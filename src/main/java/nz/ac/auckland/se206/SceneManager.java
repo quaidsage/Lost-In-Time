@@ -25,15 +25,15 @@ public class SceneManager {
   public static String convertUiType(AppUi ui) {
     switch (ui) {
       case MAINMENU:
-        return "mainMenu";
+        return "mainmenu";
       case TIMEMACHINE:
-        return "timeMachine";
+        return "timemachine";
       case LAB:
         return "lab";
       case STORAGE:
         return "storage";
     }
-    return "mainMenu";
+    return "mainmenu";
   }
 }
 
