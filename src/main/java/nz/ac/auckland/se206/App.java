@@ -47,10 +47,10 @@ public class App extends Application {
   @Override
   public void start(final Stage stage) throws IOException {
     // initialize scene instances;
-    SceneManager.addUi(AppUi.MAINMENU, loadFxml("mainmenu"));
-    SceneManager.addUi(AppUi.TIMEMACHINE, loadFxml("timemachine"));    
     SceneManager.addUi(AppUi.LAB, loadFxml("lab"));
     SceneManager.addUi(AppUi.STORAGE, loadFxml("storage"));
+    SceneManager.addUi(AppUi.MAINMENU, loadFxml("mainmenu"));
+    SceneManager.addUi(AppUi.TIMEMACHINE, loadFxml("timemachine"));
 
     // Load game starting with the main menu
     scene = new Scene(SceneManager.getUiRoot(AppUi.MAINMENU), 600, 470);
