@@ -53,7 +53,7 @@ public class App extends Application {
     SceneManager.addUi(AppUi.TIMEMACHINE, loadFxml("timemachine"));
 
     // Load game starting with the main menu
-    scene = new Scene(SceneManager.getUiRoot(AppUi.MAINMENU), 600, 470);
+    scene = new Scene(SceneManager.getUiRoot(AppUi.MAINMENU), 1400, 750);
     stage.setScene(scene);
     stage.show();
   }
