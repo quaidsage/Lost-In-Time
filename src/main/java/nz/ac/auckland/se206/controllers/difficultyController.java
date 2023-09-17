@@ -6,11 +6,11 @@ import javafx.scene.control.Button;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 
-public class mainmenuController {
-  @FXML private Button btnBeginGame;
+public class difficultyController {
+  @FXML private Button btnSwitchToTimeMachine;
 
   @FXML
-  private void beginGame(ActionEvent event) {
-    App.setUi(AppUi.DIFFICULTY);
+  private void switchToTimeMachine(ActionEvent event) {
+    App.setUi(AppUi.TIMEMACHINE);
   }
 }

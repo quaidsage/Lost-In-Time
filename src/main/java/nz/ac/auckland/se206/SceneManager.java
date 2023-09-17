@@ -5,7 +5,11 @@ import javafx.scene.Parent;
 
 public class SceneManager {
   public enum AppUi {
-    MAINMENU, TIMEMACHINE, LAB, STORAGE
+    MAINMENU,
+    TIMEMACHINE,
+    LAB,
+    STORAGE,
+    DIFFICULTY
   }
 
   // Initialize hashMap to manage Scenes
@@ -26,6 +30,8 @@ public class SceneManager {
     switch (ui) {
       case MAINMENU:
         return "mainmenu";
+      case DIFFICULTY:
+        return "difficulty";
       case TIMEMACHINE:
         return "timemachine";
       case LAB:
@@ -36,4 +42,3 @@ public class SceneManager {
     return "mainmenu";
   }
 }
-

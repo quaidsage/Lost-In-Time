@@ -5,15 +5,22 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.storageController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.storageController">
    <children>
-      <ImageView fitHeight="406.0" fitWidth="607.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="749.0" fitWidth="1135.0" layoutX="-7.0" layoutY="-5.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/storage.jpg" />
          </image>
       </ImageView>
-      <Label fx:id="lblTimer" layoutX="562.0" layoutY="6.0" text="XX:XX" />
-      <Button fx:id="btnSwitchToTimeMachine" layoutX="503.0" layoutY="373.0" mnemonicParsing="false" onAction="#switchToTimeMachine" text="Time Machine" />
+      <Label fx:id="lblTimer" layoutX="1285.0" layoutY="16.0" text="XX:XX">
+         <font>
+            <Font name="Apple Symbols" size="48.0" />
+         </font></Label>
+      <Button fx:id="btnSwitchToTimeMachine" layoutX="1159.0" layoutY="670.0" mnemonicParsing="false" onAction="#switchToTimeMachine" text="Time Machine">
+         <font>
+            <Font name="Apple Symbols" size="36.0" />
+         </font></Button>
    </children>
 </Pane>
