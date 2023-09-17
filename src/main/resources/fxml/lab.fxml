@@ -14,7 +14,7 @@
             <Image url="@../images/lab.jpg" />
          </image>
       </ImageView>
-      <Label layoutX="550.0" layoutY="14.0" text="XX:XX" />
+      <Label fx:id="lblTimer" layoutX="550.0" layoutY="14.0" text="XX:XX" />
       <Button fx:id="btnSwitchToTimeMachine" layoutY="373.0" mnemonicParsing="false" onAction="#switchToTimeMachine" text="Time Machine Room" />
    </children>
 </Pane>
