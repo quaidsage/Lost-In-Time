@@ -48,6 +48,7 @@ public class App extends Application {
   public void start(final Stage stage) throws IOException {
     // initialize scene instances;
     SceneManager.addUi(AppUi.LAB, loadFxml("lab"));
+    SceneManager.addUi(AppUi.DIFFICULTY, loadFxml("difficulty"));
     SceneManager.addUi(AppUi.STORAGE, loadFxml("storage"));
     SceneManager.addUi(AppUi.MAINMENU, loadFxml("mainmenu"));
     SceneManager.addUi(AppUi.TIMEMACHINE, loadFxml("timemachine"));
@@ -68,5 +69,4 @@ public class App extends Application {
   public static String getUi() {
     return SceneManager.convertUiType(currentUi);
   }
-
 }

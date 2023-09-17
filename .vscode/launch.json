@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "nz.ac.auckland.se206.App",
+            "projectName": "escaipe-room-beta-and-final"
+        },
+        {
+            "type": "java",
             "name": "Debug JavaFX",
             "request": "attach",
             "hostName": "localhost",

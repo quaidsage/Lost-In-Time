@@ -7,10 +7,10 @@ import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 
 public class mainmenuController {
-    @FXML private Button btnSwitchToTimeMachine;
-    
-    @FXML 
-    private void switchToTimeMachine(ActionEvent event) {
-        App.setUi(AppUi.TIMEMACHINE);
-    }
+  @FXML private Button btnBeginGame;
+
+  @FXML
+  private void beginGame(ActionEvent event) {
+    App.setUi(AppUi.DIFFICULTY);
+  }
 }
