@@ -11,8 +11,23 @@ public class storageController {
     @FXML private Button btnSwitchToTimeMachine;
     @FXML private Label lblTimer;
 
+    private static timerController timer = new timerController();
+
+    public void initialize() {
+        lblTimer.textProperty().bind(timer.messageProperty());
+        timer.setOnSucceeded(e -> {
+            // Add code here to implement the loss of the game
+            lblTimer.setText("0:00");
+        });
+    }
+
     @FXML
     private void switchToTimeMachine(ActionEvent event) {
         App.setUi(AppUi.TIMEMACHINE);
+    }
+
+    public static void storageStartTimer(int minutes) {
+        timer.setMinutes(minutes);
+        timer.start();
     }
 }
