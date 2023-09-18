@@ -67,5 +67,6 @@
             <Font name="Apple Symbols" size="48.0" />
          </font>
       </Label>
+      <Label fx:id="lblSelectBoxesWarning" layoutX="916.0" layoutY="674.0" />
    </children>
 </Pane>
