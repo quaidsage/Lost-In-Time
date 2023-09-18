@@ -21,17 +21,17 @@
       </Label>
       <VBox layoutX="321.0" layoutY="307.0" prefHeight="212.0" prefWidth="269.0">
          <children>
-            <CheckBox mnemonicParsing="false" prefHeight="44.0" prefWidth="251.0" text="Easy    - unlimited hints">
+            <CheckBox fx:id="chkbxEasy" mnemonicParsing="false" onAction="#checkedEasy" prefHeight="44.0" prefWidth="251.0" text="Easy    - unlimited hints">
                <font>
                   <Font name="Apple Symbols" size="24.0" />
                </font>
             </CheckBox>
-            <CheckBox mnemonicParsing="false" prefHeight="44.0" prefWidth="233.0" text="Medium - 5 hints">
+            <CheckBox fx:id="chkbxMedium" mnemonicParsing="false" onAction="#checkedMedium" prefHeight="44.0" prefWidth="233.0" text="Medium - 5 hints">
                <font>
                   <Font name="Apple Symbols" size="24.0" />
                </font>
             </CheckBox>
-            <CheckBox mnemonicParsing="false" prefHeight="44.0" prefWidth="233.0" text="Hard    - no hints">
+            <CheckBox fx:id="chkbxHard" mnemonicParsing="false" onAction="#checkedHard" prefHeight="44.0" prefWidth="233.0" text="Hard    - no hints">
                <font>
                   <Font name="Apple Symbols" size="24.0" />
                </font>
@@ -40,17 +40,17 @@
       </VBox>
       <VBox layoutX="929.0" layoutY="306.0" prefHeight="212.0" prefWidth="196.0">
          <children>
-            <CheckBox mnemonicParsing="false" prefHeight="44.0" prefWidth="163.0" text="2 mins">
+            <CheckBox fx:id="chkbxTwoMins" mnemonicParsing="false" onAction="#checkedTwoMins" prefHeight="44.0" prefWidth="163.0" text="2 mins">
                <font>
                   <Font name="Apple Symbols" size="24.0" />
                </font>
             </CheckBox>
-            <CheckBox mnemonicParsing="false" prefHeight="44.0" prefWidth="163.0" text="4 mins">
+            <CheckBox fx:id="chkbxFourMins" mnemonicParsing="false" onAction="#checkedFourMins" prefHeight="44.0" prefWidth="163.0" text="4 mins">
                <font>
                   <Font name="Apple Symbols" size="24.0" />
                </font>
             </CheckBox>
-            <CheckBox mnemonicParsing="false" prefHeight="44.0" prefWidth="163.0" text="6 mins">
+            <CheckBox fx:id="chkbxSixMins" mnemonicParsing="false" onAction="#checkedSixMins" prefHeight="44.0" prefWidth="163.0" text="6 mins">
                <font>
                   <Font name="Apple Symbols" size="24.0" />
                </font>

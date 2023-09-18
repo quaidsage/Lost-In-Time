@@ -14,6 +14,7 @@ public class storageController {
     private static timerController timer = new timerController();
 
     public void initialize() {
+        // Bind the lblTimer to the timerController properties.
         lblTimer.textProperty().bind(timer.messageProperty());
         timer.setOnSucceeded(e -> {
             // Add code here to implement the loss of the game
