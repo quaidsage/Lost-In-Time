@@ -1,0 +1,36 @@
+.text-area {
+    background-color: rgb(48, 48, 48), rgb(48, 48, 48);
+    color: rgb(107, 249, 177);
+    -fx-background-color: rgb(48, 48, 48), rgb(48, 48, 48);
+    -fx-text-fill: rgb(107, 249, 177);
+}
+
+.text-area .content {
+    background-color: rgb(48, 48, 48);
+    color: rgb(107, 249, 177);
+    -fx-background-color: rgb(48, 48, 48);
+    -fx-text-fill: rgb(107, 249, 177);
+}
+
+.text-area:focused .content {
+    background-color: rgb(48, 48, 48);
+    color: rgb(107, 249, 177);
+    -fx-background-color: rgb(48, 48, 48);
+    -fx-text-fill: rgb(107, 249, 177);
+}
+
+#chatArea .content {
+    background-color: rgb(48, 48, 48);
+    color: rgb(107, 249, 177);
+    -fx-background-color: rgb(48, 48, 48);
+    -fx-text-fill: rgb(107, 249, 177);
+}
+
+#chatField .content {
+    background-color: rgb(42, 42, 42);
+    color: rgb(107, 249, 177);
+    -fx-background-color: rgb(42, 42, 42);
+    -fx-text-fill: rgb(107, 249, 177);
+    padding: 10px;
+    -fx-padding: 10px;
+}
