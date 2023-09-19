@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
@@ -26,6 +27,7 @@ public class timemachineController {
   @FXML private Label lblTimer;
   @FXML private TextArea chatArea;
   @FXML private TextArea chatField;
+  @FXML private ImageView imgScientistThinking;
 
   private ChatCompletionRequest chatCompletionRequest;
   private int characterDelay = 5;
@@ -42,8 +44,11 @@ public class timemachineController {
         createTask(GptPromptEngineering.getRiddleWithGivenWord(GameState.getItem()));
     Thread riddleThread = new Thread(riddleTask);
     riddleThread.start();
+    imgScientistThinking.setVisible(true);
     riddleTask.setOnSucceeded(
         e -> {
+          imgScientistThinking.setVisible(false);
+          chatArea.appendText("\n\n-> ");
           appendChatMessage(riddleTask.getValue());
         });
 
@@ -99,7 +104,6 @@ public class timemachineController {
    * @param msg the chat message to append
    */
   public void appendChatMessage(ChatMessage msg) {
-    chatArea.appendText("\n\n- ");
 
     // Disable send button
     btnSend.setDisable(true);
@@ -213,14 +217,18 @@ public class timemachineController {
     chatField.clear();
 
     ChatMessage chatMessage = new ChatMessage("user", message);
+    chatArea.appendText("\n\n<- ");
     appendChatMessage(chatMessage);
 
     Task<ChatMessage> chatTask = createTask(message);
     Thread chatThread = new Thread(chatTask);
     chatThread.start();
+    imgScientistThinking.setVisible(true);
 
     chatTask.setOnSucceeded(
         e -> {
+          imgScientistThinking.setVisible(false);
+          chatArea.appendText("\n\n-> ");
           appendChatMessage(chatTask.getValue());
         });
   }

@@ -34,3 +34,18 @@
     padding: 10px;
     -fx-padding: 10px;
 }
+
+#btnSend {
+    background-color: rgb(107, 249, 177);
+    -fx-background-color: rgb(107, 249, 177);
+    border-color: rgb(42, 42, 42);
+    -fx-border-color: rgb(42, 42, 42);
+    border-width: 0px 2px 2px 0px;
+    -fx-border-width: 0px 2px 2px 0px;
+    -fx-text-fill: rgb(42, 42, 42);
+}
+
+#lblTimer {
+    color: rgb(107, 249, 177);
+    -fx-text-fill: rgb(107, 249, 177);
+}

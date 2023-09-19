@@ -10,7 +10,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.timemachineController">
    <children>
-      <ImageView fitHeight="750.0" fitWidth="401.0" layoutX="1000.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="730.0" fitWidth="400.0" layoutX="1006.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/device.png" />
          </image>
@@ -23,29 +23,34 @@
          <font>
             <Font name="Apple Symbols" size="36.0" />
          </font></Button>
-      <Label fx:id="lblTimer" layoutX="856.0" layoutY="14.0" text="XX:XX">
-         <font>
-            <Font name="Apple Symbols" size="48.0" />
-         </font>
-      </Label>
-      <TextArea id="chatField" fx:id="chatField" layoutX="1029.0" layoutY="599.0" prefHeight="77.0" prefWidth="343.0" promptText="Enter message..." stylesheets="@../css/style.css">
+      <TextArea id="chatField" fx:id="chatField" layoutX="1025.0" layoutY="570.0" prefHeight="106.0" prefWidth="207.0" promptText="Enter message..." stylesheets="@../css/style.css">
          <font>
             <Font name="Monospace 821 Bold BT" size="18.0" />
          </font>
       </TextArea>
-      <TextArea id="chatArea" fx:id="chatArea" editable="false" layoutX="1029.0" layoutY="258.0" prefHeight="318.0" prefWidth="343.0" stylesheets="@../css/style.css" wrapText="true">
+      <TextArea id="chatArea" fx:id="chatArea" editable="false" layoutX="1030.0" layoutY="277.0" prefHeight="253.0" prefWidth="342.0" stylesheets="@../css/style.css" wrapText="true">
          <font>
             <Font name="Monospace 821 Bold BT" size="16.0" />
          </font>
       </TextArea>
-      <ImageView fitHeight="150.0" fitWidth="277.0" layoutX="1125.0" layoutY="84.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="150.0" fitWidth="277.0" layoutX="1032.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/scientist.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnSend" layoutX="1155.0" layoutY="698.0" mnemonicParsing="false" onAction="#onSendMessage" text="Send">
+      <ImageView fx:id="imgScientistThinking" fitHeight="150.0" fitWidth="277.0" layoutX="1032.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/scientist-process.png" />
+         </image>
+      </ImageView>
+      <Button id="btnSend" fx:id="btnSend" layoutX="1265.0" layoutY="600.0" mnemonicParsing="false" onAction="#onSendMessage" stylesheets="@../css/style.css" text="Send" textFill="#6bf9b1">
          <font>
             <Font name="Monospace 821 Bold BT" size="24.0" />
          </font></Button>
+      <Label id="lblTimer" fx:id="lblTimer" layoutX="1235.0" layoutY="75.0" prefHeight="51.0" prefWidth="110.0" stylesheets="@../css/style.css" text="XX:XX" textFill="#6bf9b1">
+         <font>
+            <Font name="Monospace 821 Bold BT" size="33.0" />
+         </font>
+      </Label>
    </children>
 </Pane>
