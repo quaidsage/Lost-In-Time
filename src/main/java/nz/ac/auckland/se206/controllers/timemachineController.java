@@ -29,27 +29,38 @@ public class timemachineController {
   @FXML private TextArea chatField;
   @FXML private ImageView imgScientistThinking;
 
-  private ChatCompletionRequest chatCompletionRequest;
   private int characterDelay = 5;
+  public static Task<Void> updateChatTask;
+  public static ChatMessage chatTaskValue;
 
   private static timerController timer = new timerController();
 
   public void initialize() {
     // Initialise AI
-    chatCompletionRequest =
+    GameState.chatCompletionRequest =
         new ChatCompletionRequest().setN(1).setTemperature(0.2).setTopP(0.5).setMaxTokens(100);
+
+    imgScientistThinking.setVisible(true);
 
     // Create riddle chat thread
     Task<ChatMessage> riddleTask =
         createTask(GptPromptEngineering.getRiddleWithGivenWord(GameState.getItem()));
     Thread riddleThread = new Thread(riddleTask);
     riddleThread.start();
-    imgScientistThinking.setVisible(true);
+
     riddleTask.setOnSucceeded(
         e -> {
           imgScientistThinking.setVisible(false);
           chatArea.appendText("\n\n-> ");
+          // Add to chat log
+          GameState.chatLog = "\n\n-> " + riddleTask.getValue().getContent();
           appendChatMessage(riddleTask.getValue());
+
+          // Update chat area in other scenes
+          Thread updateChatThreadLab = new Thread(labController.updateChatTask);
+          updateChatThreadLab.start();
+          Thread updateChatThreadStorage = new Thread(storageController.updateChatTask);
+          updateChatThreadStorage.start();
         });
 
     // Bind the lblTimer to the timerController properties.
@@ -188,11 +199,11 @@ public class timemachineController {
    * @throws ApiProxyException if there is an error communicating with the API proxy
    */
   private ChatMessage runGpt(ChatMessage msg) throws ApiProxyException {
-    chatCompletionRequest.addMessage(msg);
+    GameState.chatCompletionRequest.addMessage(msg);
     try {
-      ChatCompletionResult chatCompletionResult = chatCompletionRequest.execute();
+      ChatCompletionResult chatCompletionResult = GameState.chatCompletionRequest.execute();
       Choice result = chatCompletionResult.getChoices().iterator().next();
-      chatCompletionRequest.addMessage(result.getChatMessage());
+      GameState.chatCompletionRequest.addMessage(result.getChatMessage());
       return result.getChatMessage();
     } catch (ApiProxyException e) {
       e.printStackTrace();
@@ -220,6 +231,9 @@ public class timemachineController {
     chatArea.appendText("\n\n<- ");
     appendChatMessage(chatMessage);
 
+    // Add to chat log
+    GameState.chatLog += "\n\n<- " + chatMessage.getContent();
+
     Task<ChatMessage> chatTask = createTask(message);
     Thread chatThread = new Thread(chatTask);
     chatThread.start();
@@ -227,9 +241,37 @@ public class timemachineController {
 
     chatTask.setOnSucceeded(
         e -> {
+          // Update imagery
           imgScientistThinking.setVisible(false);
+
+          // Add to chat log
+          GameState.chatLog += "\n\n-> " + chatTask.getValue().getContent();
+
+          // Append response to current scene
           chatArea.appendText("\n\n-> ");
           appendChatMessage(chatTask.getValue());
+
+          // Update chat area in other scenes
+          Thread updateChatThreadLab = new Thread(labController.updateChatTask);
+          updateChatThreadLab.start();
+          Thread updateChatThreadStorage = new Thread(storageController.updateChatTask);
+          updateChatThreadStorage.start();
         });
+  }
+
+  public void updateChatArea() {
+    chatArea.setText(GameState.getLog());
+  }
+
+  public void createUpdateTask() {
+    updateChatTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            updateChatArea();
+            createUpdateTask();
+            return null;
+          }
+        };
   }
 }

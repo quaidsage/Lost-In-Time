@@ -23,7 +23,7 @@
          <font>
             <Font name="Apple Symbols" size="36.0" />
          </font></Button>
-      <TextArea id="chatField" fx:id="chatField" layoutX="1025.0" layoutY="570.0" prefHeight="106.0" prefWidth="207.0" promptText="Enter message..." stylesheets="@../css/style.css">
+      <TextArea id="chatField" fx:id="chatField" layoutX="1025.0" layoutY="570.0" prefHeight="106.0" prefWidth="207.0" promptText="Enter message..." stylesheets="@../css/style.css" wrapText="true">
          <font>
             <Font name="Monospace 821 Bold BT" size="18.0" />
          </font>
@@ -46,10 +46,11 @@
       <Button id="btnSend" fx:id="btnSend" layoutX="1265.0" layoutY="600.0" mnemonicParsing="false" onAction="#onSendMessage" stylesheets="@../css/style.css" text="Send" textFill="#6bf9b1">
          <font>
             <Font name="Monospace 821 Bold BT" size="24.0" />
-         </font></Button>
-      <Label id="lblTimer" fx:id="lblTimer" layoutX="1235.0" layoutY="75.0" prefHeight="51.0" prefWidth="110.0" stylesheets="@../css/style.css" text="XX:XX" textFill="#6bf9b1">
+         </font>
+      </Button>
+      <Label id="lblTimer" fx:id="lblTimer" layoutX="1232.0" layoutY="71.0" prefHeight="51.0" prefWidth="116.0" stylesheets="@../css/style.css" text="XX:XX" textFill="#6bf9b1">
          <font>
-            <Font name="Monospace 821 Bold BT" size="33.0" />
+            <Font name="Monospace 821 Bold BT" size="38.0" />
          </font>
       </Label>
    </children>

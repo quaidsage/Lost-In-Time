@@ -14,7 +14,7 @@ import nz.ac.auckland.se206.SceneManager.AppUi;
  */
 public class App extends Application {
 
-  static AppUi currentUi = AppUi.MAINMENU;
+  public static AppUi currentUi = AppUi.MAINMENU;
 
   private static Scene scene;
 
@@ -46,7 +46,7 @@ public class App extends Application {
    */
   @Override
   public void start(final Stage stage) throws IOException {
-    // initialize scene instances;
+    // Initialize scene instances;
     SceneManager.addUi(AppUi.LAB, loadFxml("lab"));
     SceneManager.addUi(AppUi.DIFFICULTY, loadFxml("difficulty"));
     SceneManager.addUi(AppUi.STORAGE, loadFxml("storage"));
