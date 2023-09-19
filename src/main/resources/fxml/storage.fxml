@@ -11,27 +11,47 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.storageController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="753.0" stroke="BLACK" strokeType="INSIDE" width="1400.0" />
-      <Button fx:id="btnSwitchToTimeMachine" layoutX="1159.0" layoutY="670.0" mnemonicParsing="false" onAction="#switchToTimeMachine" text="Time Machine">
-         <font>
-            <Font name="Apple Symbols" size="36.0" />
-         </font></Button>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#343639" height="83.0" layoutX="1220.0" layoutY="20.0" stroke="BLACK" strokeType="INSIDE" width="163.0" />
-      <Label fx:id="lblTimer" layoutX="1246.0" layoutY="32.0" text="XX:XX" textFill="WHITE">
-         <font>
-            <Font name="Apple Symbols" size="55.0" />
-         </font></Label>
+      <ImageView fitHeight="730.0" fitWidth="400.0" layoutX="1006.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/device.png" />
+         </image>
+      </ImageView>
       <ImageView fitHeight="620.0" fitWidth="1070.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true">
          <image>
             <Image url="@../images/wepik-export-20230918120206Hm9p.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="605.0" fitWidth="414.0" layoutX="1045.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+      <Label fx:id="lblTimer" layoutX="1232.0" layoutY="73.0" stylesheets="@../css/style.css" text="XX:XX">
+         <font>
+            <Font name="Monospace 821 Bold BT" size="38.0" />
+         </font></Label>
+      <Button fx:id="btnSwitchToTimeMachine" layoutX="600.0" layoutY="654.0" mnemonicParsing="false" onAction="#switchToTimeMachine" prefHeight="70.0" prefWidth="389.0" text="Time Machine Room">
+         <font>
+            <Font name="Apple Symbols" size="36.0" />
+         </font></Button>
+      <TextArea id="chatField" fx:id="chatField" layoutX="1025.0" layoutY="570.0" prefHeight="106.0" prefWidth="207.0" promptText="Enter message..." stylesheets="@../css/style.css">
+         <font>
+            <Font name="Monospace 821 Bold BT" size="18.0" />
+         </font>
+      </TextArea>
+      <TextArea id="chatArea" fx:id="chatArea" editable="false" layoutX="1030.0" layoutY="277.0" prefHeight="253.0" prefWidth="342.0" stylesheets="@../css/style.css" wrapText="true">
+         <font>
+            <Font name="Monospace 821 Bold BT" size="16.0" />
+         </font>
+      </TextArea>
+      <ImageView fitHeight="150.0" fitWidth="277.0" layoutX="1032.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/wepik-export-20230919011024E1Sj.png" />
+            <Image url="@../images/scientist.png" />
          </image>
       </ImageView>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d1d765" height="192.0" layoutX="1190.0" layoutY="180.0" stroke="BLACK" strokeType="INSIDE" width="116.0" />
-      <TextArea layoutX="1194.0" layoutY="183.0" prefHeight="186.0" prefWidth="109.0" />
+      <ImageView fx:id="imgScientistThinking" fitHeight="150.0" fitWidth="277.0" layoutX="1032.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../images/scientist-process.png" />
+         </image>
+      </ImageView>
+      <Button id="btnSend" fx:id="btnSend" layoutX="1265.0" layoutY="600.0" mnemonicParsing="false" onAction="#onSendMessage" stylesheets="@../css/style.css" text="Send" textFill="#6bf9b1">
+         <font>
+            <Font name="Monospace 821 Bold BT" size="24.0" />
+         </font></Button>
    </children>
 </Pane>
