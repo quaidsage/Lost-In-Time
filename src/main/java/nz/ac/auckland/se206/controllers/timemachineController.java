@@ -23,16 +23,19 @@ import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 
 public class timemachineController {
+  // JavaFX elements
   @FXML private Button btnSwitchToLab, btnSwitchToStorage, btnSend;
   @FXML private Label lblTimer;
   @FXML private TextArea chatArea;
   @FXML private TextArea chatField;
   @FXML private ImageView imgScientistThinking;
 
+  // Initialise Variables
   private int characterDelay = 5;
   public static Task<Void> updateChatTask;
   public static ChatMessage chatTaskValue;
 
+  // Initialise Timer
   private static timerController timer = new timerController();
 
   public void initialize() {
@@ -40,20 +43,25 @@ public class timemachineController {
     GameState.chatCompletionRequest =
         new ChatCompletionRequest().setN(1).setTemperature(0.2).setTopP(0.5).setMaxTokens(100);
 
+    // Enable thinking image of scientist
     imgScientistThinking.setVisible(true);
 
-    // Create riddle chat thread
+    // Create riddle thread
     Task<ChatMessage> riddleTask =
-        createTask(GptPromptEngineering.getRiddleWithGivenWord(GameState.getItem()));
+        createTask(GptPromptEngineering.getRiddleWithGivenWord(GameState.item));
     Thread riddleThread = new Thread(riddleTask);
     riddleThread.start();
 
     riddleTask.setOnSucceeded(
         e -> {
+          // Update imagery of scientist
           imgScientistThinking.setVisible(false);
-          chatArea.appendText("\n\n-> ");
+
           // Add to chat log
-          GameState.chatLog = "\n\n-> " + riddleTask.getValue().getContent();
+          GameState.chatLog = "-> " + riddleTask.getValue().getContent();
+
+          // Append to chat area
+          chatArea.appendText("-> ");
           appendChatMessage(riddleTask.getValue());
 
           // Update chat area in other scenes
@@ -70,25 +78,42 @@ public class timemachineController {
           // Add code here to implement the loss of the game
           lblTimer.setText("0:00");
         });
+
+    createUpdateTask();
   }
 
+  /**
+   * Change scene to lab.
+   *
+   * @param event the action event triggered by the send button
+   */
   @FXML
   private void switchToLab(ActionEvent event) {
     App.setUi(AppUi.LAB);
   }
 
+  /**
+   * Change scene to storage.
+   *
+   * @param event the action event triggered by the send button
+   */
   @FXML
   private void switchToStorage(ActionEvent event) {
     App.setUi(AppUi.STORAGE);
   }
 
+  /**
+   * Function to start timer
+   *
+   * @param minutes the number of minutes to set the timer to
+   */
   public static void timemachineStartTimer(int minutes) {
     timer.setMinutes(minutes);
     timer.start();
   }
 
   /**
-   * Creates a task to run theLLM model on a given message to be run by background thread.
+   * Creates a task to run the LLM model on a given message to be run by background thread.
    *
    * @param message string to attach to message to be given to the LLM
    */
@@ -166,32 +191,6 @@ public class timemachineController {
   }
 
   /**
-   * Delays given code by a given number of milliseconds.
-   *
-   * @param ms milliseconds of delay
-   * @param continuation Code to execute after delay
-   */
-  public static void delay(int ms, Runnable continuation) {
-    // Create delay function
-    Task<Void> delayTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            try {
-              Thread.sleep(ms);
-            } catch (InterruptedException e) {
-            }
-            return null;
-          }
-        };
-    // Execute code after delay
-    delayTask.setOnSucceeded(event -> continuation.run());
-
-    // Start delay thread
-    new Thread(delayTask).start();
-  }
-
-  /**
    * Runs the GPT model with a given chat message.
    *
    * @param msg the chat message to process
@@ -220,23 +219,38 @@ public class timemachineController {
    */
   @FXML
   private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
+    // Get message from chat field
     String message = chatField.getText();
+    chatField.clear();
+
+    // Check if message is empty
     if (message.trim().isEmpty()) {
       System.out.println("message is empty");
       return;
     }
-    chatField.clear();
 
+    // Create chat message
     ChatMessage chatMessage = new ChatMessage("user", message);
+
+    // Append message to current scene
     chatArea.appendText("\n\n<- ");
     appendChatMessage(chatMessage);
+
+    // Update chat area in other scenes
+    Thread updateChatThreadLab = new Thread(labController.updateChatTask);
+    updateChatThreadLab.start();
+    Thread updateChatThreadStorage = new Thread(storageController.updateChatTask);
+    updateChatThreadStorage.start();
 
     // Add to chat log
     GameState.chatLog += "\n\n<- " + chatMessage.getContent();
 
+    // Create task to run GPT model
     Task<ChatMessage> chatTask = createTask(message);
     Thread chatThread = new Thread(chatTask);
     chatThread.start();
+
+    // Enable thinking image of scientist
     imgScientistThinking.setVisible(true);
 
     chatTask.setOnSucceeded(
@@ -252,17 +266,46 @@ public class timemachineController {
           appendChatMessage(chatTask.getValue());
 
           // Update chat area in other scenes
-          Thread updateChatThreadLab = new Thread(labController.updateChatTask);
-          updateChatThreadLab.start();
-          Thread updateChatThreadStorage = new Thread(storageController.updateChatTask);
-          updateChatThreadStorage.start();
+          Thread updateChatThreadLab2 = new Thread(labController.updateChatTask);
+          updateChatThreadLab2.start();
+          Thread updateChatThreadStorage2 = new Thread(storageController.updateChatTask);
+          updateChatThreadStorage2.start();
         });
   }
 
-  public void updateChatArea() {
-    chatArea.setText(GameState.getLog());
+  /**
+   * Delays given code by a given number of milliseconds.
+   *
+   * @param ms milliseconds of delay
+   * @param continuation Code to execute after delay
+   */
+  public static void delay(int ms, Runnable continuation) {
+    // Create delay function
+    Task<Void> delayTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            try {
+              Thread.sleep(ms);
+            } catch (InterruptedException e) {
+            }
+            return null;
+          }
+        };
+    // Execute code after delay
+    delayTask.setOnSucceeded(event -> continuation.run());
+
+    // Start delay thread
+    new Thread(delayTask).start();
   }
 
+  /** Function to set chat area to current history of chat log. */
+  public void updateChatArea() {
+    chatArea.setText(GameState.chatLog);
+    chatArea.appendText("");
+  }
+
+  /** Function to create task to update chat area for scene. */
   public void createUpdateTask() {
     updateChatTask =
         new Task<Void>() {

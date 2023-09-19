@@ -12,24 +12,15 @@ public class GameState {
   /** Indicates whether the key has been found. */
   public static boolean isKeyFound = false;
 
-  /** Current text to speech for game */
+  /** Current text to speech for game. */
   public static TextToSpeech txtToSpeech;
 
-  /** Current item to be found in the game */
+  /** Current item to be found in the game. */
   public static String item = "battery";
 
-  /** Current chat log for the game */
+  /** Current chat log for the game. */
   public static String chatLog;
 
-  /** Main AI Core */
+  /** Main AI Core. */
   public static ChatCompletionRequest chatCompletionRequest;
-
-  /** Returns the current required item for the game. */
-  public static String getItem() {
-    return item;
-  }
-
-  public static String getLog() {
-    return chatLog;
-  }
 }
