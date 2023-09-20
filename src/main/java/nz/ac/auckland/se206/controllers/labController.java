@@ -6,8 +6,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import javax.sql.rowset.spi.SyncResolver;
-
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.PathTransition;
@@ -58,7 +56,7 @@ public class labController {
   // Initialise Variables
   private int characterDelay = 5;
   public static Task<Void> updateChatTask;
-  private Boolean isRiddleGiven = false, isRiddleSolved = false, isTaskComplete = false;
+  private Boolean isRiddleGiven = false;
   private Boolean isCyanSolution = false, isBlueSolution = false, isPurpleSolution = false, isOrangeSolution = false;
   private Boolean isYellowSolution = false, isGreenSolution = false, isRedSolution = false;
   private String[] possibleChemicalColours = {"Red", "Green", "Blue", "Cyan", "Purple", "Yellow", "Orange"};
@@ -66,7 +64,9 @@ public class labController {
   private int numChemicalsAdded = 0;
   private int arrowAnimationSpeed = 85;
   private int arrowAnimationDistance = 25;
-  private int fadeTransitionSpeed = 1000;  
+  private int fadeTransitionSpeed = 1500;  
+  private Duration flashDuration = Duration.millis(0);
+  private int numFlashes = 0;
   //  ArrayList<ImageView> imageViewList = new ArrayList<>();
   ArrayList<ImageView> arrowCollection = new ArrayList<ImageView>();
 
@@ -319,7 +319,6 @@ public class labController {
   }
 
   private void changeToRiddleSolve() {
-    isRiddleSolved = true;
     enableChemicals(true);
   }
 
@@ -366,7 +365,8 @@ public class labController {
   private void puzzleComplete() {
     GameState.isLabResolved = true;
     baseImage.setVisible(true);
-    blurredImage.setVisible(false);
+    startFlashingArrows();
+    fadeTransitionOut();
   }
 
   /**
@@ -464,7 +464,6 @@ public class labController {
         blurredImage.setVisible(true);
         fadeTransition();
         //baseImage.setVisible(false);
-        isRiddleSolved = true;
         changeToRiddleSolve();
       }
       return result.getChatMessage();
@@ -586,14 +585,46 @@ public class labController {
     FadeTransition fade = new FadeTransition(Duration.millis(duration), image);
     fade.setFromValue(0);
     fade.setToValue(1);
-    fade.play();  
+    fade.play();
   }
   private void fadingTransitionOut(ImageView image, int duration) {
     FadeTransition fade = new FadeTransition(Duration.millis(duration), image);
+    fade.setDelay(Duration.millis(1200));
     fade.setFromValue(1);
     fade.setToValue(0);
     fade.play();  
   }
+  private void flashingArrowsOff(ImageView image) {
+    System.out.println("Off called");
+    FadeTransition fade = new FadeTransition(Duration.millis(1), image);
+    fade.setDelay(flashDuration);
+    fade.setFromValue(1);
+    fade.setToValue(0);
+    if (numFlashes >= 84) {
+      return;
+    } else {
+      numFlashes++;
+      fade.setOnFinished(event -> {
+        flashDuration = Duration.millis(150);
+        flashingArrowsOn(image); 
+      });
+    }
+    fade.play();  
+  }
+  private void flashingArrowsOn(ImageView image) {
+    System.out.println("On called");
+    FadeTransition fade = new FadeTransition(Duration.millis(1), image);
+    fade.setDelay(flashDuration);
+    fade.setFromValue(0);
+    fade.setToValue(1);
+      System.out.println("ON");
+      numFlashes++;
+        fade.setOnFinished(event -> {
+        flashingArrowsOff(image); // Recursive call to flash next arrow
+      });
+    fade.play();  
+    }
+  
 
   private void fadeTransition() {
     for(int i = 0; i < arrowCollection.size(); i++) {
@@ -607,7 +638,12 @@ public class labController {
     }
     fadingTransitionOut(blurredImage, fadeTransitionSpeed);
   }
-
+  private void startFlashingArrows() {
+    for(int i = 0; i < arrowCollection.size(); i++) {
+      flashingArrowsOff(arrowCollection.get(i));
+    }
+  }
+  
   private void arrowAnimationIn(ImageView arrowDown, ImageView arrowUp, int duration, int distance) {
     Line lineDown = new Line(18, 13, 18, 13 + distance);
     Line lineUp = new Line(18, 13, 18, 13 - distance);
