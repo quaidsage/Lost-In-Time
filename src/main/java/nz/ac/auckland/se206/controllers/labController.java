@@ -1,6 +1,12 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -11,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -18,7 +25,9 @@ import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
+import nz.ac.auckland.se206.gpt.GptPromptEngineering;
 import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
+import nz.ac.auckland.se206.gpt.openai.ChatCompletionRequest;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 
@@ -38,6 +47,12 @@ public class labController {
   // Initialise Variables
   private int characterDelay = 5;
   public static Task<Void> updateChatTask;
+  private Boolean isRiddleGiven = false, isRiddleSolved = false, isTaskComplete = false;
+  private Boolean isCyanSolution = false, isBlueSolution = false, isPurpleSolution = false;
+  private Boolean isYellowSolution = false, isGreenSolution = false, isRedSolution = false;
+  private String[] possibleChemicalColours = {"Red", "Green", "Blue", "Cyan", "Purple", "Yellow"};
+  private String[] puzzleColours;
+  
 
   // Initialise Timer
   private static timerController timer = new timerController();
@@ -52,6 +67,16 @@ public class labController {
         });
 
     createUpdateTask();
+      
+    List<String> colourList = Arrays.asList(possibleChemicalColours);
+    Collections.shuffle(colourList);
+
+    String[] Colours = colourList.subList(0, 3).toArray(new String[3]);
+    puzzleColours = Colours;
+    
+    for(int i = 0; i < 3; i++) {
+      updateColourAnswerVariables(puzzleColours[i]);
+    }
   }
 
   /**
@@ -75,101 +100,170 @@ public class labController {
   }
 
   @FXML
-  private void clkChemicalGeneral() {
+  private void clkChemicalGeneral(MouseEvent event) {
+    if (isRiddleGiven == false) {
+      isRiddleGiven = true;
+      String message = GptPromptEngineering.getRiddleWithGivenWordLab("to do with science", puzzleColours);
+
+    // Create chat message
+    ChatMessage chatMessage = new ChatMessage("user", message);
+
+    // Update chat area in other scenes
+    Thread updateChatThreadTM = new Thread(timemachineController.updateChatTask);
+    updateChatThreadTM.start();
+    Thread updateChatThreadStorage = new Thread(storageController.updateChatTask);
+    updateChatThreadStorage.start();
+
+    // Add to chat log
+    GameState.chatLog += "\n\n<- " + chatMessage.getContent();
+
+    // Create task to run GPT model
+    Task<ChatMessage> chatTask = createTask(message);
+    Thread chatThread = new Thread(chatTask);
+    chatThread.start();
+
+    // Enable thinking image of scientist
+    imgScientistThinking.setVisible(true);
+
+    chatTask.setOnSucceeded(
+        e -> {
+          // Update imagery
+          imgScientistThinking.setVisible(false);
+
+          // Add to chat log
+          GameState.chatLog += "\n\n-> " + chatTask.getValue().getContent();
+
+          // Append response to current scene
+          chatArea.appendText("\n\n-> ");
+          appendChatMessage(chatTask.getValue());
+
+          // Update chat area in other scenes
+          Thread updateChatThreadTM2 = new Thread(timemachineController.updateChatTask);
+          updateChatThreadTM2.start();
+          Thread updateChatThreadStorage2 = new Thread(storageController.updateChatTask);
+          updateChatThreadStorage2.start();
+        });
+    }
+  }
+
+  @FXML
+  private void showChemicalGeneral(MouseEvent event) {
+    System.out.println("general hovered");
+    chemicalGeneral.setOpacity(0.5);
+  }
+  @FXML
+  private void hideChemicalGeneral(MouseEvent event) {
+    System.out.println("general unhovered");
+    chemicalGeneral.setOpacity(0);
+  }
+
+
+  @FXML
+  private void clkChemicalCyan(MouseEvent event) {
 
   }
   @FXML
-  private void showChemicalGeneral() {
-
-  }
-  @FXML
-  private void hideChemicalGeneral() {
-
-  }
-
-
-  @FXML
-  private void clkChemicalCyan() {
-
-  }
-  @FXML
-  private void clkChemicalBlue() {
+  private void clkChemicalBlue(MouseEvent event) {
     
   }
   @FXML
-  private void clkChemicalPurple() {
+  private void clkChemicalPurple(MouseEvent event) {
     
   }
   @FXML
-  private void clkChemicalYellow() {
+  private void clkChemicalYellow(MouseEvent event) {
     
   }
   @FXML
-  private void clkChemicalGreen() {
+  private void clkChemicalGreen(MouseEvent event) {
     
   }
   @FXML
-  private void clkChemicalRed() {
-    
-  }
-
-  @FXML
-  private void showChemicalCyan() {
-
-  }
-  @FXML
-  private void showChemicalBlue() {
-    
-  }
-  @FXML
-  private void showChemicalPurple() {
-    
-  }
-  @FXML
-  private void showChemicalYellow() {
-    
-  }
-  @FXML
-  private void showChemicalGreen() {
-    
-  }
-  @FXML
-  private void showChemicalRed() {
+  private void clkChemicalRed(MouseEvent event) {
     
   }
 
   @FXML
-  private void hideChemicalCyan() {
-
+  private void showChemicalCyan(MouseEvent event) {
+    chemicalCyan.setOpacity(0.5);
   }
   @FXML
-  private void hideChemicalBlue() {
-    
+  private void showChemicalBlue(MouseEvent event) {
+    chemicalBlue.setOpacity(0.5);
   }
   @FXML
-  private void hideChemicalPurple() {
-    
+  private void showChemicalPurple(MouseEvent event) {
+    chemicalPurple.setOpacity(0.5);
   }
   @FXML
-  private void hideChemicalYellow() {
-    
+  private void showChemicalYellow(MouseEvent event) {
+    chemicalYellow.setOpacity(0.5);
   }
   @FXML
-  private void hideChemicalGreen() {
-    
+  private void showChemicalGreen(MouseEvent event) {
+    chemicalGreen.setOpacity(0.5);
   }
   @FXML
-  private void hideChemicalRed() {
-    
+  private void showChemicalRed(MouseEvent event) {
+    chemicalRed.setOpacity(0.5);
   }
 
+  @FXML
+  private void hideChemicalCyan(MouseEvent event) {
+    chemicalCyan.setOpacity(0);
+  }
+  @FXML
+  private void hideChemicalBlue(MouseEvent event) {
+    chemicalBlue.setOpacity(0);
+  }
+  @FXML
+  private void hideChemicalPurple(MouseEvent event) {
+    chemicalPurple.setOpacity(0);
+  }
+  @FXML
+  private void hideChemicalYellow(MouseEvent event) {
+    chemicalYellow.setOpacity(0);
+  }
+  @FXML
+  private void hideChemicalGreen(MouseEvent event) {
+    chemicalGreen.setOpacity(0);
+  }
+  @FXML
+  private void hideChemicalRed(MouseEvent event) {
+    chemicalRed.setOpacity(0);
+  }
 
+  private void changeToRiddleSolve() {
+    isRiddleSolved = true;
+    enableChemicals(true);
+  }
 
+  private void enableChemicals(Boolean disable) {
+    chemicalGeneral.setVisible(!disable);
+    chemicalBlue.setVisible(disable);
+    chemicalCyan.setVisible(disable);
+    chemicalPurple.setVisible(disable);
+    chemicalRed.setVisible(disable);
+    chemicalYellow.setVisible(disable);
+    chemicalGreen.setVisible(disable);
+  }
 
-
-
-
-
+  private void updateColourAnswerVariables(String colour) {
+    switch(colour) {
+      case "Cyan":
+        isCyanSolution = true;
+      case "Blue":
+        isBlueSolution = true;
+      case "Purple":
+        isPurpleSolution = true;
+      case "Yellow":
+        isYellowSolution = true;
+      case "Red":
+        isRedSolution = true;
+      case "Green":
+        isGreenSolution = true;
+    } 
+  }
 
 
   /**
@@ -263,6 +357,10 @@ public class labController {
       ChatCompletionResult chatCompletionResult = GameState.chatCompletionRequest.execute();
       Choice result = chatCompletionResult.getChoices().iterator().next();
       GameState.chatCompletionRequest.addMessage(result.getChatMessage());
+      if (result.getChatMessage().getContent().startsWith("Correct")) {
+        isRiddleSolved = true;
+        changeToRiddleSolve();
+      }
       return result.getChatMessage();
     } catch (ApiProxyException e) {
       e.printStackTrace();
