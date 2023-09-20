@@ -5,9 +5,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
+import javax.sql.rowset.spi.SyncResolver;
+
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
+import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -18,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -27,7 +31,6 @@ import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
 import nz.ac.auckland.se206.gpt.GptPromptEngineering;
 import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
-import nz.ac.auckland.se206.gpt.openai.ChatCompletionRequest;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 
@@ -40,19 +43,32 @@ public class labController {
   @FXML private TextArea chatField;
   @FXML private ImageView imgScientistThinking;
   @FXML private Polyline chemicalGeneral;
-  @FXML private Rectangle chemicalCyan, chemicalBlue, chemicalPurple;
-  @FXML private Rectangle chemicalYellow, chemicalGreen, chemicalRed;
-
+  @FXML private Rectangle chemicalCyan, chemicalBlue, chemicalPurple, chemicalOrange;
+  @FXML private Rectangle chemicalYellow, chemicalGreen, chemicalRed, transitionScene;
+  @FXML private ImageView baseImage, blurredImage;
+  @FXML private ImageView arrowUpCyan, arrowUpBlue, arrowUpPurple, arrowUpOrange;
+  @FXML private ImageView arrowUpYellow, arrowUpGreen, arrowUpRed;
+  @FXML private ImageView arrowDownCyan, arrowDownBlue, arrowDownPurple, arrowDownOrange;
+  @FXML private ImageView arrowDownYellow, arrowDownGreen, arrowDownRed;
+  @FXML private ImageView arrowUpCyan1, arrowUpBlue1, arrowUpPurple1, arrowUpOrange1;
+  @FXML private ImageView arrowUpYellow1, arrowUpGreen1, arrowUpRed1;
+  @FXML private ImageView arrowDownCyan1, arrowDownBlue1, arrowDownPurple1, arrowDownOrange1;
+  @FXML private ImageView arrowDownYellow1, arrowDownGreen1, arrowDownRed1;
 
   // Initialise Variables
   private int characterDelay = 5;
   public static Task<Void> updateChatTask;
   private Boolean isRiddleGiven = false, isRiddleSolved = false, isTaskComplete = false;
-  private Boolean isCyanSolution = false, isBlueSolution = false, isPurpleSolution = false;
+  private Boolean isCyanSolution = false, isBlueSolution = false, isPurpleSolution = false, isOrangeSolution = false;
   private Boolean isYellowSolution = false, isGreenSolution = false, isRedSolution = false;
-  private String[] possibleChemicalColours = {"Red", "Green", "Blue", "Cyan", "Purple", "Yellow"};
+  private String[] possibleChemicalColours = {"Red", "Green", "Blue", "Cyan", "Purple", "Yellow", "Orange"};
   private String[] puzzleColours;
-  
+  private int numChemicalsAdded = 0;
+  private int arrowAnimationSpeed = 85;
+  private int arrowAnimationDistance = 25;
+  private int fadeTransitionSpeed = 1000;  
+  //  ArrayList<ImageView> imageViewList = new ArrayList<>();
+  ArrayList<ImageView> arrowCollection = new ArrayList<ImageView>();
 
   // Initialise Timer
   private static timerController timer = new timerController();
@@ -73,10 +89,39 @@ public class labController {
 
     String[] Colours = colourList.subList(0, 3).toArray(new String[3]);
     puzzleColours = Colours;
-    
     for(int i = 0; i < 3; i++) {
       updateColourAnswerVariables(puzzleColours[i]);
     }
+
+    // Add the ImageView elements to the ArrayList
+    arrowCollection.add(arrowUpCyan);
+    arrowCollection.add(arrowUpBlue);
+    arrowCollection.add(arrowUpPurple);
+    arrowCollection.add(arrowUpOrange);
+    arrowCollection.add(arrowUpYellow);
+    arrowCollection.add(arrowUpGreen);
+    arrowCollection.add(arrowUpRed);
+    arrowCollection.add(arrowDownCyan);
+    arrowCollection.add(arrowDownBlue);
+    arrowCollection.add(arrowDownPurple);
+    arrowCollection.add(arrowDownOrange);
+    arrowCollection.add(arrowDownYellow);
+    arrowCollection.add(arrowDownGreen);
+    arrowCollection.add(arrowDownRed);
+    arrowCollection.add(arrowUpCyan1);
+    arrowCollection.add(arrowUpBlue1);
+    arrowCollection.add(arrowUpPurple1);
+    arrowCollection.add(arrowUpOrange1);
+    arrowCollection.add(arrowUpYellow1);
+    arrowCollection.add(arrowUpGreen1);
+    arrowCollection.add(arrowUpRed1);
+    arrowCollection.add(arrowDownCyan1);
+    arrowCollection.add(arrowDownBlue1);
+    arrowCollection.add(arrowDownPurple1);
+    arrowCollection.add(arrowDownOrange1);
+    arrowCollection.add(arrowDownYellow1);
+    arrowCollection.add(arrowDownGreen1);
+    arrowCollection.add(arrowDownRed1);
   }
 
   /**
@@ -160,77 +205,117 @@ public class labController {
 
   @FXML
   private void clkChemicalCyan(MouseEvent event) {
-
+    if (isCyanSolution == true) {
+      updateColourIndication(arrowUpCyan, arrowDownCyan, arrowUpCyan1, arrowDownCyan1);
+      isPuzzleComplete();
+      isCyanSolution = false;
+    }
   }
   @FXML
   private void clkChemicalBlue(MouseEvent event) {
-    
+    if (isBlueSolution == true) {
+      updateColourIndication(arrowUpBlue, arrowDownBlue, arrowUpBlue1, arrowDownBlue1);
+      isPuzzleComplete();
+      isBlueSolution = false;
+    }
+  }
+  @FXML
+  private void clkChemicalOrange(MouseEvent event) {
+    if (isOrangeSolution == true) {
+      updateColourIndication(arrowUpOrange, arrowDownOrange, arrowUpOrange1, arrowDownOrange1);
+      isPuzzleComplete();
+      isOrangeSolution = false;
+    }
   }
   @FXML
   private void clkChemicalPurple(MouseEvent event) {
-    
+    if (isPurpleSolution == true) {
+      updateColourIndication(arrowUpPurple, arrowDownPurple, arrowUpPurple1, arrowDownPurple1);
+      isPuzzleComplete();
+      isPurpleSolution = false;
+    }
   }
   @FXML
   private void clkChemicalYellow(MouseEvent event) {
-    
+    if (isYellowSolution == true) {
+      updateColourIndication(arrowUpYellow, arrowDownYellow, arrowUpYellow1, arrowDownYellow1);
+      isPuzzleComplete();
+      isYellowSolution = false;
+    }
   }
   @FXML
   private void clkChemicalGreen(MouseEvent event) {
-    
+    if (isGreenSolution == true) {
+      updateColourIndication(arrowUpGreen, arrowDownGreen, arrowUpGreen1, arrowDownGreen1);
+      isPuzzleComplete();
+      isGreenSolution = false;
+    }
   }
   @FXML
   private void clkChemicalRed(MouseEvent event) {
-    
+    if (isRedSolution == true) {
+      updateColourIndication(arrowUpRed, arrowDownRed, arrowUpRed1, arrowDownRed1);
+      isPuzzleComplete();
+      isRedSolution = false;
+    }
   }
 
   @FXML
   private void showChemicalCyan(MouseEvent event) {
-    chemicalCyan.setOpacity(0.5);
-  }
+    arrowAnimationIn(arrowDownCyan, arrowUpCyan, arrowAnimationSpeed, arrowAnimationDistance);
+    }
   @FXML
   private void showChemicalBlue(MouseEvent event) {
-    chemicalBlue.setOpacity(0.5);
+    arrowAnimationIn(arrowDownBlue, arrowUpBlue, arrowAnimationSpeed, arrowAnimationDistance);
+  }
+  @FXML
+  private void showChemicalOrange(MouseEvent event) {
+    arrowAnimationIn(arrowDownOrange, arrowUpOrange, arrowAnimationSpeed, arrowAnimationDistance);
   }
   @FXML
   private void showChemicalPurple(MouseEvent event) {
-    chemicalPurple.setOpacity(0.5);
+    arrowAnimationIn(arrowDownPurple, arrowUpPurple, arrowAnimationSpeed, arrowAnimationDistance);
   }
   @FXML
   private void showChemicalYellow(MouseEvent event) {
-    chemicalYellow.setOpacity(0.5);
+    arrowAnimationIn(arrowDownYellow, arrowUpYellow, arrowAnimationSpeed, arrowAnimationDistance);
   }
   @FXML
   private void showChemicalGreen(MouseEvent event) {
-    chemicalGreen.setOpacity(0.5);
+    arrowAnimationIn(arrowDownGreen, arrowUpGreen, arrowAnimationSpeed, arrowAnimationDistance);
   }
   @FXML
   private void showChemicalRed(MouseEvent event) {
-    chemicalRed.setOpacity(0.5);
+    arrowAnimationIn(arrowDownRed, arrowUpRed, arrowAnimationSpeed, arrowAnimationDistance);
   }
 
   @FXML
   private void hideChemicalCyan(MouseEvent event) {
-    chemicalCyan.setOpacity(0);
+    arrowAnimationOut(arrowDownCyan, arrowUpCyan, arrowAnimationSpeed, -arrowAnimationDistance);
   }
   @FXML
   private void hideChemicalBlue(MouseEvent event) {
-    chemicalBlue.setOpacity(0);
+    arrowAnimationOut(arrowDownBlue, arrowUpBlue, arrowAnimationSpeed, -arrowAnimationDistance);
+  }
+  @FXML
+  private void hideChemicalOrange(MouseEvent event) {
+    arrowAnimationOut(arrowDownOrange, arrowUpOrange, arrowAnimationSpeed, -arrowAnimationDistance);
   }
   @FXML
   private void hideChemicalPurple(MouseEvent event) {
-    chemicalPurple.setOpacity(0);
+    arrowAnimationOut(arrowDownPurple, arrowUpPurple, arrowAnimationSpeed, -arrowAnimationDistance);
   }
   @FXML
   private void hideChemicalYellow(MouseEvent event) {
-    chemicalYellow.setOpacity(0);
+    arrowAnimationOut(arrowDownYellow, arrowUpYellow, arrowAnimationSpeed, -arrowAnimationDistance);
   }
   @FXML
   private void hideChemicalGreen(MouseEvent event) {
-    chemicalGreen.setOpacity(0);
+    arrowAnimationOut(arrowDownGreen, arrowUpGreen, arrowAnimationSpeed, -arrowAnimationDistance);
   }
   @FXML
   private void hideChemicalRed(MouseEvent event) {
-    chemicalRed.setOpacity(0);
+    arrowAnimationOut(arrowDownRed, arrowUpRed, arrowAnimationSpeed, -arrowAnimationDistance);
   }
 
   private void changeToRiddleSolve() {
@@ -246,25 +331,43 @@ public class labController {
     chemicalRed.setVisible(disable);
     chemicalYellow.setVisible(disable);
     chemicalGreen.setVisible(disable);
+    chemicalOrange.setVisible(disable);
   }
 
   private void updateColourAnswerVariables(String colour) {
-    switch(colour) {
-      case "Cyan":
-        isCyanSolution = true;
-      case "Blue":
-        isBlueSolution = true;
-      case "Purple":
-        isPurpleSolution = true;
-      case "Yellow":
-        isYellowSolution = true;
-      case "Red":
-        isRedSolution = true;
-      case "Green":
-        isGreenSolution = true;
-    } 
+    if (colour.equals("Cyan")) {
+      isCyanSolution = true;
+    } else if (colour.equals("Blue")) {
+      isBlueSolution = true;
+    }else if (colour.equals("Purple")) {
+      isPurpleSolution = true;
+    } else if (colour.equals("Yellow")) {
+      isYellowSolution = true;
+    } else if (colour.equals("Red")) {
+      isRedSolution = true;
+    } else if (colour.equals("Green")) {
+      isGreenSolution = true;
+    } else if (colour.equals("Orange")) {
+      isOrangeSolution = true;
+
+    }
+  } 
+  
+  private Boolean isPuzzleComplete() {
+    numChemicalsAdded ++;
+    if (numChemicalsAdded == 3) {
+      puzzleComplete();
+      return true;
+    } else {
+      return false;
+    }
   }
 
+  private void puzzleComplete() {
+    GameState.isLabResolved = true;
+    baseImage.setVisible(true);
+    blurredImage.setVisible(false);
+  }
 
   /**
    * Creates a task to run the LLM model on a given message to be run by background thread.
@@ -358,6 +461,9 @@ public class labController {
       Choice result = chatCompletionResult.getChoices().iterator().next();
       GameState.chatCompletionRequest.addMessage(result.getChatMessage());
       if (result.getChatMessage().getContent().startsWith("Correct")) {
+        blurredImage.setVisible(true);
+        fadeTransition();
+        //baseImage.setVisible(false);
         isRiddleSolved = true;
         changeToRiddleSolve();
       }
@@ -475,4 +581,65 @@ public class labController {
           }
         };
   }
+
+  private void fadingTransition(ImageView image, int duration) {
+    FadeTransition fade = new FadeTransition(Duration.millis(duration), image);
+    fade.setFromValue(0);
+    fade.setToValue(1);
+    fade.play();  
+  }
+  private void fadingTransitionOut(ImageView image, int duration) {
+    FadeTransition fade = new FadeTransition(Duration.millis(duration), image);
+    fade.setFromValue(1);
+    fade.setToValue(0);
+    fade.play();  
+  }
+
+  private void fadeTransition() {
+    for(int i = 0; i < arrowCollection.size(); i++) {
+      fadingTransition(arrowCollection.get(i), fadeTransitionSpeed);
+    }
+    fadingTransition(blurredImage, fadeTransitionSpeed);
+  }
+  private void fadeTransitionOut() {
+    for(int i = 0; i < arrowCollection.size(); i++) {
+      fadingTransitionOut(arrowCollection.get(i), fadeTransitionSpeed);
+    }
+    fadingTransitionOut(blurredImage, fadeTransitionSpeed);
+  }
+
+  private void arrowAnimationIn(ImageView arrowDown, ImageView arrowUp, int duration, int distance) {
+    Line lineDown = new Line(18, 13, 18, 13 + distance);
+    Line lineUp = new Line(18, 13, 18, 13 - distance);
+
+    Duration duration2 = Duration.millis(duration);
+
+    PathTransition pathTransitionDown = new PathTransition(duration2, lineDown, arrowDown);
+    PathTransition pathTransitionUp = new PathTransition(duration2, lineUp, arrowUp);
+
+    pathTransitionDown.play();
+    pathTransitionUp.play();
+  }
+
+  private void arrowAnimationOut(ImageView arrowDown, ImageView arrowUp, int duration, int distance) {
+    Line lineDown = new Line(18, 13 - distance, 18, 13 );
+    Line lineUp = new Line(18, 13 + distance, 18, 13);
+
+    Duration duration2 = Duration.millis(duration);
+
+    PathTransition pathTransitionDown = new PathTransition(duration2, lineDown, arrowDown);
+    PathTransition pathTransitionUp = new PathTransition(duration2, lineUp, arrowUp);
+
+    pathTransitionDown.play();
+    pathTransitionUp.play();
+  }
+
+  private void updateColourIndication(ImageView arrowUp, ImageView arrowDown, ImageView arrowUp1, ImageView arrowDown1) {
+    arrowUp.setVisible(false);
+    arrowDown.setVisible(false);
+    arrowUp1.setVisible(true);
+    arrowDown1.setVisible(true);
+  }
+
+
 }
