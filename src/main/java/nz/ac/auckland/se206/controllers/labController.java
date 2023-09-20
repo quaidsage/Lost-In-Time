@@ -11,6 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Polyline;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
@@ -28,6 +30,10 @@ public class labController {
   @FXML private TextArea chatArea;
   @FXML private TextArea chatField;
   @FXML private ImageView imgScientistThinking;
+  @FXML private Polyline chemicalGeneral;
+  @FXML private Rectangle chemicalCyan, chemicalBlue, chemicalPurple;
+  @FXML private Rectangle chemicalYellow, chemicalGreen, chemicalRed;
+
 
   // Initialise Variables
   private int characterDelay = 5;
@@ -67,6 +73,104 @@ public class labController {
     timer.setMinutes(minutes);
     timer.start();
   }
+
+  @FXML
+  private void clkChemicalGeneral() {
+
+  }
+  @FXML
+  private void showChemicalGeneral() {
+
+  }
+  @FXML
+  private void hideChemicalGeneral() {
+
+  }
+
+
+  @FXML
+  private void clkChemicalCyan() {
+
+  }
+  @FXML
+  private void clkChemicalBlue() {
+    
+  }
+  @FXML
+  private void clkChemicalPurple() {
+    
+  }
+  @FXML
+  private void clkChemicalYellow() {
+    
+  }
+  @FXML
+  private void clkChemicalGreen() {
+    
+  }
+  @FXML
+  private void clkChemicalRed() {
+    
+  }
+
+  @FXML
+  private void showChemicalCyan() {
+
+  }
+  @FXML
+  private void showChemicalBlue() {
+    
+  }
+  @FXML
+  private void showChemicalPurple() {
+    
+  }
+  @FXML
+  private void showChemicalYellow() {
+    
+  }
+  @FXML
+  private void showChemicalGreen() {
+    
+  }
+  @FXML
+  private void showChemicalRed() {
+    
+  }
+
+  @FXML
+  private void hideChemicalCyan() {
+
+  }
+  @FXML
+  private void hideChemicalBlue() {
+    
+  }
+  @FXML
+  private void hideChemicalPurple() {
+    
+  }
+  @FXML
+  private void hideChemicalYellow() {
+    
+  }
+  @FXML
+  private void hideChemicalGreen() {
+    
+  }
+  @FXML
+  private void hideChemicalRed() {
+    
+  }
+
+
+
+
+
+
+
+
+
 
   /**
    * Creates a task to run the LLM model on a given message to be run by background thread.
