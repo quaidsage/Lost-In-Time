@@ -9,7 +9,8 @@ public class SceneManager {
     TIMEMACHINE,
     LAB,
     STORAGE,
-    DIFFICULTY
+    DIFFICULTY,
+    MINIGAME
   }
 
   // Initialize hashMap to manage Scenes
@@ -38,6 +39,8 @@ public class SceneManager {
         return "lab";
       case STORAGE:
         return "storage";
+      case MINIGAME:
+        return "minigame";
     }
     return "mainmenu";
   }
