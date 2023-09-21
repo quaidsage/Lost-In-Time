@@ -24,6 +24,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
+import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
 import nz.ac.auckland.se206.gpt.GptPromptEngineering;
@@ -51,6 +52,7 @@ public class labController {
   @FXML private ImageView arrowUpYellow1, arrowUpGreen1, arrowUpRed1;
   @FXML private ImageView arrowDownCyan1, arrowDownBlue1, arrowDownPurple1, arrowDownOrange1;
   @FXML private ImageView arrowDownYellow1, arrowDownGreen1, arrowDownRed1;
+  @FXML private Button btnMenu;
 
   // Initialise Variables
   private int characterDelay = 5;
@@ -195,6 +197,12 @@ public class labController {
             updateChatThreadStorage2.start();
           });
     }
+  }
+
+  @FXML 
+  private void returnToMenu(ActionEvent event) throws IOException {
+    App.setRoot("mainmenu");
+    SceneManager.clearAllScenesExceptMainMenu();
   }
 
   @FXML

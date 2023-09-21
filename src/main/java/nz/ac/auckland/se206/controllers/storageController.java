@@ -23,6 +23,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
+import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
 import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
@@ -53,6 +54,7 @@ public class storageController {
   @FXML private Button button6;
   @FXML private Button button7;
   @FXML private Button button8;
+  @FXML private Button btnMenu;
   @FXML private Text info;
 
   // Initialise Variables
@@ -458,5 +460,11 @@ public class storageController {
             return null;
           }
         };
+  }
+
+  @FXML 
+  private void returnToMenu(ActionEvent event) throws IOException {
+    App.setRoot("mainmenu");
+    SceneManager.clearAllScenesExceptMainMenu();
   }
 }
