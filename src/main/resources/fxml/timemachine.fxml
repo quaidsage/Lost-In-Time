@@ -6,19 +6,18 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.timemachineController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.timemachineController">
    <children>
+      <ImageView fitHeight="864.0" fitWidth="1481.0" layoutX="-80.0" layoutY="-92.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/wepik-export-20230918035914v2a6.png" />
+         </image>
+      </ImageView>
       <ImageView fitHeight="730.0" fitWidth="400.0" layoutX="1006.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/device.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="620.0" fitWidth="1070.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/wepik-export-20230918035914v2a6.png" />
          </image>
       </ImageView>
       <Button fx:id="btnSwitchToStorage" layoutX="14.0" layoutY="659.0" mnemonicParsing="false" onAction="#switchToStorage" text="Storage">
