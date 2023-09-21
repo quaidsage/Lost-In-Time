@@ -62,7 +62,7 @@
          <font>
             <Font name="Monospace 821 Bold BT" size="24.0" />
          </font></Button>
-      <Polyline fx:id="chemicalGeneral" layoutX="317.0" layoutY="274.0" onMouseClicked="#clkChemicalGeneral" onMouseEntered="#showChemicalGeneral" onMouseExited="#hideChemicalGeneral" opacity="0.0" points="376.80419921875, 76.09005737304688, 376.80419921875, 201.638916015625, 107.51104736328125, 156.15020751953125, 107.51104736328125, 76.09005737304688" stroke="TRANSPARENT" strokeType="INSIDE">
+      <Polyline fx:id="chemicalGeneral" layoutX="306.0" layoutY="271.0" onMouseClicked="#clkChemicalGeneral" onMouseEntered="#showChemicalGeneral" onMouseExited="#hideChemicalGeneral" opacity="0.0" points="376.80419921875, 76.09005737304688, 376.80419921875, 201.638916015625, 107.51104736328125, 156.15020751953125, 107.51104736328125, 76.09005737304688" stroke="TRANSPARENT" strokeType="INSIDE">
          <fill>
             <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
                <stops>
