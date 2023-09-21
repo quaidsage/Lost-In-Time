@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.labController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.labController">
    <children>
       <ImageView fx:id="baseImage" fitHeight="774.0" fitWidth="1417.0" layoutX="-9.0" layoutY="-12.0" pickOnBounds="true">
          <image>
@@ -62,7 +62,7 @@
          <font>
             <Font name="Monospace 821 Bold BT" size="24.0" />
          </font></Button>
-      <Polyline fx:id="chemicalGeneral" layoutX="306.0" layoutY="271.0" onMouseClicked="#clkChemicalGeneral" onMouseEntered="#showChemicalGeneral" onMouseExited="#hideChemicalGeneral" opacity="0.0" points="376.80419921875, 76.09005737304688, 376.80419921875, 201.638916015625, 107.51104736328125, 156.15020751953125, 107.51104736328125, 76.09005737304688" stroke="TRANSPARENT" strokeType="INSIDE">
+      <Polyline id="chemGeneral" fx:id="chemicalGeneral" layoutX="306.0" layoutY="271.0" onMouseClicked="#clkChemicalGeneral" opacity="0.0" points="376.80419921875, 76.09005737304688, 376.80419921875, 201.638916015625, 107.51104736328125, 156.15020751953125, 107.51104736328125, 76.09005737304688" stroke="TRANSPARENT" strokeType="INSIDE">
          <fill>
             <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
                <stops>

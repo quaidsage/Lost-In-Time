@@ -36,7 +36,7 @@ public class timemachineController {
 
   // Initialise Variables
   private int characterDelay = 5;
-  public static Task<ChatMessage> riddleTask;
+  public static Task<ChatMessage> contextTask;
   public static Task<Void> updateChatTask;
   public static ChatMessage chatTaskValue;
   public static Task<Void> startTask;
@@ -50,10 +50,10 @@ public class timemachineController {
     // Enable thinking image of scientist
     imgScientistThinking.setVisible(true);
 
-    // Create riddle thread
-    riddleTask = createTask(GptPromptEngineering.getContext());
-    Thread riddleThread = new Thread(riddleTask);
-    riddleThread.start();
+    // Create context thread
+    contextTask = createTask(GptPromptEngineering.getContext());
+    Thread contextThread = new Thread(contextTask);
+    contextThread.start();
 
     // Bind the lblTimer to the timerController properties.
     lblTimer.textProperty().bind(timer.messageProperty());
@@ -406,11 +406,11 @@ public class timemachineController {
           imgScientistThinking.setVisible(false);
 
           // Add to chat log
-          GameState.chatLog = "-> " + riddleTask.getValue().getContent();
+          GameState.chatLog = "-> " + contextTask.getValue().getContent();
 
           // Append to chat area
           chatArea.appendText("-> ");
-          appendChatMessage(riddleTask.getValue());
+          appendChatMessage(contextTask.getValue());
 
           // Update chat area in other scenes
           Thread updateChatThreadLab = new Thread(labController.updateChatTask);

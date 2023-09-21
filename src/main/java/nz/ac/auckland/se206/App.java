@@ -22,7 +22,7 @@ public class App extends Application {
   public static void main(final String[] args) {
     // Initialise AI
     GameState.chatCompletionRequest =
-        new ChatCompletionRequest().setN(1).setTemperature(0.2).setTopP(0.5).setMaxTokens(100);
+        new ChatCompletionRequest().setN(1).setTemperature(0.2).setTopP(0.5).setMaxTokens(200);
     launch();
   }
 

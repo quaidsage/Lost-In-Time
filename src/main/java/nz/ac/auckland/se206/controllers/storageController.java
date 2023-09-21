@@ -61,7 +61,7 @@ public class storageController {
   // Initialise Variables
   private int characterDelay = 5;
   public static Task<Void> updateChatTask;
-  public static Task<Void> storageIntroTask;
+  public static Task<ChatMessage> storageIntroTask;
   private ArrayList<Button> buttons = new ArrayList<>();
   private ArrayList<String> pattern = new ArrayList<>();
   private int patternOrder = 0;
@@ -91,25 +91,31 @@ public class storageController {
 
     createUpdateTask();
 
-    ChatMessage msg = new ChatMessage("assistant", GptPromptEngineering.getStorageIntro());
-    ChatMessage response = runGpt(msg);
+    storageIntroTask = createTask(GptPromptEngineering.getStorageIntro());
 
-    storageIntroTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
+    // Enable thinking image of scientist
+    imgScientistThinking.setVisible(true);
 
-            GameState.chatLog += "\n\n-> " + response.getContent();
-            chatArea.appendText("\n\n-> ");
-            appendChatMessage(response);
+    storageIntroTask.setOnSucceeded(
+        e -> {
+          // Update imagery
+          imgScientistThinking.setVisible(false);
 
-            Thread updateChatThreadLab = new Thread(labController.updateChatTask);
-            updateChatThreadLab.start();
-            Thread updateChatThreadTM = new Thread(timemachineController.updateChatTask);
-            updateChatThreadTM.start();
-            return null;
-          }
-        };
+          ChatMessage response = storageIntroTask.getValue();
+
+          // Append to chat log
+          GameState.chatLog += "\n\n-> " + response.getContent();
+
+          // Append response to current scene
+          chatArea.appendText("\n\n-> ");
+          appendChatMessage(response);
+
+          // Update chat area in other scenes
+          Thread updateChatThreadLab = new Thread(labController.updateChatTask);
+          updateChatThreadLab.start();
+          Thread updateChatThreadTM = new Thread(timemachineController.updateChatTask);
+          updateChatThreadTM.start();
+        });
 
     buttons.addAll(
         Arrays.asList(
@@ -151,17 +157,6 @@ public class storageController {
     turn = 1;
   }
 
-  @FXML
-  private void showCircuitBox(MouseEvent event) {
-    circuitBox.setOpacity(0.4);
-    System.out.println("Circuit box hovered");
-  }
-
-  @FXML
-  private void hideCircuitBox(MouseEvent event) {
-    circuitBox.setOpacity(0);
-  }
-
   /**
    * Change scene to time machine
    *
@@ -186,6 +181,7 @@ public class storageController {
     btnStartCircuitGame.setVisible(true);
     text.setVisible(true);
     info.setVisible(true);
+    btnSwitchToTimeMachine.setDisable(true);
   }
 
   private void winGame() {
@@ -197,6 +193,7 @@ public class storageController {
     text.setVisible(false);
     info.setVisible(false);
     circuitBox.setVisible(false);
+    btnSwitchToTimeMachine.setDisable(false);
 
     background.setVisible(true);
     circuitBoxImg.setVisible(true);
@@ -290,10 +287,7 @@ public class storageController {
           protected ChatMessage call() throws Exception {
             btnSend.setDisable(true);
             ChatMessage msg = runGpt(new ChatMessage("assistant", message));
-            Platform.runLater(
-                () -> {
-                  System.out.println("Initialised message");
-                });
+            Platform.runLater(() -> {});
             return msg;
           }
         };

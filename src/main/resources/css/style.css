@@ -61,3 +61,23 @@
     color: white;
     -fx-text-fill: white;
 }
+
+#chemGeneral {
+    opacity: 0;
+    -fx-opacity: 0;
+}
+
+#chemGeneral:hover {
+    opacity: 0.4;
+    -fx-opacity: 0.4;
+}
+
+#circuitBox {
+    opacity: 0;
+    -fx-opacity: 0;
+}
+
+#circuitBox:hover {
+    opacity: 0.4;
+    -fx-opacity: 0.4;
+}
