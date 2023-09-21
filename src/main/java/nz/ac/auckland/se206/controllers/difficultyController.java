@@ -89,7 +89,7 @@ public class difficultyController {
       isTimeChecked = false;
     }
 
-    minutes = 2;
+    minutes = 0;
   }
 
   @FXML

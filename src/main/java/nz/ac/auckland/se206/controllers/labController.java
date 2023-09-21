@@ -78,8 +78,8 @@ public class labController {
     lblTimer.textProperty().bind(timer.messageProperty());
     timer.setOnSucceeded(
         e -> {
-          // Add code here to implement the loss of the game
-          lblTimer.setText("0:00");
+          App.setUi(AppUi.TIMEOUT);
+          timer.reset();
         });
 
     createUpdateTask();
