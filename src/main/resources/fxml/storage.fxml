@@ -98,7 +98,12 @@
             <Font name="Apple Symbols" size="24.0" />
          </font>
       </Button>
-      <Text fx:id="text" fill="WHITE" layoutX="107.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Streak: " visible="false" wrappingWidth="100.0">
+      <Text fx:id="text" fill="WHITE" layoutX="107.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Streak:" wrappingWidth="100.0">
+         <font>
+            <Font name="Apple Symbols" size="24.0" />
+         </font>
+      </Text>
+      <Text fx:id="info" fill="WHITE" layoutX="55.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Get 5 right in a row to complete the circuit!" visible="false" wrappingWidth="283.0">
          <font>
             <Font name="Apple Symbols" size="24.0" />
          </font>

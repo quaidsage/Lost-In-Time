@@ -53,27 +53,24 @@ public class storageController {
   @FXML private Button button6;
   @FXML private Button button7;
   @FXML private Button button8;
+  @FXML private Text info;
 
+  // Initialise Variables
+  private int characterDelay = 5;
+  public static Task<Void> updateChatTask;
+  private ArrayList<Button> buttons = new ArrayList<>();
+  private ArrayList<String> pattern = new ArrayList<>();
+  private int patternOrder = 0;
+  private int counter = 0;
+  private int turn = 1;
+  private Random random = new Random();
+  private int consecutiveRounds = 0;
+  private int targetConsecutiveRounds = 4;
   private ArrayList<String> possibleButtons =
       new ArrayList<>(
           Arrays.asList(
               "button0", "button1", "button2", "button3", "button4", "button5", "button6",
               "button7", "button8"));
-
-  private ArrayList<Button> buttons = new ArrayList<>();
-
-  private ArrayList<String> pattern = new ArrayList<>();
-
-  private int patternOrder = 0;
-
-  private Random random = new Random();
-
-  private int counter = 0;
-  private int turn = 1;
-
-  // Initialise Variables
-  private int characterDelay = 5;
-  public static Task<Void> updateChatTask;
 
   // Initialise Timer
   private static timerController timer = new timerController();
@@ -96,27 +93,30 @@ public class storageController {
 
   @FXML
   void buttonClicked(ActionEvent event) {
-
     if (((Control) event.getSource()).getId().equals(pattern.get(counter))) {
-      text.setText("Current Streak: " + counter);
       Button button = buttons.get(getIndexOfButton(event));
       changeButtonColor(button, "-fx-base: lightgreen");
       counter++;
     } else {
-      Button button = buttons.get(getIndexOfButton(event));
-      changeButtonColor(button, "-fx-base: red");
-      text.setText("Wrong");
+      resetGame(); // Reset the game on a wrong click
       return;
     }
 
     if (counter == turn) {
-      nextTurn();
+      if (consecutiveRounds >= targetConsecutiveRounds) {
+        // Player wins after reaching the target consecutive rounds
+        text.setText("You Win!");
+        winGame();
+      } else {
+        nextTurn();
+      }
     }
   }
 
   @FXML
   void start(ActionEvent event) {
     pattern.clear();
+    text.setText("Current Streak: ");
 
     pattern.add(possibleButtons.get(random.nextInt(possibleButtons.size())));
     showPattern();
@@ -126,13 +126,37 @@ public class storageController {
     turn = 1;
   }
 
+  private void winGame() {
+    System.out.println("minigame won");
+    circuitGameBg.setVisible(false);
+    circuitGameImg.setVisible(false);
+    memoryGame.setVisible(false);
+    btnStartCircuitGame.setVisible(false);
+    text.setVisible(false);
+    info.setVisible(false);
+
+    background.setVisible(true);
+    circuitBox.setVisible(true);
+    circuitBoxImg.setVisible(true);
+  }
+
   private void nextTurn() {
     counter = 0;
+    consecutiveRounds++; // Increase consecutive rounds on successful turn
     turn++;
 
     pattern.add(possibleButtons.get(random.nextInt(possibleButtons.size())));
     showPattern();
     System.out.println(pattern);
+    text.setText("Current Streak: " + consecutiveRounds);
+  }
+
+  private void resetGame() {
+    consecutiveRounds = 0; // Reset consecutive rounds
+    text.setText("Wrong - Start Again");
+    pattern.clear();
+    counter = 0;
+    turn = 1;
   }
 
   private int getIndexOfButton(ActionEvent event) {
@@ -204,6 +228,7 @@ public class storageController {
     memoryGame.setVisible(true);
     btnStartCircuitGame.setVisible(true);
     text.setVisible(true);
+    info.setVisible(true);
   }
 
   /**
