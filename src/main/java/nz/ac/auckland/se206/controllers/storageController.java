@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
@@ -23,6 +24,7 @@ import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 public class storageController {
   // JavaFX elements
   @FXML private Button btnSwitchToTimeMachine, btnSend;
+  @FXML private Rectangle circiutBox;
   @FXML private Label lblTimer;
   @FXML private TextArea chatArea;
   @FXML private TextArea chatField;
@@ -55,6 +57,11 @@ public class storageController {
   @FXML
   private void switchToTimeMachine(ActionEvent event) {
     App.setUi(AppUi.TIMEMACHINE);
+  }
+
+  @FXML
+  private void clickCircuitBox(ActionEvent event) {
+    System.out.println("Circuit box clicked");
   }
 
   /**

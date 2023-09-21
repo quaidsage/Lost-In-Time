@@ -55,7 +55,7 @@ public class App extends Application {
     SceneManager.addUi(AppUi.MINIGAME, loadFxml("minigame"));
 
     // Load game starting with the main menu
-    scene = new Scene(SceneManager.getUiRoot(AppUi.MINIGAME), 600, 400);
+    scene = new Scene(SceneManager.getUiRoot(AppUi.MAINMENU), 1400, 750);
     stage.setScene(scene);
     stage.show();
   }
