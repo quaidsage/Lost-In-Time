@@ -169,13 +169,13 @@ public class storageController {
   }
 
   private void showPattern() {
-    PauseTransition pause = new PauseTransition(Duration.seconds(1));
+    PauseTransition pause = new PauseTransition(Duration.seconds(0.75));
     pause.setOnFinished(
         e -> {
           Timeline timeline =
               new Timeline(
                   new KeyFrame(
-                      Duration.seconds(1),
+                      Duration.seconds(0.75),
                       event -> {
                         showNext();
                       }));
