@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.timemachineController">
    <children>
@@ -63,8 +64,13 @@
       <Rectangle fx:id="rectLight" arcHeight="5.0" arcWidth="5.0" height="841.0" layoutX="-42.0" layoutY="-51.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="1494.0" />
       <Button fx:id="btnMenu" layoutX="25.0" layoutY="15.0" mnemonicParsing="false" onAction="#returnToMenu" text="Return To Menu">
          <font>
-            <Font size="20.0" />
+            <Font name="Apple Symbols" size="24.0" />
          </font></Button>
 <Button fx:id="btnTimeMachine" layoutX="341.0" layoutY="130.0" mnemonicParsing="false" onAction="#finishGame" onMouseEntered="#showBtnTimeMachine" onMouseExited="#hideBtnTimeMachine" opacity="0.0" prefHeight="458.0" prefWidth="350.0" text="Time Machine" textFill="WHITE" />
+      <Text layoutX="706.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently in: Time Machine Room">
+         <font>
+            <Font name="Apple Symbols" size="24.0" />
+         </font>
+      </Text>
    </children>
 </Pane>
