@@ -20,7 +20,7 @@
             <Image url="@../images/device.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="baseImage" fitHeight="774.0" fitWidth="1417.0" layoutX="-9.0" layoutY="-12.0" pickOnBounds="true">
+      <ImageView fx:id="baseImage" fitHeight="585.0" fitWidth="960.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true">
          <image>
             <Image url="@../images/lab.jpg" />
          </image>
@@ -34,7 +34,7 @@
          <font>
             <Font name="Monospace 821 Bold BT" size="38.0" />
          </font></Label>
-      <Button fx:id="btnSwitchToTimeMachine" layoutX="600.0" layoutY="654.0" mnemonicParsing="false" onAction="#switchToTimeMachine" prefHeight="70.0" prefWidth="389.0" text="Time Machine Room">
+      <Button fx:id="btnSwitchToTimeMachine" layoutX="25.0" layoutY="660.0" mnemonicParsing="false" onAction="#switchToTimeMachine" prefHeight="70.0" prefWidth="389.0" text="Time Machine Room">
          <font>
             <Font name="Apple Symbols" size="36.0" />
          </font></Button>
@@ -62,7 +62,7 @@
          <font>
             <Font name="Monospace 821 Bold BT" size="24.0" />
          </font></Button>
-      <Polyline fx:id="chemicalGeneral" layoutX="539.0" layoutY="373.0" onMouseClicked="#clkChemicalGeneral" onMouseEntered="#showChemicalGeneral" onMouseExited="#hideChemicalGeneral" opacity="0.0" points="376.80419921875, 76.09005737304688, 376.80419921875, 201.638916015625, 107.51104736328125, 156.15020751953125, 107.51104736328125, 76.09005737304688" stroke="TRANSPARENT" strokeType="INSIDE">
+      <Polyline fx:id="chemicalGeneral" layoutX="306.0" layoutY="279.0" onMouseClicked="#clkChemicalGeneral" onMouseEntered="#showChemicalGeneral" onMouseExited="#hideChemicalGeneral" opacity="0.0" points="376.80419921875, 76.09005737304688, 376.80419921875, 201.638916015625, 107.51104736328125, 156.15020751953125, 107.51104736328125, 76.09005737304688" stroke="TRANSPARENT" strokeType="INSIDE">
          <fill>
             <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
                <stops>
