@@ -127,6 +127,43 @@ public class storageController {
     turn = 1;
   }
 
+  @FXML
+  private void showCircuitBox(MouseEvent event) {
+    circuitBox.setOpacity(0.5);
+    System.out.println("Circuit box hovered");
+  }
+
+  @FXML
+  private void hideCircuitBox(MouseEvent event) {
+    circuitBox.setOpacity(0);
+  }
+
+  /**
+   * Change scene to time machine
+   *
+   * @param event the action event triggered by the time machine button
+   */
+  @FXML
+  private void switchToTimeMachine(ActionEvent event) {
+    App.setUi(AppUi.TIMEMACHINE);
+  }
+
+  @FXML
+  private void clickCircuitBox(MouseEvent event) {
+    System.out.println("Circuit box clicked");
+
+    background.setVisible(false);
+    circuitBox.setVisible(false);
+    circuitBoxImg.setVisible(false);
+
+    circuitGameBg.setVisible(true);
+    circuitGameImg.setVisible(true);
+    memoryGame.setVisible(true);
+    btnStartCircuitGame.setVisible(true);
+    text.setVisible(true);
+    info.setVisible(true);
+  }
+
   private void winGame() {
     System.out.println("minigame won");
     circuitGameBg.setVisible(false);
@@ -135,10 +172,11 @@ public class storageController {
     btnStartCircuitGame.setVisible(false);
     text.setVisible(false);
     info.setVisible(false);
+    circuitBox.setVisible(false);
 
     background.setVisible(true);
-    circuitBox.setVisible(true);
     circuitBoxImg.setVisible(true);
+    GameState.isStorageResolved = true;
   }
 
   private void nextTurn() {
@@ -204,32 +242,6 @@ public class storageController {
           button.setStyle(null);
         });
     pause.play();
-  }
-
-  /**
-   * Change scene to time machine
-   *
-   * @param event the action event triggered by the time machine button
-   */
-  @FXML
-  private void switchToTimeMachine(ActionEvent event) {
-    App.setUi(AppUi.TIMEMACHINE);
-  }
-
-  @FXML
-  private void clickCircuitBox(MouseEvent event) {
-    System.out.println("Circuit box clicked");
-
-    background.setVisible(false);
-    circuitBox.setVisible(false);
-    circuitBoxImg.setVisible(false);
-
-    circuitGameBg.setVisible(true);
-    circuitGameImg.setVisible(true);
-    memoryGame.setVisible(true);
-    btnStartCircuitGame.setVisible(true);
-    text.setVisible(true);
-    info.setVisible(true);
   }
 
   /**

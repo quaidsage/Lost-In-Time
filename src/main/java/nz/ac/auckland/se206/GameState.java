@@ -12,6 +12,9 @@ public class GameState {
   /** Indicates whether the key has been found. */
   public static boolean isKeyFound = false;
 
+  /** Indicates whether the storage task has been completed. */
+  public static boolean isStorageResolved = false;
+
   /** Current text to speech for game. */
   public static TextToSpeech txtToSpeech;
 
