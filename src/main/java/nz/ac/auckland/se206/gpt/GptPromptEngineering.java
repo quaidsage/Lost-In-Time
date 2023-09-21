@@ -18,6 +18,18 @@ public class GptPromptEngineering {
         + " user.";
   }
 
+  public static String getLabIntro() {
+    return "Now explain to the user that they need to interact with the chemicals in the labratory"
+        + " to make time fluid. However if the user has the courage to do so, they must"
+        + " complete your riddle. Do not give the user the riddle yet. Do not refer to the user.";
+  }
+
+  public static String getStorageIntro() {
+    return "Now explain to the user that they need to interact with the wall circuit to restore the"
+        + " power. Warn the user their memory will be put to the test to unlock the switch"
+        + " to return the power. Do not refer to the user.";
+  }
+
   public static String getRiddleWithGivenWordLab(String wordToGuess, String[] colours) {
     return "You are the AI of an escape room, tell me an easy riddle with a science related answer."
         + " Accept answers that are very close to the correct answer.. When the answer is"

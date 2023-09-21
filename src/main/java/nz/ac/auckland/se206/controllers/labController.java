@@ -57,6 +57,7 @@ public class labController {
   // Initialise Variables
   private int characterDelay = 5;
   public static Task<Void> updateChatTask;
+  public static Task<Void> labIntroTask;
   private Boolean isRiddleGiven = false;
   private Boolean isCyanSolution = false,
       isBlueSolution = false,
@@ -79,7 +80,7 @@ public class labController {
   // Initialise Timer
   private static timerController timer = new timerController();
 
-  public void initialize() {
+  public void initialize() throws ApiProxyException {
     timer = new timerController();
     // Bind the lblTimer to the timerController properties.
     lblTimer.textProperty().bind(timer.messageProperty());
@@ -90,6 +91,26 @@ public class labController {
         });
 
     createUpdateTask();
+    ChatMessage msg = new ChatMessage("assistant", GptPromptEngineering.getLabIntro());
+    ChatMessage response = runGpt(msg);
+
+    labIntroTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+
+            GameState.chatLog += "\n\n-> " + response.getContent();
+
+            chatArea.appendText("\n\n-> ");
+            appendChatMessage(response);
+
+            Thread updateChatThreadStorage = new Thread(storageController.updateChatTask);
+            updateChatThreadStorage.start();
+            Thread updateChatThreadTM = new Thread(timemachineController.updateChatTask);
+            updateChatThreadTM.start();
+            return null;
+          }
+        };
 
     List<String> colourList = Arrays.asList(possibleChemicalColours);
     Collections.shuffle(colourList);
@@ -199,7 +220,7 @@ public class labController {
     }
   }
 
-  @FXML 
+  @FXML
   private void returnToMenu(ActionEvent event) throws IOException {
     App.setRoot("mainmenu");
     SceneManager.clearAllScenesExceptMainMenu();

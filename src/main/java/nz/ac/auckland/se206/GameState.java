@@ -15,6 +15,12 @@ public class GameState {
   /** Indicates whether the storage task has been completed. */
   public static boolean isStorageResolved = false;
 
+  /** Indicates whether the user has visited the lab. */
+  public static boolean isLabVisited = false;
+
+  /** Indicates whether the user has visited the storage room. */
+  public static boolean isStorageVisited = false;
+
   /** Current text to speech for game. */
   public static TextToSpeech txtToSpeech;
 

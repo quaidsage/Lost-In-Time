@@ -21,7 +21,6 @@ import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
 import nz.ac.auckland.se206.gpt.GptPromptEngineering;
 import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
-import nz.ac.auckland.se206.gpt.openai.ChatCompletionRequest;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 
@@ -47,10 +46,6 @@ public class timemachineController {
 
   public void initialize() {
     timer = new timerController();
-
-    // Initialise AI
-    GameState.chatCompletionRequest =
-        new ChatCompletionRequest().setN(1).setTemperature(0.2).setTopP(0.5).setMaxTokens(100);
 
     // Enable thinking image of scientist
     imgScientistThinking.setVisible(true);
@@ -87,6 +82,11 @@ public class timemachineController {
    */
   @FXML
   private void switchToLab(ActionEvent event) {
+    if (!GameState.isLabVisited) {
+      GameState.isLabVisited = true;
+      Thread labIntroThread = new Thread(labController.labIntroTask);
+      labIntroThread.start();
+    }
     App.setUi(AppUi.LAB);
   }
 
@@ -97,6 +97,11 @@ public class timemachineController {
    */
   @FXML
   private void switchToStorage(ActionEvent event) {
+    if (!GameState.isStorageVisited) {
+      GameState.isStorageVisited = true;
+      Thread storageIntroThread = new Thread(storageController.storageIntroTask);
+      storageIntroThread.start();
+    }
     App.setUi(AppUi.STORAGE);
   }
 
