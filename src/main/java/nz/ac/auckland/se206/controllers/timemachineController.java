@@ -29,6 +29,7 @@ public class timemachineController {
   @FXML private TextArea chatArea;
   @FXML private TextArea chatField;
   @FXML private ImageView imgScientistThinking;
+  @FXML private Button timeMachine;
 
   // Initialise Variables
   private int characterDelay = 5;
@@ -39,6 +40,7 @@ public class timemachineController {
   private static timerController timer = new timerController();
 
   public void initialize() {
+    timer = new timerController();
     // Initialise AI
     GameState.chatCompletionRequest =
         new ChatCompletionRequest().setN(1).setTemperature(0.2).setTopP(0.5).setMaxTokens(100);
@@ -61,7 +63,6 @@ public class timemachineController {
           GameState.chatLog = "-> " + riddleTask.getValue().getContent();
 
           // Append to chat area
-          chatArea.appendText("-> ");
           appendChatMessage(riddleTask.getValue());
 
           // Update chat area in other scenes
@@ -112,6 +113,12 @@ public class timemachineController {
     timer.start();
   }
 
+  @FXML
+  private void finishGame(ActionEvent event) {
+    if (GameState.isLabResolved) {
+      App.setUi(AppUi.ENDSCENE);
+    }
+  }
   /**
    * Creates a task to run the LLM model on a given message to be run by background thread.
    *

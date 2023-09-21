@@ -76,6 +76,7 @@ public class storageController {
   private static timerController timer = new timerController();
 
   public void initialize() {
+    timer = new timerController();
     // Bind the lblTimer to the timerController properties.
     lblTimer.textProperty().bind(timer.messageProperty());
     timer.setOnSucceeded(
