@@ -14,6 +14,7 @@ public class SceneManager {
     LAB,
     STORAGE,
     DIFFICULTY,
+    INTRO,
     ENDSCENE,
     TIMEOUT
   }
@@ -44,6 +45,8 @@ public class SceneManager {
         return "lab";
       case STORAGE:
         return "storage";
+      case INTRO:
+        return "intro";
       case ENDSCENE:
         return "endscene";
       case TIMEOUT:

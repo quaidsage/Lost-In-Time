@@ -57,7 +57,7 @@
             </CheckBox>
          </children>
       </VBox>
-      <Button fx:id="btnSwitchToTimeMachine" layoutX="1131.0" layoutY="624.0" mnemonicParsing="false" onAction="#switchToTimeMachine" text="Begin Game">
+      <Button fx:id="btnSwitchToTimeMachine" layoutX="1131.0" layoutY="624.0" mnemonicParsing="false" onAction="#switchToIntro" text="Begin Game">
          <font>
             <Font name="Apple Symbols" size="36.0" />
          </font>

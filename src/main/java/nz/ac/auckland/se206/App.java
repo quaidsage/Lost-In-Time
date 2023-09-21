@@ -46,7 +46,6 @@ public class App extends Application {
    */
   @Override
   public void start(final Stage stage) throws IOException {
-    // Initialize scene instances;
     // Load game starting with the main menu
     scene = new Scene(App.loadFxml("mainmenu"), 1400, 750);
     stage.setScene(scene);

@@ -15,10 +15,15 @@ public class difficultyController {
   @FXML private Label lblSelectBoxesWarning;
 
   public enum Difficulty {
-    EASY, MEDIUM, HARD
+    EASY,
+    MEDIUM,
+    HARD
   }
+
   public enum TimeSetting {
-    TWO, FOUR, SIX
+    TWO,
+    FOUR,
+    SIX
   }
 
   int minutes = 4;
@@ -28,18 +33,15 @@ public class difficultyController {
   TimeSetting currentTimeSetting;
 
   @FXML
-  private void switchToTimeMachine(ActionEvent event) {
+  private void switchToIntro(ActionEvent event) {
     if (!isDifficultyChecked || !isTimeChecked) {
       lblSelectBoxesWarning.setText("Select a difficulty and time to begin");
     } else {
-      App.setUi(AppUi.TIMEMACHINE);
-      // Start timer. Change 'minutes' variable to change the length of the game
-      timemachineController.timemachineStartTimer(minutes);
-      labController.labStartTimer(minutes);
-      storageController.storageStartTimer(minutes);
+      introController.minutes = minutes;
+      Thread appendThread = new Thread(introController.appendTask);
+      appendThread.start();
+      App.setUi(AppUi.INTRO);
     }
-
-    
   }
 
   @FXML
@@ -105,7 +107,7 @@ public class difficultyController {
 
     minutes = 4;
   }
-  
+
   @FXML
   private void checkedSixMins() {
     currentTimeSetting = TimeSetting.SIX;
@@ -136,7 +138,7 @@ public class difficultyController {
         break;
     }
   }
-  
+
   private void deselectTimeBoxes(TimeSetting timeSetting, Boolean isTimeChecked) {
     switch (timeSetting) {
       case TWO:

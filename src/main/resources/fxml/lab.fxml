@@ -15,12 +15,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.labController">
    <children>
-      <ImageView fitHeight="730.0" fitWidth="400.0" layoutX="1006.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/device.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="baseImage" fitHeight="585.0" fitWidth="960.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true">
+      <ImageView fx:id="baseImage" fitHeight="774.0" fitWidth="1417.0" layoutX="-9.0" layoutY="-12.0" pickOnBounds="true">
          <image>
             <Image url="@../images/lab.jpg" />
          </image>
@@ -28,6 +23,11 @@
       <ImageView fx:id="blurredImage" fitHeight="774.0" fitWidth="1417.0" layoutX="-9.0" layoutY="-12.0" opacity="0.0" pickOnBounds="true" visible="false">
          <image>
             <Image url="@../images/blurred_lab.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="730.0" fitWidth="400.0" layoutX="1006.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/device.png" />
          </image>
       </ImageView>
       <Label fx:id="lblTimer" layoutX="1232.0" layoutY="73.0" stylesheets="@../css/style.css" text="XX:XX">
