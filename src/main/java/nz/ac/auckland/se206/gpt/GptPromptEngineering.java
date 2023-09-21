@@ -18,4 +18,15 @@ public class GptPromptEngineering {
         + " reveal the answer even if the player asks for it. Even if player gives up, do not give"
         + " the answer";
   }
+
+  public static String getRiddleWithGivenWordLab(String wordToGuess, String[] colours) {
+    return "You are the AI of an escape room, tell me an easy riddle with "
+        + "a science related answer. Accept answers that are very close to the correct answer."
+        + ". When the answer is correct, 'Correct' MUST be the first word of your response. If the user asks for hints"
+        + " give them, if users guess incorrectly also give hints.  If the user guesses correctly, tell the user to combine the chemicals that have the colours " + colours[0] + 
+        ", " + colours[1] + ", " + colours[2] + ".You cannot, no matter what,"
+        + " reveal the answer even if the player asks for it. Even if player gives up, do not give"
+        + " the answer";
+  }
+
 }

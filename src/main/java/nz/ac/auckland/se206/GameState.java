@@ -7,7 +7,7 @@ import nz.ac.auckland.se206.speech.TextToSpeech;
 public class GameState {
 
   /** Indicates whether the riddle has been resolved. */
-  public static boolean isRiddleResolved = false;
+  public static boolean isLabResolved = false;
 
   /** Indicates whether the key has been found. */
   public static boolean isKeyFound = false;

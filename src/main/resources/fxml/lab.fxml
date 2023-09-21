@@ -6,19 +6,28 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Polyline?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.labController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.labController">
    <children>
       <ImageView fitHeight="730.0" fitWidth="400.0" layoutX="1006.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/device.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="620.0" fitWidth="1070.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true">
+      <ImageView fx:id="baseImage" fitHeight="774.0" fitWidth="1417.0" layoutX="-9.0" layoutY="-12.0" pickOnBounds="true">
          <image>
-            <Image url="@../images/wepik-export-20230918100853rrmU.png" />
+            <Image url="@../images/lab.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="blurredImage" fitHeight="774.0" fitWidth="1417.0" layoutX="-9.0" layoutY="-12.0" opacity="0.0" pickOnBounds="true" visible="false">
+         <image>
+            <Image url="@../images/blurred_lab.jpg" />
          </image>
       </ImageView>
       <Label fx:id="lblTimer" layoutX="1232.0" layoutY="73.0" stylesheets="@../css/style.css" text="XX:XX">
@@ -53,5 +62,171 @@
          <font>
             <Font name="Monospace 821 Bold BT" size="24.0" />
          </font></Button>
+      <Polyline fx:id="chemicalGeneral" layoutX="539.0" layoutY="373.0" onMouseClicked="#clkChemicalGeneral" onMouseEntered="#showChemicalGeneral" onMouseExited="#hideChemicalGeneral" opacity="0.0" points="376.80419921875, 76.09005737304688, 376.80419921875, 201.638916015625, 107.51104736328125, 156.15020751953125, 107.51104736328125, 76.09005737304688" stroke="TRANSPARENT" strokeType="INSIDE">
+         <fill>
+            <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.6863999962806702" green="0.8255211710929871" blue="0.8799999952316284" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </RadialGradient>
+         </fill>
+      </Polyline>
+      <Rectangle fx:id="chemicalCyan" arcHeight="5.0" arcWidth="5.0" fill="#6ed8ff" height="237.0" layoutX="399.0" layoutY="253.0" onMouseClicked="#clkChemicalCyan" onMouseEntered="#showChemicalCyan" onMouseExited="#hideChemicalCyan" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="65.0" />
+      <Rectangle fx:id="chemicalBlue" arcHeight="5.0" arcWidth="5.0" fill="#484bff" height="238.0" layoutX="179.0" layoutY="253.0" onMouseClicked="#clkChemicalBlue" onMouseEntered="#showChemicalBlue" onMouseExited="#hideChemicalBlue" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="67.0" />
+      <Rectangle fx:id="chemicalPurple" arcHeight="5.0" arcWidth="5.0" fill="#ac4aff" height="237.0" layoutX="277.0" layoutY="253.0" onMouseClicked="#clkChemicalPurple" onMouseEntered="#showChemicalPurple" onMouseExited="#hideChemicalPurple" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="72.0" />
+      <Rectangle fx:id="chemicalYellow" arcHeight="5.0" arcWidth="5.0" fill="#e8ff64" height="238.0" layoutX="607.0" layoutY="255.0" onMouseClicked="#clkChemicalYellow" onMouseEntered="#showChemicalYellow" onMouseExited="#hideChemicalYellow" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="72.0" />
+      <Rectangle fx:id="chemicalGreen" arcHeight="5.0" arcWidth="5.0" fill="#6eff66" height="241.0" layoutX="509.0" layoutY="253.0" onMouseClicked="#clkChemicalGreen" onMouseEntered="#showChemicalGreen" onMouseExited="#hideChemicalGreen" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="67.0" />
+      <Rectangle fx:id="chemicalOrange" arcHeight="5.0" arcWidth="5.0" fill="#ff6969" height="236.0" layoutX="712.0" layoutY="254.0" onMouseClicked="#clkChemicalOrange" onMouseEntered="#showChemicalOrange" onMouseExited="#hideChemicalOrange" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="67.0" />
+      <Rectangle fx:id="chemicalRed" arcHeight="5.0" arcWidth="5.0" fill="#ff7e38" height="237.0" layoutX="825.0" layoutY="255.0" onMouseClicked="#clkChemicalRed" onMouseEntered="#showChemicalRed" onMouseExited="#hideChemicalRed" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="72.0" />
+      <Rectangle fx:id="transitionScene" arcHeight="5.0" arcWidth="5.0" height="775.0" layoutX="-14.0" layoutY="-11.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="1427.0" />
+      <ImageView fx:id="arrowDownBlue" fitHeight="26.0" fitWidth="35.0" layoutX="195.0" layoutY="170.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/arrow_white.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="arrowDownPurple" fitHeight="26.0" fitWidth="35.0" layoutX="296.0" layoutY="170.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/arrow_white.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="arrowDownYellow" fitHeight="26.0" fitWidth="35.0" layoutX="626.0" layoutY="170.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/arrow_white.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="arrowDownCyan" fitHeight="26.0" fitWidth="35.0" layoutX="414.0" layoutY="170.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/arrow_white.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="arrowDownGreen" fitHeight="26.0" fitWidth="35.0" layoutX="525.0" layoutY="170.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/arrow_white.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="arrowDownOrange" fitHeight="26.0" fitWidth="35.0" layoutX="728.0" layoutY="170.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/arrow_white.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="arrowDownRed" fitHeight="26.0" fitWidth="35.0" layoutX="844.0" layoutY="170.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/arrow_white.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="arrowUpBlue" fitHeight="26.0" fitWidth="35.0" layoutX="195.0" layoutY="555.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+         <image>
+            <Image url="@../images/arrow_white.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="arrowUpPurple" fitHeight="26.0" fitWidth="35.0" layoutX="296.0" layoutY="555.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+         <image>
+            <Image url="@../images/arrow_white.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="arrowUpCyan" fitHeight="26.0" fitWidth="35.0" layoutX="413.0" layoutY="555.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+         <image>
+            <Image url="@../images/arrow_white.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="arrowUpGreen" fitHeight="26.0" fitWidth="35.0" layoutX="524.0" layoutY="555.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+         <image>
+            <Image url="@../images/arrow_white.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="arrowUpYellow" fitHeight="26.0" fitWidth="35.0" layoutX="625.0" layoutY="555.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+         <image>
+            <Image url="@../images/arrow_white.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="arrowUpOrange" fitHeight="26.0" fitWidth="35.0" layoutX="728.0" layoutY="555.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+         <image>
+            <Image url="@../images/arrow_white.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="arrowUpRed" fitHeight="26.0" fitWidth="35.0" layoutX="845.0" layoutY="555.0" opacity="0.0" pickOnBounds="true" preserveRatio="true" rotate="180.0">
+         <image>
+            <Image url="@../images/arrow_white.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="arrowDownBlue1" fitHeight="26.0" fitWidth="35.0" layoutX="195.0" layoutY="195.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../images/arrow_green.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="arrowDownPurple1" fitHeight="26.0" fitWidth="35.0" layoutX="296.0" layoutY="195.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../images/arrow_green.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="arrowDownCyan1" fitHeight="26.0" fitWidth="35.0" layoutX="414.0" layoutY="195.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../images/arrow_green.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="arrowDownGreen1" fitHeight="26.0" fitWidth="35.0" layoutX="525.0" layoutY="195.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../images/arrow_green.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="arrowDownYellow1" fitHeight="26.0" fitWidth="35.0" layoutX="626.0" layoutY="195.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../images/arrow_green.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="arrowDownOrange1" fitHeight="26.0" fitWidth="35.0" layoutX="728.0" layoutY="195.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../images/arrow_green.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="arrowDownRed1" fitHeight="26.0" fitWidth="35.0" layoutX="844.0" layoutY="195.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../images/arrow_green.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="arrowUpBlue1" fitHeight="26.0" fitWidth="35.0" layoutX="195.0" layoutY="530.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" visible="false">
+         <image>
+            <Image url="@../images/arrow_green.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="arrowUpPurple1" fitHeight="26.0" fitWidth="35.0" layoutX="296.0" layoutY="530.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" visible="false">
+         <image>
+            <Image url="@../images/arrow_green.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="arrowUpCyan1" fitHeight="26.0" fitWidth="35.0" layoutX="413.0" layoutY="530.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" visible="false">
+         <image>
+            <Image url="@../images/arrow_green.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="arrowUpGreen1" fitHeight="26.0" fitWidth="35.0" layoutX="524.0" layoutY="530.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" visible="false">
+         <image>
+            <Image url="@../images/arrow_green.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="arrowUpYellow1" fitHeight="26.0" fitWidth="35.0" layoutX="625.0" layoutY="530.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" visible="false">
+         <image>
+            <Image url="@../images/arrow_green.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="arrowUpOrange1" fitHeight="26.0" fitWidth="35.0" layoutX="728.0" layoutY="530.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" visible="false">
+         <image>
+            <Image url="@../images/arrow_green.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="arrowUpRed1" fitHeight="26.0" fitWidth="35.0" layoutX="845.0" layoutY="530.0" pickOnBounds="true" preserveRatio="true" rotate="180.0" visible="false">
+         <image>
+            <Image url="@../images/arrow_green.png" />
+         </image>
+      </ImageView>
    </children>
 </Pane>
