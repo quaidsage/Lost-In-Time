@@ -228,5 +228,9 @@
             <Image url="@../images/arrow_green.png" />
          </image>
       </ImageView>
+      <Button fx:id="btnMenu" layoutX="30.0" layoutY="30.0" mnemonicParsing="false" onAction="#returnToMenu" text="Return To Menu">
+         <font>
+            <Font size="20.0" />
+         </font></Button>
    </children>
 </Pane>

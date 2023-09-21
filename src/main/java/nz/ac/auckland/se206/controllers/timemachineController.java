@@ -16,6 +16,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
+import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
 import nz.ac.auckland.se206.gpt.GptPromptEngineering;
@@ -31,7 +32,7 @@ public class timemachineController {
   @FXML private TextArea chatArea;
   @FXML private TextArea chatField;
   @FXML private ImageView imgScientistThinking;
-  @FXML private Button timeMachine;
+  @FXML private Button timeMachine, btnMenu;
 
   // Initialise Variables
   private int characterDelay = 5;
@@ -326,5 +327,11 @@ public class timemachineController {
             return null;
           }
         };
+  }
+
+  @FXML 
+  private void returnToMenu(ActionEvent event) throws IOException {
+    App.setRoot("mainmenu");
+    SceneManager.clearAllScenesExceptMainMenu();
   }
 }
