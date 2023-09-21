@@ -37,6 +37,7 @@ public class timemachineController {
 
   // Initialise Variables
   private int characterDelay = 5;
+  public static Task<ChatMessage> riddleTask;
   public static Task<Void> updateChatTask;
   public static ChatMessage chatTaskValue;
   public static Task<Void> startTask;
@@ -55,28 +56,9 @@ public class timemachineController {
     imgScientistThinking.setVisible(true);
 
     // Create riddle thread
-    Task<ChatMessage> riddleTask =
-        createTask(GptPromptEngineering.getRiddleWithGivenWord(GameState.item));
+    riddleTask = createTask(GptPromptEngineering.getContext());
     Thread riddleThread = new Thread(riddleTask);
     riddleThread.start();
-
-    riddleTask.setOnSucceeded(
-        e -> {
-          // Update imagery of scientist
-          imgScientistThinking.setVisible(false);
-
-          // Add to chat log
-          GameState.chatLog = "-> " + riddleTask.getValue().getContent();
-
-          // Append to chat area
-          appendChatMessage(riddleTask.getValue());
-
-          // Update chat area in other scenes
-          Thread updateChatThreadLab = new Thread(labController.updateChatTask);
-          updateChatThreadLab.start();
-          Thread updateChatThreadStorage = new Thread(storageController.updateChatTask);
-          updateChatThreadStorage.start();
-        });
 
     // Bind the lblTimer to the timerController properties.
     lblTimer.textProperty().bind(timer.messageProperty());
@@ -159,7 +141,7 @@ public class timemachineController {
             ChatMessage msg = runGpt(new ChatMessage("assistant", message));
             Platform.runLater(
                 () -> {
-                  System.out.println("Initialised message");
+                  // On message initalised...
                 });
             return msg;
           }
@@ -353,6 +335,7 @@ public class timemachineController {
 
   /** Function to animate the start of the round */
   public void startRound() {
+    // Light flash animation
     rectLight.setVisible(true);
     delay(
         500,
@@ -382,6 +365,7 @@ public class timemachineController {
               });
         });
 
+    // Timer flash animation
     lblTimer.setVisible(true);
     delay(
         200,
@@ -409,8 +393,26 @@ public class timemachineController {
               });
         });
 
-    // TODO: Timer blink effect
-    // TODO: Append AI text
+    // Starting prompt
+    delay(
+        2000,
+        () -> {
+          // Update imagery
+          imgScientistThinking.setVisible(false);
+
+          // Add to chat log
+          GameState.chatLog = "-> " + riddleTask.getValue().getContent();
+
+          // Append to chat area
+          chatArea.appendText("-> ");
+          appendChatMessage(riddleTask.getValue());
+
+          // Update chat area in other scenes
+          Thread updateChatThreadLab = new Thread(labController.updateChatTask);
+          updateChatThreadLab.start();
+          Thread updateChatThreadStorage = new Thread(storageController.updateChatTask);
+          updateChatThreadStorage.start();
+        });
   }
 
   @FXML
