@@ -31,7 +31,7 @@
          <font>
             <Font name="Monospace 821 Bold BT" size="38.0" />
          </font></Label>
-      <Button fx:id="btnSwitchToTimeMachine" layoutX="595.0" layoutY="656.0" mnemonicParsing="false" onAction="#switchToTimeMachine" prefHeight="70.0" prefWidth="389.0" text="Time Machine Room">
+      <Button fx:id="btnSwitchToTimeMachine" layoutX="595.0" layoutY="660.0" mnemonicParsing="false" onAction="#switchToTimeMachine" prefHeight="70.0" prefWidth="389.0" text="Time Machine Room">
          <font>
             <Font name="Apple Symbols" size="36.0" />
          </font></Button>

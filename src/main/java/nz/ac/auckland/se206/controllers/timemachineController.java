@@ -11,8 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
@@ -32,7 +30,6 @@ public class timemachineController {
   @FXML private TextArea chatField;
   @FXML private ImageView imgScientistThinking;
   @FXML private Button timeMachine;
-
 
   // Initialise Variables
   private int characterDelay = 5;
@@ -96,24 +93,6 @@ public class timemachineController {
     App.setUi(AppUi.LAB);
   }
 
-  @FXML
-  private void clickTimeMachine(ActionEvent event) {
-    if (GameState.isLabResolved && GameState.isStorageResolved) {
-      System.out.println("You win!"); // add winning screen logic here
-    }
-  }
-
-  @FXML
-  private void showTimeMachine(MouseEvent event) {
-    timeMachine.setOpacity(0.5);
-    System.out.println("Time machine hovered");
-  }
-
-  @FXML
-  private void hideTimeMachine(MouseEvent event) {
-    timeMachine.setOpacity(0);
-  }
-
   /**
    * Change scene to storage.
    *
@@ -136,10 +115,11 @@ public class timemachineController {
 
   @FXML
   private void finishGame(ActionEvent event) {
-    if (GameState.isLabResolved) {
+    if (GameState.isLabResolved && GameState.isStorageResolved) {
       App.setUi(AppUi.ENDSCENE);
     }
   }
+
   /**
    * Creates a task to run the LLM model on a given message to be run by background thread.
    *
