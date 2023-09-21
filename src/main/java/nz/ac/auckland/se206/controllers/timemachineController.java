@@ -11,8 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
@@ -350,7 +350,7 @@ public class timemachineController {
           }
         };
   }
-  
+
   /** Function to animate the start of the round */
   public void startRound() {
     rectLight.setVisible(true);
@@ -412,9 +412,8 @@ public class timemachineController {
     // TODO: Timer blink effect
     // TODO: Append AI text
   }
-}
 
-  @FXML 
+  @FXML
   private void returnToMenu(ActionEvent event) throws IOException {
     App.setRoot("mainmenu");
     SceneManager.clearAllScenesExceptMainMenu();
