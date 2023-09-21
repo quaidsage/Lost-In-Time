@@ -63,6 +63,6 @@
          <font>
             <Font size="20.0" />
          </font></Button>
-      <Button fx:id="timeMachine" layoutX="341.0" layoutY="95.0" mnemonicParsing="false" onAction="#finishGame" opacity="0.0" prefHeight="458.0" prefWidth="350.0" text="Button" />
+<Button fx:id="btnTimeMachine" layoutX="341.0" layoutY="95.0" mnemonicParsing="false" onAction="#finishGame" onMouseEntered="#showBtnTimeMachine" onMouseExited="#hideBtnTimeMachine" opacity="0.0" prefHeight="458.0" prefWidth="350.0" textFill="WHITE" />
    </children>
 </Pane>
