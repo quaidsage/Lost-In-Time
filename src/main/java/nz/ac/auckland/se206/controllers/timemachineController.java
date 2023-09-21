@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
@@ -29,7 +30,7 @@ public class timemachineController {
   @FXML private TextArea chatArea;
   @FXML private TextArea chatField;
   @FXML private ImageView imgScientistThinking;
-  @FXML private Button timeMachine;
+  @FXML private Button btnTimeMachine;
 
   // Initialise Variables
   private int characterDelay = 5;
@@ -118,6 +119,16 @@ public class timemachineController {
     if (GameState.isLabResolved && GameState.isStorageResolved) {
       App.setUi(AppUi.ENDSCENE);
     }
+  }
+
+  @FXML
+  private void showBtnTimeMachine(MouseEvent event) {
+    btnTimeMachine.setOpacity(0.2);
+  }
+
+  @FXML
+  private void hideBtnTimeMachine(MouseEvent event) {
+    btnTimeMachine.setOpacity(0);
   }
 
   /**

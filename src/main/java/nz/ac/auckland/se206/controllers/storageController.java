@@ -129,7 +129,7 @@ public class storageController {
 
   @FXML
   private void showCircuitBox(MouseEvent event) {
-    circuitBox.setOpacity(0.5);
+    circuitBox.setOpacity(0.4);
     System.out.println("Circuit box hovered");
   }
 
