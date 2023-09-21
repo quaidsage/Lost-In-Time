@@ -20,11 +20,11 @@
             <Image url="@../images/wepik-export-20230918035914v2a6.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnSwitchToStorage" layoutX="25.0" layoutY="660.0" mnemonicParsing="false" onAction="#switchToStorage" text="Storage">
+      <Button fx:id="btnSwitchToStorage" layoutX="25.0" layoutY="664.0" mnemonicParsing="false" onAction="#switchToStorage" text="Storage">
          <font>
             <Font name="Apple Symbols" size="36.0" />
          </font></Button>
-      <Button fx:id="btnSwitchToLab" layoutX="838.0" layoutY="656.0" mnemonicParsing="false" onAction="#switchToLab" prefHeight="70.0" prefWidth="147.0" text="Lab">
+      <Button fx:id="btnSwitchToLab" layoutX="838.0" layoutY="660.0" mnemonicParsing="false" onAction="#switchToLab" prefHeight="70.0" prefWidth="147.0" text="Lab">
          <font>
             <Font name="Apple Symbols" size="36.0" />
          </font></Button>
@@ -58,6 +58,6 @@
             <Font name="Monospace 821 Bold BT" size="38.0" />
          </font>
       </Label>
-      <Button fx:id="timeMachine" layoutX="377.0" layoutY="95.0" mnemonicParsing="false" onAction="#finishGame" opacity="0.0" prefHeight="519.0" prefWidth="389.0" text="Button" />
+      <Button fx:id="timeMachine" layoutX="341.0" layoutY="95.0" mnemonicParsing="false" onAction="#finishGame" opacity="0.0" prefHeight="458.0" prefWidth="350.0" text="Button" />
    </children>
 </Pane>
