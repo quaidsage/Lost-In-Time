@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import nz.ac.auckland.se206.App;
+import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 
@@ -13,6 +14,8 @@ public class mainmenuController {
 
   @FXML
   private void beginGame(ActionEvent event) throws IOException {
+    GameState.isLabResolved = false;
+    GameState.isStorageResolved = false;
     SceneManager.addUi(AppUi.LAB, App.loadFxml("lab"));
     SceneManager.addUi(AppUi.DIFFICULTY, App.loadFxml("difficulty"));
     SceneManager.addUi(AppUi.STORAGE, App.loadFxml("storage"));
