@@ -8,6 +8,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -19,7 +22,7 @@
             <Image url="@../images/device.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="background" fitHeight="595.0" fitWidth="952.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true">
+      <ImageView fx:id="background" fitHeight="585.0" fitWidth="960.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true">
          <image>
             <Image url="@../images/wepik-export-20230918120206Hm9p.png" />
          </image>
@@ -28,7 +31,7 @@
          <font>
             <Font name="Monospace 821 Bold BT" size="38.0" />
          </font></Label>
-      <Button fx:id="btnSwitchToTimeMachine" layoutX="600.0" layoutY="654.0" mnemonicParsing="false" onAction="#switchToTimeMachine" prefHeight="70.0" prefWidth="389.0" text="Time Machine Room">
+      <Button fx:id="btnSwitchToTimeMachine" layoutX="595.0" layoutY="656.0" mnemonicParsing="false" onAction="#switchToTimeMachine" prefHeight="70.0" prefWidth="389.0" text="Time Machine Room">
          <font>
             <Font name="Apple Symbols" size="36.0" />
          </font></Button>
@@ -56,12 +59,28 @@
          <font>
             <Font name="Monospace 821 Bold BT" size="24.0" />
          </font></Button>
-      <ImageView fx:id="circuitBoxImg" fitHeight="58.0" fitWidth="57.0" layoutX="584.0" layoutY="279.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="circuitBoxImg" fitHeight="58.0" fitWidth="57.0" layoutX="588.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/wepik-export-2023092011501715lG.png" />
          </image>
       </ImageView>
-      <Rectangle fx:id="circuitBox" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="55.0" layoutX="587.0" layoutY="279.0" onMouseClicked="#clickCircuitBox" opacity="0.51" stroke="BLACK" strokeType="INSIDE" width="44.0" />
+      <Rectangle fx:id="circuitBox" arcHeight="5.0" arcWidth="5.0" height="55.0" layoutX="595.0" layoutY="275.0" onMouseClicked="#clickCircuitBox" onMouseEntered="#showCircuitBox" onMouseExited="#hideCircuitBox" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="44.0">
+         <fill>
+            <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.686274528503418" green="0.8274509906768799" blue="0.8784313797950745" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.686274528503418" green="0.8274509906768799" blue="0.8784313797950745" />
+                     </color>
+                  </Stop>
+               </stops>
+            </RadialGradient>
+         </fill></Rectangle>
       <Rectangle fx:id="circuitGameBg" arcHeight="5.0" arcWidth="5.0" height="595.0" layoutX="26.0" layoutY="24.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="952.0" />
       <ImageView fx:id="circuitGameImg" fitHeight="571.0" fitWidth="622.0" layoutX="218.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
@@ -98,7 +117,7 @@
             <Font name="Apple Symbols" size="24.0" />
          </font>
       </Button>
-      <Text fx:id="text" fill="WHITE" layoutX="107.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Streak:" wrappingWidth="100.0">
+      <Text fx:id="text" fill="WHITE" layoutX="107.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Streak:" visible="false" wrappingWidth="100.0">
          <font>
             <Font name="Apple Symbols" size="24.0" />
          </font>
