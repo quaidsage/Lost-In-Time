@@ -33,7 +33,6 @@ public class timemachineController {
   @FXML private ImageView imgScientistThinking;
   @FXML private Button timeMachine;
 
-
   // Initialise Variables
   private int characterDelay = 5;
   public static Task<Void> updateChatTask;
@@ -44,6 +43,7 @@ public class timemachineController {
 
   public void initialize() {
     timer = new timerController();
+
     // Initialise AI
     GameState.chatCompletionRequest =
         new ChatCompletionRequest().setN(1).setTemperature(0.2).setTopP(0.5).setMaxTokens(100);
@@ -94,24 +94,6 @@ public class timemachineController {
   @FXML
   private void switchToLab(ActionEvent event) {
     App.setUi(AppUi.LAB);
-  }
-
-  @FXML
-  private void clickTimeMachine(ActionEvent event) {
-    if (GameState.isLabResolved && GameState.isStorageResolved) {
-      System.out.println("You win!"); // add winning screen logic here
-    }
-  }
-
-  @FXML
-  private void showTimeMachine(MouseEvent event) {
-    timeMachine.setOpacity(0.5);
-    System.out.println("Time machine hovered");
-  }
-
-  @FXML
-  private void hideTimeMachine(MouseEvent event) {
-    timeMachine.setOpacity(0);
   }
 
   /**
