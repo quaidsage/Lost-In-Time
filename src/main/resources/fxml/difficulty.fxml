@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.difficultyController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.difficultyController">
    <children>
       <Label layoutX="312.0" layoutY="232.0" text="Difficulty:">
          <font>
@@ -57,7 +57,7 @@
             </CheckBox>
          </children>
       </VBox>
-      <Button fx:id="btnSwitchToTimeMachine" layoutX="1131.0" layoutY="624.0" mnemonicParsing="false" onAction="#switchToIntro" text="Begin Game">
+      <Button fx:id="btnSwitchToTimeMachine" layoutX="1131.0" layoutY="624.0" mnemonicParsing="false" onAction="#switchToIntro" text="Continue">
          <font>
             <Font name="Apple Symbols" size="36.0" />
          </font>
@@ -67,6 +67,9 @@
             <Font name="Apple Symbols" size="48.0" />
          </font>
       </Label>
-      <Label fx:id="lblSelectBoxesWarning" layoutX="916.0" layoutY="674.0" />
+      <Label fx:id="lblSelectBoxesWarning" layoutX="956.0" layoutY="661.0" prefHeight="17.0" prefWidth="99.0">
+         <font>
+            <Font name="Apple Symbols" size="24.0" />
+         </font></Label>
    </children>
 </Pane>

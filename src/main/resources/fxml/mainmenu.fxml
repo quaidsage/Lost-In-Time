@@ -5,9 +5,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.mainmenuController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.mainmenuController">
    <children>
-      <Button fx:id="btnBeginGame" layoutX="417.0" layoutY="479.0" mnemonicParsing="false" onAction="#beginGame" text="Begin Game">
+      <Button fx:id="btnBeginGame" layoutX="602.0" layoutY="481.0" mnemonicParsing="false" onAction="#beginGame" text="Begin Game">
          <font>
             <Font name="Apple Symbols" size="36.0" />
          </font></Button>
@@ -21,10 +21,5 @@
             <Font name="Apple Symbols" size="48.0" />
          </font>
       </Label>
-      <Button layoutX="785.0" layoutY="478.0" mnemonicParsing="false" text="Instructions" textAlignment="CENTER">
-         <font>
-            <Font name="Apple Symbols" size="36.0" />
-         </font>
-      </Button>
    </children>
 </Pane>
