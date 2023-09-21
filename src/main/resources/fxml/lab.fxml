@@ -15,7 +15,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.labController">
    <children>
-      <ImageView fx:id="baseImage" fitHeight="774.0" fitWidth="1417.0" layoutX="-9.0" layoutY="-12.0" pickOnBounds="true">
+      <ImageView fx:id="baseImage" fitHeight="585.0" fitWidth="960.0" layoutX="25.0" layoutY="66.0" pickOnBounds="true">
          <image>
             <Image url="@../images/lab.jpg" />
          </image>
@@ -62,7 +62,7 @@
          <font>
             <Font name="Monospace 821 Bold BT" size="24.0" />
          </font></Button>
-      <Polyline fx:id="chemicalGeneral" layoutX="306.0" layoutY="271.0" onMouseClicked="#clkChemicalGeneral" onMouseEntered="#showChemicalGeneral" onMouseExited="#hideChemicalGeneral" opacity="0.0" points="376.80419921875, 76.09005737304688, 376.80419921875, 201.638916015625, 107.51104736328125, 156.15020751953125, 107.51104736328125, 76.09005737304688" stroke="TRANSPARENT" strokeType="INSIDE">
+      <Polyline fx:id="chemicalGeneral" layoutX="316.0" layoutY="320.0" onMouseClicked="#clkChemicalGeneral" onMouseEntered="#showChemicalGeneral" onMouseExited="#hideChemicalGeneral" opacity="0.0" points="376.80419921875, 76.09005737304688, 376.80419921875, 201.638916015625, 107.51104736328125, 156.15020751953125, 107.51104736328125, 76.09005737304688" stroke="TRANSPARENT" strokeType="INSIDE">
          <fill>
             <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
                <stops>
@@ -228,7 +228,7 @@
             <Image url="@../images/arrow_green.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnMenu" layoutX="30.0" layoutY="30.0" mnemonicParsing="false" onAction="#returnToMenu" text="Return To Menu">
+      <Button fx:id="btnMenu" layoutX="25.0" layoutY="15.0" mnemonicParsing="false" onAction="#returnToMenu" text="Return To Menu">
          <font>
             <Font size="20.0" />
          </font></Button>
