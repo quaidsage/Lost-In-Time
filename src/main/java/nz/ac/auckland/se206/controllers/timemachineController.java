@@ -11,8 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
@@ -33,6 +31,7 @@ public class timemachineController {
   @FXML private TextArea chatField;
   @FXML private ImageView imgScientistThinking;
   @FXML private Button timeMachine, btnMenu;
+
 
   // Initialise Variables
   private int characterDelay = 5;
@@ -119,10 +118,11 @@ public class timemachineController {
 
   @FXML
   private void finishGame(ActionEvent event) {
-    if (GameState.isLabResolved) {
+    if (GameState.isLabResolved && GameState.isStorageResolved) {
       App.setUi(AppUi.ENDSCENE);
     }
   }
+
   /**
    * Creates a task to run the LLM model on a given message to be run by background thread.
    *
