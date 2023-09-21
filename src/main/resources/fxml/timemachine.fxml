@@ -6,10 +6,6 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.paint.RadialGradient?>
-<?import javafx.scene.paint.Stop?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.timemachineController">
@@ -62,23 +58,6 @@
             <Font name="Monospace 821 Bold BT" size="38.0" />
          </font>
       </Label>
-      <Rectangle fx:id="timeMachine" arcHeight="5.0" arcWidth="5.0" height="486.0" layoutX="347.0" layoutY="90.0" onMouseClicked="#clickTimeMachine" onMouseEntered="#showTimeMachine" onMouseExited="#hideTimeMachine" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="335.0">
-         <fill>
-            <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
-               <stops>
-                  <Stop>
-                     <color>
-                        <Color red="0.686274528503418" green="0.8274509906768799" blue="0.8784313797950745" />
-                     </color>
-                  </Stop>
-                  <Stop offset="1.0">
-                     <color>
-                        <Color red="1.0" green="1.0" blue="1.0" />
-                     </color>
-                  </Stop>
-               </stops>
-            </RadialGradient>
-         </fill>
-      </Rectangle>
+      <Button fx:id="timeMachine" layoutX="377.0" layoutY="95.0" mnemonicParsing="false" onAction="#finishGame" opacity="0.0" prefHeight="519.0" prefWidth="389.0" text="Button" />
    </children>
 </Pane>

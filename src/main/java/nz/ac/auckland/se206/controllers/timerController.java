@@ -7,6 +7,7 @@ public class timerController extends Service<Void> {
     private int minutes = 2;
     private int seconds = 0;
 
+
     public void setMinutes(int minutes) {
         this.minutes = minutes;
     }

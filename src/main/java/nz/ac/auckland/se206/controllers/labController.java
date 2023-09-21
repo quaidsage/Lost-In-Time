@@ -74,12 +74,13 @@ public class labController {
   private static timerController timer = new timerController();
 
   public void initialize() {
+    timer = new timerController();
     // Bind the lblTimer to the timerController properties.
     lblTimer.textProperty().bind(timer.messageProperty());
     timer.setOnSucceeded(
         e -> {
-          // Add code here to implement the loss of the game
-          lblTimer.setText("0:00");
+          App.setUi(AppUi.TIMEOUT);
+          timer.reset();
         });
 
     createUpdateTask();
@@ -595,7 +596,6 @@ public class labController {
     fade.play();  
   }
   private void flashingArrowsOff(ImageView image) {
-    System.out.println("Off called");
     FadeTransition fade = new FadeTransition(Duration.millis(1), image);
     fade.setDelay(flashDuration);
     fade.setFromValue(1);
@@ -612,12 +612,10 @@ public class labController {
     fade.play();  
   }
   private void flashingArrowsOn(ImageView image) {
-    System.out.println("On called");
     FadeTransition fade = new FadeTransition(Duration.millis(1), image);
     fade.setDelay(flashDuration);
     fade.setFromValue(0);
     fade.setToValue(1);
-      System.out.println("ON");
       numFlashes++;
         fade.setOnFinished(event -> {
         flashingArrowsOff(image); // Recursive call to flash next arrow
