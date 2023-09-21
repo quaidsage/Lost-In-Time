@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
@@ -29,11 +30,13 @@ public class timemachineController {
   @FXML private TextArea chatArea;
   @FXML private TextArea chatField;
   @FXML private ImageView imgScientistThinking;
+  @FXML private Rectangle rectLight;
 
   // Initialise Variables
   private int characterDelay = 5;
   public static Task<Void> updateChatTask;
   public static ChatMessage chatTaskValue;
+  public static Task<Void> startTask;
 
   // Initialise Timer
   private static timerController timer = new timerController();
@@ -80,6 +83,15 @@ public class timemachineController {
         });
 
     createUpdateTask();
+
+    startTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            startRound();
+            return null;
+          }
+        };
   }
 
   /**
@@ -316,5 +328,67 @@ public class timemachineController {
             return null;
           }
         };
+  }
+
+  /** Function to animate the start of the round */
+  public void startRound() {
+    rectLight.setVisible(true);
+    delay(
+        500,
+        () -> {
+          rectLight.setVisible(false);
+          delay(
+              100,
+              () -> {
+                rectLight.setOpacity(0.8);
+                rectLight.setVisible(true);
+                delay(
+                    300,
+                    () -> {
+                      rectLight.setVisible(false);
+                      delay(
+                          100,
+                          () -> {
+                            rectLight.setOpacity(0.4);
+                            rectLight.setVisible(true);
+                            delay(
+                                100,
+                                () -> {
+                                  rectLight.setVisible(false);
+                                });
+                          });
+                    });
+              });
+        });
+
+    lblTimer.setVisible(true);
+    delay(
+        200,
+        () -> {
+          lblTimer.setVisible(false);
+          delay(
+              500,
+              () -> {
+                lblTimer.setVisible(true);
+                delay(
+                    500,
+                    () -> {
+                      lblTimer.setVisible(false);
+                      delay(
+                          500,
+                          () -> {
+                            lblTimer.setVisible(true);
+                            // Start timer. Change 'minutes' variable to change the length of the
+                            // game
+                            timemachineStartTimer(introController.minutes);
+                            labController.labStartTimer(introController.minutes);
+                            storageController.storageStartTimer(introController.minutes);
+                          });
+                    });
+              });
+        });
+
+    // TODO: Timer blink effect
+    // TODO: Append AI text
   }
 }

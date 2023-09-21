@@ -6,6 +6,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.timemachineController">
@@ -58,5 +59,6 @@
             <Font name="Monospace 821 Bold BT" size="38.0" />
          </font>
       </Label>
+      <Rectangle fx:id="rectLight" arcHeight="5.0" arcWidth="5.0" height="841.0" layoutX="-42.0" layoutY="-51.0" stroke="BLACK" strokeType="INSIDE" width="1494.0" />
    </children>
 </Pane>

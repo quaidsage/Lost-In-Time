@@ -55,10 +55,10 @@ public class introController {
   public void switchToTimeMachine(ActionEvent event) {
     // Switch to time machine
     App.setUi(AppUi.TIMEMACHINE);
-    // Start timer. Change 'minutes' variable to change the length of the game
-    timemachineController.timemachineStartTimer(minutes);
-    labController.labStartTimer(minutes);
-    storageController.storageStartTimer(minutes);
+
+    // Start round function
+    Thread startThread = new Thread(timemachineController.startTask);
+    startThread.start();
   }
 
   public void appendMessage(ChatMessage msg, TextArea chatArea) {
