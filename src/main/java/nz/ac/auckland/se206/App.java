@@ -34,7 +34,7 @@ public class App extends Application {
    * @return The node of the input file.
    * @throws IOException If the file is not found.
    */
-  private static Parent loadFxml(final String fxml) throws IOException {
+  public static Parent loadFxml(final String fxml) throws IOException {
     return new FXMLLoader(App.class.getResource("/fxml/" + fxml + ".fxml")).load();
   }
 
@@ -46,16 +46,8 @@ public class App extends Application {
    */
   @Override
   public void start(final Stage stage) throws IOException {
-    // Initialize scene instances;
-    SceneManager.addUi(AppUi.LAB, loadFxml("lab"));
-    SceneManager.addUi(AppUi.DIFFICULTY, loadFxml("difficulty"));
-    SceneManager.addUi(AppUi.STORAGE, loadFxml("storage"));
-    SceneManager.addUi(AppUi.MAINMENU, loadFxml("mainmenu"));
-    SceneManager.addUi(AppUi.TIMEMACHINE, loadFxml("timemachine"));
-    SceneManager.addUi(AppUi.INTRO, loadFxml("intro"));
-
     // Load game starting with the main menu
-    scene = new Scene(SceneManager.getUiRoot(AppUi.MAINMENU), 1400, 750);
+    scene = new Scene(App.loadFxml("mainmenu"), 1400, 750);
     stage.setScene(scene);
     stage.show();
   }

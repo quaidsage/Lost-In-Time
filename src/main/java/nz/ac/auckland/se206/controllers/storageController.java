@@ -1,19 +1,29 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
 import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
+import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
 import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
@@ -23,19 +33,52 @@ import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 public class storageController {
   // JavaFX elements
   @FXML private Button btnSwitchToTimeMachine, btnSend;
+  @FXML private Rectangle circuitBox;
+  @FXML private ImageView background;
   @FXML private Label lblTimer;
+  @FXML private ImageView circuitBoxImg;
   @FXML private TextArea chatArea;
   @FXML private TextArea chatField;
   @FXML private ImageView imgScientistThinking;
+  @FXML private Rectangle circuitGameBg;
+  @FXML private ImageView circuitGameImg;
+  @FXML private VBox memoryGame;
+  @FXML private Button btnStartCircuitGame;
+  @FXML private Text text;
+  @FXML private Button button0;
+  @FXML private Button button1;
+  @FXML private Button button2;
+  @FXML private Button button3;
+  @FXML private Button button4;
+  @FXML private Button button5;
+  @FXML private Button button6;
+  @FXML private Button button7;
+  @FXML private Button button8;
+  @FXML private Button btnMenu;
+  @FXML private Text info;
 
   // Initialise Variables
   private int characterDelay = 5;
   public static Task<Void> updateChatTask;
+  private ArrayList<Button> buttons = new ArrayList<>();
+  private ArrayList<String> pattern = new ArrayList<>();
+  private int patternOrder = 0;
+  private int counter = 0;
+  private int turn = 1;
+  private Random random = new Random();
+  private int consecutiveRounds = 0;
+  private int targetConsecutiveRounds = 4;
+  private ArrayList<String> possibleButtons =
+      new ArrayList<>(
+          Arrays.asList(
+              "button0", "button1", "button2", "button3", "button4", "button5", "button6",
+              "button7", "button8"));
 
   // Initialise Timer
   private static timerController timer = new timerController();
 
   public void initialize() {
+    timer = new timerController();
     // Bind the lblTimer to the timerController properties.
     lblTimer.textProperty().bind(timer.messageProperty());
     timer.setOnSucceeded(
@@ -45,6 +88,56 @@ public class storageController {
         });
 
     createUpdateTask();
+
+    buttons.addAll(
+        Arrays.asList(
+            button0, button1, button2, button3, button4, button5, button6, button7, button8));
+  }
+
+  @FXML
+  void buttonClicked(ActionEvent event) {
+    if (((Control) event.getSource()).getId().equals(pattern.get(counter))) {
+      Button button = buttons.get(getIndexOfButton(event));
+      changeButtonColor(button, "-fx-base: lightgreen");
+      counter++;
+    } else {
+      resetGame(); // Reset the game on a wrong click
+      return;
+    }
+
+    if (counter == turn) {
+      if (consecutiveRounds >= targetConsecutiveRounds) {
+        // Player wins after reaching the target consecutive rounds
+        text.setText("You Win!");
+        winGame();
+      } else {
+        nextTurn();
+      }
+    }
+  }
+
+  @FXML
+  void start(ActionEvent event) {
+    pattern.clear();
+    text.setText("Current Streak: ");
+
+    pattern.add(possibleButtons.get(random.nextInt(possibleButtons.size())));
+    showPattern();
+    System.out.println(pattern);
+
+    counter = 0;
+    turn = 1;
+  }
+
+  @FXML
+  private void showCircuitBox(MouseEvent event) {
+    circuitBox.setOpacity(0.4);
+    System.out.println("Circuit box hovered");
+  }
+
+  @FXML
+  private void hideCircuitBox(MouseEvent event) {
+    circuitBox.setOpacity(0);
   }
 
   /**
@@ -55,6 +148,102 @@ public class storageController {
   @FXML
   private void switchToTimeMachine(ActionEvent event) {
     App.setUi(AppUi.TIMEMACHINE);
+  }
+
+  @FXML
+  private void clickCircuitBox(MouseEvent event) {
+    System.out.println("Circuit box clicked");
+
+    background.setVisible(false);
+    circuitBox.setVisible(false);
+    circuitBoxImg.setVisible(false);
+
+    circuitGameBg.setVisible(true);
+    circuitGameImg.setVisible(true);
+    memoryGame.setVisible(true);
+    btnStartCircuitGame.setVisible(true);
+    text.setVisible(true);
+    info.setVisible(true);
+  }
+
+  private void winGame() {
+    System.out.println("minigame won");
+    circuitGameBg.setVisible(false);
+    circuitGameImg.setVisible(false);
+    memoryGame.setVisible(false);
+    btnStartCircuitGame.setVisible(false);
+    text.setVisible(false);
+    info.setVisible(false);
+    circuitBox.setVisible(false);
+
+    background.setVisible(true);
+    circuitBoxImg.setVisible(true);
+    GameState.isStorageResolved = true;
+  }
+
+  private void nextTurn() {
+    counter = 0;
+    consecutiveRounds++; // Increase consecutive rounds on successful turn
+    turn++;
+
+    pattern.add(possibleButtons.get(random.nextInt(possibleButtons.size())));
+    showPattern();
+    System.out.println(pattern);
+    text.setText("Current Streak: " + consecutiveRounds);
+  }
+
+  private void resetGame() {
+    consecutiveRounds = 0; // Reset consecutive rounds
+    text.setText("Wrong - Start Again");
+    pattern.clear();
+    counter = 0;
+    turn = 1;
+  }
+
+  private int getIndexOfButton(ActionEvent event) {
+    String buttonId = ((Control) event.getSource()).getId();
+    return Integer.parseInt(buttonId.substring(buttonId.length() - 1));
+  }
+
+  private int getIndexOfButton(String button) {
+    return Integer.parseInt(button.substring(button.length() - 1));
+  }
+
+  private void showPattern() {
+    PauseTransition pause = new PauseTransition(Duration.seconds(0.75));
+    pause.setOnFinished(
+        e -> {
+          Timeline timeline =
+              new Timeline(
+                  new KeyFrame(
+                      Duration.seconds(0.75),
+                      event -> {
+                        showNext();
+                      }));
+          timeline.setCycleCount(pattern.size());
+          timeline.play();
+        });
+    pause.play();
+  }
+
+  private void showNext() {
+    Button button = buttons.get(getIndexOfButton(pattern.get(patternOrder)));
+    changeButtonColor(button, "-fx-base: gray");
+    patternOrder++;
+
+    if (patternOrder == turn) {
+      patternOrder = 0;
+    }
+  }
+
+  private void changeButtonColor(Button button, String color) {
+    button.setStyle(color);
+    PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
+    pause.setOnFinished(
+        e -> {
+          button.setStyle(null);
+        });
+    pause.play();
   }
 
   /**
@@ -271,5 +460,11 @@ public class storageController {
             return null;
           }
         };
+  }
+
+  @FXML 
+  private void returnToMenu(ActionEvent event) throws IOException {
+    App.setRoot("mainmenu");
+    SceneManager.clearAllScenesExceptMainMenu();
   }
 }

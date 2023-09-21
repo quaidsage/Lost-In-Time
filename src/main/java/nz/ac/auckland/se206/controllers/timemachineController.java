@@ -12,9 +12,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
+import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
 import nz.ac.auckland.se206.gpt.GptPromptEngineering;
@@ -31,6 +33,7 @@ public class timemachineController {
   @FXML private TextArea chatField;
   @FXML private ImageView imgScientistThinking;
   @FXML private Rectangle rectLight;
+  @FXML private Button btnTimeMachine, btnMenu;
 
   // Initialise Variables
   private int characterDelay = 5;
@@ -42,6 +45,8 @@ public class timemachineController {
   private static timerController timer = new timerController();
 
   public void initialize() {
+    timer = new timerController();
+
     // Initialise AI
     GameState.chatCompletionRequest =
         new ChatCompletionRequest().setN(1).setTemperature(0.2).setTopP(0.5).setMaxTokens(100);
@@ -64,7 +69,6 @@ public class timemachineController {
           GameState.chatLog = "-> " + riddleTask.getValue().getContent();
 
           // Append to chat area
-          chatArea.appendText("-> ");
           appendChatMessage(riddleTask.getValue());
 
           // Update chat area in other scenes
@@ -122,6 +126,23 @@ public class timemachineController {
   public static void timemachineStartTimer(int minutes) {
     timer.setMinutes(minutes);
     timer.start();
+  }
+
+  @FXML
+  private void finishGame(ActionEvent event) {
+    if (GameState.isLabResolved && GameState.isStorageResolved) {
+      App.setUi(AppUi.ENDSCENE);
+    }
+  }
+
+  @FXML
+  private void showBtnTimeMachine(MouseEvent event) {
+    btnTimeMachine.setOpacity(0.2);
+  }
+
+  @FXML
+  private void hideBtnTimeMachine(MouseEvent event) {
+    btnTimeMachine.setOpacity(0);
   }
 
   /**
@@ -329,7 +350,7 @@ public class timemachineController {
           }
         };
   }
-
+  
   /** Function to animate the start of the round */
   public void startRound() {
     rectLight.setVisible(true);
@@ -390,5 +411,12 @@ public class timemachineController {
 
     // TODO: Timer blink effect
     // TODO: Append AI text
+  }
+}
+
+  @FXML 
+  private void returnToMenu(ActionEvent event) throws IOException {
+    App.setRoot("mainmenu");
+    SceneManager.clearAllScenesExceptMainMenu();
   }
 }

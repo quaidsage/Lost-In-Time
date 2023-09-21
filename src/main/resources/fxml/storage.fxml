@@ -5,18 +5,24 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.storageController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.storageController">
    <children>
       <ImageView fitHeight="730.0" fitWidth="400.0" layoutX="1006.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/device.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="620.0" fitWidth="1070.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true">
+      <ImageView fx:id="background" fitHeight="585.0" fitWidth="960.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true">
          <image>
             <Image url="@../images/wepik-export-20230918120206Hm9p.png" />
          </image>
@@ -25,7 +31,7 @@
          <font>
             <Font name="Monospace 821 Bold BT" size="38.0" />
          </font></Label>
-      <Button fx:id="btnSwitchToTimeMachine" layoutX="600.0" layoutY="654.0" mnemonicParsing="false" onAction="#switchToTimeMachine" prefHeight="70.0" prefWidth="389.0" text="Time Machine Room">
+      <Button fx:id="btnSwitchToTimeMachine" layoutX="595.0" layoutY="660.0" mnemonicParsing="false" onAction="#switchToTimeMachine" prefHeight="70.0" prefWidth="389.0" text="Time Machine Room">
          <font>
             <Font name="Apple Symbols" size="36.0" />
          </font></Button>
@@ -52,6 +58,78 @@
       <Button id="btnSend" fx:id="btnSend" layoutX="1265.0" layoutY="600.0" mnemonicParsing="false" onAction="#onSendMessage" stylesheets="@../css/style.css" text="Send" textFill="#6bf9b1">
          <font>
             <Font name="Monospace 821 Bold BT" size="24.0" />
+         </font></Button>
+      <ImageView fx:id="circuitBoxImg" fitHeight="58.0" fitWidth="57.0" layoutX="588.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/wepik-export-2023092011501715lG.png" />
+         </image>
+      </ImageView>
+      <Rectangle fx:id="circuitBox" arcHeight="5.0" arcWidth="5.0" height="55.0" layoutX="595.0" layoutY="275.0" onMouseClicked="#clickCircuitBox" onMouseEntered="#showCircuitBox" onMouseExited="#hideCircuitBox" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="44.0">
+         <fill>
+            <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.686274528503418" green="0.8274509906768799" blue="0.8784313797950745" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.686274528503418" green="0.8274509906768799" blue="0.8784313797950745" />
+                     </color>
+                  </Stop>
+               </stops>
+            </RadialGradient>
+         </fill></Rectangle>
+      <Rectangle fx:id="circuitGameBg" arcHeight="5.0" arcWidth="5.0" height="595.0" layoutX="26.0" layoutY="24.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="952.0" />
+      <ImageView fx:id="circuitGameImg" fitHeight="571.0" fitWidth="622.0" layoutX="218.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../images/wepik-export-2023092011501715lG.png" />
+         </image>
+      </ImageView>
+      <VBox fx:id="memoryGame" layoutX="382.0" layoutY="201.0" prefHeight="267.0" prefWidth="254.0" visible="false">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="300.0">
+               <children>
+                  <Button fx:id="button0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" />
+                  <Button fx:id="button1" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" />
+                  <Button fx:id="button2" layoutX="235.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" />
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="300.0">
+               <children>
+                  <Button fx:id="button3" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" />
+                  <Button fx:id="button4" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" />
+                  <Button fx:id="button5" layoutX="110.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" />
+               </children>
+            </HBox>
+            <HBox layoutX="10.0" layoutY="110.0" prefHeight="100.0" prefWidth="300.0">
+               <children>
+                  <Button fx:id="button6" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" />
+                  <Button fx:id="button7" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" />
+                  <Button fx:id="button8" layoutX="110.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <Button fx:id="btnStartCircuitGame" layoutX="758.0" layoutY="316.0" mnemonicParsing="false" onAction="#start" text="Start" visible="false">
+         <font>
+            <Font name="Apple Symbols" size="24.0" />
+         </font>
+      </Button>
+      <Text fx:id="text" fill="WHITE" layoutX="107.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Streak:" visible="false" wrappingWidth="100.0">
+         <font>
+            <Font name="Apple Symbols" size="24.0" />
+         </font>
+      </Text>
+      <Text fx:id="info" fill="WHITE" layoutX="55.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Get 5 right in a row to complete the circuit!" visible="false" wrappingWidth="283.0">
+         <font>
+            <Font name="Apple Symbols" size="24.0" />
+         </font>
+      </Text>
+      <Button fx:id="btnMenu" layoutX="30.0" layoutY="30.0" mnemonicParsing="false" onAction="#returnToMenu" text="Return To Menu">
+         <font>
+            <Font size="20.0" />
          </font></Button>
    </children>
 </Pane>
