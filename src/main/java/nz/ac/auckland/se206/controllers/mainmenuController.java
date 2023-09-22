@@ -9,8 +9,8 @@ import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.SceneManager.AppUi;
-import nz.ac.auckland.se206.gpt.openai.ChatCompletionRequest;
 import nz.ac.auckland.se206.speech.TextToSpeech;
+import nz.ac.auckland.se206.gpt.openai.ChatCompletionRequest;
 
 public class MainmenuController {
   @FXML private Button btnBeginGame;
