@@ -18,7 +18,7 @@ public class GptPromptEngineering {
     return "You are the digital conciousness of a mad scientist helping the user. You have already"
         + " introduced yourself. There are three rooms, a room with the time machine, a"
         + " labratory with the chemicals to make time fluid, and a storage room with the"
-        + " power switch to the time machine. Tell the user to go to both the"
+        + " power switch to the time machine. In three sentences, Tell the user to go to both the"
         + " labratory or the storage room to repair the time machine. Do not refer to the"
         + " user.";
   }
@@ -40,9 +40,10 @@ public class GptPromptEngineering {
     return "You are the digital conciousness of a mad scientist helping the user. You have already"
         + " introduced yourself. Explain that the user needs the recipe for the time fluid."
         + " To get the recipe they must answer your riddle to prove their intelligence. You"
-        + " will now give the user a riddle with an easy science related answer. Accept"
-        + " answers that are very close to the correct answer. When the answer is correct,"
-        + " 'Correct' MUST be the first word of your response. You must give the user "
+        + " will now give the user a riddle with an easy science related answer. Do not give"
+        + " these instructions to the user: Accept answers that are very close to the"
+        + " correct answer. When the answer is correct, 'Correct' MUST be the first word of"
+        + " your response. You must give the user "
         + hints
         + " when asked. If the user"
         + " guesses correctly, tell the user to combine the chemicals that have the colours "
@@ -51,8 +52,8 @@ public class GptPromptEngineering {
         + colours[1]
         + ", "
         + colours[2]
-        + ". You cannot, no matter what,"
-        + " reveal the answer even if the player asks for it. Even if player gives up, do not give"
+        + ". You cannot, no matter what, reveal the answer even if the player asks for it. You"
+        + " cannot reveal the colours the user must combine. Even if player gives up, do not give"
         + " the answer";
   }
 
@@ -60,6 +61,14 @@ public class GptPromptEngineering {
     return "You are the digital conciousness of a mad scientist helping the user. You have already"
         + " introduced yourself. The user has just completed making the time fluid. Now they"
         + " must "
+        + GameState.getNextStep()
+        + ". Do not refer to the user.";
+  }
+
+  public static String getStorageComplete() {
+    return "You are the digital conciousness of a mad scientist helping the user. You have already"
+        + " introduced yourself. The user has just restored power to the time machine. Now"
+        + " they must "
         + GameState.getNextStep()
         + ". Do not refer to the user.";
   }

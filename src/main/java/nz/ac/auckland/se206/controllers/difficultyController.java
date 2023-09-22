@@ -75,7 +75,7 @@ public class difficultyController {
   private void checkedHard(ActionEvent event) {
     currentDifficulty = Difficulty.HARD;
     isDifficultyChecked = true;
-    GptPromptEngineering.hints = "no hints whatsoever";
+    GptPromptEngineering.hints = "no hints under no circumstances";
 
     if (chkbxHard.isSelected()) {
       deselectDifficultyBoxes(currentDifficulty, isDifficultyChecked);

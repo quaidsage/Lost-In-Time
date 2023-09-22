@@ -169,7 +169,6 @@ public class storageController {
 
   @FXML
   private void clickCircuitBox(MouseEvent event) {
-    System.out.println("Circuit box clicked");
 
     background.setVisible(false);
     circuitBox.setVisible(false);
@@ -185,7 +184,8 @@ public class storageController {
   }
 
   private void winGame() {
-    System.out.println("minigame won");
+    System.out.println("Minigame won");
+
     circuitGameBg.setVisible(false);
     circuitGameImg.setVisible(false);
     memoryGame.setVisible(false);
@@ -198,6 +198,36 @@ public class storageController {
     background.setVisible(true);
     circuitBoxImg.setVisible(true);
     GameState.isStorageResolved = true;
+
+    // Send complete message
+    Task<ChatMessage> storageTaskComplete = createTask(GptPromptEngineering.getStorageComplete());
+    Thread storageThreadComplete = new Thread(storageTaskComplete);
+
+    // Enable thinking image of scientist
+    imgScientistThinking.setVisible(true);
+
+    storageThreadComplete.start();
+
+    storageTaskComplete.setOnSucceeded(
+        e -> {
+          // Update imagery
+          imgScientistThinking.setVisible(false);
+
+          ChatMessage response = storageTaskComplete.getValue();
+
+          // Append to chat log
+          GameState.chatLog += "\n\n-> " + response.getContent();
+
+          // Append response to current scene
+          chatArea.appendText("\n\n-> ");
+          appendChatMessage(response);
+
+          // Update chat area in other scenes
+          Thread updateChatThreadLab = new Thread(labController.updateChatTask);
+          updateChatThreadLab.start();
+          Thread updateChatThreadTM = new Thread(timemachineController.updateChatTask);
+          updateChatThreadTM.start();
+        });
   }
 
   private void nextTurn() {

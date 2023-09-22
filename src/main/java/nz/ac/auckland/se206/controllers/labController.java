@@ -66,6 +66,7 @@ public class labController {
       isPurpleSolution = false,
       isOrangeSolution = false;
   private Boolean isYellowSolution = false, isGreenSolution = false, isRedSolution = false;
+  private Boolean isChemicalsEnabled = false;
   private String[] possibleChemicalColours = {
     "Red", "Green", "Blue", "Cyan", "Purple", "Yellow", "Orange"
   };
@@ -158,6 +159,7 @@ public class labController {
     arrowCollection.add(arrowDownYellow1);
     arrowCollection.add(arrowDownGreen1);
     arrowCollection.add(arrowDownRed1);
+    chemicalGeneral.setVisible(false);
 
     // Create task to run GPT model for riddle message
     labRiddleTask = createTask(GptPromptEngineering.getRiddleLab(puzzleColours));
@@ -206,6 +208,10 @@ public class labController {
 
   @FXML
   private void clkChemicalGeneral(MouseEvent event) {
+
+    if (GameState.isLabResolved) {
+      return;
+    }
     // Hide general chemicals
     chemicalGeneral.setVisible(false);
 
@@ -366,6 +372,8 @@ public class labController {
     chemicalYellow.setVisible(disable);
     chemicalGreen.setVisible(disable);
     chemicalOrange.setVisible(disable);
+    chemicalGeneral.setVisible(false);
+    isChemicalsEnabled = true;
   }
 
   private void updateColourAnswerVariables(String colour) {
@@ -494,6 +502,9 @@ public class labController {
     timeline.setOnFinished(
         event -> {
           btnSend.setDisable(false);
+          if (!isChemicalsEnabled) {
+            chemicalGeneral.setVisible(true);
+          }
         });
   }
 
