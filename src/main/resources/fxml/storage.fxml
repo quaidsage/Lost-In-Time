@@ -22,7 +22,7 @@
             <Image url="@../images/device.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="background" fitHeight="585.0" fitWidth="960.0" layoutX="25.0" layoutY="25.0" pickOnBounds="true">
+      <ImageView fx:id="background" fitHeight="585.0" fitWidth="960.0" layoutX="25.0" layoutY="66.0" pickOnBounds="true">
          <image>
             <Image url="@../images/wepik-export-20230918120206Hm9p.png" />
          </image>
@@ -59,7 +59,7 @@
          <font>
             <Font name="Monospace 821 Bold BT" size="24.0" />
          </font></Button>
-      <ImageView fx:id="circuitBoxImg" fitHeight="58.0" fitWidth="57.0" layoutX="588.0" layoutY="275.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="circuitBoxImg" fitHeight="55.0" fitWidth="51.0" layoutX="594.0" layoutY="318.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/wepik-export-2023092011501715lG.png" />
          </image>
@@ -81,8 +81,8 @@
                </stops>
             </RadialGradient>
          </fill></Rectangle>
-      <Rectangle fx:id="circuitGameBg" arcHeight="5.0" arcWidth="5.0" height="595.0" layoutX="26.0" layoutY="24.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="952.0" />
-      <ImageView fx:id="circuitGameImg" fitHeight="571.0" fitWidth="622.0" layoutX="218.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" visible="false">
+      <Rectangle fx:id="circuitGameBg" arcHeight="5.0" arcWidth="5.0" height="585.0" layoutX="25.0" layoutY="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="960.0" />
+      <ImageView fx:id="circuitGameImg" fitHeight="571.0" fitWidth="622.0" layoutX="218.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/wepik-export-2023092011501715lG.png" />
          </image>
@@ -122,14 +122,19 @@
             <Font name="Apple Symbols" size="24.0" />
          </font>
       </Text>
-      <Text fx:id="info" fill="WHITE" layoutX="55.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Get 5 right in a row to complete the circuit!" visible="false" wrappingWidth="283.0">
+      <Text fx:id="info" fill="WHITE" layoutX="60.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Get 5 right in a row to complete the circuit!" visible="false" wrappingWidth="283.0">
          <font>
             <Font name="Apple Symbols" size="24.0" />
          </font>
       </Text>
-      <Button fx:id="btnMenu" layoutX="30.0" layoutY="30.0" mnemonicParsing="false" onAction="#returnToMenu" text="Return To Menu">
+      <Button fx:id="btnMenu" layoutX="25.0" layoutY="15.0" mnemonicParsing="false" onAction="#returnToMenu" text="Return To Menu">
          <font>
-            <Font size="20.0" />
+            <Font name="Apple Symbols" size="24.0" />
          </font></Button>
+      <Text layoutX="755.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently in: Storage Room">
+         <font>
+            <Font name="Apple Symbols" size="24.0" />
+         </font>
+      </Text>
    </children>
 </Pane>

@@ -228,6 +228,8 @@ public class labController {
   @FXML
   private void returnToMenu(ActionEvent event) throws IOException {
     App.setRoot("mainmenu");
+    GameState.isLabResolved = false;
+    GameState.isStorageResolved = false;
     SceneManager.clearAllScenesExceptMainMenu();
   }
 
