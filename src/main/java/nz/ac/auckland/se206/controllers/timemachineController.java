@@ -117,7 +117,7 @@ public class timemachineController {
   }
 
   /**
-   * Function to start timer
+   * Function to start timer.
    *
    * @param minutes the number of minutes to set the timer to
    */
@@ -126,18 +126,34 @@ public class timemachineController {
     timer.start();
   }
 
+  /**
+   * Function that handles if the game is completed.
+   *
+   * @param event the action event triggered by the send button
+   */
   @FXML
   private void finishGame(ActionEvent event) {
+    // Check if game is complete
     if (GameState.isLabResolved && GameState.isStorageResolved) {
       App.setUi(AppUi.ENDSCENE);
     }
   }
 
+  /**
+   * Function to show highlight of time machine on hover.
+   *
+   * @param event the action event triggered by the send button
+   */
   @FXML
   private void showBtnTimeMachine(MouseEvent event) {
     btnTimeMachine.setOpacity(0.2);
   }
 
+  /**
+   * Function to hide highlight of time machine off hover.
+   *
+   * @param event the action event triggered by the send button
+   */
   @FXML
   private void hideBtnTimeMachine(MouseEvent event) {
     btnTimeMachine.setOpacity(0);
@@ -350,7 +366,7 @@ public class timemachineController {
         };
   }
 
-  /** Function to animate the start of the round */
+  /** Function to animate the start of the round. */
   public void startRound() {
     // Light flash animation
     rectLight.setVisible(true);
@@ -433,6 +449,12 @@ public class timemachineController {
         });
   }
 
+  /**
+   * Function to handle returning to main menu.
+   *
+   * @param event the action event triggered by the send button
+   * @throws IOException if there is an I/O error
+   */
   @FXML
   private void returnToMenu(ActionEvent event) throws IOException {
     App.setRoot("mainmenu");
