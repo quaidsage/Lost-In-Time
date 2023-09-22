@@ -6,13 +6,39 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.timemachineController">
    <children>
-      <ImageView fitHeight="585.0" fitWidth="960.0" layoutX="25.0" layoutY="66.0" pickOnBounds="true">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="759.0" layoutX="1135.0" layoutY="-3.0" stroke="BLACK" strokeType="INSIDE" width="266.0">
+         <fill>
+            <LinearGradient startX="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+                  <Stop offset="0.006711409395973154">
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color green="0.043421052396297455" blue="0.1184210553765297" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </fill>
+      </Rectangle>
+      <ImageView fitHeight="759.0" fitWidth="1246.0" layoutX="-110.0" layoutY="-4.0" pickOnBounds="true">
          <image>
             <Image url="@../images/wepik-export-20230918035914v2a6.png" />
          </image>
@@ -61,13 +87,13 @@
             <Font name="Monospace 821 Bold BT" size="38.0" />
          </font>
       </Label>
-      <Rectangle fx:id="rectLight" arcHeight="5.0" arcWidth="5.0" height="841.0" layoutX="-42.0" layoutY="-51.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="1494.0" />
+      <Rectangle fx:id="rectLight" arcHeight="5.0" arcWidth="5.0" height="797.0" layoutX="-15.0" layoutY="-15.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="1451.0" />
       <Button fx:id="btnMenu" layoutX="25.0" layoutY="15.0" mnemonicParsing="false" onAction="#returnToMenu" text="Return To Menu">
          <font>
             <Font name="Apple Symbols" size="24.0" />
          </font></Button>
-<Button fx:id="btnTimeMachine" layoutX="341.0" layoutY="130.0" mnemonicParsing="false" onAction="#finishGame" onMouseEntered="#showBtnTimeMachine" onMouseExited="#hideBtnTimeMachine" opacity="0.0" prefHeight="458.0" prefWidth="350.0" text="Time Machine" textFill="WHITE" />
-      <Text layoutX="706.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently in: Time Machine Room">
+<Button fx:id="btnTimeMachine" layoutX="299.0" layoutY="71.0" mnemonicParsing="false" onAction="#finishGame" onMouseEntered="#showBtnTimeMachine" onMouseExited="#hideBtnTimeMachine" opacity="0.0" prefHeight="624.0" prefWidth="456.0" text="Time Machine" textFill="WHITE" />
+      <Text layoutX="646.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently in: Time Machine Room">
          <font>
             <Font name="Apple Symbols" size="24.0" />
          </font>

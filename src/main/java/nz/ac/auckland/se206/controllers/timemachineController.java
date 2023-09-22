@@ -21,7 +21,6 @@ import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
 import nz.ac.auckland.se206.gpt.GptPromptEngineering;
 import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
-import nz.ac.auckland.se206.gpt.openai.ChatCompletionRequest;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 
@@ -37,6 +36,7 @@ public class timemachineController {
 
   // Initialise Variables
   private int characterDelay = 5;
+  public static Task<ChatMessage> contextTask;
   public static Task<Void> updateChatTask;
   public static ChatMessage chatTaskValue;
   public static Task<Void> startTask;
@@ -47,36 +47,13 @@ public class timemachineController {
   public void initialize() {
     timer = new timerController();
 
-    // Initialise AI
-    GameState.chatCompletionRequest =
-        new ChatCompletionRequest().setN(1).setTemperature(0.2).setTopP(0.5).setMaxTokens(100);
-
     // Enable thinking image of scientist
     imgScientistThinking.setVisible(true);
 
-    // Create riddle thread
-    Task<ChatMessage> riddleTask =
-        createTask(GptPromptEngineering.getRiddleWithGivenWord(GameState.item));
-    Thread riddleThread = new Thread(riddleTask);
-    riddleThread.start();
-
-    riddleTask.setOnSucceeded(
-        e -> {
-          // Update imagery of scientist
-          imgScientistThinking.setVisible(false);
-
-          // Add to chat log
-          GameState.chatLog = "-> " + riddleTask.getValue().getContent();
-
-          // Append to chat area
-          appendChatMessage(riddleTask.getValue());
-
-          // Update chat area in other scenes
-          Thread updateChatThreadLab = new Thread(labController.updateChatTask);
-          updateChatThreadLab.start();
-          Thread updateChatThreadStorage = new Thread(storageController.updateChatTask);
-          updateChatThreadStorage.start();
-        });
+    // Create context thread
+    contextTask = createTask(GptPromptEngineering.getContext());
+    Thread contextThread = new Thread(contextTask);
+    contextThread.start();
 
     // Bind the lblTimer to the timerController properties.
     lblTimer.textProperty().bind(timer.messageProperty());
@@ -105,6 +82,11 @@ public class timemachineController {
    */
   @FXML
   private void switchToLab(ActionEvent event) {
+    if (!GameState.isLabVisited) {
+      GameState.isLabVisited = true;
+      Thread labIntroThread = new Thread(labController.labIntroTask);
+      labIntroThread.start();
+    }
     App.setUi(AppUi.LAB);
   }
 
@@ -115,6 +97,11 @@ public class timemachineController {
    */
   @FXML
   private void switchToStorage(ActionEvent event) {
+    if (!GameState.isStorageVisited) {
+      GameState.isStorageVisited = true;
+      Thread storageIntroThread = new Thread(storageController.storageIntroTask);
+      storageIntroThread.start();
+    }
     App.setUi(AppUi.STORAGE);
   }
 
@@ -159,7 +146,7 @@ public class timemachineController {
             ChatMessage msg = runGpt(new ChatMessage("assistant", message));
             Platform.runLater(
                 () -> {
-                  System.out.println("Initialised message");
+                  // On message initalised...
                 });
             return msg;
           }
@@ -353,6 +340,7 @@ public class timemachineController {
 
   /** Function to animate the start of the round */
   public void startRound() {
+    // Light flash animation
     rectLight.setVisible(true);
     delay(
         500,
@@ -382,6 +370,7 @@ public class timemachineController {
               });
         });
 
+    // Timer flash animation
     lblTimer.setVisible(true);
     delay(
         200,
@@ -409,8 +398,26 @@ public class timemachineController {
               });
         });
 
-    // TODO: Timer blink effect
-    // TODO: Append AI text
+    // Starting prompt
+    delay(
+        2000,
+        () -> {
+          // Update imagery
+          imgScientistThinking.setVisible(false);
+
+          // Add to chat log
+          GameState.chatLog = "-> " + contextTask.getValue().getContent();
+
+          // Append to chat area
+          chatArea.appendText("-> ");
+          appendChatMessage(contextTask.getValue());
+
+          // Update chat area in other scenes
+          Thread updateChatThreadLab = new Thread(labController.updateChatTask);
+          updateChatThreadLab.start();
+          Thread updateChatThreadStorage = new Thread(storageController.updateChatTask);
+          updateChatThreadStorage.start();
+        });
   }
 
   @FXML

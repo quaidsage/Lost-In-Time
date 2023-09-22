@@ -34,9 +34,7 @@ public class introController {
     "Seek the time fluid reservoir within the machine's core, and find the temporal power switch"
         + " nearby. As you administer the rejuvenating elixir and breathe life into the circuits,"
         + " we edge closer to restoring the fabric of time.\n\n",
-    "We must hurry though, for the time machine has become unstable and will soon collapse in "
-        + introController.minutes
-        + " minutes.\n\n",
+    "We must hurry though, for the time machine has become unstable and will soon collapse",
     "Let us not dally; our future awaits, both in this era and the moments yet to come. Onward, my"
         + " courageous compatriot!"
   };

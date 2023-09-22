@@ -40,7 +40,10 @@ public class labController {
   @FXML private TextArea chatArea;
   @FXML private TextArea chatField;
   @FXML private ImageView imgScientistThinking;
+  @FXML private Button btnMenu;
   @FXML private Polyline chemicalGeneral;
+
+  // Chemicals and arrow javafx elements
   @FXML private Rectangle chemicalCyan, chemicalBlue, chemicalPurple, chemicalOrange;
   @FXML private Rectangle chemicalYellow, chemicalGreen, chemicalRed, transitionScene;
   @FXML private ImageView baseImage, blurredImage;
@@ -52,17 +55,18 @@ public class labController {
   @FXML private ImageView arrowUpYellow1, arrowUpGreen1, arrowUpRed1;
   @FXML private ImageView arrowDownCyan1, arrowDownBlue1, arrowDownPurple1, arrowDownOrange1;
   @FXML private ImageView arrowDownYellow1, arrowDownGreen1, arrowDownRed1;
-  @FXML private Button btnMenu;
 
   // Initialise Variables
   private int characterDelay = 5;
   public static Task<Void> updateChatTask;
-  private Boolean isRiddleGiven = false;
+  public static Task<ChatMessage> labIntroTask;
+  public static Task<ChatMessage> labRiddleTask;
   private Boolean isCyanSolution = false,
       isBlueSolution = false,
       isPurpleSolution = false,
       isOrangeSolution = false;
   private Boolean isYellowSolution = false, isGreenSolution = false, isRedSolution = false;
+  private Boolean isChemicalsEnabled = false;
   private String[] possibleChemicalColours = {
     "Red", "Green", "Blue", "Cyan", "Purple", "Yellow", "Orange"
   };
@@ -79,7 +83,7 @@ public class labController {
   // Initialise Timer
   private static timerController timer = new timerController();
 
-  public void initialize() {
+  public void initialize() throws ApiProxyException {
     timer = new timerController();
     // Bind the lblTimer to the timerController properties.
     lblTimer.textProperty().bind(timer.messageProperty());
@@ -89,8 +93,34 @@ public class labController {
           timer.reset();
         });
 
+    // Initialise task to update chat area
     createUpdateTask();
 
+    // Create task to run GPT model for intro message
+    labIntroTask = createTask(GptPromptEngineering.getLabIntro());
+
+    // Change to thinking image
+    imgScientistThinking.setVisible(true);
+
+    labIntroTask.setOnSucceeded(
+        e -> {
+          // Update imagery of scientist
+          imgScientistThinking.setVisible(false);
+
+          ChatMessage response = labIntroTask.getValue();
+          // Append to chat log
+          GameState.chatLog += "\n\n-> " + response.getContent();
+
+          // Append response to current scene
+          chatArea.appendText("\n\n-> ");
+          appendChatMessage(response);
+
+          // Update chat area in other scenes
+          Thread updateChatThreadStorage = new Thread(storageController.updateChatTask);
+          updateChatThreadStorage.start();
+          Thread updateChatThreadTM = new Thread(timemachineController.updateChatTask);
+          updateChatThreadTM.start();
+        });
     List<String> colourList = Arrays.asList(possibleChemicalColours);
     Collections.shuffle(colourList);
 
@@ -129,6 +159,31 @@ public class labController {
     arrowCollection.add(arrowDownYellow1);
     arrowCollection.add(arrowDownGreen1);
     arrowCollection.add(arrowDownRed1);
+    chemicalGeneral.setVisible(false);
+
+    // Create task to run GPT model for riddle message
+    labRiddleTask = createTask(GptPromptEngineering.getRiddleLab(puzzleColours));
+
+    labRiddleTask.setOnSucceeded(
+        e -> {
+          // Update imagery
+          imgScientistThinking.setVisible(false);
+
+          ChatMessage response = labRiddleTask.getValue();
+
+          // Append to chat log
+          GameState.chatLog += "\n\n-> " + response.getContent();
+
+          // Append response to current scene
+          chatArea.appendText("\n\n-> ");
+          appendChatMessage(response);
+
+          // Update chat area in other scenes
+          Thread updateChatThreadTM2 = new Thread(timemachineController.updateChatTask);
+          updateChatThreadTM2.start();
+          Thread updateChatThreadStorage2 = new Thread(storageController.updateChatTask);
+          updateChatThreadStorage2.start();
+        });
   }
 
   /**
@@ -153,70 +208,29 @@ public class labController {
 
   @FXML
   private void clkChemicalGeneral(MouseEvent event) {
-    if (isRiddleGiven == false) {
-      isRiddleGiven = true;
-      String message =
-          GptPromptEngineering.getRiddleWithGivenWordLab("to do with science", puzzleColours);
 
-      // Create chat message
-      ChatMessage chatMessage = new ChatMessage("user", message);
-
-      // Update chat area in other scenes
-      Thread updateChatThreadTM = new Thread(timemachineController.updateChatTask);
-      updateChatThreadTM.start();
-      Thread updateChatThreadStorage = new Thread(storageController.updateChatTask);
-      updateChatThreadStorage.start();
-
-      // Add to chat log
-      GameState.chatLog += "\n\n<- " + chatMessage.getContent();
-
-      // Create task to run GPT model
-      Task<ChatMessage> chatTask = createTask(message);
-      Thread chatThread = new Thread(chatTask);
-      chatThread.start();
-
-      // Enable thinking image of scientist
-      imgScientistThinking.setVisible(true);
-
-      chatTask.setOnSucceeded(
-          e -> {
-            // Update imagery
-            imgScientistThinking.setVisible(false);
-
-            // Add to chat log
-            GameState.chatLog += "\n\n-> " + chatTask.getValue().getContent();
-
-            // Append response to current scene
-            chatArea.appendText("\n\n-> ");
-            appendChatMessage(chatTask.getValue());
-
-            // Update chat area in other scenes
-            Thread updateChatThreadTM2 = new Thread(timemachineController.updateChatTask);
-            updateChatThreadTM2.start();
-            Thread updateChatThreadStorage2 = new Thread(storageController.updateChatTask);
-            updateChatThreadStorage2.start();
-          });
+    if (GameState.isLabResolved) {
+      return;
     }
+    // Hide general chemicals
+    chemicalGeneral.setVisible(false);
+
+    // Prevent user from leaving lab until riddle is solved
+    btnSwitchToTimeMachine.setDisable(true);
+
+    // Change to thinking scientist
+    imgScientistThinking.setVisible(true);
+
+    Thread labRiddleThread = new Thread(labRiddleTask);
+    labRiddleThread.start();
   }
 
-  @FXML 
+  @FXML
   private void returnToMenu(ActionEvent event) throws IOException {
     App.setRoot("mainmenu");
     GameState.isLabResolved = false;
     GameState.isStorageResolved = false;
     SceneManager.clearAllScenesExceptMainMenu();
-  }
-
-  @FXML
-  private void showChemicalGeneral(MouseEvent event) {
-    System.out.println("general hovered");
-    chemicalGeneral.setOpacity(0.4);
-  }
-
-  @FXML
-  private void hideChemicalGeneral(MouseEvent event) {
-    System.out.println("general unhovered");
-    chemicalGeneral.setOpacity(0);
   }
 
   @FXML
@@ -352,12 +366,7 @@ public class labController {
     arrowAnimationOut(arrowDownRed, arrowUpRed, arrowAnimationSpeed, -arrowAnimationDistance);
   }
 
-  private void changeToRiddleSolve() {
-    enableChemicals(true);
-  }
-
   private void enableChemicals(Boolean disable) {
-    chemicalGeneral.setVisible(!disable);
     chemicalBlue.setVisible(disable);
     chemicalCyan.setVisible(disable);
     chemicalPurple.setVisible(disable);
@@ -365,6 +374,8 @@ public class labController {
     chemicalYellow.setVisible(disable);
     chemicalGreen.setVisible(disable);
     chemicalOrange.setVisible(disable);
+    chemicalGeneral.setVisible(false);
+    isChemicalsEnabled = true;
   }
 
   private void updateColourAnswerVariables(String colour) {
@@ -397,7 +408,29 @@ public class labController {
 
   private void puzzleComplete() {
     GameState.isLabResolved = true;
+
+    Task<ChatMessage> labCompleteTask = createTask(GptPromptEngineering.getLabComplete());
+    Thread labCompleteThread = new Thread(labCompleteTask);
+    labCompleteThread.start();
+
+    labCompleteTask.setOnSucceeded(
+        e -> {
+          // Append to chat log
+          GameState.chatLog += "\n\n-> " + labCompleteTask.getValue().getContent();
+
+          // Append response to current scene
+          chatArea.appendText("\n\n-> ");
+          appendChatMessage(labCompleteTask.getValue());
+
+          // Update chat area in other scenes
+          Thread updateChatThreadTM2 = new Thread(timemachineController.updateChatTask);
+          updateChatThreadTM2.start();
+          Thread updateChatThreadStorage2 = new Thread(storageController.updateChatTask);
+          updateChatThreadStorage2.start();
+        });
+
     baseImage.setVisible(true);
+    btnSwitchToTimeMachine.setDisable(false);
     startFlashingArrows();
     fadeTransitionOut();
   }
@@ -414,10 +447,7 @@ public class labController {
           protected ChatMessage call() throws Exception {
             btnSend.setDisable(true);
             ChatMessage msg = runGpt(new ChatMessage("assistant", message));
-            Platform.runLater(
-                () -> {
-                  System.out.println("Initialised message");
-                });
+            Platform.runLater(() -> {});
             return msg;
           }
         };
@@ -452,9 +482,6 @@ public class labController {
 
     // Create a timeline and keyframes to append each character of the message to the chat text area
     Timeline timeline = new Timeline();
-    if (ch.length < 100) {
-      characterDelay = (50 - (ch.length / 2)) + 5;
-    }
     System.out.println("printing with delay of: " + characterDelay);
     Duration delayBetweenCharacters = Duration.millis(characterDelay);
     Duration frame = delayBetweenCharacters;
@@ -477,6 +504,9 @@ public class labController {
     timeline.setOnFinished(
         event -> {
           btnSend.setDisable(false);
+          if (!isChemicalsEnabled) {
+            chemicalGeneral.setVisible(true);
+          }
         });
   }
 
@@ -494,10 +524,11 @@ public class labController {
       Choice result = chatCompletionResult.getChoices().iterator().next();
       GameState.chatCompletionRequest.addMessage(result.getChatMessage());
       if (result.getChatMessage().getContent().startsWith("Correct")) {
+        // Show chemicals
+        enableChemicals(true);
+
         blurredImage.setVisible(true);
         fadeTransition();
-        // baseImage.setVisible(false);
-        changeToRiddleSolve();
       }
       return result.getChatMessage();
     } catch (ApiProxyException e) {

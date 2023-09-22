@@ -15,6 +15,12 @@ public class GameState {
   /** Indicates whether the storage task has been completed. */
   public static boolean isStorageResolved = false;
 
+  /** Indicates whether the user has visited the lab. */
+  public static boolean isLabVisited = false;
+
+  /** Indicates whether the user has visited the storage room. */
+  public static boolean isStorageVisited = false;
+
   /** Current text to speech for game. */
   public static TextToSpeech txtToSpeech;
 
@@ -26,4 +32,19 @@ public class GameState {
 
   /** Main AI Core. */
   public static ChatCompletionRequest chatCompletionRequest;
+
+  /** Function to get the next step for the user */
+  public static String getNextStep() {
+    if (isLabResolved && isStorageResolved) {
+      return "go to the time machine room and repair the time machine to stabilise it and return to"
+          + " the present";
+    } else if (isLabResolved && !isStorageResolved) {
+      return "go to the storage room and restore power to the time machine";
+    } else if (!isLabResolved && isStorageResolved) {
+      return "go to the labratory and create the time fluid";
+    } else {
+      return "go to either the labratory to create the time fluid or the storage room to restore"
+          + " power to the time machine";
+    }
+  }
 }
