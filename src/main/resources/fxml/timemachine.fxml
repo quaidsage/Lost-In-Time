@@ -72,7 +72,7 @@
             <Font name="System Bold" size="24.0" />
          </font></Button>
 <Button fx:id="btnTimeMachine" layoutX="339.0" layoutY="129.0" mnemonicParsing="false" onAction="#finishGame" onMouseEntered="#showBtnTimeMachine" onMouseExited="#hideBtnTimeMachine" opacity="0.0" prefHeight="471.0" prefWidth="349.0" text="Time Machine" textFill="WHITE" />
-      <Text fill="#6bf9b1" layoutX="544.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently in: Time Machine Room" wrappingWidth="440.3333435058594">
+      <Text fill="#6bf9b1" layoutX="706.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently in: Time Machine Room" wrappingWidth="281.3333435058594">
          <font>
             <Font name="Apple Symbols" size="24.0" />
          </font>
