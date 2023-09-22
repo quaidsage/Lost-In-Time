@@ -26,10 +26,20 @@ public class IntroController {
   public static Task<Void> appendTask;
   public static ChatMessage msg;
   private int interaction = 0;
+  // Array of introduction messages
   private String[] interactions = {
-    // Array of introduction messages
     "Greetings, intrepid traveler! You've stumbled into quite the temporal predicament.\n\n",
-    // ... (more messages)
+    "My consciousness resides within this contraption, a victim of the very device that brought you"
+        + " here. Fear not, for I am a mad scientist with a penchant for fixing the"
+        + " unfathomable.\n\n",
+    "Alas, our time machine thirsts for a replenishment of time fluid, its essence for proper"
+        + " function depleted, and it yearns to be powered on once more.\n\n",
+    "Seek the time fluid reservoir within the machine's core, and find the temporal power switch"
+        + " nearby. As you administer the rejuvenating elixir and breathe life into the circuits,"
+        + " we edge closer to restoring the fabric of time.\n\n",
+    "We must hurry though, for the time machine has become unstable and will soon collapse",
+    "Let us not dally; our future awaits, both in this era and the moments yet to come. Onward, my"
+        + " courageous compatriot!"
   };
 
   // Initialize the introduction scene
@@ -45,7 +55,11 @@ public class IntroController {
     btnNext.setDisable(true);
   }
 
-  // Handle switching to the time machine scene
+  /**
+   * Handles switching to time machine scene.
+   *
+   * @param event The event that triggered the function.
+   */
   @FXML
   public void switchToTimeMachine(ActionEvent event) {
     // Switch to time machine scene
@@ -56,7 +70,12 @@ public class IntroController {
     startThread.start();
   }
 
-  // Append a chat message to the text area with character-by-character animation
+  /**
+   * Appends a chat message to the text area with character-by-character animation.
+   *
+   * @param msg The chat message to append.
+   * @param chatArea The text area to append the message to.
+   */
   public void appendMessage(ChatMessage msg, TextArea chatArea) {
     // Convert message to character array
     char[] ch = msg.getContent().toCharArray();
@@ -101,7 +120,11 @@ public class IntroController {
         });
   }
 
-  /** Update the task which appends the chat log to the chat area. */
+  /**
+   * Update the task which appends chat log to chat area.
+   *
+   * @param chatArea The text area to append the message to.
+   */
   public void updateTask(TextArea chatArea) {
     appendTask =
         new Task<Void>() {
@@ -114,7 +137,7 @@ public class IntroController {
         };
   }
 
-  // Start the interaction with the assistant
+  /** Function to handle starting interaction with the AI. */
   @FXML
   public void startInteraction() {
     // Hide relevant elements
@@ -134,7 +157,7 @@ public class IntroController {
     appendThread.start();
   }
 
-  // Proceed to the next interaction with the assistant
+  /** Function to handle the next interaction with the AI. */
   @FXML
   public void proceedToNextInteraction() {
     // Hide the "Next" button
