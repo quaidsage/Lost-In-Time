@@ -11,11 +11,13 @@ import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.GptPromptEngineering;
 
 public class difficultyController {
+  // Define FXML elements
   @FXML private Button btnSwitchToTimeMachine;
   @FXML private CheckBox chkbxEasy, chkbxMedium, chkbxHard;
   @FXML private CheckBox chkbxTwoMins, chkbxFourMins, chkbxSixMins;
   @FXML private Label lblSelectBoxesWarning;
 
+  // Enumerations for difficulty levels and time settings
   public enum Difficulty {
     EASY,
     MEDIUM,
@@ -28,17 +30,22 @@ public class difficultyController {
     SIX
   }
 
+  // Default settings and variables
   int minutes = 4;
   boolean isDifficultyChecked, isTimeChecked = false;
 
+  // Variables to track the current difficulty and time settings
   public static Difficulty currentDifficulty;
   TimeSetting currentTimeSetting;
 
+  // Handle switching to the intro screen
   @FXML
   private void switchToIntro(ActionEvent event) {
+    // Check if both difficulty and time settings are selected
     if (!isDifficultyChecked || !isTimeChecked) {
       lblSelectBoxesWarning.setText("Select a difficulty and time to begin");
     } else {
+      // Set the selected difficulty in the game state
       if (currentDifficulty == Difficulty.EASY) {
         GameState.isDifficultyEasy = true;
       } else if (currentDifficulty == Difficulty.MEDIUM) {
@@ -46,6 +53,8 @@ public class difficultyController {
       } else if (currentDifficulty == Difficulty.HARD) {
         GameState.isDifficultyHard = true;
       }
+
+      // Set the selected time setting for the intro screen
       introController.minutes = minutes;
       Thread appendThread = new Thread(introController.appendTask);
       appendThread.start();
@@ -53,6 +62,7 @@ public class difficultyController {
     }
   }
 
+  // Handle the "Easy" difficulty checkbox
   @FXML
   private void checkedEasy(ActionEvent event) {
     currentDifficulty = Difficulty.EASY;
@@ -66,6 +76,7 @@ public class difficultyController {
     }
   }
 
+  // Handle the "Medium" difficulty checkbox
   @FXML
   private void checkedMedium(ActionEvent event) {
     currentDifficulty = Difficulty.MEDIUM;
@@ -79,6 +90,7 @@ public class difficultyController {
     }
   }
 
+  // Handle the "Hard" difficulty checkbox
   @FXML
   private void checkedHard(ActionEvent event) {
     currentDifficulty = Difficulty.HARD;
@@ -92,6 +104,7 @@ public class difficultyController {
     }
   }
 
+  // Handle the "Two Minutes" time setting checkbox
   @FXML
   private void checkedTwoMins() {
     currentTimeSetting = TimeSetting.TWO;
@@ -106,6 +119,7 @@ public class difficultyController {
     minutes = 2;
   }
 
+  // Handle the "Four Minutes" time setting checkbox
   @FXML
   private void checkedFourMins() {
     currentTimeSetting = TimeSetting.FOUR;
@@ -120,6 +134,7 @@ public class difficultyController {
     minutes = 4;
   }
 
+  // Handle the "Six Minutes" time setting checkbox
   @FXML
   private void checkedSixMins() {
     currentTimeSetting = TimeSetting.SIX;
@@ -134,6 +149,7 @@ public class difficultyController {
     minutes = 6;
   }
 
+  // Helper method to deselect other difficulty checkboxes
   private void deselectDifficultyBoxes(Difficulty difficulty, Boolean isDifficultyChecked) {
     switch (difficulty) {
       case EASY:
@@ -151,6 +167,7 @@ public class difficultyController {
     }
   }
 
+  // Helper method to deselect other time setting checkboxes
   private void deselectTimeBoxes(TimeSetting timeSetting, Boolean isTimeChecked) {
     switch (timeSetting) {
       case TWO:
