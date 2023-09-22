@@ -39,8 +39,8 @@ public class DifficultyController {
   boolean isDifficultyChecked, isTimeChecked = false;
 
   // Variables to track the current difficulty and time settings
-  public static Difficulty currentDifficulty;
-  TimeSetting currentTimeSetting;
+  private Difficulty currentDifficulty;
+  private TimeSetting currentTimeSetting;
 
   /**
    * Function to handle switching to intro scene.
