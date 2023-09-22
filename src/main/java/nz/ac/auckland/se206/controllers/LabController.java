@@ -32,12 +32,22 @@ import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 
 public class LabController {
+  public static int numHints = 5;
+  public static ArrayList<Integer> solutionColours;
+
+  // Fields related to Task
+  public static Task<Void> updateChatTask;
+  public static Task<ChatMessage> labIntroTask;
+  public static Task<ChatMessage> labRiddleTask;
+
+  // Initialise Timer
+  private static TimerController timer = new TimerController();
 
   // Fields for JavaFX elements
   @FXML private Pane paneLab;
-  @FXML private Button btnSwitchToTimeMachine; 
+  @FXML private Button btnSwitchToTimeMachine;
   @FXML private Button btnSend;
-  @FXML private Label lblTimer; 
+  @FXML private Label lblTimer;
   @FXML private Label hintsRemaining;
   @FXML private TextArea chatArea;
   @FXML private TextArea chatField;
@@ -66,20 +76,47 @@ public class LabController {
   private int fadeTransitionSpeed = 1500;
   private Duration flashDuration = Duration.millis(0);
   private int numFlashes = 0;
-  public static int numHints = 5;
-  public static ArrayList<Integer> solutionColours;
-
-  // Fields related to Task
-  public static Task<Void> updateChatTask;
-  public static Task<ChatMessage> labIntroTask;
-  public static Task<ChatMessage> labRiddleTask;
 
   // Fields related to chemical solutions
   private Boolean[] isChemicalSolution = {false, false, false, false, false, false, false};
   private Boolean isChemicalsEnabled = false;
 
-  // Initialise Timer
-  private static TimerController timer = new TimerController();
+  /**
+   * Function to start timer
+   *
+   * @param minutes the number of minutes to set the timer to
+   */
+  public static void labStartTimer(int minutes) {
+    timer.setMinutes(minutes);
+    timer.start();
+  }
+
+  /**
+   * Delays given code by a given number of milliseconds.
+   *
+   * @param ms milliseconds of delay
+   * @param continuation Code to execute after delay
+   */
+  public static void delay(int ms, Runnable continuation) {
+    // Create delay function
+    Task<Void> delayTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            try {
+              Thread.sleep(ms);
+            } catch (InterruptedException e) {
+              e.printStackTrace();
+            }
+            return null;
+          }
+        };
+    // Execute code after delay
+    delayTask.setOnSucceeded(event -> continuation.run());
+
+    // Start delay thread
+    new Thread(delayTask).start();
+  }
 
   public void initialize() throws ApiProxyException {
     // Initialise timer and bind the lblTimer to the timerController properties.
@@ -221,16 +258,6 @@ public class LabController {
   }
 
   /**
-   * Function to start timer
-   *
-   * @param minutes the number of minutes to set the timer to
-   */
-  public static void labStartTimer(int minutes) {
-    timer.setMinutes(minutes);
-    timer.start();
-  }
-
-  /**
    * Function to return to main menu, restarting game.
    *
    * @param event the action event triggered by the main menu button
@@ -366,14 +393,15 @@ public class LabController {
    * @param show whether to show or hide the arrows
    */
   private void chemAnimate(int color, Boolean show) {
+    // Animate appropriate arrows
     if (show) {
-      moveArrowsIn(
+      moveArrowsIn( // Animate arrow moving inwards
           arrowCollection.get(color),
           arrowCollection.get(color + 7),
           arrowAnimationSpeed,
           arrowAnimationDistance);
     } else {
-      arrowAnimationOut(
+      arrowAnimationOut( // Animate arrow moving outwards
           arrowCollection.get(color),
           arrowCollection.get(color + 7),
           arrowAnimationSpeed,
@@ -388,7 +416,10 @@ public class LabController {
    */
   @FXML
   private void showChemical(MouseEvent event) {
+    // Get source of click
     Rectangle src = (Rectangle) event.getSource();
+
+    // Animate appropriate arrows
     switch (src.getId()) {
       case "chemicalBlue":
         chemAnimate(0, true);
@@ -489,10 +520,13 @@ public class LabController {
    * @param image the arrow to be flashed
    */
   private void flashingArrowsOff(ImageView image) {
+    // Initialise transition and its parameters
     FadeTransition fade = new FadeTransition(Duration.millis(1), image);
     fade.setDelay(flashDuration);
     fade.setFromValue(1);
     fade.setToValue(0);
+
+    // Recursive call to flash next arrow
     if (numFlashes >= 84) {
       return;
     } else {
@@ -681,13 +715,16 @@ public class LabController {
    * @param message string to attach to message to be given to the LLM
    */
   private Task<ChatMessage> createTask(String message) {
+    // Create task to run GPT model
     Task<ChatMessage> task =
         new Task<ChatMessage>() {
           @Override
           protected ChatMessage call() throws Exception {
+            // Prevent user from sending further text
             btnSend.setDisable(true);
+
+            // Run GPT model
             ChatMessage msg = runGpt(new ChatMessage("assistant", message));
-            Platform.runLater(() -> {});
             return msg;
           }
         };
@@ -864,33 +901,6 @@ public class LabController {
         });
   }
 
-  /**
-   * Delays given code by a given number of milliseconds.
-   *
-   * @param ms milliseconds of delay
-   * @param continuation Code to execute after delay
-   */
-  public static void delay(int ms, Runnable continuation) {
-    // Create delay function
-    Task<Void> delayTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            try {
-              Thread.sleep(ms);
-            } catch (InterruptedException e) {
-              e.printStackTrace();
-            }
-            return null;
-          }
-        };
-    // Execute code after delay
-    delayTask.setOnSucceeded(event -> continuation.run());
-
-    // Start delay thread
-    new Thread(delayTask).start();
-  }
-
   /** Function to set chat area to current history of chat log. */
   public void updateChatArea() {
     chatArea.setText(GameState.chatLog);
@@ -899,11 +909,15 @@ public class LabController {
 
   /** Function to create task to update chat area for scene. */
   public void createUpdateTask() {
+    // Create task to update chat area with chat log
     updateChatTask =
         new Task<Void>() {
           @Override
           protected Void call() throws Exception {
+            // Update the scenes chat area
             updateChatArea();
+
+            // Remake task for next call
             createUpdateTask();
             return null;
           }

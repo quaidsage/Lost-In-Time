@@ -11,10 +11,14 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
-import nz.ac.auckland.se206.gpt.ChatMessage;
 import nz.ac.auckland.se206.SceneManager.AppUi;
+import nz.ac.auckland.se206.gpt.ChatMessage;
 
 public class IntroController {
+  public static Task<Void> appendTask;
+  public static ChatMessage msg;
+  public static int minutes;
+
   // Define FXML elements
   @FXML private Button btnSkip;
   @FXML private Button btnPick;
@@ -24,11 +28,9 @@ public class IntroController {
   @FXML private Rectangle rectBack;
 
   // Define variables for the introduction
-  public static int minutes;
   private int characterDelay = 5;
-  public static Task<Void> appendTask;
-  public static ChatMessage msg;
   private int interaction = 0;
+
   // Array of introduction messages
   private String[] interactions = {
     "Greetings, intrepid traveler! You've stumbled into quite the temporal predicament.\n\n",
@@ -47,11 +49,14 @@ public class IntroController {
 
   // Initialize the introduction scene
   public void initialize() {
+    // Form the introduction message
     msg =
         new ChatMessage(
             "assistant",
             "You wake up in a strange room...\n Next to you, you see a strange device glowing.");
     updateTask(txtIntro);
+
+    // Set visibility of relevant elements
     rectBack.setVisible(true);
     btnPick.setDisable(true);
     btnNext.setVisible(false);

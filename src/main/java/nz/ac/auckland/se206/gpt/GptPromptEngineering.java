@@ -37,9 +37,16 @@ public class GptPromptEngineering {
         + " test to unlock the switch to return the power. Do not refer to the user.";
   }
 
+  /**
+   * Function to generate the riddle for the labratory task.
+   *
+   * @param solutionColours the colours of the chemicals that the user must combine
+   * @return the generated prompt engineering string
+   */
   public static String getRiddleLab(ArrayList<Integer> solutionColours) {
     String[] colorStr = new String[3];
 
+    // Convert the solution colours to strings to append to the riddle
     for (int i = 0; i < 3; i++) {
       switch (solutionColours.get(i)) {
         case 0:
@@ -65,10 +72,16 @@ public class GptPromptEngineering {
           break;
       }
     }
+
+    // Get the number of hints user has based on difficulty
     String numHints = String.valueOf(LabController.numHints);
+
+    // If on easy, user has infinite hints
     if (numHints == "6") {
       numHints = "infinite";
     }
+
+    // Generate riddle prompt.
     return "You are the digital conciousness of a mad scientist helping the user. You have already"
         + " introduced yourself. You are going to give recipe for time fluid after user"
         + " answers your riddle. You give the user a riddle with easy science"
