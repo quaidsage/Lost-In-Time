@@ -17,14 +17,14 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.storageController">
    <children>
+      <ImageView fx:id="background" fitHeight="862.0" fitWidth="1415.0" layoutX="-7.0" pickOnBounds="true">
+         <image>
+            <Image url="@../images/wepik-export-20230918120206Hm9p.png" />
+         </image>
+      </ImageView>
       <ImageView fitHeight="730.0" fitWidth="400.0" layoutX="1006.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/device.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="background" fitHeight="585.0" fitWidth="960.0" layoutX="25.0" layoutY="66.0" pickOnBounds="true">
-         <image>
-            <Image url="@../images/wepik-export-20230918120206Hm9p.png" />
          </image>
       </ImageView>
       <Label fx:id="lblTimer" layoutX="1232.0" layoutY="73.0" stylesheets="@../css/style.css" text="XX:XX">
@@ -59,12 +59,12 @@
          <font>
             <Font name="Monospace 821 Bold BT" size="24.0" />
          </font></Button>
-      <ImageView fx:id="circuitBoxImg" fitHeight="55.0" fitWidth="51.0" layoutX="594.0" layoutY="318.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="circuitBoxImg" fitHeight="77.0" fitWidth="82.0" layoutX="833.0" layoutY="371.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/wepik-export-2023092011501715lG.png" />
          </image>
       </ImageView>
-      <Rectangle id="circuitBox" fx:id="circuitBox" arcHeight="5.0" arcWidth="5.0" height="55.0" layoutX="595.0" layoutY="275.0" onMouseClicked="#clickCircuitBox" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="44.0">
+      <Rectangle id="circuitBox" fx:id="circuitBox" arcHeight="5.0" arcWidth="5.0" height="70.0" layoutX="846.0" layoutY="376.0" onMouseClicked="#clickCircuitBox" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="49.0">
          <fill>
             <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
                <stops>
@@ -131,7 +131,7 @@
          <font>
             <Font name="Apple Symbols" size="24.0" />
          </font></Button>
-      <Text layoutX="755.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently in: Storage Room">
+      <Text layoutX="696.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently in: Storage Room">
          <font>
             <Font name="Apple Symbols" size="24.0" />
          </font>
