@@ -71,6 +71,7 @@ public class storageController {
   private Random random = new Random();
   private int consecutiveRounds = 0;
   private int targetConsecutiveRounds = 4;
+  private boolean buttonsDisabled = false;
   private ArrayList<String> possibleButtons =
       new ArrayList<>(
           Arrays.asList(
@@ -127,6 +128,10 @@ public class storageController {
 
   @FXML
   void buttonClicked(ActionEvent event) {
+    if (buttonsDisabled) {
+      return; // Ignore clicks while buttons are disabled
+    }
+
     if (((Control) event.getSource()).getId().equals(pattern.get(counter))) {
       Button button = buttons.get(getIndexOfButton(event));
       changeButtonColor(button, "-fx-base: lightgreen");
@@ -264,6 +269,8 @@ public class storageController {
   }
 
   private void showPattern() {
+    buttonsDisabled = true; // Disable buttons during pattern display
+
     PauseTransition pause = new PauseTransition(Duration.seconds(0.75));
     pause.setOnFinished(
         e -> {
@@ -275,6 +282,10 @@ public class storageController {
                         showNext();
                       }));
           timeline.setCycleCount(pattern.size());
+          timeline.setOnFinished(
+              event -> {
+                buttonsDisabled = false; // Enable buttons after pattern display
+              });
           timeline.play();
         });
     pause.play();
