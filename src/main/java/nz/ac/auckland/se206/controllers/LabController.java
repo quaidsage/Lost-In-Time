@@ -28,12 +28,12 @@ import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
 import nz.ac.auckland.se206.gpt.GptPromptEngineering;
 import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
-import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult;
+import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 
 public class LabController {
 
-  // JavaFX elements
+  // Fields for JavaFX elements
   @FXML private Pane paneLab;
   @FXML private Button btnSwitchToTimeMachine, btnSend;
   @FXML private Label lblTimer, hintsRemaining;
@@ -47,16 +47,8 @@ public class LabController {
   @FXML private ImageView baseImage, blurredImage, typingBubble;
   ArrayList<ImageView> arrowCollection = new ArrayList<ImageView>();
 
-  // Initialise Variables
+  // Fields for initializing variables
   private int characterDelay = 5;
-  public static Task<Void> updateChatTask;
-  public static Task<ChatMessage> labIntroTask;
-  public static Task<ChatMessage> labRiddleTask;
-  private Boolean[] isChemicalSolution = {false, false, false, false, false, false, false};
-  public static ArrayList<Integer> solutionColours;
-  private Boolean isChemicalsEnabled = false;
-
-  // Animation variables
   private int numChemicalsAdded = 0;
   private int arrowAnimationSpeed = 85;
   private int arrowAnimationDistance = 25;
@@ -64,6 +56,16 @@ public class LabController {
   private Duration flashDuration = Duration.millis(0);
   private int numFlashes = 0;
   public static int numHints = 5;
+  public static ArrayList<Integer> solutionColours;
+
+  // Fields related to Task
+  public static Task<Void> updateChatTask;
+  public static Task<ChatMessage> labIntroTask;
+  public static Task<ChatMessage> labRiddleTask;
+
+  // Fields related to chemical solutions
+  private Boolean[] isChemicalSolution = {false, false, false, false, false, false, false};
+  private Boolean isChemicalsEnabled = false;
 
   // Initialise Timer
   private static TimerController timer = new TimerController();
@@ -545,7 +547,7 @@ public class LabController {
    * @param distance the distance to move the arrow
    */
   private void moveArrowsIn(ImageView arrowDown, ImageView arrowUp, int duration, int distance) {
-  // Initialise path lines and duration
+    // Initialise path lines and duration
     Line lineDown = new Line(18, 13, 18, 13 + distance);
     Line lineUp = new Line(18, 13, 18, 13 - distance);
 

@@ -28,10 +28,11 @@ import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
 import nz.ac.auckland.se206.gpt.GptPromptEngineering;
 import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
-import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult;
+import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 
 public class StorageController {
+
   // JavaFX elements
   @FXML private Button btnSwitchToTimeMachine, btnSend;
   @FXML private Rectangle circuitBox;
