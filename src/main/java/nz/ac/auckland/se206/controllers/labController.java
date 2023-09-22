@@ -69,8 +69,8 @@ public class labController {
   private static timerController timer = new timerController();
 
   public void initialize() throws ApiProxyException {
+    // Initialise timer and bind the lblTimer to the timerController properties.
     timer = new timerController();
-    // Bind the lblTimer to the timerController properties.
     lblTimer.textProperty().bind(timer.messageProperty());
     timer.setOnSucceeded(
         e -> {
@@ -83,24 +83,19 @@ public class labController {
 
     // Create task to run GPT model for intro message
     labIntroTask = createTask(GptPromptEngineering.getLabIntro());
-
-    // Change to thinking image
     imgScientistThinking.setVisible(true);
 
     labIntroTask.setOnSucceeded(
         e -> {
-          // Update imagery of scientist
           imgScientistThinking.setVisible(false);
 
+          // Append to chat logs
           ChatMessage response = labIntroTask.getValue();
-          // Append to chat log
           GameState.chatLog += "\n\n-> " + response.getContent();
 
-          // Append response to current scene
           chatArea.appendText("\n\n-> ");
           appendChatMessage(response);
 
-          // Update chat area in other scenes
           Thread updateChatThreadStorage = new Thread(storageController.updateChatTask);
           updateChatThreadStorage.start();
           Thread updateChatThreadTM = new Thread(timemachineController.updateChatTask);
@@ -119,28 +114,24 @@ public class labController {
       isChemicalSolution[solutionColours.get(i)] = true;
     }
 
+    // Task to initialise javafx elements in lab
     Task<Void> initLabTask =
         new Task<Void>() {
           @Override
           protected Void call() throws Exception {
-            // Initialise arrows
-            // Order: Blue, Purple, Cyan, Green, Yellow, Orange, Red
-
-            // White arrows
+            // Initialise white arrows
             int posx = 180;
             int posy = 170;
             for (int i = 0; i < 14; i++) { // 0-6 are up arrows, 8-13 are down arrows
-              // Create white arrow
               ImageView arrow = new ImageView("file:src/main/resources/images/arrow_white.png");
 
-              // Set position and rotation
+              // Set properties of arrow
               posx = 180 + (110 * i);
-              if (i > 6) {
+              if (i > 6) { // >6 are arrows along bottom row
                 posx = 100 + (105 * (i - 6));
                 posy = 555;
                 arrow.rotateProperty().setValue(180.0);
               }
-
               arrow.setOpacity(0);
               arrow.setFitHeight(26.0);
               arrow.setFitWidth(35.0);
@@ -151,25 +142,23 @@ public class labController {
               arrow.setCache(true);
               arrow.toFront();
 
-              // Add to collection
+              // Add to pane and collection
               paneLab.getChildren().add(arrow);
               arrowCollection.add(arrow);
             }
 
-            // Green arrows
+            // Initialise Green arrows
             posy = 195;
             for (int i = 0; i < 14; i++) { // 0-6 are up arrows, 7-13 are down arrows
-              // Create green arrow
               ImageView arrow = new ImageView("file:src/main/resources/images/arrow_green.png");
 
-              // Set position and rotation
+              // Set properties
               posx = 180 + (110 * i);
               if (i > 6) {
                 posx = 100 + (105 * (i - 6));
                 posy = 530;
                 arrow.rotateProperty().setValue(180.0);
               }
-
               arrow.setOpacity(0);
               arrow.setVisible(false);
               arrow.setFitHeight(26.0);
@@ -187,6 +176,8 @@ public class labController {
               paneLab.getChildren().add(arrow);
               arrowCollection.add(arrow);
             }
+
+            // Set relevant elements above arrows
             chemicalBlue.toFront();
             chemicalPurple.toFront();
             chemicalCyan.toFront();
@@ -194,9 +185,9 @@ public class labController {
             chemicalOrange.toFront();
             chemicalYellow.toFront();
             chemicalRed.toFront();
-
             chemicalGeneral.toFront();
             chemicalGeneral.setVisible(false);
+
             return null;
           }
         };
@@ -205,22 +196,18 @@ public class labController {
 
     // Create task to run GPT model for riddle message
     labRiddleTask = createTask(GptPromptEngineering.getRiddleLab(solutionColours));
-
     labRiddleTask.setOnSucceeded(
         e -> {
-          // Update imagery
           imgScientistThinking.setVisible(false);
 
+          // Append to chat logs
           ChatMessage response = labRiddleTask.getValue();
 
-          // Append to chat log
           GameState.chatLog += "\n\n-> " + response.getContent();
 
-          // Append response to current scene
           chatArea.appendText("\n\n-> ");
           appendChatMessage(response);
 
-          // Update chat area in other scenes
           Thread updateChatThreadTM2 = new Thread(timemachineController.updateChatTask);
           updateChatThreadTM2.start();
           Thread updateChatThreadStorage2 = new Thread(storageController.updateChatTask);
@@ -248,6 +235,22 @@ public class labController {
     timer.start();
   }
 
+  /**
+   * Function to return to main menu, restarting game.
+   *
+   * @param event the action event triggered by the main menu button
+   */
+  @FXML
+  private void returnToMenu(ActionEvent event) throws IOException {
+    App.setRoot("mainmenu");
+    SceneManager.clearAllScenesExceptMainMenu();
+  }
+
+  /**
+   * Function to begin lab riddle.
+   *
+   * @param event the action event triggered by the begin button
+   */
   @FXML
   private void clkChemicalGeneral(MouseEvent event) {
 
@@ -263,18 +266,16 @@ public class labController {
     // Change to thinking scientist
     imgScientistThinking.setVisible(true);
 
+    // Generate riddle
     Thread labRiddleThread = new Thread(labRiddleTask);
     labRiddleThread.start();
   }
 
-  @FXML
-  private void returnToMenu(ActionEvent event) throws IOException {
-    App.setRoot("mainmenu");
-    GameState.isLabResolved = false;
-    GameState.isStorageResolved = false;
-    SceneManager.clearAllScenesExceptMainMenu();
-  }
-
+  /**
+   * Function to get arrows to change white arrows to green arrows.
+   *
+   * @param color the color of the chemical whos arrows point to
+   */
   private void updateArrows(int color) {
     updateColourIndication(
         arrowCollection.get(color),
@@ -283,6 +284,11 @@ public class labController {
         arrowCollection.get(color + 21));
   }
 
+  /**
+   * Function to update arrows and check if puzzle is complete.
+   *
+   * @param color the color of the chemical whos arrows point to
+   */
   private void chemClicked(int color) {
     if (isChemicalSolution[color]) {
       updateArrows(color);
@@ -291,6 +297,11 @@ public class labController {
     }
   }
 
+  /**
+   * Function to correctly identify which chemical is clicked
+   *
+   * @param event the action event triggered by the chemical being clicked
+   */
   @FXML
   private void clkChemical(MouseEvent event) {
     Rectangle src = (Rectangle) event.getSource();
@@ -319,6 +330,12 @@ public class labController {
     }
   }
 
+  /**
+   * Function to set which arrows to animate and animation properties.
+   *
+   * @param color the color of the chemical whos arrows point to
+   * @param show whether to show or hide the arrows
+   */
   private void chemAnimate(int color, Boolean show) {
     if (show) {
       arrowAnimationIn(
@@ -335,6 +352,11 @@ public class labController {
     }
   }
 
+  /**
+   * Function to correctly identify which chemical is hovered.
+   *
+   * @param event the action event triggered by the chemical being hovered
+   */
   @FXML
   private void showChemical(MouseEvent event) {
     Rectangle src = (Rectangle) event.getSource();
@@ -363,6 +385,11 @@ public class labController {
     }
   }
 
+  /**
+   * Function to correctly identify which chemical is unhovered.
+   *
+   * @param event the action event triggered by the chemical being unhovered
+   */
   @FXML
   private void hideChemical(MouseEvent event) {
     Rectangle src = (Rectangle) event.getSource();
@@ -391,6 +418,121 @@ public class labController {
     }
   }
 
+  private void fadingTransition(ImageView image, int duration) {
+    FadeTransition fade = new FadeTransition(Duration.millis(duration), image);
+    fade.setFromValue(0);
+    fade.setToValue(1);
+    fade.play();
+  }
+
+  private void fadingTransitionOut(ImageView image, int duration) {
+    FadeTransition fade = new FadeTransition(Duration.millis(duration), image);
+    fade.setDelay(Duration.millis(1200));
+    fade.setFromValue(1);
+    fade.setToValue(0);
+    fade.play();
+  }
+
+  private void flashingArrowsOff(ImageView image) {
+    FadeTransition fade = new FadeTransition(Duration.millis(1), image);
+    fade.setDelay(flashDuration);
+    fade.setFromValue(1);
+    fade.setToValue(0);
+    if (numFlashes >= 84) {
+      return;
+    } else {
+      numFlashes++;
+      fade.setOnFinished(
+          event -> {
+            flashDuration = Duration.millis(150);
+            flashingArrowsOn(image);
+          });
+    }
+    fade.play();
+  }
+
+  private void flashingArrowsOn(ImageView image) {
+    FadeTransition fade = new FadeTransition(Duration.millis(1), image);
+    fade.setDelay(flashDuration);
+    fade.setFromValue(0);
+    fade.setToValue(1);
+    numFlashes++;
+    fade.setOnFinished(
+        event -> {
+          flashingArrowsOff(image); // Recursive call to flash next arrow
+        });
+    fade.play();
+  }
+
+  private void fadeTransition() {
+    for (int i = 0; i < arrowCollection.size(); i++) {
+      fadingTransition(arrowCollection.get(i), fadeTransitionSpeed);
+    }
+    fadingTransition(blurredImage, fadeTransitionSpeed);
+  }
+
+  private void fadeTransitionOut() {
+    for (int i = 0; i < arrowCollection.size(); i++) {
+      fadingTransitionOut(arrowCollection.get(i), fadeTransitionSpeed);
+    }
+    fadingTransitionOut(blurredImage, fadeTransitionSpeed);
+  }
+
+  private void startFlashingArrows() {
+    for (int i = 0; i < arrowCollection.size(); i++) {
+      flashingArrowsOff(arrowCollection.get(i));
+    }
+  }
+
+  private void arrowAnimationIn(
+      ImageView arrowDown, ImageView arrowUp, int duration, int distance) {
+    Line lineDown = new Line(18, 13, 18, 13 + distance);
+    Line lineUp = new Line(18, 13, 18, 13 - distance);
+
+    Duration duration2 = Duration.millis(duration);
+
+    PathTransition pathTransitionDown = new PathTransition(duration2, lineDown, arrowDown);
+    PathTransition pathTransitionUp = new PathTransition(duration2, lineUp, arrowUp);
+
+    pathTransitionDown.play();
+    pathTransitionUp.play();
+  }
+
+  private void arrowAnimationOut(
+      ImageView arrowDown, ImageView arrowUp, int duration, int distance) {
+    Line lineDown = new Line(18, 13 - distance, 18, 13);
+    Line lineUp = new Line(18, 13 + distance, 18, 13);
+
+    Duration duration2 = Duration.millis(duration);
+
+    PathTransition pathTransitionDown = new PathTransition(duration2, lineDown, arrowDown);
+    PathTransition pathTransitionUp = new PathTransition(duration2, lineUp, arrowUp);
+
+    pathTransitionDown.play();
+    pathTransitionUp.play();
+  }
+
+  /**
+   * Function to switch from white arrows for green arrows.
+   *
+   * @param arrowUp the up arrow to be hidden
+   * @param arrowDown the down arrow to be hidden
+   * @param arrowUp1 the up arrow to be shown
+   * @param arrowDown1 the down arrow to be shown
+   */
+  private void updateColourIndication(
+      ImageView arrowUp, ImageView arrowDown, ImageView arrowUp1, ImageView arrowDown1) {
+    arrowUp.setVisible(false);
+    arrowDown.setVisible(false);
+    arrowUp1.setVisible(true);
+    arrowDown1.setVisible(true);
+  }
+
+  /**
+   * Function to show cehmcial task.
+   *
+   * @param visibility whether to show or hide the chemicals
+   */
   private void enableChemicals(Boolean visibility) {
     chemicalBlue.setVisible(visibility);
     chemicalCyan.setVisible(visibility);
@@ -403,6 +545,7 @@ public class labController {
     isChemicalsEnabled = true;
   }
 
+  /** Increment number of solutions added and check if puzzle is complete. */
   private Boolean isPuzzleComplete() {
     numChemicalsAdded++;
     if (numChemicalsAdded == 3) {
@@ -413,23 +556,24 @@ public class labController {
     }
   }
 
+  /** Function to execute events for when the lab task is finished. */
   private void puzzleComplete() {
     GameState.isLabResolved = true;
 
+    // Create task to run GPT model for lab complete message
     Task<ChatMessage> labCompleteTask = createTask(GptPromptEngineering.getLabComplete());
     Thread labCompleteThread = new Thread(labCompleteTask);
     labCompleteThread.start();
 
     labCompleteTask.setOnSucceeded(
         e -> {
-          // Append to chat log
+          // Append to chat logs
+
           GameState.chatLog += "\n\n-> " + labCompleteTask.getValue().getContent();
 
-          // Append response to current scene
           chatArea.appendText("\n\n-> ");
           appendChatMessage(labCompleteTask.getValue());
 
-          // Update chat area in other scenes
           Thread updateChatThreadTM2 = new Thread(timemachineController.updateChatTask);
           updateChatThreadTM2.start();
           Thread updateChatThreadStorage2 = new Thread(storageController.updateChatTask);
@@ -650,107 +794,5 @@ public class labController {
             return null;
           }
         };
-  }
-
-  private void fadingTransition(ImageView image, int duration) {
-    FadeTransition fade = new FadeTransition(Duration.millis(duration), image);
-    fade.setFromValue(0);
-    fade.setToValue(1);
-    fade.play();
-  }
-
-  private void fadingTransitionOut(ImageView image, int duration) {
-    FadeTransition fade = new FadeTransition(Duration.millis(duration), image);
-    fade.setDelay(Duration.millis(1200));
-    fade.setFromValue(1);
-    fade.setToValue(0);
-    fade.play();
-  }
-
-  private void flashingArrowsOff(ImageView image) {
-    FadeTransition fade = new FadeTransition(Duration.millis(1), image);
-    fade.setDelay(flashDuration);
-    fade.setFromValue(1);
-    fade.setToValue(0);
-    if (numFlashes >= 84) {
-      return;
-    } else {
-      numFlashes++;
-      fade.setOnFinished(
-          event -> {
-            flashDuration = Duration.millis(150);
-            flashingArrowsOn(image);
-          });
-    }
-    fade.play();
-  }
-
-  private void flashingArrowsOn(ImageView image) {
-    FadeTransition fade = new FadeTransition(Duration.millis(1), image);
-    fade.setDelay(flashDuration);
-    fade.setFromValue(0);
-    fade.setToValue(1);
-    numFlashes++;
-    fade.setOnFinished(
-        event -> {
-          flashingArrowsOff(image); // Recursive call to flash next arrow
-        });
-    fade.play();
-  }
-
-  private void fadeTransition() {
-    for (int i = 0; i < arrowCollection.size(); i++) {
-      fadingTransition(arrowCollection.get(i), fadeTransitionSpeed);
-    }
-    fadingTransition(blurredImage, fadeTransitionSpeed);
-  }
-
-  private void fadeTransitionOut() {
-    for (int i = 0; i < arrowCollection.size(); i++) {
-      fadingTransitionOut(arrowCollection.get(i), fadeTransitionSpeed);
-    }
-    fadingTransitionOut(blurredImage, fadeTransitionSpeed);
-  }
-
-  private void startFlashingArrows() {
-    for (int i = 0; i < arrowCollection.size(); i++) {
-      flashingArrowsOff(arrowCollection.get(i));
-    }
-  }
-
-  private void arrowAnimationIn(
-      ImageView arrowDown, ImageView arrowUp, int duration, int distance) {
-    Line lineDown = new Line(18, 13, 18, 13 + distance);
-    Line lineUp = new Line(18, 13, 18, 13 - distance);
-
-    Duration duration2 = Duration.millis(duration);
-
-    PathTransition pathTransitionDown = new PathTransition(duration2, lineDown, arrowDown);
-    PathTransition pathTransitionUp = new PathTransition(duration2, lineUp, arrowUp);
-
-    pathTransitionDown.play();
-    pathTransitionUp.play();
-  }
-
-  private void arrowAnimationOut(
-      ImageView arrowDown, ImageView arrowUp, int duration, int distance) {
-    Line lineDown = new Line(18, 13 - distance, 18, 13);
-    Line lineUp = new Line(18, 13 + distance, 18, 13);
-
-    Duration duration2 = Duration.millis(duration);
-
-    PathTransition pathTransitionDown = new PathTransition(duration2, lineDown, arrowDown);
-    PathTransition pathTransitionUp = new PathTransition(duration2, lineUp, arrowUp);
-
-    pathTransitionDown.play();
-    pathTransitionUp.play();
-  }
-
-  private void updateColourIndication(
-      ImageView arrowUp, ImageView arrowDown, ImageView arrowUp1, ImageView arrowDown1) {
-    arrowUp.setVisible(false);
-    arrowDown.setVisible(false);
-    arrowUp1.setVisible(true);
-    arrowDown1.setVisible(true);
   }
 }
