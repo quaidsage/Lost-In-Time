@@ -14,7 +14,7 @@ import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
 
-public class introController {
+public class IntroController {
   // Define FXML elements
   @FXML private Button btnSkip, btnPick, btnNext;
   @FXML private TextArea txtIntro, txtAi;
@@ -52,7 +52,7 @@ public class introController {
     App.setUi(AppUi.TIMEMACHINE);
 
     // Start the round function in the time machine scene
-    Thread startThread = new Thread(timemachineController.startTask);
+    Thread startThread = new Thread(TimemachineController.startTask);
     startThread.start();
   }
 
@@ -136,7 +136,7 @@ public class introController {
 
   // Proceed to the next interaction with the assistant
   @FXML
-  public void nextInteraction() {
+  public void proceedToNextInteraction() {
     // Hide the "Next" button
     btnNext.setDisable(true);
 

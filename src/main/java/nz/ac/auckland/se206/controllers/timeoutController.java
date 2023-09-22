@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.SceneManager;
 
-public class timeoutController {
+public class TimeoutController {
 
   @FXML private Button btnPlayAgain;
 

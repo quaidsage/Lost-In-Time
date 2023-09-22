@@ -9,7 +9,7 @@ import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 
-public class difficultyController {
+public class DifficultyController {
   // Define FXML elements
   @FXML private Button btnSwitchToTimeMachine;
   @FXML private CheckBox chkbxEasy, chkbxMedium, chkbxHard;
@@ -54,8 +54,8 @@ public class difficultyController {
       }
 
       // Set the selected time setting for the intro screen
-      introController.minutes = minutes;
-      Thread appendThread = new Thread(introController.appendTask);
+      IntroController.minutes = minutes;
+      Thread appendThread = new Thread(IntroController.appendTask);
       appendThread.start();
       App.setUi(AppUi.INTRO);
     }
@@ -67,7 +67,7 @@ public class difficultyController {
     // Change game state
     currentDifficulty = Difficulty.EASY;
     isDifficultyChecked = true;
-    labController.numHints = 6;
+    LabController.numHints = 6;
 
     // Handle when switching difficulties
     if (chkbxEasy.isSelected()) {

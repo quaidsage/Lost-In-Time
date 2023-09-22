@@ -24,7 +24,7 @@ import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 
-public class timemachineController {
+public class TimemachineController {
   // JavaFX elements
   @FXML private Button btnSwitchToLab, btnSwitchToStorage, btnSend;
   @FXML private Label lblTimer;
@@ -43,10 +43,10 @@ public class timemachineController {
   public static Task<Void> startTask;
 
   // Initialise Timer
-  private static timerController timer = new timerController();
+  private static TimerController timer = new TimerController();
 
   public void initialize() {
-    timer = new timerController();
+    timer = new TimerController();
 
     // Enable thinking image of scientist
     imgScientistThinking.setVisible(true);
@@ -95,7 +95,7 @@ public class timemachineController {
   private void switchToLab(ActionEvent event) {
     if (!GameState.isLabVisited) {
       GameState.isLabVisited = true;
-      Thread labIntroThread = new Thread(labController.labIntroTask);
+      Thread labIntroThread = new Thread(LabController.labIntroTask);
       labIntroThread.start();
     }
     App.setUi(AppUi.LAB);
@@ -110,7 +110,7 @@ public class timemachineController {
   private void switchToStorage(ActionEvent event) {
     if (!GameState.isStorageVisited) {
       GameState.isStorageVisited = true;
-      Thread storageIntroThread = new Thread(storageController.storageIntroTask);
+      Thread storageIntroThread = new Thread(StorageController.storageIntroTask);
       storageIntroThread.start();
     }
     App.setUi(AppUi.STORAGE);
@@ -283,9 +283,9 @@ public class timemachineController {
     appendChatMessage(chatMessage);
 
     // Update chat area in other scenes
-    Thread updateChatThreadLab = new Thread(labController.updateChatTask);
+    Thread updateChatThreadLab = new Thread(LabController.updateChatTask);
     updateChatThreadLab.start();
-    Thread updateChatThreadStorage = new Thread(storageController.updateChatTask);
+    Thread updateChatThreadStorage = new Thread(StorageController.updateChatTask);
     updateChatThreadStorage.start();
 
     // Add to chat log
@@ -314,9 +314,9 @@ public class timemachineController {
           appendChatMessage(chatTask.getValue());
 
           // Update chat area in other scenes
-          Thread updateChatThreadLab2 = new Thread(labController.updateChatTask);
+          Thread updateChatThreadLab2 = new Thread(LabController.updateChatTask);
           updateChatThreadLab2.start();
-          Thread updateChatThreadStorage2 = new Thread(storageController.updateChatTask);
+          Thread updateChatThreadStorage2 = new Thread(StorageController.updateChatTask);
           updateChatThreadStorage2.start();
         });
   }
@@ -336,6 +336,7 @@ public class timemachineController {
             try {
               Thread.sleep(ms);
             } catch (InterruptedException e) {
+              e.printStackTrace();
             }
             return null;
           }
@@ -418,9 +419,9 @@ public class timemachineController {
                             lblTimer.setVisible(true);
                             // Start timer. Change 'minutes' variable to change the length of the
                             // game
-                            timemachineStartTimer(introController.minutes);
-                            labController.labStartTimer(introController.minutes);
-                            storageController.storageStartTimer(introController.minutes);
+                            timemachineStartTimer(IntroController.minutes);
+                            LabController.labStartTimer(IntroController.minutes);
+                            StorageController.storageStartTimer(IntroController.minutes);
                           });
                     });
               });
@@ -442,9 +443,9 @@ public class timemachineController {
           appendChatMessage(contextTask.getValue());
 
           // Update chat area in other scenes
-          Thread updateChatThreadLab = new Thread(labController.updateChatTask);
+          Thread updateChatThreadLab = new Thread(LabController.updateChatTask);
           updateChatThreadLab.start();
-          Thread updateChatThreadStorage = new Thread(storageController.updateChatTask);
+          Thread updateChatThreadStorage = new Thread(StorageController.updateChatTask);
           updateChatThreadStorage.start();
         });
   }
