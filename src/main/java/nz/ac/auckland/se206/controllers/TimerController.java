@@ -19,7 +19,7 @@ public class TimerController extends Service<Void> {
   /**
    * Creates and returns a task that handles the timer countdown.
    *
-   * @return A task responsible for updating the timer.
+   * @return A task responsible for updating the timer
    */
   @Override
   protected Task<Void> createTask() {
