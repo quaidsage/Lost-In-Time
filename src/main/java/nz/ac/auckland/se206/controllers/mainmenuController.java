@@ -9,6 +9,7 @@ import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.SceneManager.AppUi;
+import nz.ac.auckland.se206.gpt.openai.ChatCompletionRequest;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 
 public class mainmenuController {
@@ -22,10 +23,18 @@ public class mainmenuController {
 
   @FXML
   private void beginGame(ActionEvent event) throws IOException {
+    // Reset GameState
     GameState.isLabResolved = false;
     GameState.isStorageResolved = false;
     GameState.isLabVisited = false;
     GameState.isStorageVisited = false;
+    GameState.isDifficultyEasy = false;
+    GameState.isDifficultyMedium = false;
+    GameState.isDifficultyHard = false;
+
+    // Initialise AI
+    GameState.chatCompletionRequest =
+        new ChatCompletionRequest().setN(1).setTemperature(0.2).setTopP(0.5).setMaxTokens(200);
 
     // Create a task to load all the fxml files
     Task<Void> loadTask =

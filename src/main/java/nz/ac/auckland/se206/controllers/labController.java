@@ -16,7 +16,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polyline;
@@ -31,24 +30,21 @@ import nz.ac.auckland.se206.gpt.GptPromptEngineering;
 import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
-import nz.ac.auckland.se206.controllers.difficultyController.Difficulty;
-
 
 public class labController {
 
   // JavaFX elements
   @FXML private Pane paneLab;
   @FXML private Button btnSwitchToTimeMachine, btnSend;
-  @FXML private Label lblTimer;
+  @FXML private Label lblTimer, hintsRemaining;
   @FXML private TextArea chatArea;
   @FXML private TextArea chatField;
   @FXML private ImageView imgScientistThinking;
   @FXML private Button btnMenu;
-  @FXML private HBox box;
   @FXML private Polyline chemicalGeneral;
   @FXML private Rectangle chemicalCyan, chemicalBlue, chemicalPurple, chemicalOrange;
   @FXML private Rectangle chemicalYellow, chemicalGreen, chemicalRed, transitionScene;
-  @FXML private ImageView baseImage, blurredImage;
+  @FXML private ImageView baseImage, blurredImage, typingBubble;
   ArrayList<ImageView> arrowCollection = new ArrayList<ImageView>();
 
   // Initialise Variables
@@ -66,9 +62,7 @@ public class labController {
   private int fadeTransitionSpeed = 1500;
   private Duration flashDuration = Duration.millis(0);
   private int numFlashes = 0;
-  //  ArrayList<ImageView> imageViewList = new ArrayList<>();
-  ArrayList<ImageView> arrowCollection = new ArrayList<ImageView>();
-  int numHints = 5;
+  public int numHints = 5;
 
   // Initialise Timer
   private static timerController timer = new timerController();
@@ -264,7 +258,7 @@ public class labController {
     if (GameState.isDifficultyMedium == true) {
       numHints = 5;
       hintsRemaining.setText("Hints Remaining: " + String.valueOf(numHints));
-    }  else if (GameState.isDifficultyEasy == true) {
+    } else if (GameState.isDifficultyEasy == true) {
       hintsRemaining.setText("Unlimited hints available");
     } else {
       hintsRemaining.setText("No hints available");
@@ -698,12 +692,13 @@ public class labController {
         blurredImage.setVisible(true);
         fadeTransition();
       }
-      if (result.getChatMessage().getContent().contains("Hint:") && GameState.isDifficultyMedium == true) {
-        Platform.runLater(() -> {
-          numHints--;
-        updateHintText(numHints);
-      });
-        
+      if (result.getChatMessage().getContent().contains("Hint:")
+          && GameState.isDifficultyMedium == true) {
+        Platform.runLater(
+            () -> {
+              numHints--;
+              updateHintText(numHints);
+            });
       }
       return result.getChatMessage();
     } catch (ApiProxyException e) {
@@ -826,4 +821,5 @@ public class labController {
     if (numHints <= 0) {
       hintsRemaining.setText("Hints Remaining: " + String.valueOf(numHints));
     }
+  }
 }

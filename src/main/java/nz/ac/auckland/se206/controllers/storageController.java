@@ -529,11 +529,6 @@ public class storageController {
   @FXML
   private void returnToMenu(ActionEvent event) throws IOException {
     App.setRoot("mainmenu");
-    GameState.isLabResolved = false;
-    GameState.isStorageResolved = false;
-    GameState.isDifficultyEasy = false;
-    GameState.isDifficultyMedium = false;
-    GameState.isDifficultyHard = false;
     SceneManager.clearAllScenesExceptMainMenu();
   }
 }
