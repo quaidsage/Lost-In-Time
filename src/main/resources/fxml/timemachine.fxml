@@ -61,6 +61,11 @@
             <Font name="Monospace 821 Bold BT" size="38.0" />
          </font>
       </Label>
+      <ImageView fx:id="typingBubble" fitHeight="70.0" fitWidth="107.0" layoutX="1212.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../images/typing_bubble1.gif" />
+         </image>
+      </ImageView>
       <Rectangle fx:id="rectLight" arcHeight="5.0" arcWidth="5.0" height="797.0" layoutX="-15.0" layoutY="-15.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="1451.0" />
       <Button fx:id="btnMenu" layoutX="25.0" layoutY="15.0" mnemonicParsing="false" onAction="#returnToMenu" text="Return To Menu">
          <font>

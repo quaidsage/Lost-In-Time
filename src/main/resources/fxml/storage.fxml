@@ -136,5 +136,10 @@
             <Font name="Apple Symbols" size="24.0" />
          </font>
       </Text>
+      <ImageView fx:id="typingBubble" fitHeight="70.0" fitWidth="107.0" layoutX="1212.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../images/typing_bubble1.gif" />
+         </image>
+      </ImageView>
    </children>
 </Pane>

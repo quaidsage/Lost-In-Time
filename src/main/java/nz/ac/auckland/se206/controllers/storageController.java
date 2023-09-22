@@ -57,6 +57,7 @@ public class storageController {
   @FXML private Button button8;
   @FXML private Button btnMenu;
   @FXML private Text info;
+  @FXML private ImageView typingBubble;
 
   // Initialise Variables
   private int characterDelay = 5;
@@ -95,11 +96,13 @@ public class storageController {
 
     // Enable thinking image of scientist
     imgScientistThinking.setVisible(true);
+    typingBubble.setVisible(true);
 
     storageIntroTask.setOnSucceeded(
         e -> {
           // Update imagery
           imgScientistThinking.setVisible(false);
+          typingBubble.setVisible(false);
 
           ChatMessage response = storageIntroTask.getValue();
 
@@ -205,6 +208,7 @@ public class storageController {
 
     // Enable thinking image of scientist
     imgScientistThinking.setVisible(true);
+    typingBubble.setVisible(true);
 
     storageThreadComplete.start();
 
@@ -212,6 +216,7 @@ public class storageController {
         e -> {
           // Update imagery
           imgScientistThinking.setVisible(false);
+          typingBubble.setVisible(false);
 
           ChatMessage response = storageTaskComplete.getValue();
 
@@ -442,11 +447,13 @@ public class storageController {
 
     // Enable thinking image of scientist
     imgScientistThinking.setVisible(true);
+    typingBubble.setVisible(true);
 
     chatTask.setOnSucceeded(
         e -> {
           // Update imagery
           imgScientistThinking.setVisible(false);
+          typingBubble.setVisible(false);
 
           // Add to chat log
           GameState.chatLog += "\n\n-> " + chatTask.getValue().getContent();
