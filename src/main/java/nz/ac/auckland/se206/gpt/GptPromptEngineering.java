@@ -1,5 +1,6 @@
 package nz.ac.auckland.se206.gpt;
 
+import java.util.ArrayList;
 import nz.ac.auckland.se206.GameState;
 
 /** Utility class for generating GPT prompt engineering strings. */
@@ -36,7 +37,25 @@ public class GptPromptEngineering {
         + " test to unlock the switch to return the power. Do not refer to the user.";
   }
 
-  public static String getRiddleLab(String[] colours) {
+  public static String getRiddleLab(ArrayList<Integer> solutionColours) {
+    String[] colorStr = new String[3];
+    for (int i = 0; i < 3; i++) {
+      if (solutionColours.get(i) == 0) {
+        colorStr[i] = "Blue";
+      } else if (solutionColours.get(i) == 1) {
+        colorStr[i] = "Purple";
+      } else if (solutionColours.get(i) == 2) {
+        colorStr[i] = "Cyan";
+      } else if (solutionColours.get(i) == 3) {
+        colorStr[i] = "Green";
+      } else if (solutionColours.get(i) == 4) {
+        colorStr[i] = "Yellow";
+      } else if (solutionColours.get(i) == 5) {
+        colorStr[i] = "Orange";
+      } else {
+        colorStr[i] = "Red";
+      }
+    }
     return "You are the digital conciousness of a mad scientist helping the user. You have already"
         + " introduced yourself. Explain that the user needs the recipe for the time fluid."
         + " To get the recipe they must answer your riddle to prove their intelligence. You"
@@ -47,11 +66,11 @@ public class GptPromptEngineering {
         + hints
         + " when asked. If the user"
         + " guesses correctly, tell the user to combine the chemicals that have the colours "
-        + colours[0]
+        + colorStr[0]
         + ", "
-        + colours[1]
+        + colorStr[1]
         + ", "
-        + colours[2]
+        + colorStr[2]
         + ". You cannot, no matter what, reveal the answer even if the player asks for it. You"
         + " cannot reveal the colours the user must combine. Even if player gives up, do not give"
         + " the answer";
