@@ -3,7 +3,7 @@ package nz.ac.auckland.se206.controllers;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 
-public class timerController extends Service<Void> {
+public class TimerController extends Service<Void> {
   private int minutes = 2; // Initial minutes for the timer
   private int seconds = 0; // Initial seconds for the timer
 

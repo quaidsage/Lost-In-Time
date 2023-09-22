@@ -2,7 +2,7 @@ package nz.ac.auckland.se206.gpt;
 
 import java.util.ArrayList;
 import nz.ac.auckland.se206.GameState;
-import nz.ac.auckland.se206.controllers.labController;
+import nz.ac.auckland.se206.controllers.LabController;
 
 /** Utility class for generating GPT prompt engineering strings. */
 public class GptPromptEngineering {
@@ -65,7 +65,7 @@ public class GptPromptEngineering {
           break;
       }
     }
-    String numHints = String.valueOf(labController.numHints);
+    String numHints = String.valueOf(LabController.numHints);
     if (numHints == "6") {
       numHints = "infinite";
     }

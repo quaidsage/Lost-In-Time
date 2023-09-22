@@ -12,7 +12,7 @@ import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionRequest;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 
-public class mainmenuController {
+public class MainmenuController {
   @FXML private Button btnBeginGame;
 
   int count = 0;
@@ -20,7 +20,7 @@ public class mainmenuController {
   public void initialize() {
     // This method is automatically called when the FXML is loaded.
     // It can be used for any initialization tasks.
-    // textToSpeech("Soft enj 2 0 6, escape room. Welcome!");
+    textToSpeech("Lost in time. Restore the fabric of time.");
   }
 
   @FXML
@@ -35,7 +35,7 @@ public class mainmenuController {
     GameState.isDifficultyEasy = false;
     GameState.isDifficultyMedium = false;
     GameState.isDifficultyHard = false;
-    labController.numHints = 5;
+    LabController.numHints = 5;
 
     // Initialise AI chat parameters
     GameState.chatCompletionRequest =
@@ -62,7 +62,7 @@ public class mainmenuController {
     SceneManager.addUi(AppUi.DIFFICULTY, App.loadFxml("difficulty"));
     App.setUi(AppUi.DIFFICULTY);
     SceneManager.addUi(AppUi.INTRO, App.loadFxml("intro"));
-    // textToSpeech("Select difficulty level and time limit.");
+    textToSpeech("Select difficulty level and time limit.");
   }
 
   private void textToSpeech(String msg) {

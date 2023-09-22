@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.SceneManager;
 
-public class endsceneController {
+public class EndsceneController {
   @FXML private Button btnPlayAgain;
 
   // Handle the "Play Again" button click event
