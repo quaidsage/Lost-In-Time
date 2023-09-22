@@ -39,21 +39,30 @@ public class GptPromptEngineering {
 
   public static String getRiddleLab(ArrayList<Integer> solutionColours) {
     String[] colorStr = new String[3];
+
     for (int i = 0; i < 3; i++) {
-      if (solutionColours.get(i) == 0) {
-        colorStr[i] = "Blue";
-      } else if (solutionColours.get(i) == 1) {
-        colorStr[i] = "Purple";
-      } else if (solutionColours.get(i) == 2) {
-        colorStr[i] = "Cyan";
-      } else if (solutionColours.get(i) == 3) {
-        colorStr[i] = "Green";
-      } else if (solutionColours.get(i) == 4) {
-        colorStr[i] = "Yellow";
-      } else if (solutionColours.get(i) == 5) {
-        colorStr[i] = "Orange";
-      } else {
-        colorStr[i] = "Red";
+      switch (solutionColours.get(i)) {
+        case 0:
+          colorStr[i] = "Blue";
+          break;
+        case 1:
+          colorStr[i] = "Purple";
+          break;
+        case 2:
+          colorStr[i] = "Cyan";
+          break;
+        case 3:
+          colorStr[i] = "Green";
+          break;
+        case 4:
+          colorStr[i] = "Yellow";
+          break;
+        case 5:
+          colorStr[i] = "Orange";
+          break;
+        default:
+          colorStr[i] = "Red";
+          break;
       }
     }
     return "You are the digital conciousness of a mad scientist helping the user. You have already"

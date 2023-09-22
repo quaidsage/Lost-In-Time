@@ -292,38 +292,31 @@ public class labController {
   }
 
   @FXML
-  private void clkChemicalBlue(MouseEvent event) {
-    chemClicked(0);
-  }
-
-  @FXML
-  private void clkChemicalPurple(MouseEvent event) {
-    chemClicked(1);
-  }
-
-  @FXML
-  private void clkChemicalCyan(MouseEvent event) {
-    chemClicked(2);
-  }
-
-  @FXML
-  private void clkChemicalGreen(MouseEvent event) {
-    chemClicked(3);
-  }
-
-  @FXML
-  private void clkChemicalYellow(MouseEvent event) {
-    chemClicked(4);
-  }
-
-  @FXML
-  private void clkChemicalOrange(MouseEvent event) {
-    chemClicked(5);
-  }
-
-  @FXML
-  private void clkChemicalRed(MouseEvent event) {
-    chemClicked(6);
+  private void clkChemical(MouseEvent event) {
+    Rectangle src = (Rectangle) event.getSource();
+    switch (src.getId()) {
+      case "chemicalBlue":
+        chemClicked(0);
+        break;
+      case "chemicalPurple":
+        chemClicked(1);
+        break;
+      case "chemicalCyan":
+        chemClicked(2);
+        break;
+      case "chemicalGreen":
+        chemClicked(3);
+        break;
+      case "chemicalYellow":
+        chemClicked(4);
+        break;
+      case "chemicalOrange":
+        chemClicked(5);
+        break;
+      case "chemicalRed":
+        chemClicked(6);
+        break;
+    }
   }
 
   private void chemAnimate(int color, Boolean show) {
@@ -343,73 +336,59 @@ public class labController {
   }
 
   @FXML
-  private void showChemicalBlue(MouseEvent event) {
-    chemAnimate(0, true);
+  private void showChemical(MouseEvent event) {
+    Rectangle src = (Rectangle) event.getSource();
+    switch (src.getId()) {
+      case "chemicalBlue":
+        chemAnimate(0, true);
+        break;
+      case "chemicalPurple":
+        chemAnimate(1, true);
+        break;
+      case "chemicalCyan":
+        chemAnimate(2, true);
+        break;
+      case "chemicalGreen":
+        chemAnimate(3, true);
+        break;
+      case "chemicalYellow":
+        chemAnimate(4, true);
+        break;
+      case "chemicalOrange":
+        chemAnimate(5, true);
+        break;
+      case "chemicalRed":
+        chemAnimate(6, true);
+        break;
+    }
   }
 
   @FXML
-  private void showChemicalPurple(MouseEvent event) {
-    chemAnimate(1, true);
-  }
-
-  @FXML
-  private void showChemicalCyan(MouseEvent event) {
-    chemAnimate(2, true);
-  }
-
-  @FXML
-  private void showChemicalGreen(MouseEvent event) {
-    chemAnimate(3, true);
-  }
-
-  @FXML
-  private void showChemicalYellow(MouseEvent event) {
-    chemAnimate(4, true);
-  }
-
-  @FXML
-  private void showChemicalOrange(MouseEvent event) {
-    chemAnimate(5, true);
-  }
-
-  @FXML
-  private void showChemicalRed(MouseEvent event) {
-    chemAnimate(6, true);
-  }
-
-  @FXML
-  private void hideChemicalBlue(MouseEvent event) {
-    chemAnimate(0, false);
-  }
-
-  @FXML
-  private void hideChemicalPurple(MouseEvent event) {
-    chemAnimate(1, false);
-  }
-
-  @FXML
-  private void hideChemicalCyan(MouseEvent event) {
-    chemAnimate(2, false);
-  }
-
-  @FXML
-  private void hideChemicalGreen(MouseEvent event) {
-    chemAnimate(3, false);
-  }
-
-  @FXML
-  private void hideChemicalYellow(MouseEvent event) {
-    chemAnimate(4, false);
-  }
-
-  @FXML
-  private void hideChemicalOrange(MouseEvent event) {
-    chemAnimate(5, false);
-  }
-
-  @FXML
-  private void hideChemicalRed(MouseEvent event) {
-    chemAnimate(6, false);
+  private void hideChemical(MouseEvent event) {
+    Rectangle src = (Rectangle) event.getSource();
+    switch (src.getId()) {
+      case "chemicalBlue":
+        chemAnimate(0, false);
+        break;
+      case "chemicalPurple":
+        chemAnimate(1, false);
+        break;
+      case "chemicalCyan":
+        chemAnimate(2, false);
+        break;
+      case "chemicalGreen":
+        chemAnimate(3, false);
+        break;
+      case "chemicalYellow":
+        chemAnimate(4, false);
+        break;
+      case "chemicalOrange":
+        chemAnimate(5, false);
+        break;
+      case "chemicalRed":
+        chemAnimate(6, false);
+        break;
+    }
   }
 
   private void enableChemicals(Boolean visibility) {
