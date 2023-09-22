@@ -31,7 +31,7 @@ import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 
-public class labController {
+public class LabController {
 
   // JavaFX elements
   @FXML private Pane paneLab;
@@ -66,11 +66,11 @@ public class labController {
   public static int numHints = 5;
 
   // Initialise Timer
-  private static timerController timer = new timerController();
+  private static TimerController timer = new TimerController();
 
   public void initialize() throws ApiProxyException {
     // Initialise timer and bind the lblTimer to the timerController properties.
-    timer = new timerController();
+    timer = new TimerController();
     lblTimer.textProperty().bind(timer.messageProperty());
     timer.setOnSucceeded(
         e -> {
@@ -98,10 +98,10 @@ public class labController {
           chatArea.appendText("\n\n-> ");
           appendChatMessage(response);
 
-          Thread updateChatThreadStorage = new Thread(storageController.updateChatTask);
+          Thread updateChatThreadStorage = new Thread(StorageController.updateChatTask);
           updateChatThreadStorage.start();
-          Thread updateChatThreadTime = new Thread(timemachineController.updateChatTask);
-          updateChatThreadTime.start();
+          Thread updateChatThreadTM = new Thread(TimemachineController.updateChatTask);
+          updateChatThreadTM.start();
         });
 
     // Set solution chemicals
@@ -249,7 +249,7 @@ public class labController {
     }
 
     // Create task to run GPT model for riddle message
-    labRiddleTask = createTask(GptPromptEngineering.getRiddleLab(labController.solutionColours));
+    labRiddleTask = createTask(GptPromptEngineering.getRiddleLab(LabController.solutionColours));
     labRiddleTask.setOnSucceeded(
         e -> {
           imgScientistThinking.setVisible(false);
@@ -263,9 +263,9 @@ public class labController {
           chatArea.appendText("\n\n-> ");
           appendChatMessage(response);
 
-          Thread updateChatThreadTime2 = new Thread(timemachineController.updateChatTask);
-          updateChatThreadTime2.start();
-          Thread updateChatThreadStorage2 = new Thread(storageController.updateChatTask);
+          Thread updateChatThreadTM2 = new Thread(TimemachineController.updateChatTask);
+          updateChatThreadTM2.start();
+          Thread updateChatThreadStorage2 = new Thread(StorageController.updateChatTask);
           updateChatThreadStorage2.start();
         });
 
@@ -586,9 +586,9 @@ public class labController {
           chatArea.appendText("\n\n-> ");
           appendChatMessage(labCompleteTask.getValue());
 
-          Thread updateChatThreadTime2 = new Thread(timemachineController.updateChatTask);
-          updateChatThreadTime2.start();
-          Thread updateChatThreadStorage2 = new Thread(storageController.updateChatTask);
+          Thread updateChatThreadTM2 = new Thread(TimemachineController.updateChatTask);
+          updateChatThreadTM2.start();
+          Thread updateChatThreadStorage2 = new Thread(StorageController.updateChatTask);
           updateChatThreadStorage2.start();
         });
 
@@ -743,9 +743,9 @@ public class labController {
     appendChatMessage(chatMessage);
 
     // Update chat area in other scenes
-    Thread updateChatThreadTime = new Thread(timemachineController.updateChatTask);
-    updateChatThreadTime.start();
-    Thread updateChatThreadStorage = new Thread(storageController.updateChatTask);
+    Thread updateChatThreadTM = new Thread(TimemachineController.updateChatTask);
+    updateChatThreadTM.start();
+    Thread updateChatThreadStorage = new Thread(StorageController.updateChatTask);
     updateChatThreadStorage.start();
 
     // Add to chat log
@@ -774,9 +774,10 @@ public class labController {
           appendChatMessage(chatTask.getValue());
 
           // Update chat area in other scenes
-          Thread updateChatThreadTime2 = new Thread(timemachineController.updateChatTask);
-          updateChatThreadTime2.start();
-          Thread updateChatThreadStorage2 = new Thread(storageController.updateChatTask);
+          Thread updateChatThreadTM2 = new Thread(TimemachineController.updateChatTask);
+          updateChatThreadTM2.start();
+          Thread updateChatThreadStorage2 = new Thread(StorageController.updateChatTask);
+
           updateChatThreadStorage2.start();
         });
   }
