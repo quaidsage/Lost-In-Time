@@ -7,64 +7,64 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.difficultyController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" style="-fx-background-color: rgb(28,28,28);" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.difficultyController">
    <children>
-      <Label layoutX="312.0" layoutY="232.0" text="Difficulty:">
+      <Label layoutX="239.0" layoutY="231.0" text="Difficulty:" textFill="#6bf9b1">
          <font>
-            <Font name="Apple Symbols" size="48.0" />
+            <Font name="System Bold" size="48.0" />
          </font>
       </Label>
-      <Label layoutX="912.0" layoutY="231.0" text="Time Limit:">
+      <Label layoutX="840.0" layoutY="231.0" text="Time Limit:" textFill="#6bf9b1">
          <font>
-            <Font name="Apple Symbols" size="48.0" />
+            <Font name="System Bold" size="48.0" />
          </font>
       </Label>
-      <VBox layoutX="321.0" layoutY="307.0" prefHeight="212.0" prefWidth="269.0">
+      <VBox layoutX="267.0" layoutY="306.0" prefHeight="212.0" prefWidth="322.0">
          <children>
-            <CheckBox fx:id="chkbxEasy" mnemonicParsing="false" onAction="#checkedEasy" prefHeight="44.0" prefWidth="251.0" text="Easy    - unlimited hints">
+            <CheckBox fx:id="chkbxEasy" mnemonicParsing="false" onAction="#checkedEasy" prefHeight="44.0" prefWidth="305.0" text="Easy    - unlimited hints" textFill="#6bf9b1">
                <font>
                   <Font name="Apple Symbols" size="24.0" />
                </font>
             </CheckBox>
-            <CheckBox fx:id="chkbxMedium" mnemonicParsing="false" onAction="#checkedMedium" prefHeight="44.0" prefWidth="233.0" text="Medium - 5 hints">
+            <CheckBox fx:id="chkbxMedium" mnemonicParsing="false" onAction="#checkedMedium" prefHeight="44.0" prefWidth="233.0" text="Medium - 5 hints" textFill="#6bf9b1">
                <font>
                   <Font name="Apple Symbols" size="24.0" />
                </font>
             </CheckBox>
-            <CheckBox fx:id="chkbxHard" mnemonicParsing="false" onAction="#checkedHard" prefHeight="44.0" prefWidth="233.0" text="Hard    - no hints">
+            <CheckBox fx:id="chkbxHard" mnemonicParsing="false" onAction="#checkedHard" prefHeight="44.0" prefWidth="233.0" text="Hard    - no hints" textFill="#6bf9b1">
                <font>
                   <Font name="Apple Symbols" size="24.0" />
                </font>
             </CheckBox>
          </children>
       </VBox>
-      <VBox layoutX="929.0" layoutY="306.0" prefHeight="212.0" prefWidth="196.0">
+      <VBox layoutX="896.0" layoutY="306.0" prefHeight="212.0" prefWidth="196.0">
          <children>
-            <CheckBox fx:id="chkbxTwoMins" mnemonicParsing="false" onAction="#checkedTwoMins" prefHeight="44.0" prefWidth="163.0" text="2 mins">
+            <CheckBox fx:id="chkbxTwoMins" mnemonicParsing="false" onAction="#checkedTwoMins" prefHeight="44.0" prefWidth="163.0" text="2 Minutes" textFill="#6bf9b1">
                <font>
                   <Font name="Apple Symbols" size="24.0" />
                </font>
             </CheckBox>
-            <CheckBox fx:id="chkbxFourMins" mnemonicParsing="false" onAction="#checkedFourMins" prefHeight="44.0" prefWidth="163.0" text="4 mins">
+            <CheckBox fx:id="chkbxFourMins" mnemonicParsing="false" onAction="#checkedFourMins" prefHeight="44.0" prefWidth="163.0" text="4 Minutes" textFill="#6bf9b1">
                <font>
                   <Font name="Apple Symbols" size="24.0" />
                </font>
             </CheckBox>
-            <CheckBox fx:id="chkbxSixMins" mnemonicParsing="false" onAction="#checkedSixMins" prefHeight="44.0" prefWidth="163.0" text="6 mins">
+            <CheckBox fx:id="chkbxSixMins" mnemonicParsing="false" onAction="#checkedSixMins" prefHeight="44.0" prefWidth="163.0" text="6 Minutes" textFill="#6bf9b1">
                <font>
                   <Font name="Apple Symbols" size="24.0" />
                </font>
             </CheckBox>
          </children>
       </VBox>
-      <Button fx:id="btnSwitchToTimeMachine" layoutX="1131.0" layoutY="624.0" mnemonicParsing="false" onAction="#switchToIntro" text="Continue">
+      <Button id="btnSkip" fx:id="btnSwitchToTimeMachine" layoutX="1131.0" layoutY="624.0" mnemonicParsing="false" onAction="#switchToIntro" stylesheets="@../css/style.css" text="Continue">
          <font>
-            <Font name="Apple Symbols" size="36.0" />
+            <Font name="System Bold" size="36.0" />
          </font>
       </Button>
-      <Label layoutX="74.0" layoutY="46.0" prefHeight="50.0" prefWidth="702.0" text="Select Difficulty Level and Time Limit">
+      <Label layoutX="74.0" layoutY="46.0" prefHeight="70.0" prefWidth="909.0" text="Select Difficulty Level and Time Limit" textFill="#6bf9b1">
          <font>
-            <Font name="Apple Symbols" size="48.0" />
+            <Font name="System Bold" size="48.0" />
          </font>
       </Label>
       <Label fx:id="lblSelectBoxesWarning" layoutX="956.0" layoutY="661.0" prefHeight="17.0" prefWidth="99.0">

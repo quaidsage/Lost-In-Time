@@ -5,7 +5,6 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.paint.RadialGradient?>
@@ -15,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="paneLab" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.labController">
+<Pane fx:id="paneLab" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" style="-fx-background-color: rgb(28,28,28);" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.labController">
    <children>
       <ImageView fx:id="baseImage" fitHeight="585.0" fitWidth="960.0" layoutX="25.0" layoutY="67.0" pickOnBounds="true">
          <image>
@@ -36,9 +35,9 @@
          <font>
             <Font name="Monospace 821 Bold BT" size="38.0" />
          </font></Label>
-      <Button fx:id="btnSwitchToTimeMachine" layoutX="25.0" layoutY="660.0" mnemonicParsing="false" onAction="#switchToTimeMachine" prefHeight="70.0" prefWidth="389.0" text="Time Machine Room">
+      <Button id="btnSkip" fx:id="btnSwitchToTimeMachine" layoutX="25.0" layoutY="660.0" mnemonicParsing="false" onAction="#switchToTimeMachine" prefHeight="79.0" prefWidth="408.0" text="Time Machine Room">
          <font>
-            <Font name="Apple Symbols" size="36.0" />
+            <Font name="System Bold" size="36.0" />
          </font></Button>
       <TextArea id="chatField" fx:id="chatField" layoutX="1025.0" layoutY="570.0" prefHeight="106.0" prefWidth="207.0" promptText="Enter message..." stylesheets="@../css/style.css">
          <font>
@@ -90,11 +89,11 @@
       <Rectangle fx:id="chemicalOrange" arcHeight="5.0" arcWidth="5.0" fill="#ff6969" height="236.0" layoutX="680.0" layoutY="255.0" onMouseClicked="#clkChemical" onMouseEntered="#showChemical" onMouseExited="#hideChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="67.0" />
       <Rectangle fx:id="chemicalRed" arcHeight="5.0" arcWidth="5.0" fill="#ff7e38" height="237.0" layoutX="780.0" layoutY="255.0" onMouseClicked="#clkChemical" onMouseEntered="#showChemical" onMouseExited="#hideChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="72.0" />
       <Rectangle fx:id="transitionScene" arcHeight="5.0" arcWidth="5.0" height="775.0" layoutX="-14.0" layoutY="-11.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="1427.0" />
-      <Button fx:id="btnMenu" layoutX="25.0" layoutY="15.0" mnemonicParsing="false" onAction="#returnToMenu" text="Return To Menu">
+      <Button id="btnSkip" fx:id="btnMenu" layoutX="5.0" layoutY="4.0" mnemonicParsing="false" onAction="#returnToMenu" text="Return To Menu">
          <font>
-            <Font name="Apple Symbols" size="24.0" />
+            <Font name="System Bold" size="24.0" />
          </font></Button>
-      <Text layoutX="790.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently in: Lab Room">
+      <Text fill="#6bf9b1" layoutX="731.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently in: Lab Room">
          <font>
             <Font name="Apple Symbols" size="24.0" />
          </font>
