@@ -1,7 +1,6 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
-
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,30 +17,45 @@ public class mainmenuController {
   int count = 0;
 
   public void initialize() {
-    textToSpeech("Soft enj 2 0 6, escape room. Welcome!");
+    // textToSpeech("Soft enj 2 0 6, escape room. Welcome!");
   }
 
   @FXML
   private void beginGame(ActionEvent event) throws IOException {
     GameState.isLabResolved = false;
     GameState.isStorageResolved = false;
-    SceneManager.addUi(AppUi.LAB, App.loadFxml("lab"));
+    GameState.isLabVisited = false;
+    GameState.isStorageVisited = false;
+
+    // Create a task to load all the fxml files
+    Task<Void> loadTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            SceneManager.addUi(AppUi.LAB, App.loadFxml("lab"));
+            SceneManager.addUi(AppUi.STORAGE, App.loadFxml("storage"));
+            SceneManager.addUi(AppUi.TIMEMACHINE, App.loadFxml("timemachine"));
+            SceneManager.addUi(AppUi.ENDSCENE, App.loadFxml("endscene"));
+            SceneManager.addUi(AppUi.TIMEOUT, App.loadFxml("timeout"));
+            return null;
+          }
+        };
+    Thread loadThread = new Thread(loadTask);
+    loadThread.start();
+
     SceneManager.addUi(AppUi.DIFFICULTY, App.loadFxml("difficulty"));
-    SceneManager.addUi(AppUi.STORAGE, App.loadFxml("storage"));
-    SceneManager.addUi(AppUi.TIMEMACHINE, App.loadFxml("timemachine"));
-    SceneManager.addUi(AppUi.ENDSCENE, App.loadFxml("endscene"));
-    SceneManager.addUi(AppUi.TIMEOUT, App.loadFxml("timeout"));
-    SceneManager.addUi(AppUi.INTRO, App.loadFxml("intro"));
     App.setUi(AppUi.DIFFICULTY);
-    textToSpeech("Select difficulty level and time limit.");
+    SceneManager.addUi(AppUi.INTRO, App.loadFxml("intro"));
+    // textToSpeech("Select difficulty level and time limit.");
   }
 
   private void textToSpeech(String msg) {
     // Declare textToSpeech from tts constructor
-    Task<Void> ttsTask = new Task<Void>() {
-  
-        @Override
-        protected Void call() throws Exception {
+    Task<Void> ttsTask =
+        new Task<Void>() {
+
+          @Override
+          protected Void call() throws Exception {
             // call desired methods when start()
             TextToSpeech textToSpeech = new TextToSpeech();
             textToSpeech.speak(msg);
@@ -50,13 +64,13 @@ public class mainmenuController {
               // Terminate the text-to-speech when done
               textToSpeech.terminate();
             }
-            
+
             count++;
             return null;
-        }
-    };
+          }
+        };
 
     // Create a thread to run the task
     new Thread(ttsTask).start();
-}
+  }
 }

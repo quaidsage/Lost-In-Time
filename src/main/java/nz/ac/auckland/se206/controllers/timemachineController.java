@@ -52,8 +52,17 @@ public class timemachineController {
 
     // Create context thread
     contextTask = createTask(GptPromptEngineering.getContext());
-    Thread contextThread = new Thread(contextTask);
-    contextThread.start();
+    Task<Void> contextAppendTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            Thread contextThread = new Thread(contextTask);
+            contextThread.start();
+            return null;
+          }
+        };
+    Thread contextAppendThread = new Thread(contextAppendTask);
+    contextAppendThread.start();
 
     // Bind the lblTimer to the timerController properties.
     lblTimer.textProperty().bind(timer.messageProperty());
