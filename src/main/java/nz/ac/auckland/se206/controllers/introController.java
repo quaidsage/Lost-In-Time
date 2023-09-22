@@ -41,7 +41,7 @@ public class introController {
 
   public void initialize() {
     msg =
-        new ChatMessage("assistant", "You awake to broken time machine blah blah pick the device");
+        new ChatMessage("assistant", "You wake up in a strange room...\n Next to you, you see a strange device glowing.");
     updateTask(txtIntro);
     rectBack.setVisible(true);
     btnPick.setDisable(true);
