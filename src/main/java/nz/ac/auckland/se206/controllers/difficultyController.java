@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import nz.ac.auckland.se206.App;
+import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.GptPromptEngineering;
 
@@ -30,7 +31,7 @@ public class difficultyController {
   int minutes = 4;
   boolean isDifficultyChecked, isTimeChecked = false;
 
-  Difficulty currentDifficulty;
+  public static Difficulty currentDifficulty;
   TimeSetting currentTimeSetting;
 
   @FXML
@@ -38,6 +39,13 @@ public class difficultyController {
     if (!isDifficultyChecked || !isTimeChecked) {
       lblSelectBoxesWarning.setText("Select a difficulty and time to begin");
     } else {
+      if (currentDifficulty == Difficulty.EASY) {
+        GameState.isDifficultyEasy = true;
+      } else if (currentDifficulty == Difficulty.MEDIUM) {
+        GameState.isDifficultyMedium = true;
+      } else if (currentDifficulty == Difficulty.HARD) {
+        GameState.isDifficultyHard = true;
+      } 
       introController.minutes = minutes;
       Thread appendThread = new Thread(introController.appendTask);
       appendThread.start();
@@ -75,7 +83,7 @@ public class difficultyController {
   private void checkedHard(ActionEvent event) {
     currentDifficulty = Difficulty.HARD;
     isDifficultyChecked = true;
-    GptPromptEngineering.hints = "no hints under no circumstances";
+    GptPromptEngineering.hints = "no hints under any circumstances";
 
     if (chkbxHard.isSelected()) {
       deselectDifficultyBoxes(currentDifficulty, isDifficultyChecked);

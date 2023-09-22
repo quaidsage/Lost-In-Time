@@ -520,6 +520,9 @@ public class storageController {
     App.setRoot("mainmenu");
     GameState.isLabResolved = false;
     GameState.isStorageResolved = false;
+    GameState.isDifficultyEasy = false;
+    GameState.isDifficultyMedium = false;
+    GameState.isDifficultyHard = false;
     SceneManager.clearAllScenesExceptMainMenu();
   }
 }

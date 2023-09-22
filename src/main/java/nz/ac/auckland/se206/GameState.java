@@ -6,6 +6,13 @@ import nz.ac.auckland.se206.speech.TextToSpeech;
 /** Represents the state of the game. */
 public class GameState {
 
+  public static boolean isDifficultyMedium = false;
+
+  public static boolean isDifficultyEasy = false;
+
+  public static boolean isDifficultyHard = false;
+
+
   /** Indicates whether the riddle has been resolved. */
   public static boolean isLabResolved = false;
 
