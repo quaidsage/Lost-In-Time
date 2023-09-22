@@ -9,7 +9,7 @@ import nz.ac.auckland.se206.SceneManager;
 public class EndsceneController {
   @FXML private Button btnPlayAgain;
 
-  // Handle the "Play Again" button click event
+  /** Handle the "Play Again" button click event. */
   @FXML
   private void playAgain() throws IOException {
     // Set the root scene to the main menu when the "Play Again" button is clicked

@@ -16,13 +16,14 @@ public class DifficultyController {
   @FXML private CheckBox chkbxTwoMins, chkbxFourMins, chkbxSixMins;
   @FXML private Label lblSelectBoxesWarning;
 
-  // Enumerations for difficulty levels and time settings
+  // Enumerations for difficulty levels
   public enum Difficulty {
     EASY,
     MEDIUM,
     HARD
   }
 
+  // Enumerations for time settings
   public enum TimeSetting {
     TWO,
     FOUR,
@@ -37,7 +38,11 @@ public class DifficultyController {
   public static Difficulty currentDifficulty;
   TimeSetting currentTimeSetting;
 
-  // Handle switching to the intro screen
+  /**
+   * Function to handle switching to intro scene.
+   *
+   * @param event The event that triggered the function.
+   */
   @FXML
   private void switchToIntro(ActionEvent event) {
     // Check if both difficulty and time settings are selected
@@ -61,7 +66,11 @@ public class DifficultyController {
     }
   }
 
-  // Handle the "Easy" difficulty checkbox
+  /**
+   * Handles the EASY checkbox.
+   *
+   * @param event The event that triggered the function.
+   */
   @FXML
   private void checkedEasy(ActionEvent event) {
     // Change game state
@@ -77,7 +86,11 @@ public class DifficultyController {
     }
   }
 
-  // Handle the "Medium" difficulty checkbox
+  /**
+   * Handles the MEDIUM checkbox.
+   *
+   * @param event The event that triggered the function.
+   */
   @FXML
   private void checkedMedium(ActionEvent event) {
     // Change game state
@@ -92,7 +105,11 @@ public class DifficultyController {
     }
   }
 
-  // Handle the "Hard" difficulty checkbox
+  /**
+   * Handles the HARD checkbox.
+   *
+   * @param event The event that triggered the function.
+   */
   @FXML
   private void checkedHard(ActionEvent event) {
     // Change game state
@@ -107,7 +124,7 @@ public class DifficultyController {
     }
   }
 
-  // Handle the "Two Minutes" time setting checkbox
+  /** Handles the 2 Minutes checkbox. */
   @FXML
   private void checkedTwoMins() {
     currentTimeSetting = TimeSetting.TWO;
@@ -122,7 +139,7 @@ public class DifficultyController {
     minutes = 2;
   }
 
-  // Handle the "Four Minutes" time setting checkbox
+  /** Handles the 4 Minutes checkbox. */
   @FXML
   private void checkedFourMins() {
     currentTimeSetting = TimeSetting.FOUR;
@@ -137,7 +154,7 @@ public class DifficultyController {
     minutes = 4;
   }
 
-  // Handle the "Six Minutes" time setting checkbox
+  /** Handles the 6 Minutes checkbox. */
   @FXML
   private void checkedSixMins() {
     currentTimeSetting = TimeSetting.SIX;
@@ -152,8 +169,14 @@ public class DifficultyController {
     minutes = 6;
   }
 
-  // Helper method to deselect other difficulty checkboxes
+  /**
+   * Helper method to deselect other difficulty checkboxes.
+   *
+   * @param difficulty The difficulty to deselect.
+   * @param isDifficultyChecked Whether the difficulty is checked.
+   */
   private void deselectDifficultyBoxes(Difficulty difficulty, Boolean isDifficultyChecked) {
+    // Deselect the unwanted difficulty checkboxes
     switch (difficulty) {
       case EASY:
         chkbxMedium.setSelected(false);
@@ -170,8 +193,14 @@ public class DifficultyController {
     }
   }
 
-  // Helper method to deselect other time setting checkboxes
+  /**
+   * Helper method to deselect other time setting checkboxes.
+   *
+   * @param timeSetting The time setting to deselect.
+   * @param isTimeChecked Whether the time setting is checked.
+   */
   private void deselectTimeBoxes(TimeSetting timeSetting, Boolean isTimeChecked) {
+    // Deselect the unwanted time setting checkboxes
     switch (timeSetting) {
       case TWO:
         chkbxFourMins.setSelected(false);
