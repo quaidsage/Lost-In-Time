@@ -16,8 +16,11 @@ import nz.ac.auckland.se206.SceneManager.AppUi;
 
 public class IntroController {
   // Define FXML elements
-  @FXML private Button btnSkip, btnPick, btnNext;
-  @FXML private TextArea txtIntro, txtAi;
+  @FXML private Button btnSkip;
+  @FXML private Button btnPick;
+  @FXML private Button btnNext;
+  @FXML private TextArea txtIntro;
+  @FXML private TextArea txtAi;
   @FXML private Rectangle rectBack;
 
   // Define variables for the introduction
