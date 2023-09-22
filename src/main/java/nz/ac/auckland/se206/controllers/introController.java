@@ -101,12 +101,13 @@ public class introController {
         });
   }
 
-  // Update the task to append a chat message
+  /** Update the task which appends the chat log to the chat area. */
   public void updateTask(TextArea chatArea) {
     appendTask =
         new Task<Void>() {
           @Override
           protected Void call() throws Exception {
+            // Append chat log to chat area
             appendMessage(msg, chatArea);
             return null;
           }

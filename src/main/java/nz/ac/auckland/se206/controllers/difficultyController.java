@@ -64,10 +64,12 @@ public class difficultyController {
   // Handle the "Easy" difficulty checkbox
   @FXML
   private void checkedEasy(ActionEvent event) {
+    // Change game state
     currentDifficulty = Difficulty.EASY;
     isDifficultyChecked = true;
     labController.numHints = 6;
 
+    // Handle when switching difficulties
     if (chkbxEasy.isSelected()) {
       deselectDifficultyBoxes(currentDifficulty, isDifficultyChecked);
     } else if (isDifficultyChecked == true) {
@@ -78,9 +80,11 @@ public class difficultyController {
   // Handle the "Medium" difficulty checkbox
   @FXML
   private void checkedMedium(ActionEvent event) {
+    // Change game state
     currentDifficulty = Difficulty.MEDIUM;
     isDifficultyChecked = true;
 
+    // Handle when switching difficulties
     if (chkbxMedium.isSelected()) {
       deselectDifficultyBoxes(currentDifficulty, isDifficultyChecked);
     } else if (isDifficultyChecked == true) {
@@ -91,9 +95,11 @@ public class difficultyController {
   // Handle the "Hard" difficulty checkbox
   @FXML
   private void checkedHard(ActionEvent event) {
+    // Change game state
     currentDifficulty = Difficulty.HARD;
     isDifficultyChecked = true;
 
+    // Handle when switching difficulties
     if (chkbxHard.isSelected()) {
       deselectDifficultyBoxes(currentDifficulty, isDifficultyChecked);
     } else if (isDifficultyChecked == true) {

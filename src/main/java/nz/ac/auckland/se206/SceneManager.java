@@ -31,8 +31,9 @@ public class SceneManager {
     return sceneMap.get(ui);
   }
 
-  // Returns the String value of each scene
+  // Returns the String value of each possible scene
   public static String convertUiType(AppUi ui) {
+    // With the switch statement, we can convert the enum to a string
     switch (ui) {
       case MAINMENU:
         return "mainmenu";

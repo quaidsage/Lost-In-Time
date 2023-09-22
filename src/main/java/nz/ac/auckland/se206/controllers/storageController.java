@@ -176,13 +176,16 @@ public class storageController {
     App.setUi(AppUi.TIMEMACHINE);
   }
 
+  /** Function to handle when the circuit minigame is opened */
   @FXML
   private void clickCircuitBox(MouseEvent event) {
 
+    // Hide the circuit box
     background.setVisible(false);
     circuitBox.setVisible(false);
     circuitBoxImg.setVisible(false);
 
+    // Show enlarged circuit box and minigame elements
     circuitGameBg.setVisible(true);
     circuitGameImg.setVisible(true);
     memoryGame.setVisible(true);
@@ -190,6 +193,7 @@ public class storageController {
     text.setVisible(true);
     info.setVisible(true);
     btnSwitchToTimeMachine.setDisable(true);
+    
   }
 
   private void winGame() {
@@ -408,9 +412,13 @@ public class storageController {
   private ChatMessage runGpt(ChatMessage msg) throws ApiProxyException {
     GameState.chatCompletionRequest.addMessage(msg);
     try {
+      // Get response from GPT model
       ChatCompletionResult chatCompletionResult = GameState.chatCompletionRequest.execute();
       Choice result = chatCompletionResult.getChoices().iterator().next();
+
+      // Add response to main chat completion request
       GameState.chatCompletionRequest.addMessage(result.getChatMessage());
+
       return result.getChatMessage();
     } catch (ApiProxyException e) {
       e.printStackTrace();
