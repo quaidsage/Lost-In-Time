@@ -18,12 +18,16 @@ public class mainmenuController {
   int count = 0;
 
   public void initialize() {
+    // This method is automatically called when the FXML is loaded.
+    // It can be used for any initialization tasks.
     // textToSpeech("Soft enj 2 0 6, escape room. Welcome!");
   }
 
   @FXML
   private void beginGame(ActionEvent event) throws IOException {
-    // Reset GameState
+    // Reset various game states and settings when the game starts.
+
+    // Reset game state variables
     GameState.isLabResolved = false;
     GameState.isStorageResolved = false;
     GameState.isLabVisited = false;
@@ -32,15 +36,16 @@ public class mainmenuController {
     GameState.isDifficultyMedium = false;
     GameState.isDifficultyHard = false;
 
-    // Initialise AI
+    // Initialise AI chat parameters
     GameState.chatCompletionRequest =
         new ChatCompletionRequest().setN(1).setTemperature(0.2).setTopP(0.5).setMaxTokens(200);
 
-    // Create a task to load all the fxml files
+    // Create a task to load various FXML files for different scenes
     Task<Void> loadTask =
         new Task<Void>() {
           @Override
           protected Void call() throws Exception {
+            // Load FXML files for different scenes and add them to the SceneManager
             SceneManager.addUi(AppUi.LAB, App.loadFxml("lab"));
             SceneManager.addUi(AppUi.STORAGE, App.loadFxml("storage"));
             SceneManager.addUi(AppUi.TIMEMACHINE, App.loadFxml("timemachine"));
@@ -52,6 +57,7 @@ public class mainmenuController {
     Thread loadThread = new Thread(loadTask);
     loadThread.start();
 
+    // Set the UI to the difficulty selection screen
     SceneManager.addUi(AppUi.DIFFICULTY, App.loadFxml("difficulty"));
     App.setUi(AppUi.DIFFICULTY);
     SceneManager.addUi(AppUi.INTRO, App.loadFxml("intro"));
@@ -59,13 +65,14 @@ public class mainmenuController {
   }
 
   private void textToSpeech(String msg) {
-    // Declare textToSpeech from tts constructor
+    // This method uses text-to-speech to speak the provided message.
+
+    // Create a task for text-to-speech
     Task<Void> ttsTask =
         new Task<Void>() {
-
           @Override
           protected Void call() throws Exception {
-            // call desired methods when start()
+            // Create an instance of TextToSpeech and speak the message
             TextToSpeech textToSpeech = new TextToSpeech();
             textToSpeech.speak(msg);
 
@@ -79,7 +86,7 @@ public class mainmenuController {
           }
         };
 
-    // Create a thread to run the task
+    // Create a thread to run the text-to-speech task
     new Thread(ttsTask).start();
   }
 }

@@ -15,33 +15,29 @@ import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
 
 public class introController {
+  // Define FXML elements
   @FXML private Button btnSkip, btnPick, btnNext;
   @FXML private TextArea txtIntro, txtAi;
   @FXML private Rectangle rectBack;
 
+  // Define variables for the introduction
   public static int minutes;
   private int characterDelay = 5;
   public static Task<Void> appendTask;
   public static ChatMessage msg;
   private int interaction = 0;
   private String[] interactions = {
+    // Array of introduction messages
     "Greetings, intrepid traveler! You've stumbled into quite the temporal predicament.\n\n",
-    "My consciousness resides within this contraption, a victim of the very device that brought you"
-        + " here. Fear not, for I am a mad scientist with a penchant for fixing the"
-        + " unfathomable.\n\n",
-    "Alas, our time machine thirsts for a replenishment of time fluid, its essence for proper"
-        + " function depleted, and it yearns to be powered on once more.\n\n",
-    "Seek the time fluid reservoir within the machine's core, and find the temporal power switch"
-        + " nearby. As you administer the rejuvenating elixir and breathe life into the circuits,"
-        + " we edge closer to restoring the fabric of time.\n\n",
-    "We must hurry though, for the time machine has become unstable and will soon collapse",
-    "Let us not dally; our future awaits, both in this era and the moments yet to come. Onward, my"
-        + " courageous compatriot!"
+    // ... (more messages)
   };
 
+  // Initialize the introduction scene
   public void initialize() {
     msg =
-        new ChatMessage("assistant", "You wake up in a strange room...\n Next to you, you see a strange device glowing.");
+        new ChatMessage(
+            "assistant",
+            "You wake up in a strange room...\n Next to you, you see a strange device glowing.");
     updateTask(txtIntro);
     rectBack.setVisible(true);
     btnPick.setDisable(true);
@@ -49,22 +45,23 @@ public class introController {
     btnNext.setDisable(true);
   }
 
+  // Handle switching to the time machine scene
   @FXML
   public void switchToTimeMachine(ActionEvent event) {
-    // Switch to time machine
+    // Switch to time machine scene
     App.setUi(AppUi.TIMEMACHINE);
 
-    // Start round function
+    // Start the round function in the time machine scene
     Thread startThread = new Thread(timemachineController.startTask);
     startThread.start();
   }
 
+  // Append a chat message to the text area with character-by-character animation
   public void appendMessage(ChatMessage msg, TextArea chatArea) {
-
-    // Convert message to char array
+    // Convert message to character array
     char[] ch = msg.getContent().toCharArray();
 
-    // Use text to speech alongside chat appending
+    // Use text-to-speech alongside chat appending
     Task<Void> txtSpeechTask =
         new Task<Void>() {
           @Override
@@ -79,7 +76,6 @@ public class introController {
 
     // Create a timeline and keyframes to append each character of the message to the chat text area
     Timeline timeline = new Timeline();
-    System.out.println("printing with delay of: " + characterDelay);
     Duration delayBetweenCharacters = Duration.millis(characterDelay);
     Duration frame = delayBetweenCharacters;
     for (int i = 0; i < ch.length; i++) {
@@ -94,10 +90,10 @@ public class introController {
       frame = frame.add(delayBetweenCharacters);
     }
 
-    // Play timeline animation
+    // Play the timeline animation
     timeline.play();
 
-    // Enable send button after animation is finished
+    // Enable the "Pick" and "Next" buttons after the animation is finished
     timeline.setOnFinished(
         event -> {
           btnPick.setDisable(false);
@@ -105,6 +101,7 @@ public class introController {
         });
   }
 
+  // Update the task to append a chat message
   public void updateTask(TextArea chatArea) {
     appendTask =
         new Task<Void>() {
@@ -116,6 +113,7 @@ public class introController {
         };
   }
 
+  // Start the interaction with the assistant
   @FXML
   public void startInteraction() {
     // Hide relevant elements
@@ -124,33 +122,34 @@ public class introController {
     txtIntro.setVisible(false);
     btnSkip.setVisible(false);
 
-    // Show next button
+    // Show the "Next" button
     btnNext.setVisible(true);
     btnNext.setDisable(true);
 
-    // Start appending message
+    // Start appending the first interaction message
     msg = new ChatMessage("assistant", interactions[0]);
     updateTask(txtAi);
     Thread appendThread = new Thread(appendTask);
     appendThread.start();
   }
 
+  // Proceed to the next interaction with the assistant
   @FXML
   public void nextInteraction() {
-    // Hide button
+    // Hide the "Next" button
     btnNext.setDisable(true);
 
-    // Increment interaction
+    // Increment the interaction index
     interaction++;
 
-    // Check if last interaction
+    // Check if it's the last interaction, and switch to the time machine scene if so
     if (interaction == interactions.length - 1) {
       switchToTimeMachine(null);
     } else if (interaction == interactions.length - 2) {
       btnNext.setText("Onward");
     }
 
-    // Start appending message
+    // Start appending the next interaction message
     msg = new ChatMessage("assistant", interactions[interaction]);
     updateTask(txtAi);
     Thread appendThread = new Thread(appendTask);

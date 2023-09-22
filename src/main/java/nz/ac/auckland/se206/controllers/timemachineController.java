@@ -157,7 +157,7 @@ public class timemachineController {
             ChatMessage msg = runGpt(new ChatMessage("assistant", message));
             Platform.runLater(
                 () -> {
-                  // On message initalised...
+                  // On message initialized...
                 });
             return msg;
           }
