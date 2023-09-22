@@ -131,7 +131,7 @@
          <font>
             <Font name="System Bold" size="24.0" />
          </font></Button>
-      <Text fill="#6bf9b1" layoutX="755.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently in: Storage Room">
+      <Text fill="#6bf9b1" layoutX="646.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently in: Storage Room" wrappingWidth="359.0">
          <font>
             <Font name="Apple Symbols" size="24.0" />
          </font>
