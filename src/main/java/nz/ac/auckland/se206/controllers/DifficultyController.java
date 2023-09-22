@@ -6,8 +6,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import nz.ac.auckland.se206.App;
-import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.GameState;
+import nz.ac.auckland.se206.SceneManager.AppUi;
 
 public class DifficultyController {
   // Define FXML elements
@@ -131,9 +131,11 @@ public class DifficultyController {
   /** Handles the 2 Minutes checkbox. */
   @FXML
   private void checkedTwoMins() {
+    // Change game state
     currentTimeSetting = TimeSetting.TWO;
     isTimeChecked = true;
 
+    // Handle when switching time settings
     if (chkbxTwoMins.isSelected()) {
       deselectTimeBoxes(currentTimeSetting, isTimeChecked);
     } else if (isTimeChecked == true) {
@@ -146,9 +148,11 @@ public class DifficultyController {
   /** Handles the 4 Minutes checkbox. */
   @FXML
   private void checkedFourMins() {
+    // Change game state
     currentTimeSetting = TimeSetting.FOUR;
     isTimeChecked = true;
 
+    // Handle when switching time settings
     if (chkbxFourMins.isSelected()) {
       deselectTimeBoxes(currentTimeSetting, isTimeChecked);
     } else if (isTimeChecked == true) {
@@ -161,9 +165,11 @@ public class DifficultyController {
   /** Handles the 6 Minutes checkbox. */
   @FXML
   private void checkedSixMins() {
+    // Change game state
     currentTimeSetting = TimeSetting.SIX;
     isTimeChecked = true;
 
+    // Handle when switching time settings
     if (chkbxSixMins.isSelected()) {
       deselectTimeBoxes(currentTimeSetting, isTimeChecked);
     } else if (isTimeChecked == true) {

@@ -7,7 +7,6 @@ import java.util.Random;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -167,13 +166,16 @@ public class StorageController {
    */
   @FXML
   void start(ActionEvent event) {
+    // Clear pattern and text for new game
     pattern.clear();
     text.setText("Current Streak: ");
 
+    // Get first possible button to press and show
     pattern.add(possibleButtons.get(random.nextInt(possibleButtons.size())));
     showPattern();
     System.out.println(pattern);
 
+    // Set initial parameters
     counter = 0;
     turn = 1;
   }
@@ -347,13 +349,19 @@ public class StorageController {
    * @param color the colour to change the button to
    */
   private void changeButtonColor(Button button, String color) {
+    // Apply style of desired color
     button.setStyle(color);
+
+    // Initialise pause transition to change colour back
     PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
     pause.setOnFinished(
         e -> {
+          // Change back to original color
           button.setStyle(
               "-fx-background-color: rgb(107,249,177); -fx-border-color: rgb(28,28,28);");
         });
+
+    // Start transition
     pause.play();
   }
 
@@ -373,13 +381,16 @@ public class StorageController {
    * @param message string to attach to message to be given to the LLM
    */
   private Task<ChatMessage> createTask(String message) {
+    // Create task to run GPT model
     Task<ChatMessage> task =
         new Task<ChatMessage>() {
           @Override
           protected ChatMessage call() throws Exception {
+            // Prevent user from sending further text
             btnSend.setDisable(true);
+
+            // Get response from GPT model
             ChatMessage msg = runGpt(new ChatMessage("assistant", message));
-            Platform.runLater(() -> {});
             return msg;
           }
         };
@@ -565,11 +576,15 @@ public class StorageController {
 
   /** Function to create task to update chat area for scene. */
   public void createUpdateTask() {
+    // Create task to append chat log to chat area
     updateChatTask =
         new Task<Void>() {
           @Override
           protected Void call() throws Exception {
+            // Append chat log to chat area
             updateChatArea();
+
+            // Create new task to update chat area
             createUpdateTask();
             return null;
           }

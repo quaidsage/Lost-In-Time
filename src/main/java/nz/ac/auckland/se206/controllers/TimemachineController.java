@@ -21,8 +21,8 @@ import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
 import nz.ac.auckland.se206.gpt.GptPromptEngineering;
 import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
-import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult;
+import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 
 public class TimemachineController {
   // JavaFX elements
@@ -244,10 +244,14 @@ public class TimemachineController {
    * @throws ApiProxyException if there is an error communicating with the API proxy
    */
   private ChatMessage runGpt(ChatMessage msg) throws ApiProxyException {
+    // Append to main game chat completion request
     GameState.chatCompletionRequest.addMessage(msg);
     try {
+      // Get response from GPT model
       ChatCompletionResult chatCompletionResult = GameState.chatCompletionRequest.execute();
       Choice result = chatCompletionResult.getChoices().iterator().next();
+
+      // Create chat message from response
       GameState.chatCompletionRequest.addMessage(result.getChatMessage());
       return result.getChatMessage();
     } catch (ApiProxyException e) {
@@ -356,11 +360,15 @@ public class TimemachineController {
 
   /** Function to create task to update chat area for scene. */
   public void createUpdateTask() {
+    // Create task to update chat area
     updateChatTask =
         new Task<Void>() {
           @Override
           protected Void call() throws Exception {
+            // Update chat area with chat log
             updateChatArea();
+
+            // Create new task for next update of chat area
             createUpdateTask();
             return null;
           }
