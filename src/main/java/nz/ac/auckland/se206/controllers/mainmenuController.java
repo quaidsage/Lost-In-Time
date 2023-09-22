@@ -35,6 +35,7 @@ public class mainmenuController {
     GameState.isDifficultyEasy = false;
     GameState.isDifficultyMedium = false;
     GameState.isDifficultyHard = false;
+    labController.numHints = 5;
 
     // Initialise AI chat parameters
     GameState.chatCompletionRequest =

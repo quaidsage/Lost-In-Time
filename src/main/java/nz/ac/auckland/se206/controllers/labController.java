@@ -53,6 +53,7 @@ public class labController {
   public static Task<ChatMessage> labIntroTask;
   public static Task<ChatMessage> labRiddleTask;
   private Boolean[] isChemicalSolution = {false, false, false, false, false, false, false};
+  public static ArrayList<Integer> solutionColours;
   private Boolean isChemicalsEnabled = false;
 
   // Animation variables
@@ -62,7 +63,7 @@ public class labController {
   private int fadeTransitionSpeed = 1500;
   private Duration flashDuration = Duration.millis(0);
   private int numFlashes = 0;
-  public int numHints = 5;
+  public static int numHints = 5;
 
   // Initialise Timer
   private static timerController timer = new timerController();
@@ -109,7 +110,7 @@ public class labController {
       list.add(i);
     }
     Collections.shuffle(list);
-    ArrayList<Integer> solutionColours = new ArrayList<Integer>();
+    solutionColours = new ArrayList<Integer>();
     for (int i = 0; i < 3; i++) {
       solutionColours.add(list.get(i));
       isChemicalSolution[solutionColours.get(i)] = true;
@@ -194,27 +195,6 @@ public class labController {
         };
     Thread initLabThread = new Thread(initLabTask);
     initLabThread.start();
-
-    // Create task to run GPT model for riddle message
-    labRiddleTask = createTask(GptPromptEngineering.getRiddleLab(solutionColours));
-    labRiddleTask.setOnSucceeded(
-        e -> {
-          imgScientistThinking.setVisible(false);
-          typingBubble.setVisible(false);
-
-          // Append to chat logs
-          ChatMessage response = labRiddleTask.getValue();
-
-          GameState.chatLog += "\n\n-> " + response.getContent();
-
-          chatArea.appendText("\n\n-> ");
-          appendChatMessage(response);
-
-          Thread updateChatThreadTM2 = new Thread(timemachineController.updateChatTask);
-          updateChatThreadTM2.start();
-          Thread updateChatThreadStorage2 = new Thread(storageController.updateChatTask);
-          updateChatThreadStorage2.start();
-        });
   }
 
   /**
@@ -267,6 +247,28 @@ public class labController {
     if (GameState.isLabResolved) {
       return;
     }
+
+    // Create task to run GPT model for riddle message
+    labRiddleTask = createTask(GptPromptEngineering.getRiddleLab(labController.solutionColours));
+    labRiddleTask.setOnSucceeded(
+        e -> {
+          imgScientistThinking.setVisible(false);
+          typingBubble.setVisible(false);
+
+          // Append to chat logs
+          ChatMessage response = labRiddleTask.getValue();
+
+          GameState.chatLog += "\n\n-> " + response.getContent();
+
+          chatArea.appendText("\n\n-> ");
+          appendChatMessage(response);
+
+          Thread updateChatThreadTM2 = new Thread(timemachineController.updateChatTask);
+          updateChatThreadTM2.start();
+          Thread updateChatThreadStorage2 = new Thread(storageController.updateChatTask);
+          updateChatThreadStorage2.start();
+        });
+
     // Hide general chemicals
     chemicalGeneral.setVisible(false);
 
@@ -644,7 +646,6 @@ public class labController {
 
     // Create a timeline and keyframes to append each character of the message to the chat text area
     Timeline timeline = new Timeline();
-    System.out.println("printing with delay of: " + characterDelay);
     Duration delayBetweenCharacters = Duration.millis(characterDelay);
     Duration frame = delayBetweenCharacters;
     for (int i = 0; i < ch.length; i++) {
@@ -692,13 +693,22 @@ public class labController {
         blurredImage.setVisible(true);
         fadeTransition();
       }
+
+      // Decrement hint on medium
       if (result.getChatMessage().getContent().contains("Hint:")
-          && GameState.isDifficultyMedium == true) {
+          && GameState.isDifficultyMedium == true
+          && numHints > 0) {
         Platform.runLater(
             () -> {
               numHints--;
               updateHintText(numHints);
             });
+      }
+
+      // Prevent hints on hard and with 0 hints remaining
+      if (result.getChatMessage().getContent().contains("Hint:")
+          && (GameState.isDifficultyHard || numHints <= 0)) {
+        return new ChatMessage("assistant", "No more hints remaining...");
       }
       return result.getChatMessage();
     } catch (ApiProxyException e) {
@@ -818,7 +828,7 @@ public class labController {
   }
 
   private void updateHintText(int numHints) {
-    if (numHints <= 0) {
+    if (numHints >= 0) {
       hintsRemaining.setText("Hints Remaining: " + String.valueOf(numHints));
     }
   }
