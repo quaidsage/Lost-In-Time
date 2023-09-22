@@ -12,7 +12,6 @@ public class GameState {
 
   public static boolean isDifficultyHard = false;
 
-
   /** Indicates whether the riddle has been resolved. */
   public static boolean isLabResolved = false;
 
@@ -30,9 +29,6 @@ public class GameState {
 
   /** Current text to speech for game. */
   public static TextToSpeech txtToSpeech;
-
-  /** Current item to be found in the game. */
-  public static String item = "battery";
 
   /** Current chat log for the game. */
   public static String chatLog;

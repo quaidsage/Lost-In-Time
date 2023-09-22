@@ -45,7 +45,7 @@ public class difficultyController {
         GameState.isDifficultyMedium = true;
       } else if (currentDifficulty == Difficulty.HARD) {
         GameState.isDifficultyHard = true;
-      } 
+      }
       introController.minutes = minutes;
       Thread appendThread = new Thread(introController.appendTask);
       appendThread.start();

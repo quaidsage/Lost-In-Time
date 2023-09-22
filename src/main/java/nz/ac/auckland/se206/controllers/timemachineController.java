@@ -291,7 +291,6 @@ public class timemachineController {
           imgScientistThinking.setVisible(false);
           typingBubble.setVisible(false);
 
-
           // Add to chat log
           GameState.chatLog += "\n\n-> " + chatTask.getValue().getContent();
 
@@ -438,11 +437,6 @@ public class timemachineController {
   @FXML
   private void returnToMenu(ActionEvent event) throws IOException {
     App.setRoot("mainmenu");
-    GameState.isLabResolved = false;
-    GameState.isStorageResolved = false;
-    GameState.isDifficultyEasy = false;
-    GameState.isDifficultyMedium = false;
-    GameState.isDifficultyHard = false;
     SceneManager.clearAllScenesExceptMainMenu();
   }
 }

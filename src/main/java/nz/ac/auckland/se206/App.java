@@ -7,7 +7,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.SceneManager.AppUi;
-import nz.ac.auckland.se206.gpt.openai.ChatCompletionRequest;
 
 /**
  * This is the entry point of the JavaFX application, while you can change this class, it should
@@ -20,9 +19,6 @@ public class App extends Application {
   private static Scene scene;
 
   public static void main(final String[] args) {
-    // Initialise AI
-    GameState.chatCompletionRequest =
-        new ChatCompletionRequest().setN(1).setTemperature(0.2).setTopP(0.5).setMaxTokens(200);
     launch();
   }
 
