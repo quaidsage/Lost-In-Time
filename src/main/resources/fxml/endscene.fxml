@@ -7,7 +7,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" style="-fx-background-color: rgb(28,28,28);" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.endsceneController">
    <children>
-      <Label layoutX="52.0" layoutY="246.0" prefHeight="70.0" prefWidth="1371.0" text="You win! You successfully escaped using the time machine." textFill="#6bf9b1">
+      <Label layoutX="104.0" layoutY="254.0" prefHeight="70.0" prefWidth="1194.0" text="You win! You successfully escaped using the time machine." textFill="#6bf9b1">
          <font>
             <Font name="System Bold" size="48.0" />
          </font></Label>
@@ -15,7 +15,7 @@
          <font>
             <Font name="System Bold" size="48.0" />
          </font></Button>
-      <Label layoutX="592.0" layoutY="176.0" prefHeight="70.0" prefWidth="261.0" text="Well done..." textFill="#6bf9b1">
+      <Label layoutX="593.0" layoutY="177.0" prefHeight="70.0" prefWidth="207.0" text="Well done..." textFill="#6bf9b1">
          <font>
             <Font name="Apple Symbols" size="48.0" />
          </font>

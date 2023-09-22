@@ -89,11 +89,11 @@
       <Rectangle fx:id="chemicalOrange" arcHeight="5.0" arcWidth="5.0" fill="#ff6969" height="236.0" layoutX="680.0" layoutY="255.0" onMouseClicked="#clkChemical" onMouseEntered="#showChemical" onMouseExited="#hideChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="67.0" />
       <Rectangle fx:id="chemicalRed" arcHeight="5.0" arcWidth="5.0" fill="#ff7e38" height="237.0" layoutX="780.0" layoutY="255.0" onMouseClicked="#clkChemical" onMouseEntered="#showChemical" onMouseExited="#hideChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="72.0" />
       <Rectangle fx:id="transitionScene" arcHeight="5.0" arcWidth="5.0" height="775.0" layoutX="-14.0" layoutY="-11.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="1427.0" />
-      <Button id="btnSkip" fx:id="btnMenu" layoutX="5.0" layoutY="4.0" mnemonicParsing="false" onAction="#returnToMenu" text="Return To Menu">
+      <Button id="btnSkip" fx:id="btnMenu" layoutX="25.0" layoutY="10.0" mnemonicParsing="false" onAction="#returnToMenu" text="Return To Menu">
          <font>
             <Font name="System Bold" size="24.0" />
          </font></Button>
-      <Text fill="#6bf9b1" layoutX="731.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently in: Lab Room">
+      <Text fill="#6bf9b1" layoutX="790.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently in: Lab Room">
          <font>
             <Font name="Apple Symbols" size="24.0" />
          </font>

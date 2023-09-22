@@ -7,15 +7,15 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" style="-fx-background-color: rgb(28,28,28);" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.timeoutController">
    <children>
-      <Label layoutX="190.0" layoutY="255.0" prefHeight="70.0" prefWidth="1096.0" text="You ran out of time and were unable to escape." textFill="#6bf9b1">
+      <Label layoutX="224.0" layoutY="256.0" prefHeight="70.0" prefWidth="941.0" text="You ran out of time and were unable to escape." textFill="#6bf9b1">
          <font>
             <Font name="System Bold" size="48.0" />
          </font></Label>
-      <Button id="btnSkip" fx:id="btnPlayAgain" layoutX="512.0" layoutY="449.0" mnemonicParsing="false" onAction="#playAgain" text="Back to Menu">
+      <Button id="btnSkip" fx:id="btnPlayAgain" layoutX="535.0" layoutY="546.0" mnemonicParsing="false" onAction="#playAgain" text="Back to Menu">
          <font>
             <Font name="System Bold" size="48.0" />
          </font></Button>
-      <Label layoutX="496.0" layoutY="325.0" prefHeight="70.0" prefWidth="484.0" text="Better luck next time..." textFill="#6bf9b1">
+      <Label layoutX="490.0" layoutY="336.0" prefHeight="70.0" prefWidth="402.0" text="Better luck next time..." textFill="#6bf9b1">
          <font>
             <Font name="Apple Symbols" size="48.0" />
          </font>

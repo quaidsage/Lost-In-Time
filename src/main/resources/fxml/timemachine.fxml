@@ -27,7 +27,7 @@
          <font>
             <Font name="System Bold" size="36.0" />
          </font></Button>
-      <Button id="btnSkip" fx:id="btnSwitchToLab" layoutX="838.0" layoutY="660.0" mnemonicParsing="false" onAction="#switchToLab" prefHeight="70.0" prefWidth="147.0" text="Lab">
+      <Button id="btnSkip" fx:id="btnSwitchToLab" layoutX="841.0" layoutY="664.0" mnemonicParsing="false" onAction="#switchToLab" prefHeight="70.0" prefWidth="147.0" text="Lab">
          <font>
             <Font name="System Bold" size="36.0" />
          </font></Button>
@@ -67,12 +67,12 @@
          </image>
       </ImageView>
       <Rectangle fx:id="rectLight" arcHeight="5.0" arcWidth="5.0" height="797.0" layoutX="-15.0" layoutY="-15.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="1451.0" />
-      <Button id="btnSkip" fx:id="btnMenu" layoutX="8.0" layoutY="5.0" mnemonicParsing="false" onAction="#returnToMenu" stylesheets="@../css/style.css" text="Return To Menu">
+      <Button id="btnSkip" fx:id="btnMenu" layoutX="25.0" layoutY="10.0" mnemonicParsing="false" onAction="#returnToMenu" stylesheets="@../css/style.css" text="Return To Menu">
          <font>
             <Font name="System Bold" size="24.0" />
          </font></Button>
 <Button fx:id="btnTimeMachine" layoutX="339.0" layoutY="129.0" mnemonicParsing="false" onAction="#finishGame" onMouseEntered="#showBtnTimeMachine" onMouseExited="#hideBtnTimeMachine" opacity="0.0" prefHeight="471.0" prefWidth="349.0" text="Time Machine" textFill="WHITE" />
-      <Text fill="#6bf9b1" layoutX="595.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently in: Time Machine Room" wrappingWidth="389.3333435058594">
+      <Text fill="#6bf9b1" layoutX="700.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently in: Time Machine Room" wrappingWidth="281.3333435058594">
          <font>
             <Font name="Apple Symbols" size="24.0" />
          </font>
