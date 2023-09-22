@@ -41,7 +41,9 @@ public class introController {
 
   public void initialize() {
     msg =
-        new ChatMessage("assistant", "You wake up in a strange room...\n Next to you, you see a strange device glowing.");
+        new ChatMessage(
+            "assistant",
+            "You wake up in a strange room...\n Next to you, you see a strange device glowing.");
     updateTask(txtIntro);
     rectBack.setVisible(true);
     btnPick.setDisable(true);
@@ -79,7 +81,6 @@ public class introController {
 
     // Create a timeline and keyframes to append each character of the message to the chat text area
     Timeline timeline = new Timeline();
-    System.out.println("printing with delay of: " + characterDelay);
     Duration delayBetweenCharacters = Duration.millis(characterDelay);
     Duration frame = delayBetweenCharacters;
     for (int i = 0; i < ch.length; i++) {

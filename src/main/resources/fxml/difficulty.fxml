@@ -67,9 +67,9 @@
             <Font name="System Bold" size="48.0" />
          </font>
       </Label>
-      <Label fx:id="lblSelectBoxesWarning" layoutX="956.0" layoutY="661.0" prefHeight="17.0" prefWidth="99.0">
+      <Label fx:id="lblSelectBoxesWarning" layoutX="606.0" layoutY="629.0" prefHeight="70.0" prefWidth="469.0" textAlignment="CENTER" textFill="#6bf9b1">
          <font>
-            <Font name="Apple Symbols" size="24.0" />
+            <Font size="36.0" />
          </font></Label>
    </children>
 </Pane>

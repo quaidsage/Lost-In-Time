@@ -81,7 +81,7 @@
                </stops>
             </RadialGradient>
          </fill></Rectangle>
-      <Rectangle fx:id="circuitGameBg" arcHeight="5.0" arcWidth="5.0" height="585.0" layoutX="25.0" layoutY="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="960.0" />
+      <Rectangle fx:id="circuitGameBg" arcHeight="5.0" arcWidth="5.0" fill="#141414" height="585.0" layoutX="25.0" layoutY="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="960.0" />
       <ImageView fx:id="circuitGameImg" fitHeight="571.0" fitWidth="622.0" layoutX="218.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/wepik-export-2023092011501715lG.png" />
@@ -91,40 +91,40 @@
          <children>
             <HBox prefHeight="100.0" prefWidth="300.0">
                <children>
-                  <Button fx:id="button0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" />
-                  <Button fx:id="button1" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" />
-                  <Button fx:id="button2" layoutX="235.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" />
+                  <Button fx:id="button0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: rgb(107,249,177); -fx-border-color: rgb(28,28,28);" />
+                  <Button fx:id="button1" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: rgb(107,249,177); -fx-border-color: rgb(28,28,28);" />
+                  <Button fx:id="button2" layoutX="235.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: rgb(107,249,177); -fx-border-color: rgb(28,28,28);" />
                </children>
             </HBox>
             <HBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="300.0">
                <children>
-                  <Button fx:id="button3" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" />
-                  <Button fx:id="button4" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" />
-                  <Button fx:id="button5" layoutX="110.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" />
+                  <Button fx:id="button3" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: rgb(107,249,177); -fx-border-color: rgb(28,28,28);" />
+                  <Button fx:id="button4" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: rgb(107,249,177); -fx-border-color: rgb(28,28,28);" />
+                  <Button fx:id="button5" layoutX="110.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: rgb(107,249,177); -fx-border-color: rgb(28,28,28);" />
                </children>
             </HBox>
             <HBox layoutX="10.0" layoutY="110.0" prefHeight="100.0" prefWidth="300.0">
                <children>
-                  <Button fx:id="button6" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" />
-                  <Button fx:id="button7" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" />
-                  <Button fx:id="button8" layoutX="110.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" />
+                  <Button fx:id="button6" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: rgb(107,249,177); -fx-border-color: rgb(28,28,28);" />
+                  <Button fx:id="button7" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: rgb(107,249,177); -fx-border-color: rgb(28,28,28);" />
+                  <Button fx:id="button8" layoutX="110.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: rgb(107,249,177); -fx-border-color: rgb(28,28,28);" />
                </children>
             </HBox>
          </children>
       </VBox>
-      <Button fx:id="btnStartCircuitGame" layoutX="758.0" layoutY="316.0" mnemonicParsing="false" onAction="#start" text="Start" visible="false">
+      <Button id="btnSkip" fx:id="btnStartCircuitGame" layoutX="758.0" layoutY="316.0" mnemonicParsing="false" onAction="#start" text="Start" visible="false">
          <font>
             <Font name="Apple Symbols" size="24.0" />
          </font>
       </Button>
-      <Text fx:id="text" fill="WHITE" layoutX="107.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Streak:" visible="false" wrappingWidth="100.0">
+      <Text fx:id="text" fill="#6bf9b1" layoutX="113.0" layoutY="291.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Streak:" visible="false" wrappingWidth="125.3896484375">
          <font>
-            <Font name="Apple Symbols" size="24.0" />
+            <Font name="System Bold" size="31.0" />
          </font>
       </Text>
-      <Text fx:id="info" fill="WHITE" layoutX="60.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Get 5 right in a row to complete the circuit!" visible="false" wrappingWidth="283.0">
+      <Text fx:id="info" fill="#6bf9b1" layoutX="232.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Get 5 right in a row to complete the circuit!" textAlignment="CENTER" visible="false" wrappingWidth="544.0">
          <font>
-            <Font name="Apple Symbols" size="24.0" />
+            <Font name="System Bold" size="24.0" />
          </font>
       </Text>
       <Button id="btnSkip" fx:id="btnMenu" layoutX="4.0" layoutY="4.0" mnemonicParsing="false" onAction="#returnToMenu" text="Return To Menu">

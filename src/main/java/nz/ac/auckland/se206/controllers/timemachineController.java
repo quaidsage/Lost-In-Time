@@ -196,7 +196,6 @@ public class timemachineController {
     if (ch.length < 100) {
       characterDelay = (50 - (ch.length / 2)) + 5;
     }
-    System.out.println("printing with delay of: " + characterDelay);
     Duration delayBetweenCharacters = Duration.millis(characterDelay);
     Duration frame = delayBetweenCharacters;
     for (int i = 0; i < ch.length; i++) {

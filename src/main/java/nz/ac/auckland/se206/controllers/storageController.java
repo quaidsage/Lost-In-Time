@@ -131,10 +131,11 @@ public class storageController {
     if (buttonsDisabled) {
       return; // Ignore clicks while buttons are disabled
     }
-
+    System.out.println(((Control) event.getSource()).getId());
     if (((Control) event.getSource()).getId().equals(pattern.get(counter))) {
       Button button = buttons.get(getIndexOfButton(event));
-      changeButtonColor(button, "-fx-base: lightgreen");
+      changeButtonColor(
+          button, "-fx-background-color: rgb(77,181,127); -fx-border-color: rgb(28,28,28);");
       counter++;
     } else {
       resetGame(); // Reset the game on a wrong click
@@ -293,7 +294,8 @@ public class storageController {
 
   private void showNext() {
     Button button = buttons.get(getIndexOfButton(pattern.get(patternOrder)));
-    changeButtonColor(button, "-fx-base: gray");
+    changeButtonColor(
+        button, "-fx-background-color: rgb(55,130,91); -fx-border-color: rgb(28,28,28);");
     patternOrder++;
 
     if (patternOrder == turn) {
@@ -306,7 +308,8 @@ public class storageController {
     PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
     pause.setOnFinished(
         e -> {
-          button.setStyle(null);
+          button.setStyle(
+              "-fx-background-color: rgb(107,249,177); -fx-border-color: rgb(28,28,28);");
         });
     pause.play();
   }
@@ -371,7 +374,6 @@ public class storageController {
     if (ch.length < 100) {
       characterDelay = (50 - (ch.length / 2)) + 5;
     }
-    System.out.println("printing with delay of: " + characterDelay);
     Duration delayBetweenCharacters = Duration.millis(characterDelay);
     Duration frame = delayBetweenCharacters;
     for (int i = 0; i < ch.length; i++) {

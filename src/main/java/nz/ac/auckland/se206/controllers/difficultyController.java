@@ -8,7 +8,6 @@ import javafx.scene.control.Label;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.SceneManager.AppUi;
-import nz.ac.auckland.se206.gpt.GptPromptEngineering;
 
 public class difficultyController {
   @FXML private Button btnSwitchToTimeMachine;
@@ -57,7 +56,7 @@ public class difficultyController {
   private void checkedEasy(ActionEvent event) {
     currentDifficulty = Difficulty.EASY;
     isDifficultyChecked = true;
-    GptPromptEngineering.hints = "You can give the user as many hints as they ask for";
+    labController.numHints = 6;
 
     if (chkbxEasy.isSelected()) {
       deselectDifficultyBoxes(currentDifficulty, isDifficultyChecked);
@@ -70,7 +69,6 @@ public class difficultyController {
   private void checkedMedium(ActionEvent event) {
     currentDifficulty = Difficulty.MEDIUM;
     isDifficultyChecked = true;
-    GptPromptEngineering.hints = "a total of 5 hints, given one at a time";
 
     if (chkbxMedium.isSelected()) {
       deselectDifficultyBoxes(currentDifficulty, isDifficultyChecked);
@@ -83,7 +81,6 @@ public class difficultyController {
   private void checkedHard(ActionEvent event) {
     currentDifficulty = Difficulty.HARD;
     isDifficultyChecked = true;
-    GptPromptEngineering.hints = "no hints under any circumstances";
 
     if (chkbxHard.isSelected()) {
       deselectDifficultyBoxes(currentDifficulty, isDifficultyChecked);
