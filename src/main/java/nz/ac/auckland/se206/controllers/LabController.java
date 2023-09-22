@@ -28,8 +28,8 @@ import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
 import nz.ac.auckland.se206.gpt.GptPromptEngineering;
 import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
-import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult;
+import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 
 public class LabController {
 
@@ -100,8 +100,8 @@ public class LabController {
 
           Thread updateChatThreadStorage = new Thread(StorageController.updateChatTask);
           updateChatThreadStorage.start();
-          Thread updateChatThreadTM = new Thread(TimemachineController.updateChatTask);
-          updateChatThreadTM.start();
+          Thread updateChatThreadTime = new Thread(TimemachineController.updateChatTask);
+          updateChatThreadTime.start();
         });
 
     // Set solution chemicals
@@ -263,8 +263,8 @@ public class LabController {
           chatArea.appendText("\n\n-> ");
           appendChatMessage(response);
 
-          Thread updateChatThreadTM2 = new Thread(TimemachineController.updateChatTask);
-          updateChatThreadTM2.start();
+          Thread updateChatThreadTime2 = new Thread(TimemachineController.updateChatTask);
+          updateChatThreadTime2.start();
           Thread updateChatThreadStorage2 = new Thread(StorageController.updateChatTask);
           updateChatThreadStorage2.start();
         });
@@ -545,7 +545,7 @@ public class LabController {
    * @param distance the distance to move the arrow
    */
   private void moveArrowsIn(ImageView arrowDown, ImageView arrowUp, int duration, int distance) {
-  // Initialise path lines and duration
+    // Initialise path lines and duration
     Line lineDown = new Line(18, 13, 18, 13 + distance);
     Line lineUp = new Line(18, 13, 18, 13 - distance);
 
@@ -650,8 +650,8 @@ public class LabController {
           chatArea.appendText("\n\n-> ");
           appendChatMessage(labCompleteTask.getValue());
 
-          Thread updateChatThreadTM2 = new Thread(TimemachineController.updateChatTask);
-          updateChatThreadTM2.start();
+          Thread updateChatThreadTime2 = new Thread(TimemachineController.updateChatTask);
+          updateChatThreadTime2.start();
           Thread updateChatThreadStorage2 = new Thread(StorageController.updateChatTask);
           updateChatThreadStorage2.start();
         });
@@ -812,8 +812,8 @@ public class LabController {
     appendChatMessage(chatMessage);
 
     // Update chat area in other scenes
-    Thread updateChatThreadTM = new Thread(TimemachineController.updateChatTask);
-    updateChatThreadTM.start();
+    Thread updateChatThreadTime = new Thread(TimemachineController.updateChatTask);
+    updateChatThreadTime.start();
     Thread updateChatThreadStorage = new Thread(StorageController.updateChatTask);
     updateChatThreadStorage.start();
 
@@ -843,8 +843,8 @@ public class LabController {
           appendChatMessage(chatTask.getValue());
 
           // Update chat area in other scenes
-          Thread updateChatThreadTM2 = new Thread(TimemachineController.updateChatTask);
-          updateChatThreadTM2.start();
+          Thread updateChatThreadTime2 = new Thread(TimemachineController.updateChatTask);
+          updateChatThreadTime2.start();
           Thread updateChatThreadStorage2 = new Thread(StorageController.updateChatTask);
 
           updateChatThreadStorage2.start();
