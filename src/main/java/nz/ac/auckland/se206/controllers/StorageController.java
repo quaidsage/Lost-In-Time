@@ -33,7 +33,8 @@ import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult;
 
 public class StorageController {
   // JavaFX elements
-  @FXML private Button btnSwitchToTimeMachine, btnSend;
+  @FXML private Button btnSwitchToTimeMachine;
+  @FXML private Button btnSend;
   @FXML private Rectangle circuitBox;
   @FXML private ImageView background;
   @FXML private Label lblTimer;

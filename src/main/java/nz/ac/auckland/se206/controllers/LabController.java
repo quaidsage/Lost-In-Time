@@ -35,16 +35,27 @@ public class LabController {
 
   // JavaFX elements
   @FXML private Pane paneLab;
-  @FXML private Button btnSwitchToTimeMachine, btnSend;
-  @FXML private Label lblTimer, hintsRemaining;
+  @FXML private Button btnSwitchToTimeMachine; 
+  @FXML private Button btnSend;
+  @FXML private Label lblTimer; 
+  @FXML private Label hintsRemaining;
   @FXML private TextArea chatArea;
   @FXML private TextArea chatField;
   @FXML private ImageView imgScientistThinking;
   @FXML private Button btnMenu;
   @FXML private Polyline chemicalGeneral;
-  @FXML private Rectangle chemicalCyan, chemicalBlue, chemicalPurple, chemicalOrange;
-  @FXML private Rectangle chemicalYellow, chemicalGreen, chemicalRed, transitionScene;
-  @FXML private ImageView baseImage, blurredImage, typingBubble;
+  @FXML private Rectangle chemicalCyan;
+  @FXML private Rectangle chemicalBlue;
+  @FXML private Rectangle chemicalPurple;
+  @FXML private Rectangle chemicalOrange;
+  @FXML private Rectangle chemicalYellow;
+  @FXML private Rectangle chemicalGreen;
+  @FXML private Rectangle chemicalRed;
+  @FXML private Rectangle transitionScene;
+  @FXML private ImageView baseImage;
+  @FXML private ImageView blurredImage;
+  @FXML private ImageView typingBubble;
+
   ArrayList<ImageView> arrowCollection = new ArrayList<ImageView>();
 
   // Initialise Variables
