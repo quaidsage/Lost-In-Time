@@ -317,7 +317,10 @@ public class LabController {
    */
   @FXML
   private void clkChemical(MouseEvent event) {
+    // Get source of click
     Rectangle src = (Rectangle) event.getSource();
+
+    // Access appropriate arrows
     switch (src.getId()) {
       case "chemicalBlue":
         chemClicked(0);
@@ -405,7 +408,10 @@ public class LabController {
    */
   @FXML
   private void hideChemical(MouseEvent event) {
+    // Get source of click
     Rectangle src = (Rectangle) event.getSource();
+
+    // Animate appropriate arrows
     switch (src.getId()) {
       case "chemicalBlue":
         chemAnimate(0, false);
@@ -431,21 +437,44 @@ public class LabController {
     }
   }
 
+  /**
+   * Function to fade in a given element.
+   *
+   * @param image the element to be faded in
+   * @param duration the duration of the animation
+   */
   private void fadingTransition(ImageView image, int duration) {
+    // Initialise fade transition and its parameters
     FadeTransition fade = new FadeTransition(Duration.millis(duration), image);
     fade.setFromValue(0);
     fade.setToValue(1);
+
+    // Play fade transition
     fade.play();
   }
 
+  /**
+   * Function to fade given element out.
+   *
+   * @param image the element to be faded out
+   * @param duration the duration of the animation
+   */
   private void fadingTransitionOut(ImageView image, int duration) {
+    // Initialise fade transition and its parameters
     FadeTransition fade = new FadeTransition(Duration.millis(duration), image);
     fade.setDelay(Duration.millis(1200));
     fade.setFromValue(1);
     fade.setToValue(0);
+
+    // Play fade transition
     fade.play();
   }
 
+  /**
+   * Function to flash given arrow from shown to hidden.
+   *
+   * @param image the arrow to be flashed
+   */
   private void flashingArrowsOff(ImageView image) {
     FadeTransition fade = new FadeTransition(Duration.millis(1), image);
     fade.setDelay(flashDuration);
@@ -464,6 +493,11 @@ public class LabController {
     fade.play();
   }
 
+  /**
+   * Function to flash given arrow from hidden to shown.
+   *
+   * @param image the arrow to be flashed
+   */
   private void flashingArrowsOn(ImageView image) {
     FadeTransition fade = new FadeTransition(Duration.millis(1), image);
     fade.setDelay(flashDuration);
@@ -477,49 +511,76 @@ public class LabController {
     fade.play();
   }
 
+  /** Function to fade in elements for chemical task. */
   private void fadeTransition() {
+    // Fade in all arrows and blurred image
     for (int i = 0; i < arrowCollection.size(); i++) {
       fadingTransition(arrowCollection.get(i), fadeTransitionSpeed);
     }
     fadingTransition(blurredImage, fadeTransitionSpeed);
   }
 
+  /** Function to fade out chemical task elements. */
   private void fadeTransitionOut() {
+    // Fade out all arrows and blurred image
     for (int i = 0; i < arrowCollection.size(); i++) {
       fadingTransitionOut(arrowCollection.get(i), fadeTransitionSpeed);
     }
     fadingTransitionOut(blurredImage, fadeTransitionSpeed);
   }
 
+  /** Function to start flashing animation of arrows. */
   private void startFlashingArrows() {
     for (int i = 0; i < arrowCollection.size(); i++) {
       flashingArrowsOff(arrowCollection.get(i));
     }
   }
 
+  /**
+   * Function to move arrows towards the relevant chemical flask.
+   *
+   * @param arrowDown the down arrow to be moved
+   * @param arrowUp the up arrow to be moved
+   * @param duration the duration of the animation
+   * @param distance the distance to move the arrow
+   */
   private void moveArrowsIn(ImageView arrowDown, ImageView arrowUp, int duration, int distance) {
+  // Initialise path lines and duration
     Line lineDown = new Line(18, 13, 18, 13 + distance);
     Line lineUp = new Line(18, 13, 18, 13 - distance);
 
     Duration duration2 = Duration.millis(duration);
 
+    // Create path transition
     PathTransition pathTransitionDown = new PathTransition(duration2, lineDown, arrowDown);
     PathTransition pathTransitionUp = new PathTransition(duration2, lineUp, arrowUp);
 
+    // Execute animation
     pathTransitionDown.play();
     pathTransitionUp.play();
   }
 
+  /**
+   * Function to move arrows away from the relevant chemical flask.
+   *
+   * @param arrowDown the down arrow to be moved
+   * @param arrowUp the up arrow to be moved
+   * @param duration the duration of the animation
+   * @param distance the distance to move the arrow
+   */
   private void arrowAnimationOut(
       ImageView arrowDown, ImageView arrowUp, int duration, int distance) {
+    // Initialise path lines and duration
     Line lineDown = new Line(18, 13 - distance, 18, 13);
     Line lineUp = new Line(18, 13 + distance, 18, 13);
 
     Duration duration2 = Duration.millis(duration);
 
+    // Create path transition
     PathTransition pathTransitionDown = new PathTransition(duration2, lineDown, arrowDown);
     PathTransition pathTransitionUp = new PathTransition(duration2, lineUp, arrowUp);
 
+    // Execute animation
     pathTransitionDown.play();
     pathTransitionUp.play();
   }
@@ -541,11 +602,12 @@ public class LabController {
   }
 
   /**
-   * Function to show cehmcial task.
+   * Function to show chemical task and its relevant javafx elements.
    *
    * @param visibility whether to show or hide the chemicals
    */
   private void enableChemicals(Boolean visibility) {
+    // Set visiblity of elements for chemical task
     chemicalBlue.setVisible(visibility);
     chemicalCyan.setVisible(visibility);
     chemicalPurple.setVisible(visibility);
@@ -554,6 +616,8 @@ public class LabController {
     chemicalGreen.setVisible(visibility);
     chemicalOrange.setVisible(visibility);
     chemicalGeneral.setVisible(false);
+
+    // Change game state
     isChemicalsEnabled = true;
   }
 
@@ -682,13 +746,17 @@ public class LabController {
   private ChatMessage runGpt(ChatMessage msg) throws ApiProxyException {
     GameState.chatCompletionRequest.addMessage(msg);
     try {
+      // Get response from GPT model
       ChatCompletionResult chatCompletionResult = GameState.chatCompletionRequest.execute();
       Choice result = chatCompletionResult.getChoices().iterator().next();
-      GameState.chatCompletionRequest.addMessage(result.getChatMessage());
-      if (result.getChatMessage().getContent().startsWith("Correct")) {
-        // Show chemicals
-        enableChemicals(true);
 
+      // Add response to main chat completion request
+      GameState.chatCompletionRequest.addMessage(result.getChatMessage());
+
+      // Check if users answer was correct
+      if (result.getChatMessage().getContent().startsWith("Correct")) {
+        // Show chemicals and transition
+        enableChemicals(true);
         blurredImage.setVisible(true);
         fadeTransition();
       }
@@ -709,6 +777,7 @@ public class LabController {
           && (GameState.isDifficultyHard || numHints <= 0)) {
         return new ChatMessage("assistant", "No more hints remaining...");
       }
+
       return result.getChatMessage();
     } catch (ApiProxyException e) {
       e.printStackTrace();
@@ -828,8 +897,14 @@ public class LabController {
         };
   }
 
+  /**
+   * Function to update the label showing the user their remaining hints.
+   *
+   * @param numHints the number of hints remaining
+   */
   private void updateHintText(int numHints) {
     if (numHints >= 0) {
+      // Update number of hints to relevant number of hints
       hintsRemaining.setText("Hints Remaining: " + String.valueOf(numHints));
     }
   }

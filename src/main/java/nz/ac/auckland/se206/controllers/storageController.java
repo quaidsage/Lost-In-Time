@@ -126,6 +126,11 @@ public class StorageController {
             button0, button1, button2, button3, button4, button5, button6, button7, button8));
   }
 
+  /**
+   * Function to handle when a minigame button is pressed.
+   *
+   * @param event the action event triggered by the button press
+   */
   @FXML
   void buttonClicked(ActionEvent event) {
     if (buttonsDisabled) {
@@ -153,6 +158,11 @@ public class StorageController {
     }
   }
 
+  /**
+   * Function to handle the starting of the minigame.
+   *
+   * @param event the action event triggered by the start button
+   */
   @FXML
   void start(ActionEvent event) {
     pattern.clear();
@@ -167,7 +177,7 @@ public class StorageController {
   }
 
   /**
-   * Change scene to time machine
+   * Change scene to time machine.
    *
    * @param event the action event triggered by the time machine button
    */
@@ -176,13 +186,16 @@ public class StorageController {
     App.setUi(AppUi.TIMEMACHINE);
   }
 
+  /** Function to handle when the circuit minigame is opened. */
   @FXML
   private void clickCircuitBox(MouseEvent event) {
 
+    // Hide the circuit box
     background.setVisible(false);
     circuitBox.setVisible(false);
     circuitBoxImg.setVisible(false);
 
+    // Show enlarged circuit box and minigame elements
     circuitGameBg.setVisible(true);
     circuitGameImg.setVisible(true);
     memoryGame.setVisible(true);
@@ -192,9 +205,9 @@ public class StorageController {
     btnSwitchToTimeMachine.setDisable(true);
   }
 
+  /** Function to handle when the user wins the minigame. */
   private void winGame() {
-    System.out.println("Minigame won");
-
+    // Hide minigame elements
     circuitGameBg.setVisible(false);
     circuitGameImg.setVisible(false);
     memoryGame.setVisible(false);
@@ -204,15 +217,18 @@ public class StorageController {
     circuitBox.setVisible(false);
     btnSwitchToTimeMachine.setDisable(false);
 
+    // Show storage room elements previously hidden by minigame
     background.setVisible(true);
     circuitBoxImg.setVisible(true);
+
+    // Update game state
     GameState.isStorageResolved = true;
 
     // Send complete message
     Task<ChatMessage> storageTaskComplete = createTask(GptPromptEngineering.getStorageComplete());
     Thread storageThreadComplete = new Thread(storageTaskComplete);
 
-    // Enable thinking image of scientist
+    // Enable thinking animation of scientist
     imgScientistThinking.setVisible(true);
     typingBubble.setVisible(true);
 
@@ -220,7 +236,7 @@ public class StorageController {
 
     storageTaskComplete.setOnSucceeded(
         e -> {
-          // Update imagery
+          // Disable thinking animation of scientist
           imgScientistThinking.setVisible(false);
           typingBubble.setVisible(false);
 
@@ -241,17 +257,21 @@ public class StorageController {
         });
   }
 
+  /** Function to handle the next round of minigame. */
   private void nextTurn() {
     counter = 0;
     consecutiveRounds++; // Increase consecutive rounds on successful turn
     turn++;
 
+    // Add next button to pattern for user to memorise
     pattern.add(possibleButtons.get(random.nextInt(possibleButtons.size())));
     showPattern();
-    System.out.println(pattern);
+
+    // Update current streak user is on
     text.setText("Current Streak: " + consecutiveRounds);
   }
 
+  /** Function to handle when the minigame must be reset. */
   private void resetGame() {
     consecutiveRounds = 0; // Reset consecutive rounds
     text.setText("Wrong - Start Again");
@@ -260,18 +280,31 @@ public class StorageController {
     turn = 1;
   }
 
+  /**
+   * Function to get the index of minigame button via ActionEvent.
+   *
+   * @param event the action event triggered by the button press
+   */
   private int getIndexOfButton(ActionEvent event) {
+    // Get source of click event
     String buttonId = ((Control) event.getSource()).getId();
     return Integer.parseInt(buttonId.substring(buttonId.length() - 1));
   }
 
+  /**
+   * Function to get the index of minigame button via String.
+   *
+   * @param button the button to get the index of
+   */
   private int getIndexOfButton(String button) {
     return Integer.parseInt(button.substring(button.length() - 1));
   }
 
+  /** Function to show the pattern to the user that they have to memorise for current round. */
   private void showPattern() {
     buttonsDisabled = true; // Disable buttons during pattern display
 
+    // Initialise pause transition
     PauseTransition pause = new PauseTransition(Duration.seconds(0.75));
     pause.setOnFinished(
         e -> {
@@ -292,7 +325,9 @@ public class StorageController {
     pause.play();
   }
 
+  /** Function to show next button to press in the pattern order. */
   private void showNext() {
+    // Get next button in pattern and indicate by changing colour
     Button button = buttons.get(getIndexOfButton(pattern.get(patternOrder)));
     changeButtonColor(
         button, "-fx-background-color: rgb(55,130,91); -fx-border-color: rgb(28,28,28);");
@@ -303,6 +338,12 @@ public class StorageController {
     }
   }
 
+  /**
+   * Function to change colour of minigame button to desired colour, then reset after delay.
+   *
+   * @param button the button to change the colour of
+   * @param color the colour to change the button to
+   */
   private void changeButtonColor(Button button, String color) {
     button.setStyle(color);
     PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
@@ -315,7 +356,7 @@ public class StorageController {
   }
 
   /**
-   * Function to start timer
+   * Function to start timer.
    *
    * @param minutes the number of minutes to set the timer to
    */
@@ -408,9 +449,13 @@ public class StorageController {
   private ChatMessage runGpt(ChatMessage msg) throws ApiProxyException {
     GameState.chatCompletionRequest.addMessage(msg);
     try {
+      // Get response from GPT model
       ChatCompletionResult chatCompletionResult = GameState.chatCompletionRequest.execute();
       Choice result = chatCompletionResult.getChoices().iterator().next();
+
+      // Add response to main chat completion request
       GameState.chatCompletionRequest.addMessage(result.getChatMessage());
+
       return result.getChatMessage();
     } catch (ApiProxyException e) {
       e.printStackTrace();
@@ -529,6 +574,12 @@ public class StorageController {
         };
   }
 
+  /**
+   * Function to handle returning to main menu.
+   *
+   * @param event the action event triggered by the menu button
+   * @throws IOException if there is an I/O error
+   */
   @FXML
   private void returnToMenu(ActionEvent event) throws IOException {
     App.setRoot("mainmenu");

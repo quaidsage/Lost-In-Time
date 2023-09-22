@@ -23,6 +23,12 @@ public class MainmenuController {
     textToSpeech("Lost in time. Restore the fabric of time.");
   }
 
+  /**
+   * Function to handle when the user starts game.
+   *
+   * @param event The event that triggered this function
+   * @throws IOException If the FXML file is not found
+   */
   @FXML
   private void beginGame(ActionEvent event) throws IOException {
     // Reset various game states and settings when the game starts.
@@ -65,6 +71,11 @@ public class MainmenuController {
     textToSpeech("Select difficulty level and time limit.");
   }
 
+  /**
+   * Function to handle text to speech in seperate thread.
+   *
+   * @param msg The message to be spoken
+   */
   private void textToSpeech(String msg) {
     // This method uses text-to-speech to speak the provided message.
 
