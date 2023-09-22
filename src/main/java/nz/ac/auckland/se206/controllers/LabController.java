@@ -32,6 +32,16 @@ import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 
 public class LabController {
+  public static int numHints = 5;
+  public static ArrayList<Integer> solutionColours;
+
+  // Fields related to Task
+  public static Task<Void> updateChatTask;
+  public static Task<ChatMessage> labIntroTask;
+  public static Task<ChatMessage> labRiddleTask;
+
+  // Initialise Timer
+  private static TimerController timer = new TimerController();
 
   // Fields for JavaFX elements
   @FXML private Pane paneLab;
@@ -66,20 +76,47 @@ public class LabController {
   private int fadeTransitionSpeed = 1500;
   private Duration flashDuration = Duration.millis(0);
   private int numFlashes = 0;
-  public static int numHints = 5;
-  public static ArrayList<Integer> solutionColours;
-
-  // Fields related to Task
-  public static Task<Void> updateChatTask;
-  public static Task<ChatMessage> labIntroTask;
-  public static Task<ChatMessage> labRiddleTask;
 
   // Fields related to chemical solutions
   private Boolean[] isChemicalSolution = {false, false, false, false, false, false, false};
   private Boolean isChemicalsEnabled = false;
 
-  // Initialise Timer
-  private static TimerController timer = new TimerController();
+  /**
+   * Function to start timer
+   *
+   * @param minutes the number of minutes to set the timer to
+   */
+  public static void labStartTimer(int minutes) {
+    timer.setMinutes(minutes);
+    timer.start();
+  }
+
+  /**
+   * Delays given code by a given number of milliseconds.
+   *
+   * @param ms milliseconds of delay
+   * @param continuation Code to execute after delay
+   */
+  public static void delay(int ms, Runnable continuation) {
+    // Create delay function
+    Task<Void> delayTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            try {
+              Thread.sleep(ms);
+            } catch (InterruptedException e) {
+              e.printStackTrace();
+            }
+            return null;
+          }
+        };
+    // Execute code after delay
+    delayTask.setOnSucceeded(event -> continuation.run());
+
+    // Start delay thread
+    new Thread(delayTask).start();
+  }
 
   public void initialize() throws ApiProxyException {
     // Initialise timer and bind the lblTimer to the timerController properties.
@@ -218,16 +255,6 @@ public class LabController {
   @FXML
   private void switchToTimeMachine(ActionEvent event) {
     App.setUi(AppUi.TIMEMACHINE);
-  }
-
-  /**
-   * Function to start timer
-   *
-   * @param minutes the number of minutes to set the timer to
-   */
-  public static void labStartTimer(int minutes) {
-    timer.setMinutes(minutes);
-    timer.start();
   }
 
   /**
@@ -872,33 +899,6 @@ public class LabController {
 
           updateChatThreadStorage2.start();
         });
-  }
-
-  /**
-   * Delays given code by a given number of milliseconds.
-   *
-   * @param ms milliseconds of delay
-   * @param continuation Code to execute after delay
-   */
-  public static void delay(int ms, Runnable continuation) {
-    // Create delay function
-    Task<Void> delayTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            try {
-              Thread.sleep(ms);
-            } catch (InterruptedException e) {
-              e.printStackTrace();
-            }
-            return null;
-          }
-        };
-    // Execute code after delay
-    delayTask.setOnSucceeded(event -> continuation.run());
-
-    // Start delay thread
-    new Thread(delayTask).start();
   }
 
   /** Function to set chat area to current history of chat log. */

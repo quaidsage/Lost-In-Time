@@ -25,6 +25,14 @@ import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 
 public class TimemachineController {
+  public static Task<ChatMessage> contextTask;
+  public static Task<Void> updateChatTask;
+  public static ChatMessage chatTaskValue;
+  public static Task<Void> startTask;
+
+  // Initialise Timer
+  private static TimerController timer = new TimerController();
+
   // JavaFX elements
   @FXML private Button btnSwitchToLab, btnSwitchToStorage, btnSend;
   @FXML private Label lblTimer;
@@ -37,13 +45,43 @@ public class TimemachineController {
 
   // Initialise Variables
   private int characterDelay = 5;
-  public static Task<ChatMessage> contextTask;
-  public static Task<Void> updateChatTask;
-  public static ChatMessage chatTaskValue;
-  public static Task<Void> startTask;
 
-  // Initialise Timer
-  private static TimerController timer = new TimerController();
+  /**
+   * Function to start timer.
+   *
+   * @param minutes the number of minutes to set the timer to
+   */
+  public static void timemachineStartTimer(int minutes) {
+    timer.setMinutes(minutes);
+    timer.start();
+  }
+
+  /**
+   * Delays given code by a given number of milliseconds.
+   *
+   * @param ms milliseconds of delay
+   * @param continuation Code to execute after delay
+   */
+  public static void delay(int ms, Runnable continuation) {
+    // Create delay function
+    Task<Void> delayTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            try {
+              Thread.sleep(ms);
+            } catch (InterruptedException e) {
+              e.printStackTrace();
+            }
+            return null;
+          }
+        };
+    // Execute code after delay
+    delayTask.setOnSucceeded(event -> continuation.run());
+
+    // Start delay thread
+    new Thread(delayTask).start();
+  }
 
   public void initialize() {
     timer = new TimerController();
@@ -114,16 +152,6 @@ public class TimemachineController {
       storageIntroThread.start();
     }
     App.setUi(AppUi.STORAGE);
-  }
-
-  /**
-   * Function to start timer.
-   *
-   * @param minutes the number of minutes to set the timer to
-   */
-  public static void timemachineStartTimer(int minutes) {
-    timer.setMinutes(minutes);
-    timer.start();
   }
 
   /**
@@ -323,33 +351,6 @@ public class TimemachineController {
           Thread updateChatThreadStorage2 = new Thread(StorageController.updateChatTask);
           updateChatThreadStorage2.start();
         });
-  }
-
-  /**
-   * Delays given code by a given number of milliseconds.
-   *
-   * @param ms milliseconds of delay
-   * @param continuation Code to execute after delay
-   */
-  public static void delay(int ms, Runnable continuation) {
-    // Create delay function
-    Task<Void> delayTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            try {
-              Thread.sleep(ms);
-            } catch (InterruptedException e) {
-              e.printStackTrace();
-            }
-            return null;
-          }
-        };
-    // Execute code after delay
-    delayTask.setOnSucceeded(event -> continuation.run());
-
-    // Start delay thread
-    new Thread(delayTask).start();
   }
 
   /** Function to set chat area to current history of chat log. */

@@ -31,6 +31,11 @@ import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 
 public class StorageController {
+  public static Task<Void> updateChatTask;
+  public static Task<ChatMessage> storageIntroTask;
+
+  // Initialise Timer
+  private static TimerController timer = new TimerController();
 
   // JavaFX elements
   @FXML private Button btnSwitchToTimeMachine;
@@ -62,8 +67,6 @@ public class StorageController {
 
   // Initialise Variables
   private int characterDelay = 5;
-  public static Task<Void> updateChatTask;
-  public static Task<ChatMessage> storageIntroTask;
   private ArrayList<Button> buttons = new ArrayList<>();
   private ArrayList<String> pattern = new ArrayList<>();
   private int patternOrder = 0;
@@ -79,8 +82,42 @@ public class StorageController {
               "button0", "button1", "button2", "button3", "button4", "button5", "button6",
               "button7", "button8"));
 
-  // Initialise Timer
-  private static TimerController timer = new TimerController();
+  /**
+   * Function to start timer.
+   *
+   * @param minutes the number of minutes to set the timer to
+   */
+  public static void storageStartTimer(int minutes) {
+    timer.setMinutes(minutes);
+    timer.start();
+  }
+
+  /**
+   * Delays given code by a given number of milliseconds.
+   *
+   * @param ms milliseconds of delay
+   * @param continuation Code to execute after delay
+   */
+  public static void delay(int ms, Runnable continuation) {
+    // Create delay function
+    Task<Void> delayTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            try {
+              Thread.sleep(ms);
+            } catch (InterruptedException e) {
+              e.printStackTrace();
+            }
+            return null;
+          }
+        };
+    // Execute code after delay
+    delayTask.setOnSucceeded(event -> continuation.run());
+
+    // Start delay thread
+    new Thread(delayTask).start();
+  }
 
   public void initialize() throws ApiProxyException {
     timer = new TimerController();
@@ -366,16 +403,6 @@ public class StorageController {
   }
 
   /**
-   * Function to start timer.
-   *
-   * @param minutes the number of minutes to set the timer to
-   */
-  public static void storageStartTimer(int minutes) {
-    timer.setMinutes(minutes);
-    timer.start();
-  }
-
-  /**
    * Creates a task to run the LLM model on a given message to be run by background thread.
    *
    * @param message string to attach to message to be given to the LLM
@@ -539,33 +566,6 @@ public class StorageController {
           Thread updateChatThreadTime2 = new Thread(TimemachineController.updateChatTask);
           updateChatThreadTime2.start();
         });
-  }
-
-  /**
-   * Delays given code by a given number of milliseconds.
-   *
-   * @param ms milliseconds of delay
-   * @param continuation Code to execute after delay
-   */
-  public static void delay(int ms, Runnable continuation) {
-    // Create delay function
-    Task<Void> delayTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            try {
-              Thread.sleep(ms);
-            } catch (InterruptedException e) {
-              e.printStackTrace();
-            }
-            return null;
-          }
-        };
-    // Execute code after delay
-    delayTask.setOnSucceeded(event -> continuation.run());
-
-    // Start delay thread
-    new Thread(delayTask).start();
   }
 
   /** Function to set chat area to current history of chat log. */
