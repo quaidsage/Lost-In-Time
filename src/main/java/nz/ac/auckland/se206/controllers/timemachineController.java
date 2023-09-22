@@ -320,6 +320,7 @@ public class TimemachineController {
             try {
               Thread.sleep(ms);
             } catch (InterruptedException e) {
+              e.printStackTrace();
             }
             return null;
           }

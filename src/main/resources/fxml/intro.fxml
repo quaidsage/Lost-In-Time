@@ -55,7 +55,7 @@
             <Font name="System Bold" size="38.0" />
          </font>
       </Button>
-      <Button id="btnSkip" fx:id="btnNext" disable="true" layoutX="973.0" layoutY="382.0" mnemonicParsing="false" onAction="#nextInteraction" stylesheets="@../css/style.css" text="Next">
+      <Button id="btnSkip" fx:id="btnNext" disable="true" layoutX="973.0" layoutY="382.0" mnemonicParsing="false" onAction="#proceedToNextInteraction" stylesheets="@../css/style.css" text="Next">
          <font>
             <Font size="38.0" />
          </font>

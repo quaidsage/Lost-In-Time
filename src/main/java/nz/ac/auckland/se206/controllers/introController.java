@@ -135,7 +135,7 @@ public class IntroController {
 
   // Proceed to the next interaction with the assistant
   @FXML
-  public void nextInteraction() {
+  public void proceedToNextInteraction() {
     // Hide the "Next" button
     btnNext.setDisable(true);
 
