@@ -5,17 +5,17 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.endsceneController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" style="-fx-background-color: rgb(28,28,28);" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.endsceneController">
    <children>
-      <Label layoutX="213.0" layoutY="238.0" prefHeight="50.0" prefWidth="1010.0" text="You win! You successfully escaped using the time machine.">
+      <Label layoutX="52.0" layoutY="246.0" prefHeight="70.0" prefWidth="1371.0" text="You win! You successfully escaped using the time machine." textFill="#6bf9b1">
          <font>
-            <Font name="Apple Symbols" size="48.0" />
+            <Font name="System Bold" size="48.0" />
          </font></Label>
-      <Button fx:id="btnPlayAgain" layoutX="560.0" layoutY="457.0" mnemonicParsing="false" onAction="#playAgain" text="Back to Menu">
+      <Button id="btnSkip" fx:id="btnPlayAgain" layoutX="534.0" layoutY="423.0" mnemonicParsing="false" onAction="#playAgain" text="Back to Menu">
          <font>
-            <Font name="Apple Symbols" size="48.0" />
+            <Font name="System Bold" size="48.0" />
          </font></Button>
-      <Label layoutX="611.0" layoutY="302.0" prefHeight="50.0" prefWidth="184.0" text="Well done.">
+      <Label layoutX="592.0" layoutY="176.0" prefHeight="70.0" prefWidth="261.0" text="Well done..." textFill="#6bf9b1">
          <font>
             <Font name="Apple Symbols" size="48.0" />
          </font>

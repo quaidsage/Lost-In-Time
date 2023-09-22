@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 
@@ -49,6 +50,8 @@ public class App extends Application {
     // Load game starting with the main menu
     scene = new Scene(App.loadFxml("mainmenu"), 1400, 750);
     stage.setScene(scene);
+    stage.setResizable(false);
+    stage.getIcons().add(new Image("file:src/main/resources/images/scientist-process.png"));
     stage.show();
   }
 
