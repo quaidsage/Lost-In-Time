@@ -54,7 +54,9 @@ public class labController {
   @FXML private ImageView arrowUpCyan1, arrowUpBlue1, arrowUpPurple1, arrowUpOrange1;
   @FXML private ImageView arrowUpYellow1, arrowUpGreen1, arrowUpRed1;
   @FXML private ImageView arrowDownCyan1, arrowDownBlue1, arrowDownPurple1, arrowDownOrange1;
-  @FXML private ImageView arrowDownYellow1, arrowDownGreen1, arrowDownRed1;
+  @FXML private ImageView arrowDownYellow1, arrowDownGreen1, arrowDownRed1; 
+  @FXML private ImageView typingBubble;
+
 
   // Initialise Variables
   private int characterDelay = 5;
@@ -101,11 +103,13 @@ public class labController {
 
     // Change to thinking image
     imgScientistThinking.setVisible(true);
+    typingBubble.setVisible(true);
 
     labIntroTask.setOnSucceeded(
         e -> {
           // Update imagery of scientist
           imgScientistThinking.setVisible(false);
+          typingBubble.setVisible(false);
 
           ChatMessage response = labIntroTask.getValue();
           // Append to chat log
@@ -180,6 +184,7 @@ public class labController {
         e -> {
           // Update imagery
           imgScientistThinking.setVisible(false);
+          typingBubble.setVisible(false);
 
           ChatMessage response = labRiddleTask.getValue();
 
@@ -232,6 +237,7 @@ public class labController {
 
     // Change to thinking scientist
     imgScientistThinking.setVisible(true);
+    typingBubble.setVisible(true);
 
     Thread labRiddleThread = new Thread(labRiddleTask);
     labRiddleThread.start();
@@ -591,11 +597,13 @@ public class labController {
 
     // Enable thinking image of scientist
     imgScientistThinking.setVisible(true);
+    typingBubble.setVisible(true);
 
     chatTask.setOnSucceeded(
         e -> {
           // Update imagery
           imgScientistThinking.setVisible(false);
+          typingBubble.setVisible(false);
 
           // Add to chat log
           GameState.chatLog += "\n\n-> " + chatTask.getValue().getContent();

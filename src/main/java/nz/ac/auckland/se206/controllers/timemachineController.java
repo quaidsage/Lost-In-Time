@@ -33,6 +33,7 @@ public class timemachineController {
   @FXML private ImageView imgScientistThinking;
   @FXML private Rectangle rectLight;
   @FXML private Button btnTimeMachine, btnMenu;
+  @FXML private ImageView typingBubble;
 
   // Initialise Variables
   private int characterDelay = 5;
@@ -49,6 +50,7 @@ public class timemachineController {
 
     // Enable thinking image of scientist
     imgScientistThinking.setVisible(true);
+    typingBubble.setVisible(true);
 
     // Create context thread
     contextTask = createTask(GptPromptEngineering.getContext());
@@ -281,11 +283,14 @@ public class timemachineController {
 
     // Enable thinking image of scientist
     imgScientistThinking.setVisible(true);
+    typingBubble.setVisible(true);
 
     chatTask.setOnSucceeded(
         e -> {
           // Update imagery
           imgScientistThinking.setVisible(false);
+          typingBubble.setVisible(false);
+
 
           // Add to chat log
           GameState.chatLog += "\n\n-> " + chatTask.getValue().getContent();
@@ -413,6 +418,7 @@ public class timemachineController {
         () -> {
           // Update imagery
           imgScientistThinking.setVisible(false);
+          typingBubble.setVisible(false);
 
           // Add to chat log
           GameState.chatLog = "-> " + contextTask.getValue().getContent();
