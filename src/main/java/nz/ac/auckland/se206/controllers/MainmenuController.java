@@ -15,7 +15,7 @@ import nz.ac.auckland.se206.gpt.openai.ChatCompletionRequest;
 public class MainmenuController {
   @FXML private Button btnBeginGame;
 
-  int count = 0;
+  private int count = 0;
 
   public void initialize() {
     // This method is automatically called when the FXML is loaded.
