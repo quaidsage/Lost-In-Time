@@ -32,6 +32,7 @@ import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 
 public class StorageController {
+
   // JavaFX elements
   @FXML private Button btnSwitchToTimeMachine;
   @FXML private Button btnSend;
