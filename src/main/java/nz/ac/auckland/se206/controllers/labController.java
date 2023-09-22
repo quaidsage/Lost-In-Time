@@ -121,45 +121,57 @@ public class labController {
           Thread updateChatThreadTM = new Thread(timemachineController.updateChatTask);
           updateChatThreadTM.start();
         });
+
+    // Create task for initialising the lab task elements
     List<String> colourList = Arrays.asList(possibleChemicalColours);
     Collections.shuffle(colourList);
 
     String[] Colours = colourList.subList(0, 3).toArray(new String[3]);
     puzzleColours = Colours;
-    for (int i = 0; i < 3; i++) {
-      updateColourAnswerVariables(puzzleColours[i]);
-    }
 
-    // Add the ImageView elements to the ArrayList
-    arrowCollection.add(arrowUpCyan);
-    arrowCollection.add(arrowUpBlue);
-    arrowCollection.add(arrowUpPurple);
-    arrowCollection.add(arrowUpOrange);
-    arrowCollection.add(arrowUpYellow);
-    arrowCollection.add(arrowUpGreen);
-    arrowCollection.add(arrowUpRed);
-    arrowCollection.add(arrowDownCyan);
-    arrowCollection.add(arrowDownBlue);
-    arrowCollection.add(arrowDownPurple);
-    arrowCollection.add(arrowDownOrange);
-    arrowCollection.add(arrowDownYellow);
-    arrowCollection.add(arrowDownGreen);
-    arrowCollection.add(arrowDownRed);
-    arrowCollection.add(arrowUpCyan1);
-    arrowCollection.add(arrowUpBlue1);
-    arrowCollection.add(arrowUpPurple1);
-    arrowCollection.add(arrowUpOrange1);
-    arrowCollection.add(arrowUpYellow1);
-    arrowCollection.add(arrowUpGreen1);
-    arrowCollection.add(arrowUpRed1);
-    arrowCollection.add(arrowDownCyan1);
-    arrowCollection.add(arrowDownBlue1);
-    arrowCollection.add(arrowDownPurple1);
-    arrowCollection.add(arrowDownOrange1);
-    arrowCollection.add(arrowDownYellow1);
-    arrowCollection.add(arrowDownGreen1);
-    arrowCollection.add(arrowDownRed1);
-    chemicalGeneral.setVisible(false);
+    Task<Void> initLabTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            for (int i = 0; i < 3; i++) {
+              updateColourAnswerVariables(puzzleColours[i]);
+            }
+
+            // Add the ImageView elements to the ArrayList
+            arrowCollection.add(arrowUpCyan);
+            arrowCollection.add(arrowUpBlue);
+            arrowCollection.add(arrowUpPurple);
+            arrowCollection.add(arrowUpOrange);
+            arrowCollection.add(arrowUpYellow);
+            arrowCollection.add(arrowUpGreen);
+            arrowCollection.add(arrowUpRed);
+            arrowCollection.add(arrowDownCyan);
+            arrowCollection.add(arrowDownBlue);
+            arrowCollection.add(arrowDownPurple);
+            arrowCollection.add(arrowDownOrange);
+            arrowCollection.add(arrowDownYellow);
+            arrowCollection.add(arrowDownGreen);
+            arrowCollection.add(arrowDownRed);
+            arrowCollection.add(arrowUpCyan1);
+            arrowCollection.add(arrowUpBlue1);
+            arrowCollection.add(arrowUpPurple1);
+            arrowCollection.add(arrowUpOrange1);
+            arrowCollection.add(arrowUpYellow1);
+            arrowCollection.add(arrowUpGreen1);
+            arrowCollection.add(arrowUpRed1);
+            arrowCollection.add(arrowDownCyan1);
+            arrowCollection.add(arrowDownBlue1);
+            arrowCollection.add(arrowDownPurple1);
+            arrowCollection.add(arrowDownOrange1);
+            arrowCollection.add(arrowDownYellow1);
+            arrowCollection.add(arrowDownGreen1);
+            arrowCollection.add(arrowDownRed1);
+            chemicalGeneral.setVisible(false);
+            return null;
+          }
+        };
+    Thread initLabThread = new Thread(initLabTask);
+    initLabThread.start();
 
     // Create task to run GPT model for riddle message
     labRiddleTask = createTask(GptPromptEngineering.getRiddleLab(puzzleColours));
