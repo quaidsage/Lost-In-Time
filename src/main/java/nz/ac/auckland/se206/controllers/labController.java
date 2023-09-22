@@ -31,6 +31,8 @@ import nz.ac.auckland.se206.gpt.GptPromptEngineering;
 import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
+import nz.ac.auckland.se206.controllers.difficultyController.Difficulty;
+
 
 public class labController {
 
@@ -56,6 +58,7 @@ public class labController {
   @FXML private ImageView arrowDownCyan1, arrowDownBlue1, arrowDownPurple1, arrowDownOrange1;
   @FXML private ImageView arrowDownYellow1, arrowDownGreen1, arrowDownRed1; 
   @FXML private ImageView typingBubble;
+  @FXML private Label hintsRemaining;
 
 
   // Initialise Variables
@@ -81,6 +84,7 @@ public class labController {
   private int numFlashes = 0;
   //  ArrayList<ImageView> imageViewList = new ArrayList<>();
   ArrayList<ImageView> arrowCollection = new ArrayList<ImageView>();
+  int numHints = 5;
 
   // Initialise Timer
   private static timerController timer = new timerController();
@@ -225,6 +229,14 @@ public class labController {
 
   @FXML
   private void clkChemicalGeneral(MouseEvent event) {
+    if (GameState.isDifficultyMedium == true) {
+      numHints = 5;
+      hintsRemaining.setText("Hints Remaining: " + String.valueOf(numHints));
+    }  else if (GameState.isDifficultyEasy == true) {
+      hintsRemaining.setText("Unlimited hints available");
+    } else {
+      hintsRemaining.setText("No hints available");
+    }
 
     if (GameState.isLabResolved) {
       return;
@@ -248,6 +260,9 @@ public class labController {
     App.setRoot("mainmenu");
     GameState.isLabResolved = false;
     GameState.isStorageResolved = false;
+    GameState.isDifficultyEasy = false;
+    GameState.isDifficultyMedium = false;
+    GameState.isDifficultyHard = false;
     SceneManager.clearAllScenesExceptMainMenu();
   }
 
@@ -548,6 +563,13 @@ public class labController {
         blurredImage.setVisible(true);
         fadeTransition();
       }
+      if (result.getChatMessage().getContent().contains("Hint:") && GameState.isDifficultyMedium == true) {
+        Platform.runLater(() -> {
+          numHints--;
+        updateHintText(numHints);
+      });
+        
+      }
       return result.getChatMessage();
     } catch (ApiProxyException e) {
       e.printStackTrace();
@@ -765,5 +787,11 @@ public class labController {
     arrowDown.setVisible(false);
     arrowUp1.setVisible(true);
     arrowDown1.setVisible(true);
+  }
+
+  private void updateHintText(int numHints) {
+    if (numHints <= 0) {
+      hintsRemaining.setText("Hints Remaining: " + String.valueOf(numHints));
+    }
   }
 }

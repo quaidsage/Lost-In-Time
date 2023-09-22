@@ -243,5 +243,6 @@
             <Image url="@../images/typing_bubble1.gif" />
          </image>
       </ImageView>
+      <Label fx:id="hintsRemaining" layoutX="1028.0" layoutY="241.0" prefHeight="26.0" prefWidth="232.0" textFill="#6bf9b1" />
    </children>
 </Pane>
