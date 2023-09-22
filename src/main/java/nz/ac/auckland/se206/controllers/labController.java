@@ -100,8 +100,8 @@ public class labController {
 
           Thread updateChatThreadStorage = new Thread(storageController.updateChatTask);
           updateChatThreadStorage.start();
-          Thread updateChatThreadTM = new Thread(timemachineController.updateChatTask);
-          updateChatThreadTM.start();
+          Thread updateChatThreadTime = new Thread(timemachineController.updateChatTask);
+          updateChatThreadTime.start();
         });
 
     // Set solution chemicals
@@ -263,8 +263,8 @@ public class labController {
           chatArea.appendText("\n\n-> ");
           appendChatMessage(response);
 
-          Thread updateChatThreadTM2 = new Thread(timemachineController.updateChatTask);
-          updateChatThreadTM2.start();
+          Thread updateChatThreadTime2 = new Thread(timemachineController.updateChatTask);
+          updateChatThreadTime2.start();
           Thread updateChatThreadStorage2 = new Thread(storageController.updateChatTask);
           updateChatThreadStorage2.start();
         });
@@ -351,7 +351,7 @@ public class labController {
    */
   private void chemAnimate(int color, Boolean show) {
     if (show) {
-      arrowAnimationIn(
+      moveArrowsIn(
           arrowCollection.get(color),
           arrowCollection.get(color + 7),
           arrowAnimationSpeed,
@@ -497,8 +497,7 @@ public class labController {
     }
   }
 
-  private void arrowAnimationIn(
-      ImageView arrowDown, ImageView arrowUp, int duration, int distance) {
+  private void moveArrowsIn(ImageView arrowDown, ImageView arrowUp, int duration, int distance) {
     Line lineDown = new Line(18, 13, 18, 13 + distance);
     Line lineUp = new Line(18, 13, 18, 13 - distance);
 
@@ -587,8 +586,8 @@ public class labController {
           chatArea.appendText("\n\n-> ");
           appendChatMessage(labCompleteTask.getValue());
 
-          Thread updateChatThreadTM2 = new Thread(timemachineController.updateChatTask);
-          updateChatThreadTM2.start();
+          Thread updateChatThreadTime2 = new Thread(timemachineController.updateChatTask);
+          updateChatThreadTime2.start();
           Thread updateChatThreadStorage2 = new Thread(storageController.updateChatTask);
           updateChatThreadStorage2.start();
         });
@@ -744,8 +743,8 @@ public class labController {
     appendChatMessage(chatMessage);
 
     // Update chat area in other scenes
-    Thread updateChatThreadTM = new Thread(timemachineController.updateChatTask);
-    updateChatThreadTM.start();
+    Thread updateChatThreadTime = new Thread(timemachineController.updateChatTask);
+    updateChatThreadTime.start();
     Thread updateChatThreadStorage = new Thread(storageController.updateChatTask);
     updateChatThreadStorage.start();
 
@@ -775,8 +774,8 @@ public class labController {
           appendChatMessage(chatTask.getValue());
 
           // Update chat area in other scenes
-          Thread updateChatThreadTM2 = new Thread(timemachineController.updateChatTask);
-          updateChatThreadTM2.start();
+          Thread updateChatThreadTime2 = new Thread(timemachineController.updateChatTask);
+          updateChatThreadTime2.start();
           Thread updateChatThreadStorage2 = new Thread(storageController.updateChatTask);
           updateChatThreadStorage2.start();
         });
@@ -797,6 +796,7 @@ public class labController {
             try {
               Thread.sleep(ms);
             } catch (InterruptedException e) {
+              e.printStackTrace();
             }
             return null;
           }

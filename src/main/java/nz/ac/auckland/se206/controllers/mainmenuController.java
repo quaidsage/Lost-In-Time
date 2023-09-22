@@ -62,7 +62,7 @@ public class mainmenuController {
     SceneManager.addUi(AppUi.DIFFICULTY, App.loadFxml("difficulty"));
     App.setUi(AppUi.DIFFICULTY);
     SceneManager.addUi(AppUi.INTRO, App.loadFxml("intro"));
-    // textToSpeech("Select difficulty level and time limit.");
+    textToSpeech("Select difficulty level and time limit.");
   }
 
   private void textToSpeech(String msg) {

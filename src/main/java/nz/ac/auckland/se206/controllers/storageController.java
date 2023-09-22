@@ -117,8 +117,8 @@ public class storageController {
           // Update chat area in other scenes
           Thread updateChatThreadLab = new Thread(labController.updateChatTask);
           updateChatThreadLab.start();
-          Thread updateChatThreadTM = new Thread(timemachineController.updateChatTask);
-          updateChatThreadTM.start();
+          Thread updateChatThreadTime = new Thread(timemachineController.updateChatTask);
+          updateChatThreadTime.start();
         });
 
     buttons.addAll(
@@ -236,8 +236,8 @@ public class storageController {
           // Update chat area in other scenes
           Thread updateChatThreadLab = new Thread(labController.updateChatTask);
           updateChatThreadLab.start();
-          Thread updateChatThreadTM = new Thread(timemachineController.updateChatTask);
-          updateChatThreadTM.start();
+          Thread updateChatThreadTime = new Thread(timemachineController.updateChatTask);
+          updateChatThreadTime.start();
         });
   }
 
@@ -447,8 +447,8 @@ public class storageController {
     // Update chat area in other scenes
     Thread updateChatThreadLab = new Thread(labController.updateChatTask);
     updateChatThreadLab.start();
-    Thread updateChatThreadTM = new Thread(timemachineController.updateChatTask);
-    updateChatThreadTM.start();
+    Thread updateChatThreadTime = new Thread(timemachineController.updateChatTask);
+    updateChatThreadTime.start();
 
     // Add to chat log
     GameState.chatLog += "\n\n<- " + chatMessage.getContent();
@@ -478,8 +478,8 @@ public class storageController {
           // Update chat area in other scenes
           Thread updateChatThreadLab2 = new Thread(labController.updateChatTask);
           updateChatThreadLab2.start();
-          Thread updateChatThreadTM2 = new Thread(timemachineController.updateChatTask);
-          updateChatThreadTM2.start();
+          Thread updateChatThreadTime2 = new Thread(timemachineController.updateChatTask);
+          updateChatThreadTime2.start();
         });
   }
 
@@ -498,6 +498,7 @@ public class storageController {
             try {
               Thread.sleep(ms);
             } catch (InterruptedException e) {
+              e.printStackTrace();
             }
             return null;
           }
