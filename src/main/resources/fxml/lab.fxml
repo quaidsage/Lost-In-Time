@@ -93,7 +93,7 @@
          <font>
             <Font name="System Bold" size="24.0" />
          </font></Button>
-      <Text fill="#6bf9b1" layoutX="672.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently in: Lab Room" wrappingWidth="287.91015625">
+      <Text fill="#6bf9b1" layoutX="790.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently in: Lab Room" wrappingWidth="194.64062500000003">
          <font>
             <Font name="Apple Symbols" size="24.0" />
          </font>
