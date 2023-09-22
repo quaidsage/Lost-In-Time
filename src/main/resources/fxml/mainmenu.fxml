@@ -7,16 +7,16 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" style="-fx-background-color: rgb(48,48,48);" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.mainmenuController">
    <children>
-      <Button id="btnSkip" fx:id="btnBeginGame" layoutX="544.0" layoutY="460.0" mnemonicParsing="false" onAction="#beginGame" stylesheets="@../css/style.css" text="Begin Game">
+      <Button id="btnSkip" fx:id="btnBeginGame" layoutX="535.0" layoutY="461.0" mnemonicParsing="false" onAction="#beginGame" stylesheets="@../css/style.css" text="Begin Game">
          <font>
             <Font name="System Bold" size="52.0" />
          </font></Button>
-      <Label layoutX="417.0" layoutY="126.0" text="LOST IN TIME" textAlignment="CENTER" textFill="#6bf9b1">
+      <Label layoutX="431.0" layoutY="121.0" text="LOST IN TIME" textAlignment="CENTER" textFill="#6bf9b1">
          <font>
             <Font name="System Bold" size="96.0" />
          </font>
       </Label>
-      <Label layoutX="552.0" layoutY="248.0" text="RESTORE THE FABRIC OF TIME" textAlignment="CENTER" textFill="#6bf9b1">
+      <Label layoutX="534.0" layoutY="253.0" text="RESTORE THE FABRIC OF TIME" textAlignment="CENTER" textFill="#6bf9b1">
          <font>
             <Font size="26.0" />
          </font>

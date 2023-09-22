@@ -127,11 +127,11 @@
             <Font name="Apple Symbols" size="24.0" />
          </font>
       </Text>
-      <Button id="btnSkip" fx:id="btnMenu" layoutX="4.0" layoutY="4.0" mnemonicParsing="false" onAction="#returnToMenu" text="Return To Menu">
+      <Button id="btnSkip" fx:id="btnMenu" layoutX="25.0" layoutY="10.0" mnemonicParsing="false" onAction="#returnToMenu" text="Return To Menu">
          <font>
             <Font name="System Bold" size="24.0" />
          </font></Button>
-      <Text fill="#6bf9b1" layoutX="681.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently in: Storage Room">
+      <Text fill="#6bf9b1" layoutX="755.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently in: Storage Room">
          <font>
             <Font name="Apple Symbols" size="24.0" />
          </font>
