@@ -31,6 +31,8 @@ import nz.ac.auckland.se206.gpt.GptPromptEngineering;
 import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
+import nz.ac.auckland.se206.controllers.difficultyController.Difficulty;
+
 
 public class labController {
 
@@ -64,6 +66,9 @@ public class labController {
   private int fadeTransitionSpeed = 1500;
   private Duration flashDuration = Duration.millis(0);
   private int numFlashes = 0;
+  //  ArrayList<ImageView> imageViewList = new ArrayList<>();
+  ArrayList<ImageView> arrowCollection = new ArrayList<ImageView>();
+  int numHints = 5;
 
   // Initialise Timer
   private static timerController timer = new timerController();
@@ -84,10 +89,12 @@ public class labController {
     // Create task to run GPT model for intro message
     labIntroTask = createTask(GptPromptEngineering.getLabIntro());
     imgScientistThinking.setVisible(true);
+    typingBubble.setVisible(true);
 
     labIntroTask.setOnSucceeded(
         e -> {
           imgScientistThinking.setVisible(false);
+          typingBubble.setVisible(false);
 
           // Append to chat logs
           ChatMessage response = labIntroTask.getValue();
@@ -199,6 +206,7 @@ public class labController {
     labRiddleTask.setOnSucceeded(
         e -> {
           imgScientistThinking.setVisible(false);
+          typingBubble.setVisible(false);
 
           // Append to chat logs
           ChatMessage response = labRiddleTask.getValue();
@@ -253,6 +261,14 @@ public class labController {
    */
   @FXML
   private void clkChemicalGeneral(MouseEvent event) {
+    if (GameState.isDifficultyMedium == true) {
+      numHints = 5;
+      hintsRemaining.setText("Hints Remaining: " + String.valueOf(numHints));
+    }  else if (GameState.isDifficultyEasy == true) {
+      hintsRemaining.setText("Unlimited hints available");
+    } else {
+      hintsRemaining.setText("No hints available");
+    }
 
     if (GameState.isLabResolved) {
       return;
@@ -265,6 +281,7 @@ public class labController {
 
     // Change to thinking scientist
     imgScientistThinking.setVisible(true);
+    typingBubble.setVisible(true);
 
     // Generate riddle
     Thread labRiddleThread = new Thread(labRiddleTask);
@@ -681,6 +698,13 @@ public class labController {
         blurredImage.setVisible(true);
         fadeTransition();
       }
+      if (result.getChatMessage().getContent().contains("Hint:") && GameState.isDifficultyMedium == true) {
+        Platform.runLater(() -> {
+          numHints--;
+        updateHintText(numHints);
+      });
+        
+      }
       return result.getChatMessage();
     } catch (ApiProxyException e) {
       e.printStackTrace();
@@ -730,11 +754,13 @@ public class labController {
 
     // Enable thinking image of scientist
     imgScientistThinking.setVisible(true);
+    typingBubble.setVisible(true);
 
     chatTask.setOnSucceeded(
         e -> {
           // Update imagery
           imgScientistThinking.setVisible(false);
+          typingBubble.setVisible(false);
 
           // Add to chat log
           GameState.chatLog += "\n\n-> " + chatTask.getValue().getContent();
@@ -795,4 +821,9 @@ public class labController {
           }
         };
   }
+
+  private void updateHintText(int numHints) {
+    if (numHints <= 0) {
+      hintsRemaining.setText("Hints Remaining: " + String.valueOf(numHints));
+    }
 }

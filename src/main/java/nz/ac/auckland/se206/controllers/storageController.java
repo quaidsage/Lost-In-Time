@@ -57,6 +57,7 @@ public class storageController {
   @FXML private Button button8;
   @FXML private Button btnMenu;
   @FXML private Text info;
+  @FXML private ImageView typingBubble;
 
   // Initialise Variables
   private int characterDelay = 5;
@@ -70,6 +71,7 @@ public class storageController {
   private Random random = new Random();
   private int consecutiveRounds = 0;
   private int targetConsecutiveRounds = 4;
+  private boolean buttonsDisabled = false;
   private ArrayList<String> possibleButtons =
       new ArrayList<>(
           Arrays.asList(
@@ -95,11 +97,13 @@ public class storageController {
 
     // Enable thinking image of scientist
     imgScientistThinking.setVisible(true);
+    typingBubble.setVisible(true);
 
     storageIntroTask.setOnSucceeded(
         e -> {
           // Update imagery
           imgScientistThinking.setVisible(false);
+          typingBubble.setVisible(false);
 
           ChatMessage response = storageIntroTask.getValue();
 
@@ -124,6 +128,10 @@ public class storageController {
 
   @FXML
   void buttonClicked(ActionEvent event) {
+    if (buttonsDisabled) {
+      return; // Ignore clicks while buttons are disabled
+    }
+
     if (((Control) event.getSource()).getId().equals(pattern.get(counter))) {
       Button button = buttons.get(getIndexOfButton(event));
       changeButtonColor(button, "-fx-base: lightgreen");
@@ -205,6 +213,7 @@ public class storageController {
 
     // Enable thinking image of scientist
     imgScientistThinking.setVisible(true);
+    typingBubble.setVisible(true);
 
     storageThreadComplete.start();
 
@@ -212,6 +221,7 @@ public class storageController {
         e -> {
           // Update imagery
           imgScientistThinking.setVisible(false);
+          typingBubble.setVisible(false);
 
           ChatMessage response = storageTaskComplete.getValue();
 
@@ -259,6 +269,8 @@ public class storageController {
   }
 
   private void showPattern() {
+    buttonsDisabled = true; // Disable buttons during pattern display
+
     PauseTransition pause = new PauseTransition(Duration.seconds(0.75));
     pause.setOnFinished(
         e -> {
@@ -270,6 +282,10 @@ public class storageController {
                         showNext();
                       }));
           timeline.setCycleCount(pattern.size());
+          timeline.setOnFinished(
+              event -> {
+                buttonsDisabled = false; // Enable buttons after pattern display
+              });
           timeline.play();
         });
     pause.play();
@@ -442,11 +458,13 @@ public class storageController {
 
     // Enable thinking image of scientist
     imgScientistThinking.setVisible(true);
+    typingBubble.setVisible(true);
 
     chatTask.setOnSucceeded(
         e -> {
           // Update imagery
           imgScientistThinking.setVisible(false);
+          typingBubble.setVisible(false);
 
           // Add to chat log
           GameState.chatLog += "\n\n-> " + chatTask.getValue().getContent();
@@ -513,6 +531,9 @@ public class storageController {
     App.setRoot("mainmenu");
     GameState.isLabResolved = false;
     GameState.isStorageResolved = false;
+    GameState.isDifficultyEasy = false;
+    GameState.isDifficultyMedium = false;
+    GameState.isDifficultyHard = false;
     SceneManager.clearAllScenesExceptMainMenu();
   }
 }

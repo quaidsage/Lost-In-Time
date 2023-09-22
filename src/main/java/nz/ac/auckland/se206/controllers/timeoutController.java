@@ -8,14 +8,12 @@ import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.SceneManager;
 
 public class timeoutController {
-
+  
   @FXML private Button btnPlayAgain;
 
   @FXML
   private void playAgain() throws IOException {
     App.setRoot("mainmenu");
-    GameState.isLabResolved = false;
-    GameState.isStorageResolved = false;
     SceneManager.clearAllScenesExceptMainMenu();
   }
 }

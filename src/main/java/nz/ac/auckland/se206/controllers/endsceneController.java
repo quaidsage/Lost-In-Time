@@ -5,6 +5,7 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import nz.ac.auckland.se206.App;
+import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.SceneManager;
 
 public class endsceneController {
@@ -12,6 +13,11 @@ public class endsceneController {
 
     @FXML
     private void playAgain() throws IOException {
+        GameState.isLabResolved = false;
+        GameState.isStorageResolved = false;
+        GameState.isDifficultyEasy = false;
+        GameState.isDifficultyMedium = false;
+        GameState.isDifficultyHard = false;
         App.setRoot("mainmenu");
         SceneManager.clearAllScenesExceptMainMenu();
     }
