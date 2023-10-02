@@ -37,6 +37,43 @@ public class StorageController {
   // Initialise Timer
   private static TimerController timer = new TimerController();
 
+  /**
+   * Function to start timer.
+   *
+   * @param minutes the number of minutes to set the timer to
+   */
+  public static void storageStartTimer(int minutes) {
+    timer.setMinutes(minutes);
+    timer.start();
+  }
+
+  /**
+   * Delays given code by a given number of milliseconds.
+   *
+   * @param ms milliseconds of delay
+   * @param continuation Code to execute after delay
+   */
+  public static void delay(int ms, Runnable continuation) {
+    // Create delay function
+    Task<Void> delayTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            try {
+              Thread.sleep(ms);
+            } catch (InterruptedException e) {
+              e.printStackTrace();
+            }
+            return null;
+          }
+        };
+    // Execute code after delay
+    delayTask.setOnSucceeded(event -> continuation.run());
+
+    // Start delay thread
+    new Thread(delayTask).start();
+  }
+
   // JavaFX elements
   @FXML private Button btnSwitchToTimeMachine;
   @FXML private Button btnSend;
@@ -81,43 +118,6 @@ public class StorageController {
           Arrays.asList(
               "button0", "button1", "button2", "button3", "button4", "button5", "button6",
               "button7", "button8"));
-
-  /**
-   * Function to start timer.
-   *
-   * @param minutes the number of minutes to set the timer to
-   */
-  public static void storageStartTimer(int minutes) {
-    timer.setMinutes(minutes);
-    timer.start();
-  }
-
-  /**
-   * Delays given code by a given number of milliseconds.
-   *
-   * @param ms milliseconds of delay
-   * @param continuation Code to execute after delay
-   */
-  public static void delay(int ms, Runnable continuation) {
-    // Create delay function
-    Task<Void> delayTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            try {
-              Thread.sleep(ms);
-            } catch (InterruptedException e) {
-              e.printStackTrace();
-            }
-            return null;
-          }
-        };
-    // Execute code after delay
-    delayTask.setOnSucceeded(event -> continuation.run());
-
-    // Start delay thread
-    new Thread(delayTask).start();
-  }
 
   public void initialize() throws ApiProxyException {
     timer = new TimerController();

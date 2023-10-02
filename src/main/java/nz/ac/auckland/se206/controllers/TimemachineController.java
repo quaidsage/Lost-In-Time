@@ -33,19 +33,6 @@ public class TimemachineController {
   // Initialise Timer
   private static TimerController timer = new TimerController();
 
-  // JavaFX elements
-  @FXML private Button btnSwitchToLab, btnSwitchToStorage, btnSend;
-  @FXML private Label lblTimer;
-  @FXML private TextArea chatArea;
-  @FXML private TextArea chatField;
-  @FXML private ImageView imgScientistThinking;
-  @FXML private Rectangle rectLight;
-  @FXML private Button btnTimeMachine, btnMenu;
-  @FXML private ImageView typingBubble;
-
-  // Initialise Variables
-  private int characterDelay = 5;
-
   /**
    * Function to start timer.
    *
@@ -82,6 +69,19 @@ public class TimemachineController {
     // Start delay thread
     new Thread(delayTask).start();
   }
+
+  // JavaFX elements
+  @FXML private Button btnSwitchToLab, btnSwitchToStorage, btnSend;
+  @FXML private Label lblTimer;
+  @FXML private TextArea chatArea;
+  @FXML private TextArea chatField;
+  @FXML private ImageView imgScientistThinking;
+  @FXML private Rectangle rectLight;
+  @FXML private Button btnTimeMachine, btnMenu;
+  @FXML private ImageView typingBubble;
+
+  // Initialise Variables
+  private int characterDelay = 5;
 
   public void initialize() {
     timer = new TimerController();

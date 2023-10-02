@@ -43,6 +43,43 @@ public class LabController {
   // Initialise Timer
   private static TimerController timer = new TimerController();
 
+  /**
+   * Function to start timer
+   *
+   * @param minutes the number of minutes to set the timer to
+   */
+  public static void labStartTimer(int minutes) {
+    timer.setMinutes(minutes);
+    timer.start();
+  }
+
+  /**
+   * Delays given code by a given number of milliseconds.
+   *
+   * @param ms milliseconds of delay
+   * @param continuation Code to execute after delay
+   */
+  public static void delay(int ms, Runnable continuation) {
+    // Create delay function
+    Task<Void> delayTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            try {
+              Thread.sleep(ms);
+            } catch (InterruptedException e) {
+              e.printStackTrace();
+            }
+            return null;
+          }
+        };
+    // Execute code after delay
+    delayTask.setOnSucceeded(event -> continuation.run());
+
+    // Start delay thread
+    new Thread(delayTask).start();
+  }
+
   // Fields for JavaFX elements
   @FXML private Pane paneLab;
   @FXML private Button btnSwitchToTimeMachine;
@@ -80,43 +117,6 @@ public class LabController {
   // Fields related to chemical solutions
   private Boolean[] isChemicalSolution = {false, false, false, false, false, false, false};
   private Boolean isChemicalsEnabled = false;
-
-  /**
-   * Function to start timer
-   *
-   * @param minutes the number of minutes to set the timer to
-   */
-  public static void labStartTimer(int minutes) {
-    timer.setMinutes(minutes);
-    timer.start();
-  }
-
-  /**
-   * Delays given code by a given number of milliseconds.
-   *
-   * @param ms milliseconds of delay
-   * @param continuation Code to execute after delay
-   */
-  public static void delay(int ms, Runnable continuation) {
-    // Create delay function
-    Task<Void> delayTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            try {
-              Thread.sleep(ms);
-            } catch (InterruptedException e) {
-              e.printStackTrace();
-            }
-            return null;
-          }
-        };
-    // Execute code after delay
-    delayTask.setOnSucceeded(event -> continuation.run());
-
-    // Start delay thread
-    new Thread(delayTask).start();
-  }
 
   public void initialize() throws ApiProxyException {
     // Initialise timer and bind the lblTimer to the timerController properties.
