@@ -170,7 +170,7 @@ public class StorageController {
    * @param event the action event triggered by the button press
    */
   @FXML
-  void buttonClicked(ActionEvent event) {
+  void onClickPanel(ActionEvent event) {
     if (buttonsDisabled) {
       return; // Ignore clicks while buttons are disabled
     }
@@ -202,7 +202,7 @@ public class StorageController {
    * @param event the action event triggered by the start button
    */
   @FXML
-  void start(ActionEvent event) {
+  void onClickStartMemoryGame(ActionEvent event) {
     // Clear pattern and text for new game
     pattern.clear();
     text.setText("Current Streak: ");
@@ -223,13 +223,13 @@ public class StorageController {
    * @param event the action event triggered by the time machine button
    */
   @FXML
-  private void switchToTimeMachine(ActionEvent event) {
+  private void onClickTimeMachineRoom(ActionEvent event) {
     App.setUi(AppUi.TIMEMACHINE);
   }
 
   /** Function to handle when the circuit minigame is opened. */
   @FXML
-  private void clickCircuitBox(MouseEvent event) {
+  private void onClickCircuit(MouseEvent event) {
 
     // Hide the circuit box
     background.setVisible(false);
@@ -598,7 +598,7 @@ public class StorageController {
    * @throws IOException if there is an I/O error
    */
   @FXML
-  private void returnToMenu(ActionEvent event) throws IOException {
+  private void onClickReturn(ActionEvent event) throws IOException {
     App.setRoot("mainmenu");
     SceneManager.clearAllScenesExceptMainMenu();
   }

@@ -253,7 +253,7 @@ public class LabController {
    * @param event the action event triggered by the time machine button
    */
   @FXML
-  private void switchToTimeMachine(ActionEvent event) {
+  private void onClickTimeMachineRoom(ActionEvent event) {
     App.setUi(AppUi.TIMEMACHINE);
   }
 
@@ -263,7 +263,7 @@ public class LabController {
    * @param event the action event triggered by the main menu button
    */
   @FXML
-  private void returnToMenu(ActionEvent event) throws IOException {
+  private void onClickReturn(ActionEvent event) throws IOException {
     App.setRoot("mainmenu");
     SceneManager.clearAllScenesExceptMainMenu();
   }
@@ -274,7 +274,7 @@ public class LabController {
    * @param event the action event triggered by the begin button
    */
   @FXML
-  private void clkChemicalGeneral(MouseEvent event) {
+  private void onClickChemicals(MouseEvent event) {
     if (GameState.isDifficultyMedium == true) {
       numHints = 5;
       hintsRemaining.setText("Hints Remaining: " + String.valueOf(numHints));
@@ -356,7 +356,7 @@ public class LabController {
    * @param event the action event triggered by the chemical being clicked
    */
   @FXML
-  private void clkChemical(MouseEvent event) {
+  private void onClickChemical(MouseEvent event) {
     // Get source of click
     Rectangle src = (Rectangle) event.getSource();
 
@@ -415,7 +415,7 @@ public class LabController {
    * @param event the action event triggered by the chemical being hovered
    */
   @FXML
-  private void showChemical(MouseEvent event) {
+  private void onMouseEnterChemical(MouseEvent event) {
     // Get source of click
     Rectangle src = (Rectangle) event.getSource();
 
@@ -451,7 +451,7 @@ public class LabController {
    * @param event the action event triggered by the chemical being unhovered
    */
   @FXML
-  private void hideChemical(MouseEvent event) {
+  private void onMouseExitChemical(MouseEvent event) {
     // Get source of click
     Rectangle src = (Rectangle) event.getSource();
 

@@ -46,16 +46,16 @@
          <font>
             <Font name="Monospace 821 Bold BT" size="38.0" />
          </font></TextArea>
-      <Button id="btnSkip" fx:id="btnSkip" layoutX="1163.0" layoutY="670.0" mnemonicParsing="false" onAction="#switchToTimeMachine" stylesheets="@../css/style.css" text="Skip Intro">
+      <Button id="btnSkip" fx:id="btnSkip" layoutX="1163.0" layoutY="670.0" mnemonicParsing="false" onAction="#onClickSkipIntro" stylesheets="@../css/style.css" text="Skip Intro">
          <font>
             <Font name="Monospace 821 Bold BT" size="29.0" />
          </font></Button>
-      <Button id="btnSkip" fx:id="btnPick" layoutX="515.0" layoutY="645.0" mnemonicParsing="false" onAction="#startInteraction" prefHeight="83.0" prefWidth="389.0" stylesheets="@../css/style.css" text="Pick up device...">
+      <Button id="btnSkip" fx:id="btnPick" layoutX="515.0" layoutY="645.0" mnemonicParsing="false" onAction="#onClickPickDevice" prefHeight="83.0" prefWidth="389.0" stylesheets="@../css/style.css" text="Pick up device...">
          <font>
             <Font name="System Bold" size="38.0" />
          </font>
       </Button>
-      <Button id="btnSkip" fx:id="btnNext" disable="true" layoutX="973.0" layoutY="382.0" mnemonicParsing="false" onAction="#proceedToNextInteraction" stylesheets="@../css/style.css" text="Next">
+      <Button id="btnSkip" fx:id="btnNext" disable="true" layoutX="973.0" layoutY="382.0" mnemonicParsing="false" onAction="#onClickNext" stylesheets="@../css/style.css" text="Next">
          <font>
             <Font size="38.0" />
          </font>

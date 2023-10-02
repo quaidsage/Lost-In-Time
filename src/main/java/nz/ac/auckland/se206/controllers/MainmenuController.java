@@ -9,8 +9,8 @@ import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.SceneManager.AppUi;
-import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionRequest;
+import nz.ac.auckland.se206.speech.TextToSpeech;
 
 public class MainmenuController {
   @FXML private Button btnBeginGame;
@@ -30,7 +30,7 @@ public class MainmenuController {
    * @throws IOException If the FXML file is not found
    */
   @FXML
-  private void beginGame(ActionEvent event) throws IOException {
+  private void onClickBeginGame(ActionEvent event) throws IOException {
     // Reset various game states and settings when the game starts.
 
     // Reset game state variables

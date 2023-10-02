@@ -69,7 +69,7 @@ public class IntroController {
    * @param event The event that triggered the function.
    */
   @FXML
-  public void switchToTimeMachine(ActionEvent event) {
+  public void onClickSkipIntro(ActionEvent event) {
     // Switch to time machine scene
     App.setUi(AppUi.TIMEMACHINE);
 
@@ -147,7 +147,7 @@ public class IntroController {
 
   /** Function to handle starting interaction with the AI. */
   @FXML
-  public void startInteraction() {
+  public void onClickPickDevice() {
     // Hide relevant elements
     rectBack.setVisible(false);
     btnPick.setVisible(false);
@@ -167,7 +167,7 @@ public class IntroController {
 
   /** Function to handle the next interaction with the AI. */
   @FXML
-  public void proceedToNextInteraction() {
+  public void onClickNext() {
     // Hide the "Next" button
     btnNext.setDisable(true);
 
@@ -176,7 +176,7 @@ public class IntroController {
 
     // Check if it's the last interaction, and switch to the time machine scene if so
     if (interaction == interactions.length - 1) {
-      switchToTimeMachine(null);
+      onClickSkipIntro(null);
     } else if (interaction == interactions.length - 2) {
       btnNext.setText("Onward");
     }

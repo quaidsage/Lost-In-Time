@@ -35,7 +35,7 @@
          <font>
             <Font name="Monospace 821 Bold BT" size="38.0" />
          </font></Label>
-      <Button id="btnSkip" fx:id="btnSwitchToTimeMachine" layoutX="25.0" layoutY="660.0" mnemonicParsing="false" onAction="#switchToTimeMachine" prefHeight="79.0" prefWidth="408.0" text="Time Machine Room">
+      <Button id="btnSkip" fx:id="btnSwitchToTimeMachine" layoutX="25.0" layoutY="660.0" mnemonicParsing="false" onAction="#onClickTimeMachineRoom" prefHeight="79.0" prefWidth="408.0" text="Time Machine Room">
          <font>
             <Font name="System Bold" size="36.0" />
          </font></Button>
@@ -63,7 +63,7 @@
          <font>
             <Font name="Monospace 821 Bold BT" size="24.0" />
          </font></Button>
-      <Polyline id="chemGeneral" fx:id="chemicalGeneral" layoutX="319.0" layoutY="313.0" onMouseClicked="#clkChemicalGeneral" opacity="0.0" points="335.0, 98.0, 335.0, 199.0, 124.0, 161.0, 124.0, 86.0" stroke="TRANSPARENT" strokeType="INSIDE">
+      <Polyline id="chemGeneral" fx:id="chemicalGeneral" layoutX="319.0" layoutY="313.0" onMouseClicked="#onClickChemicals" opacity="0.0" points="335.0, 98.0, 335.0, 199.0, 124.0, 161.0, 124.0, 86.0" stroke="TRANSPARENT" strokeType="INSIDE">
          <fill>
             <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
                <stops>
@@ -81,15 +81,15 @@
             </RadialGradient>
          </fill>
       </Polyline>
-      <Rectangle fx:id="chemicalCyan" arcHeight="5.0" arcWidth="5.0" fill="#6ed8ff" height="237.0" layoutX="380.0" layoutY="255.0" onMouseClicked="#clkChemical" onMouseEntered="#showChemical" onMouseExited="#hideChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="65.0" />
-      <Rectangle fx:id="chemicalBlue" arcHeight="5.0" arcWidth="5.0" fill="#484bff" height="238.0" layoutX="180.0" layoutY="255.0" onMouseClicked="#clkChemical" onMouseEntered="#showChemical" onMouseExited="#hideChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="67.0" />
-      <Rectangle fx:id="chemicalPurple" arcHeight="5.0" arcWidth="5.0" fill="#ac4aff" height="237.0" layoutX="280.0" layoutY="255.0" onMouseClicked="#clkChemical" onMouseEntered="#showChemical" onMouseExited="#hideChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="72.0" />
-      <Rectangle fx:id="chemicalYellow" arcHeight="5.0" arcWidth="5.0" fill="#e8ff64" height="238.0" layoutX="580.0" layoutY="255.0" onMouseClicked="#clkChemical" onMouseEntered="#showChemical" onMouseExited="#hideChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="72.0" />
-      <Rectangle fx:id="chemicalGreen" arcHeight="5.0" arcWidth="5.0" fill="#6eff66" height="241.0" layoutX="480.0" layoutY="255.0" onMouseClicked="#clkChemical" onMouseEntered="#showChemical" onMouseExited="#hideChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="67.0" />
-      <Rectangle fx:id="chemicalOrange" arcHeight="5.0" arcWidth="5.0" fill="#ff6969" height="236.0" layoutX="680.0" layoutY="255.0" onMouseClicked="#clkChemical" onMouseEntered="#showChemical" onMouseExited="#hideChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="67.0" />
-      <Rectangle fx:id="chemicalRed" arcHeight="5.0" arcWidth="5.0" fill="#ff7e38" height="237.0" layoutX="780.0" layoutY="255.0" onMouseClicked="#clkChemical" onMouseEntered="#showChemical" onMouseExited="#hideChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="72.0" />
+      <Rectangle fx:id="chemicalCyan" arcHeight="5.0" arcWidth="5.0" fill="#6ed8ff" height="237.0" layoutX="380.0" layoutY="255.0" onMouseClicked="#onClickChemical" onMouseEntered="#onMouseEnterChemical" onMouseExited="#onMouseExitChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="65.0" />
+      <Rectangle fx:id="chemicalBlue" arcHeight="5.0" arcWidth="5.0" fill="#484bff" height="238.0" layoutX="180.0" layoutY="255.0" onMouseClicked="#onClickChemical" onMouseEntered="#onMouseEnterChemical" onMouseExited="#onMouseExitChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="67.0" />
+      <Rectangle fx:id="chemicalPurple" arcHeight="5.0" arcWidth="5.0" fill="#ac4aff" height="237.0" layoutX="280.0" layoutY="255.0" onMouseClicked="#onClickChemical" onMouseEntered="#onMouseEnterChemical" onMouseExited="#onMouseExitChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="72.0" />
+      <Rectangle fx:id="chemicalYellow" arcHeight="5.0" arcWidth="5.0" fill="#e8ff64" height="238.0" layoutX="580.0" layoutY="255.0" onMouseClicked="#onClickChemical" onMouseEntered="#onMouseEnterChemical" onMouseExited="#onMouseExitChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="72.0" />
+      <Rectangle fx:id="chemicalGreen" arcHeight="5.0" arcWidth="5.0" fill="#6eff66" height="241.0" layoutX="480.0" layoutY="255.0" onMouseClicked="#onClickChemical" onMouseEntered="#onMouseEnterChemical" onMouseExited="#onMouseExitChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="67.0" />
+      <Rectangle fx:id="chemicalOrange" arcHeight="5.0" arcWidth="5.0" fill="#ff6969" height="236.0" layoutX="680.0" layoutY="255.0" onMouseClicked="#onClickChemical" onMouseEntered="#onMouseEnterChemical" onMouseExited="#onMouseExitChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="67.0" />
+      <Rectangle fx:id="chemicalRed" arcHeight="5.0" arcWidth="5.0" fill="#ff7e38" height="237.0" layoutX="780.0" layoutY="255.0" onMouseClicked="#onClickChemical" onMouseEntered="#onMouseEnterChemical" onMouseExited="#onMouseExitChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="72.0" />
       <Rectangle fx:id="transitionScene" arcHeight="5.0" arcWidth="5.0" height="775.0" layoutX="-14.0" layoutY="-11.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="1427.0" />
-      <Button id="btnSkip" fx:id="btnMenu" layoutX="25.0" layoutY="10.0" mnemonicParsing="false" onAction="#returnToMenu" text="Return To Menu">
+      <Button id="btnSkip" fx:id="btnMenu" layoutX="25.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClickReturn" text="Return To Menu">
          <font>
             <Font name="System Bold" size="24.0" />
          </font></Button>
