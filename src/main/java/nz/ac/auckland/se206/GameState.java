@@ -36,7 +36,7 @@ public class GameState {
   /** Main AI Core. */
   public static ChatCompletionRequest chatCompletionRequest;
 
-  /** Function to get the next step for the user */
+  /** Function to get the next step for the user. */
   public static String getNextStep() {
     // Check state
     if (isLabResolved && isStorageResolved) { // User has completed both tasks

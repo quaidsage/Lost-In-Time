@@ -8,6 +8,7 @@ import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 
+/** A class to generate a chat task. This class is used by many scenes within the game. */
 public class ChatTaskGenerator {
   /**
    * Creates a task to run the LLM model on a given message to be run by background thread.

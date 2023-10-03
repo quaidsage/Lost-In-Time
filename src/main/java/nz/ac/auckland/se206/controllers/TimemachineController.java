@@ -22,6 +22,7 @@ import nz.ac.auckland.se206.gpt.ChatTaskGenerator;
 import nz.ac.auckland.se206.gpt.GptPromptEngineering;
 import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
 
+/** A controller class for the time machine scene */
 public class TimemachineController {
   public static Task<ChatMessage> contextTask;
   public static Task<Void> updateChatTask;
@@ -30,9 +31,9 @@ public class TimemachineController {
   private static TimerController timer = new TimerController();
 
   /**
-   * Function to start timer.
+   * Function to start the time in the timemachinescene.
    *
-   * @param minutes the number of minutes to set the timer to
+   * @param minutes the number of minutes to set the timer to.
    */
   public static void timemachineStartTimer(int minutes) {
     timer.setMinutes(minutes);
@@ -42,8 +43,8 @@ public class TimemachineController {
   /**
    * Delays given code by a given number of milliseconds.
    *
-   * @param ms milliseconds of delay
-   * @param continuation Code to execute after delay
+   * @param ms milliseconds of delay.
+   * @param continuation Code to execute after delay.
    */
   public static void delay(int ms, Runnable continuation) {
     Task<Void> delayTask = Delay.createDelay(ms);
@@ -67,6 +68,7 @@ public class TimemachineController {
   // Initialise Variables
   private int characterDelay = 5;
 
+  /** Carries out specific tasks required when opening the scene */
   public void initialize() {
     // Create task to get context from GPT model
     setThinkingAnimation(true);
@@ -86,7 +88,7 @@ public class TimemachineController {
   }
 
   /**
-   * Change scene to lab.
+   * Changes scene to the lab without resetting the scene.
    *
    * @param event the action event triggered by the send button
    */

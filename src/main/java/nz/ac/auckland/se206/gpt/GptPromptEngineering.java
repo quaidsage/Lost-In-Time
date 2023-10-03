@@ -24,12 +24,22 @@ public class GptPromptEngineering {
         + " user.";
   }
 
+  /**
+   * Method to get the message to run chatGPT when the lab is entered initially.
+   * 
+   * @return the message to be sent to chat GPT.
+   */
   public static String getLabIntro() {
     return "You are the digital conciousness of a mad scientist helping the user. You have already"
         + " introduced yourself. Tell the user that they need to look closer at the"
         + " chemicals on the table for the time fluid. Do not refer to the user.";
   }
 
+  /**
+   * Method to get the message to run chatGPT when the storage is entered initially.
+   * 
+   * @return the message to be sent to chat GPT.
+   */
   public static String getStorageIntro() {
     return "You are the digital conciousness of a mad scientist helping the user. You have already"
         + " introduced yourself. Now explain to the user that they need to interact with the"
@@ -103,6 +113,11 @@ public class GptPromptEngineering {
         + " the answer";
   }
 
+  /**
+   * Method to get the message to run chatGPT when the lab task is completed.
+   * 
+   * @return the message to be sent to chatGPT.
+   */
   public static String getLabComplete() {
     return "You are the digital conciousness of a mad scientist helping the user. You have already"
         + " introduced yourself. The user has just completed making the time fluid. Now they"
@@ -111,6 +126,11 @@ public class GptPromptEngineering {
         + ". Do not refer to the user.";
   }
 
+  /**
+   * Method to get the message to run chatGPT when the storage task is completed.
+   * 
+   * @return the message to be sent to chatGPT.
+   */
   public static String getStorageComplete() {
     return "You are the digital conciousness of a mad scientist helping the user. You have already"
         + " introduced yourself. The user has just restored power to the time machine. Now"

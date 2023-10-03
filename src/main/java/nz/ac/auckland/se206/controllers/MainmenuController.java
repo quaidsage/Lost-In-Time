@@ -12,11 +12,13 @@ import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionRequest;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 
+/** A controller class for the main menu scene. */
 public class MainmenuController {
   @FXML private Button btnBeginGame;
 
   private int count = 0;
 
+  /** Initialises the main menu scene with the required settings. */
   public void initialize() {
     // This method is automatically called when the FXML is loaded.
     // It can be used for any initialization tasks.

@@ -3,6 +3,7 @@ package nz.ac.auckland.se206.controllers;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 
+/** A class to create a timer to be used within the game. */
 public class TimerController extends Service<Void> {
   private int minutes = 2; // Initial minutes for the timer
   private int seconds = 0; // Initial seconds for the timer
