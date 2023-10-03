@@ -10,7 +10,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
-import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
 
@@ -85,22 +84,23 @@ public class IntroController {
    * @param chatArea The text area to append the message to.
    */
   public void appendMessage(ChatMessage msg, TextArea chatArea) {
-    // Convert message to character array
-    char[] ch = msg.getContent().toCharArray();
+    // Create timeline animation of message appending to text area
+    Timeline timeline = createMessageTimeline(msg.getContent().toCharArray(), chatArea);
+    timeline.play();
+    timeline.setOnFinished(
+        event -> {
+          btnPick.setDisable(false);
+          btnNext.setDisable(false);
+        });
+  }
 
-    // Use text-to-speech alongside chat appending
-    Task<Void> txtSpeechTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            GameState.txtToSpeech.speak(msg.getContent());
-            return null;
-          }
-        };
-
-    Thread txtSpeechThread = new Thread(txtSpeechTask);
-    txtSpeechThread.start();
-
+  /**
+   * Create a timeline which animates the message into the text area character by character.
+   *
+   * @param ch the character array to animate
+   * @return the timeline
+   */
+  private Timeline createMessageTimeline(char[] ch, TextArea chatArea) {
     // Create a timeline and keyframes to append each character of the message to the chat text area
     Timeline timeline = new Timeline();
     Duration delayBetweenCharacters = Duration.millis(characterDelay);
@@ -116,16 +116,7 @@ public class IntroController {
       timeline.getKeyFrames().add(keyFrame);
       frame = frame.add(delayBetweenCharacters);
     }
-
-    // Play the timeline animation
-    timeline.play();
-
-    // Enable the "Pick" and "Next" buttons after the animation is finished
-    timeline.setOnFinished(
-        event -> {
-          btnPick.setDisable(false);
-          btnNext.setDisable(false);
-        });
+    return timeline;
   }
 
   /**
