@@ -176,8 +176,6 @@ public class TimemachineController {
    * @param msg the chat message to append
    */
   public void appendChatMessage(ChatMessage msg) {
-
-    // Disable send button
     btnSend.setDisable(true);
 
     // Create timeline animation of message appending to text area

@@ -88,7 +88,7 @@ public class StorageController {
   @FXML private ImageView typingBubble;
 
   // Initialise Variables
-  private int characterDelay = 5;
+  private int CHARACTER_DELAY = 5;
   private ArrayList<Button> buttons = new ArrayList<>();
   private ArrayList<String> pattern = new ArrayList<>();
   private int patternOrder = 0;
@@ -105,43 +105,23 @@ public class StorageController {
               "button7", "button8"));
 
   public void initialize() throws ApiProxyException {
+    // Initialise timer
     timer = new TimerController();
-    // Bind the lblTimer to the timerController properties.
     lblTimer.textProperty().bind(timer.messageProperty());
     timer.setOnSucceeded(
         e -> {
-          // Add code here to implement the loss of the game
           lblTimer.setText("0:00");
         });
 
     createUpdateTask();
 
+    // Get introduction message on first visit of storage room
     storageIntroTask = ChatTaskGenerator.createTask(GptPromptEngineering.getStorageIntro());
-
-    // Enable thinking image of scientist
-    imgScientistThinking.setVisible(true);
-    typingBubble.setVisible(true);
-
+    setThinkingAnimation(true);
     storageIntroTask.setOnSucceeded(
         e -> {
-          // Update imagery
-          imgScientistThinking.setVisible(false);
-          typingBubble.setVisible(false);
-
-          ChatMessage response = storageIntroTask.getValue();
-
-          // Append to chat log
-          GameState.chatLog += "\n\n-> " + response.getContent();
-
-          // Append response to current scene
-          chatArea.appendText("\n\n-> ");
-          appendChatMessage(response);
-
-          // Update chat area in other scenes
-          Thread updateChatThreadLab = new Thread(LabController.updateChatTask);
-          updateChatThreadLab.start();
-          Thread updateChatThreadTime = new Thread(TimemachineController.updateChatTask);
-          updateChatThreadTime.start();
+          setThinkingAnimation(false);
+          updateChat("\n\n-> ", storageIntroTask.getValue());
         });
 
     buttons.addAll(
@@ -231,6 +211,145 @@ public class StorageController {
     btnSwitchToTimeMachine.setDisable(true);
   }
 
+  /**
+   * Function to handle returning to main menu.
+   *
+   * @param event the action event triggered by the menu button
+   * @throws IOException if there is an I/O error
+   */
+  @FXML
+  private void onClickReturn(ActionEvent event) throws IOException {
+    App.setRoot("mainmenu");
+    SceneManager.clearAllScenesExceptMainMenu();
+  }
+
+  /**
+   * Sends a message to the GPT model.
+   *
+   * @param event the action event triggered by the send button
+   * @throws ApiProxyException if there is an error communicating with the API proxy
+   * @throws IOException if there is an I/O error
+   */
+  @FXML
+  private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
+    // Get message from chat field
+    String message = chatField.getText();
+    chatField.clear();
+
+    // Check if message is empty
+    if (message.trim().isEmpty()) {
+      System.out.println("message is empty");
+      return;
+    }
+
+    // Add users message to chat area, chat log, and other scenes
+    updateChat("\n\n<- ", new ChatMessage("user", message));
+
+    // Get response for users message from GPT model
+    Task<ChatMessage> chatTask = ChatTaskGenerator.createTask(message);
+    new Thread(chatTask).start();
+
+    setThinkingAnimation(true);
+    chatTask.setOnSucceeded(
+        e -> {
+          setThinkingAnimation(false);
+          updateChat("\n\n-> ", chatTask.getValue());
+        });
+  }
+
+  /**
+   * Appends a chat message to the chat text area one character at a time.
+   *
+   * @param msg the chat message to append
+   */
+  public void appendChatMessage(ChatMessage msg) {
+    btnSend.setDisable(true);
+
+    // Create timeline animation of message appending to text area
+    Timeline timeline = createMessageTimeline(msg.getContent().toCharArray());
+    timeline.play();
+    timeline.setOnFinished(
+        event -> {
+          btnSend.setDisable(false);
+        });
+  }
+
+  /**
+   * Create a timeline which animates the message into the text area character by character.
+   *
+   * @param ch the character array to animate
+   * @return the timeline
+   */
+  private Timeline createMessageTimeline(char[] ch) {
+    // Create a timeline and keyframes to append each character of the message to the chat text area
+    Timeline timeline = new Timeline();
+    if (ch.length < 100) {
+      CHARACTER_DELAY = (50 - (ch.length / 2)) + 5;
+    }
+    Duration delayBetweenCharacters = Duration.millis(CHARACTER_DELAY);
+    Duration frame = delayBetweenCharacters;
+    for (int i = 0; i < ch.length; i++) {
+      final int I = i;
+      KeyFrame keyFrame =
+          new KeyFrame(
+              frame,
+              event -> {
+                chatArea.appendText(String.valueOf(ch[I]));
+              });
+      timeline.getKeyFrames().add(keyFrame);
+      frame = frame.add(delayBetweenCharacters);
+    }
+    return timeline;
+  }
+
+  /** Function to create task to update chat area for scene. */
+  public void createUpdateTask() {
+    // Create task to append chat log to chat area
+    updateChatTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            // Append chat log to chat area
+            chatArea.setText(GameState.chatLog);
+            chatArea.appendText("");
+
+            // Create new task to update chat area
+            createUpdateTask();
+            return null;
+          }
+        };
+  }
+
+  /**
+   * Show/hide the thinking animation of scientist.
+   *
+   * @param isThinking whether the scientist is thinking
+   */
+  public void setThinkingAnimation(Boolean isThinking) {
+    // Enable thinking image of scientist
+    imgScientistThinking.setVisible(isThinking);
+    typingBubble.setVisible(isThinking);
+  }
+
+  /**
+   * Function to update chatlog, current scene chat area, and chat areas of other scenes.
+   *
+   * @param indent the indent of the message
+   * @param chatMessage the chat message to update
+   */
+  private void updateChat(String indent, ChatMessage chatMessage) {
+    // Add to chat log
+    GameState.chatLog += indent + chatMessage.getContent();
+
+    // Append to chat area
+    chatArea.appendText(indent);
+    appendChatMessage(chatMessage);
+
+    // Update chat area in other scenes
+    new Thread(LabController.updateChatTask).start();
+    new Thread(TimemachineController.updateChatTask).start();
+  }
+
   /** Function to handle when the user wins the minigame. */
   private void winGame() {
     // Hide minigame elements
@@ -253,34 +372,13 @@ public class StorageController {
     // Send complete message
     Task<ChatMessage> storageTaskComplete =
         ChatTaskGenerator.createTask(GptPromptEngineering.getStorageComplete());
-    Thread storageThreadComplete = new Thread(storageTaskComplete);
+    new Thread(storageTaskComplete).start();
 
-    // Enable thinking animation of scientist
-    imgScientistThinking.setVisible(true);
-    typingBubble.setVisible(true);
-
-    storageThreadComplete.start();
-
+    setThinkingAnimation(true);
     storageTaskComplete.setOnSucceeded(
         e -> {
-          // Disable thinking animation of scientist
-          imgScientistThinking.setVisible(false);
-          typingBubble.setVisible(false);
-
-          ChatMessage response = storageTaskComplete.getValue();
-
-          // Append to chat log
-          GameState.chatLog += "\n\n-> " + response.getContent();
-
-          // Append response to current scene
-          chatArea.appendText("\n\n-> ");
-          appendChatMessage(response);
-
-          // Update chat area in other scenes
-          Thread updateChatThreadLab = new Thread(LabController.updateChatTask);
-          updateChatThreadLab.start();
-          Thread updateChatThreadTime = new Thread(TimemachineController.updateChatTask);
-          updateChatThreadTime.start();
+          setThinkingAnimation(false);
+          updateChat("\n\n-> ", storageTaskComplete.getValue());
         });
   }
 
@@ -386,160 +484,5 @@ public class StorageController {
 
     // Start transition
     pause.play();
-  }
-
-  /**
-   * Appends a chat message to the chat text area one character at a time.
-   *
-   * @param msg the chat message to append
-   */
-  public void appendChatMessage(ChatMessage msg) {
-
-    // Disable send button
-    btnSend.setDisable(true);
-
-    // Convert message to char array
-    char[] ch = msg.getContent().toCharArray();
-
-    // Use text to speech alongside chat appending
-    Task<Void> txtSpeechTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            GameState.txtToSpeech.speak(msg.getContent());
-            return null;
-          }
-        };
-
-    Thread txtSpeechThread = new Thread(txtSpeechTask);
-    txtSpeechThread.start();
-
-    // Create a timeline and keyframes to append each character of the message to the chat text area
-    Timeline timeline = new Timeline();
-    if (ch.length < 100) {
-      characterDelay = (50 - (ch.length / 2)) + 5;
-    }
-    Duration delayBetweenCharacters = Duration.millis(characterDelay);
-    Duration frame = delayBetweenCharacters;
-    for (int i = 0; i < ch.length; i++) {
-      final int I = i;
-      KeyFrame keyFrame =
-          new KeyFrame(
-              frame,
-              event -> {
-                chatArea.appendText(String.valueOf(ch[I]));
-              });
-      timeline.getKeyFrames().add(keyFrame);
-      frame = frame.add(delayBetweenCharacters);
-    }
-
-    // Play timeline animation
-    timeline.play();
-
-    // Enable send button after animation is finished
-    timeline.setOnFinished(
-        event -> {
-          btnSend.setDisable(false);
-        });
-  }
-
-  /**
-   * Sends a message to the GPT model.
-   *
-   * @param event the action event triggered by the send button
-   * @throws ApiProxyException if there is an error communicating with the API proxy
-   * @throws IOException if there is an I/O error
-   */
-  @FXML
-  private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
-    // Get message from chat field
-    String message = chatField.getText();
-    chatField.clear();
-
-    // Check if message is empty
-    if (message.trim().isEmpty()) {
-      System.out.println("message is empty");
-      return;
-    }
-
-    // Create chat message
-    ChatMessage chatMessage = new ChatMessage("user", message);
-
-    // Append message to current scene
-    chatArea.appendText("\n\n<- ");
-    appendChatMessage(chatMessage);
-
-    // Update chat area in other scenes
-    Thread updateChatThreadLab = new Thread(LabController.updateChatTask);
-    updateChatThreadLab.start();
-    Thread updateChatThreadTime = new Thread(TimemachineController.updateChatTask);
-    updateChatThreadTime.start();
-
-    // Add to chat log
-    GameState.chatLog += "\n\n<- " + chatMessage.getContent();
-
-    // Create task to run GPT model
-    Task<ChatMessage> chatTask = ChatTaskGenerator.createTask(message);
-    Thread chatThread = new Thread(chatTask);
-    chatThread.start();
-
-    // Enable thinking image of scientist
-    imgScientistThinking.setVisible(true);
-    typingBubble.setVisible(true);
-
-    chatTask.setOnSucceeded(
-        e -> {
-          // Update imagery
-          imgScientistThinking.setVisible(false);
-          typingBubble.setVisible(false);
-
-          // Add to chat log
-          GameState.chatLog += "\n\n-> " + chatTask.getValue().getContent();
-
-          // Append response to current scene
-          chatArea.appendText("\n\n-> ");
-          appendChatMessage(chatTask.getValue());
-
-          // Update chat area in other scenes
-          Thread updateChatThreadLab2 = new Thread(LabController.updateChatTask);
-          updateChatThreadLab2.start();
-          Thread updateChatThreadTime2 = new Thread(TimemachineController.updateChatTask);
-          updateChatThreadTime2.start();
-        });
-  }
-
-  /** Function to set chat area to current history of chat log. */
-  public void updateChatArea() {
-    chatArea.setText(GameState.chatLog);
-    chatArea.appendText("");
-  }
-
-  /** Function to create task to update chat area for scene. */
-  public void createUpdateTask() {
-    // Create task to append chat log to chat area
-    updateChatTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            // Append chat log to chat area
-            updateChatArea();
-
-            // Create new task to update chat area
-            createUpdateTask();
-            return null;
-          }
-        };
-  }
-
-  /**
-   * Function to handle returning to main menu.
-   *
-   * @param event the action event triggered by the menu button
-   * @throws IOException if there is an I/O error
-   */
-  @FXML
-  private void onClickReturn(ActionEvent event) throws IOException {
-    App.setRoot("mainmenu");
-    SceneManager.clearAllScenesExceptMainMenu();
   }
 }

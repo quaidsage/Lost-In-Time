@@ -343,6 +343,254 @@ public class LabController {
   }
 
   /**
+   * Appends a chat message to the chat text area one character at a time.
+   *
+   * @param msg the chat message to append
+   */
+  public void appendChatMessage(ChatMessage msg) {
+    btnSend.setDisable(true);
+
+    // Create timeline to animate the appending of message
+    Timeline timeline = createMessageTimeline(msg.getContent().toCharArray());
+    timeline.play();
+    timeline.setOnFinished(
+        event -> {
+          btnSend.setDisable(false);
+          if (!isChemicalsEnabled) {
+            chemicalGeneral.setVisible(true);
+          }
+        });
+  }
+
+  /**
+   * Create a timeline which animates the message into the text area character by character.
+   *
+   * @param ch the character array to animate
+   * @return the timeline
+   */
+  private Timeline createMessageTimeline(char[] ch) {
+    // Create a timeline and keyframes to append each character of the message to the chat text area
+    Timeline timeline = new Timeline();
+    if (ch.length < 100) {
+      CHARACTER_DELAY = (50 - (ch.length / 2)) + 5;
+    }
+    Duration delayBetweenCharacters = Duration.millis(CHARACTER_DELAY);
+    Duration frame = delayBetweenCharacters;
+    for (int i = 0; i < ch.length; i++) {
+      final int I = i;
+      KeyFrame keyFrame =
+          new KeyFrame(
+              frame,
+              event -> {
+                chatArea.appendText(String.valueOf(ch[I]));
+              });
+      timeline.getKeyFrames().add(keyFrame);
+      frame = frame.add(delayBetweenCharacters);
+    }
+    return timeline;
+  }
+
+  /**
+   * Show/hide the thinking animation of scientist.
+   *
+   * @param isThinking whether the scientist is thinking
+   */
+  public void setThinkingAnimation(Boolean isThinking) {
+    // Enable thinking image of scientist
+    imgScientistThinking.setVisible(isThinking);
+    typingBubble.setVisible(isThinking);
+  }
+
+  /**
+   * Function to update chatlog, current scene chat area, and chat areas of other scenes.
+   *
+   * @param indent the indent of the message
+   * @param chatMessage the chat message to update
+   */
+  private void updateChat(String indent, ChatMessage chatMessage) {
+    // Add to chat log
+    GameState.chatLog += indent + chatMessage.getContent();
+
+    // Append to chat area
+    chatArea.appendText(indent);
+    appendChatMessage(chatMessage);
+
+    // Update chat area in other scenes
+    new Thread(TimemachineController.updateChatTask).start();
+    new Thread(StorageController.updateChatTask).start();
+  }
+
+  /** Function to initalise the relevant tasks for scene */
+  private void initialiseTasks() {
+    createUpdateTask();
+    createAnimateTask();
+    updateHintTask(numHints);
+  }
+
+  /** Function to create task to update chat area for scene. */
+  public void createUpdateTask() {
+    // Create task to update chat area with chat log
+    updateChatTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            // Update the scenes chat area
+            chatArea.setText(GameState.chatLog);
+            chatArea.appendText("");
+
+            // Remake task for next call
+            createUpdateTask();
+            return null;
+          }
+        };
+  }
+
+  /**
+   * Function to update the label showing the user their remaining hints.
+   *
+   * @param numHints the number of hints remaining
+   */
+  public void updateHintTask(int numHints) {
+    updateHintTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            if (numHints >= 0) {
+              // Update number of hints to relevant number of hints
+              hintsRemaining.setText("Hints Remaining: " + String.valueOf(numHints));
+            }
+            return null;
+          }
+        };
+  }
+
+  public void createAnimateTask() {
+    animateTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            enableChemicals(true);
+            blurredImage.setVisible(true);
+            fadeTransition();
+
+            return null;
+          }
+        };
+  }
+
+  public void initialiseElements() {
+    // Task to initialise javafx elements in lab
+    Task<Void> initLabTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            // Initialise white arrows
+            int posx = 180;
+            int posy = 170;
+            for (int i = 0; i < 14; i++) { // 0-6 are up arrows, 8-13 are down arrows
+              ImageView arrow = new ImageView("file:src/main/resources/images/arrow_white.png");
+
+              // Set properties of arrow
+              posx = 180 + (110 * i);
+              if (i > 6) { // >6 are arrows along bottom row
+                posx = 100 + (105 * (i - 6));
+                posy = 555;
+                arrow.rotateProperty().setValue(180.0);
+              }
+              arrow.setOpacity(0);
+              arrow.setFitHeight(26.0);
+              arrow.setFitWidth(35.0);
+              arrow.setLayoutX(posx);
+              arrow.setLayoutY(posy);
+              arrow.setPreserveRatio(true);
+              arrow.setPickOnBounds(true);
+              arrow.setCache(true);
+              arrow.toFront();
+
+              // Add to pane and collection
+              paneLab.getChildren().add(arrow);
+              arrowCollection.add(arrow);
+            }
+
+            // Initialise Green arrows
+            posy = 195;
+            for (int i = 0; i < 14; i++) { // 0-6 are up arrows, 7-13 are down arrows
+              ImageView arrow = new ImageView("file:src/main/resources/images/arrow_green.png");
+
+              // Set properties
+              posx = 180 + (110 * i);
+              if (i > 6) {
+                posx = 100 + (105 * (i - 6));
+                posy = 530;
+                arrow.rotateProperty().setValue(180.0);
+              }
+              arrow.setOpacity(0);
+              arrow.setVisible(false);
+              arrow.setFitHeight(26.0);
+              arrow.setFitWidth(35.0);
+              arrow.setLayoutX(posx);
+              arrow.setLayoutY(posy);
+              arrow.setFitHeight(26.0);
+              arrow.setFitWidth(35.0);
+              arrow.setPickOnBounds(true);
+              arrow.setPreserveRatio(true);
+              arrow.toFront();
+              arrow.setCache(true);
+
+              // Add to collection
+              paneLab.getChildren().add(arrow);
+              arrowCollection.add(arrow);
+            }
+
+            // Set relevant elements above arrows
+            chemicalBlue.toFront();
+            chemicalPurple.toFront();
+            chemicalCyan.toFront();
+            chemicalGreen.toFront();
+            chemicalOrange.toFront();
+            chemicalYellow.toFront();
+            chemicalRed.toFront();
+            chemicalGeneral.toFront();
+            chemicalGeneral.setVisible(false);
+
+            return null;
+          }
+        };
+    new Thread(initLabTask).start();
+  }
+
+  /** Increment number of solutions added and check if puzzle is complete. */
+  private Boolean isPuzzleComplete() {
+    numChemicalsAdded++;
+    if (numChemicalsAdded == 3) {
+      puzzleComplete();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /** Function to execute events for when the lab task is finished. */
+  private void puzzleComplete() {
+    GameState.isLabResolved = true;
+
+    // Create task to run GPT model for lab complete message
+    Task<ChatMessage> labCompleteTask =
+        ChatTaskGenerator.createTask(GptPromptEngineering.getLabComplete());
+    new Thread(labCompleteTask).start();
+
+    labCompleteTask.setOnSucceeded(
+        e -> {
+          updateChat("\n\n-> ", labCompleteTask.getValue());
+        });
+
+    baseImage.setVisible(true);
+    btnSwitchToTimeMachine.setDisable(false);
+    startFlashingArrows();
+    fadeTransitionOut();
+  }
+
+  /**
    * Function to get arrows to change white arrows to green arrows.
    *
    * @param color the color of the chemical whos arrows point to
@@ -567,255 +815,5 @@ public class LabController {
 
     // Change game state
     isChemicalsEnabled = true;
-  }
-
-  /** Increment number of solutions added and check if puzzle is complete. */
-  private Boolean isPuzzleComplete() {
-    numChemicalsAdded++;
-    if (numChemicalsAdded == 3) {
-      puzzleComplete();
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  /** Function to execute events for when the lab task is finished. */
-  private void puzzleComplete() {
-    GameState.isLabResolved = true;
-
-    // Create task to run GPT model for lab complete message
-    Task<ChatMessage> labCompleteTask =
-        ChatTaskGenerator.createTask(GptPromptEngineering.getLabComplete());
-    new Thread(labCompleteTask).start();
-
-    labCompleteTask.setOnSucceeded(
-        e -> {
-          updateChat("\n\n-> ", labCompleteTask.getValue());
-        });
-
-    baseImage.setVisible(true);
-    btnSwitchToTimeMachine.setDisable(false);
-    startFlashingArrows();
-    fadeTransitionOut();
-  }
-
-  /**
-   * Appends a chat message to the chat text area one character at a time.
-   *
-   * @param msg the chat message to append
-   */
-  public void appendChatMessage(ChatMessage msg) {
-
-    // Disable send button
-    btnSend.setDisable(true);
-
-    // Create timeline to animate the appending of message
-    Timeline timeline = createMessageTimeline(msg.getContent().toCharArray());
-    timeline.play();
-    timeline.setOnFinished(
-        event -> {
-          btnSend.setDisable(false);
-          if (!isChemicalsEnabled) {
-            chemicalGeneral.setVisible(true);
-          }
-        });
-  }
-
-  /**
-   * Create a timeline which animates the message into the text area character by character.
-   *
-   * @param ch the character array to animate
-   * @return the timeline
-   */
-  private Timeline createMessageTimeline(char[] ch) {
-    // Create a timeline and keyframes to append each character of the message to the chat text area
-    Timeline timeline = new Timeline();
-    if (ch.length < 100) {
-      CHARACTER_DELAY = (50 - (ch.length / 2)) + 5;
-    }
-    Duration delayBetweenCharacters = Duration.millis(CHARACTER_DELAY);
-    Duration frame = delayBetweenCharacters;
-    for (int i = 0; i < ch.length; i++) {
-      final int I = i;
-      KeyFrame keyFrame =
-          new KeyFrame(
-              frame,
-              event -> {
-                chatArea.appendText(String.valueOf(ch[I]));
-              });
-      timeline.getKeyFrames().add(keyFrame);
-      frame = frame.add(delayBetweenCharacters);
-    }
-    return timeline;
-  }
-
-  /**
-   * Show/hide the thinking animation of scientist.
-   *
-   * @param isThinking whether the scientist is thinking
-   */
-  public void setThinkingAnimation(Boolean isThinking) {
-    // Enable thinking image of scientist
-    imgScientistThinking.setVisible(isThinking);
-    typingBubble.setVisible(isThinking);
-  }
-
-  /**
-   * Function to update chatlog, current scene chat area, and chat areas of other scenes.
-   *
-   * @param indent the indent of the message
-   * @param chatMessage the chat message to update
-   */
-  private void updateChat(String indent, ChatMessage chatMessage) {
-    // Add to chat log
-    GameState.chatLog += indent + chatMessage.getContent();
-
-    // Append to chat area
-    chatArea.appendText(indent);
-    appendChatMessage(chatMessage);
-
-    // Update chat area in other scenes
-    new Thread(TimemachineController.updateChatTask).start();
-    new Thread(StorageController.updateChatTask).start();
-  }
-
-  /** Function to initalise the relevant tasks for scene */
-  private void initialiseTasks() {
-    createUpdateTask();
-    createAnimateTask();
-    updateHintTask(numHints);
-  }
-
-  /** Function to create task to update chat area for scene. */
-  public void createUpdateTask() {
-    // Create task to update chat area with chat log
-    updateChatTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            // Update the scenes chat area
-            chatArea.setText(GameState.chatLog);
-            chatArea.appendText("");
-
-            // Remake task for next call
-            createUpdateTask();
-            return null;
-          }
-        };
-  }
-
-  /**
-   * Function to update the label showing the user their remaining hints.
-   *
-   * @param numHints the number of hints remaining
-   */
-  public void updateHintTask(int numHints) {
-    updateHintTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            if (numHints >= 0) {
-              // Update number of hints to relevant number of hints
-              hintsRemaining.setText("Hints Remaining: " + String.valueOf(numHints));
-            }
-            return null;
-          }
-        };
-  }
-
-  public void createAnimateTask() {
-    animateTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            enableChemicals(true);
-            blurredImage.setVisible(true);
-            fadeTransition();
-
-            return null;
-          }
-        };
-  }
-
-  public void initialiseElements() {
-    // Task to initialise javafx elements in lab
-    Task<Void> initLabTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            // Initialise white arrows
-            int posx = 180;
-            int posy = 170;
-            for (int i = 0; i < 14; i++) { // 0-6 are up arrows, 8-13 are down arrows
-              ImageView arrow = new ImageView("file:src/main/resources/images/arrow_white.png");
-
-              // Set properties of arrow
-              posx = 180 + (110 * i);
-              if (i > 6) { // >6 are arrows along bottom row
-                posx = 100 + (105 * (i - 6));
-                posy = 555;
-                arrow.rotateProperty().setValue(180.0);
-              }
-              arrow.setOpacity(0);
-              arrow.setFitHeight(26.0);
-              arrow.setFitWidth(35.0);
-              arrow.setLayoutX(posx);
-              arrow.setLayoutY(posy);
-              arrow.setPreserveRatio(true);
-              arrow.setPickOnBounds(true);
-              arrow.setCache(true);
-              arrow.toFront();
-
-              // Add to pane and collection
-              paneLab.getChildren().add(arrow);
-              arrowCollection.add(arrow);
-            }
-
-            // Initialise Green arrows
-            posy = 195;
-            for (int i = 0; i < 14; i++) { // 0-6 are up arrows, 7-13 are down arrows
-              ImageView arrow = new ImageView("file:src/main/resources/images/arrow_green.png");
-
-              // Set properties
-              posx = 180 + (110 * i);
-              if (i > 6) {
-                posx = 100 + (105 * (i - 6));
-                posy = 530;
-                arrow.rotateProperty().setValue(180.0);
-              }
-              arrow.setOpacity(0);
-              arrow.setVisible(false);
-              arrow.setFitHeight(26.0);
-              arrow.setFitWidth(35.0);
-              arrow.setLayoutX(posx);
-              arrow.setLayoutY(posy);
-              arrow.setFitHeight(26.0);
-              arrow.setFitWidth(35.0);
-              arrow.setPickOnBounds(true);
-              arrow.setPreserveRatio(true);
-              arrow.toFront();
-              arrow.setCache(true);
-
-              // Add to collection
-              paneLab.getChildren().add(arrow);
-              arrowCollection.add(arrow);
-            }
-
-            // Set relevant elements above arrows
-            chemicalBlue.toFront();
-            chemicalPurple.toFront();
-            chemicalCyan.toFront();
-            chemicalGreen.toFront();
-            chemicalOrange.toFront();
-            chemicalYellow.toFront();
-            chemicalRed.toFront();
-            chemicalGeneral.toFront();
-            chemicalGeneral.setVisible(false);
-
-            return null;
-          }
-        };
-    new Thread(initLabTask).start();
   }
 }
