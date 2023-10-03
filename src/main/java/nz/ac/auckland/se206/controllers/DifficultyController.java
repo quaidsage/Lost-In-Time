@@ -9,6 +9,7 @@ import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 
+/** A controller class for the difficulty selection scene. */
 public class DifficultyController {
   // Define FXML elements
   @FXML private Button btnSwitchToTimeMachine;
@@ -35,7 +36,7 @@ public class DifficultyController {
   }
 
   // Default settings and variables
-  int minutes = 4;
+  private int minutes = 4;
   private boolean isDifficultyChecked = false;
   private boolean isTimeChecked = false;
 
@@ -72,7 +73,7 @@ public class DifficultyController {
   }
 
   /**
-   * Handles the EASY checkbox.
+   * Handles the functionality of the EASY checkbox when clicked.
    *
    * @param event The event that triggered the function.
    */
@@ -92,7 +93,7 @@ public class DifficultyController {
   }
 
   /**
-   * Handles the MEDIUM checkbox.
+   * Handles the functionality of the MEDIUM checkbox when clicked.
    *
    * @param event The event that triggered the function.
    */
@@ -111,7 +112,7 @@ public class DifficultyController {
   }
 
   /**
-   * Handles the HARD checkbox.
+   * Handles the functionality of the HARD checkbox when clicked.
    *
    * @param event The event that triggered the function.
    */

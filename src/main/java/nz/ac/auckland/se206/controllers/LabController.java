@@ -30,6 +30,7 @@ import nz.ac.auckland.se206.gpt.ChatTaskGenerator;
 import nz.ac.auckland.se206.gpt.GptPromptEngineering;
 import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
 
+/** A controller class for the lab scene. */
 public class LabController {
   public static int numHints = 5;
   public static ArrayList<Integer> solutionColours;
@@ -47,7 +48,7 @@ public class LabController {
   /**
    * Function to start timer
    *
-   * @param minutes the number of minutes to set the timer to
+   * @param minutes the number of minutes to set the timer to.
    */
   public static void labStartTimer(int minutes) {
     timer.setMinutes(minutes);
@@ -57,8 +58,8 @@ public class LabController {
   /**
    * Delays given code by a given number of milliseconds.
    *
-   * @param ms milliseconds of delay
-   * @param continuation Code to execute after delay
+   * @param ms milliseconds of delay.
+   * @param continuation Code to execute after delay.
    */
   public static void delay(int ms, Runnable continuation) {
     Task<Void> delayTask = Delay.createDelay(ms);
@@ -141,9 +142,9 @@ public class LabController {
   }
 
   /**
-   * Change scene to Time Machine
+   * Change scene to Time Machine.
    *
-   * @param event the action event triggered by the time machine button
+   * @param event the action event triggered by the time machine button.
    */
   @FXML
   private void onClickTimeMachineRoom(ActionEvent event) {
@@ -153,7 +154,7 @@ public class LabController {
   /**
    * Function to return to main menu, restarting game.
    *
-   * @param event the action event triggered by the main menu button
+   * @param event the action event triggered by the main menu button.
    */
   @FXML
   private void onClickReturn(ActionEvent event) throws IOException {
@@ -164,7 +165,7 @@ public class LabController {
   /**
    * Function to begin lab riddle.
    *
-   * @param event the action event triggered by the begin button
+   * @param event the action event triggered by the begin button.
    */
   @FXML
   private void onClickChemicals(MouseEvent event) {
@@ -199,9 +200,9 @@ public class LabController {
   }
 
   /**
-   * Function to correctly identify which chemical is clicked
+   * Function to correctly identify which chemical is clicked.
    *
-   * @param event the action event triggered by the chemical being clicked
+   * @param event the action event triggered by the chemical being clicked.
    */
   @FXML
   private void onClickChemical(MouseEvent event) {
@@ -237,7 +238,7 @@ public class LabController {
   /**
    * Function to correctly identify which chemical is hovered.
    *
-   * @param event the action event triggered by the chemical being hovered
+   * @param event the action event triggered by the chemical being hovered.
    */
   @FXML
   private void onMouseEnterChemical(MouseEvent event) {
@@ -273,7 +274,7 @@ public class LabController {
   /**
    * Function to correctly identify which chemical is unhovered.
    *
-   * @param event the action event triggered by the chemical being unhovered
+   * @param event the action event triggered by the chemical being unhovered.
    */
   @FXML
   private void onMouseExitChemical(MouseEvent event) {
@@ -309,9 +310,9 @@ public class LabController {
   /**
    * Sends a message to the GPT model.
    *
-   * @param event the action event triggered by the send button
-   * @throws ApiProxyException if there is an error communicating with the API proxy
-   * @throws IOException if there is an I/O error
+   * @param event the action event triggered by the send button.
+   * @throws ApiProxyException if there is an error communicating with the API proxy.
+   * @throws IOException if there is an I/O error.
    */
   @FXML
   private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
@@ -343,7 +344,7 @@ public class LabController {
   /**
    * Appends a chat message to the chat text area one character at a time.
    *
-   * @param msg the chat message to append
+   * @param msg the chat message to append.
    */
   public void appendChatMessage(ChatMessage msg) {
     btnSend.setDisable(true);
@@ -363,8 +364,8 @@ public class LabController {
   /**
    * Create a timeline which animates the message into the text area character by character.
    *
-   * @param ch the character array to animate
-   * @return the timeline
+   * @param ch the character array to animate.
+   * @return the timeline.
    */
   private Timeline createMessageTimeline(char[] ch) {
     // Create a timeline and keyframes to append each character of the message to the chat text area
@@ -391,7 +392,7 @@ public class LabController {
   /**
    * Show/hide the thinking animation of scientist.
    *
-   * @param isThinking whether the scientist is thinking
+   * @param isThinking whether the scientist is thinking.
    */
   public void setThinkingAnimation(Boolean isThinking) {
     // Enable thinking image of scientist
@@ -402,8 +403,8 @@ public class LabController {
   /**
    * Function to update chatlog, current scene chat area, and chat areas of other scenes.
    *
-   * @param indent the indent of the message
-   * @param chatMessage the chat message to update
+   * @param indent the indent of the message.
+   * @param chatMessage the chat message to update.
    */
   private void updateChat(String indent, ChatMessage chatMessage) {
     // Add to chat log
@@ -418,7 +419,7 @@ public class LabController {
     new Thread(StorageController.updateChatTask).start();
   }
 
-  /** Function to initalise the relevant tasks for scene */
+  /** Function to initalise the relevant tasks for scene. */
   private void initialiseTasks() {
     createUpdateTask();
     createAnimateTask();
@@ -446,7 +447,7 @@ public class LabController {
   /**
    * Function to update the label showing the user their remaining hints.
    *
-   * @param numHints the number of hints remaining
+   * @param numHints the number of hints remaining.
    */
   public void updateHintTask(int numHints) {
     updateHintTask =
@@ -462,10 +463,7 @@ public class LabController {
         };
   }
 
-   /**
-   * Function to create a task for animation.
-   *
-   */
+  /** Function to create a task for animation. */
   public void createAnimateTask() {
     // Create a new task for animation
     animateTask =
@@ -482,6 +480,7 @@ public class LabController {
         };
   }
 
+  /** Function to initialise elements of the lab. */
   public void initialiseElements() {
     // Task to initialise javafx elements in lab
     Task<Void> initLabTask =
@@ -497,7 +496,7 @@ public class LabController {
               // Set properties of arrow
               posx = 180 + (110 * i);
               if (i > 6) { // >6 are arrows along bottom row
-                posx = 100 + (105 * (i - 6));
+                posx = posx + (105 * (i - 6));
                 posy = 555;
                 arrow.rotateProperty().setValue(180.0);
               }
@@ -597,7 +596,7 @@ public class LabController {
   /**
    * Function to get arrows to change white arrows to green arrows.
    *
-   * @param color the color of the chemical whos arrows point to
+   * @param color the color of the chemical whos arrows point to.
    */
   private void updateArrows(int color) {
     updateColourIndication(
@@ -610,7 +609,7 @@ public class LabController {
   /**
    * Function to update arrows and check if puzzle is complete.
    *
-   * @param color the color of the chemical whos arrows point to
+   * @param color the color of the chemical whos arrows point to.
    */
   private void chemClicked(int color) {
     if (isChemicalSolution[color]) {
@@ -623,31 +622,33 @@ public class LabController {
   /**
    * Function to set which arrows to animate and animation properties.
    *
-   * @param color the color of the chemical whos arrows point to
-   * @param show whether to show or hide the arrows
+   * @param color the color of the chemical whos arrows point to.
+   * @param show whether to show or hide the arrows.
    */
   private void chemAnimate(int color, Boolean show) {
     // Animate appropriate arrows
     if (show) {
-      moveArrowsIn( // Animate arrow moving inwards
-          arrowCollection.get(color),
-          arrowCollection.get(color + 7),
-          arrowAnimationSpeed,
-          arrowAnimationDistance);
+        moveArrowsIn( // Animate arrow moving inwards
+            arrowCollection.get(color),
+            arrowCollection.get(color + 7),
+            arrowAnimationSpeed,
+            arrowAnimationDistance
+        );
     } else {
-      moveArrowsOut( // Animate arrow moving outwards
-          arrowCollection.get(color),
-          arrowCollection.get(color + 7),
-          arrowAnimationSpeed,
-          -arrowAnimationDistance);
+        moveArrowsOut( // Animate arrow moving outwards
+            arrowCollection.get(color),
+            arrowCollection.get(color + 7),
+            arrowAnimationSpeed,
+            -arrowAnimationDistance
+        );
     }
-  }
+}
 
   /**
    * Function to fade in a given element.
    *
-   * @param image the element to be faded in
-   * @param duration the duration of the animation
+   * @param image the element to be faded in.
+   * @param duration the duration of the animation.
    */
   private void fadingTransition(ImageView image, int duration) {
     // Initialise fade transition and its parameters
@@ -662,8 +663,8 @@ public class LabController {
   /**
    * Function to fade given element out.
    *
-   * @param image the element to be faded out
-   * @param duration the duration of the animation
+   * @param image the element to be faded out.
+   * @param duration the duration of the animation.
    */
   private void fadingTransitionOut(ImageView image, int duration) {
     // Initialise fade transition and its parameters
@@ -679,7 +680,7 @@ public class LabController {
   /**
    * Function to flash given arrow from shown to hidden.
    *
-   * @param image the arrow to be flashed
+   * @param image the arrow to be flashed.
    */
   private void flashingArrowsOff(ImageView image) {
     // Initialise transition and its parameters
@@ -705,7 +706,7 @@ public class LabController {
   /**
    * Function to flash given arrow from hidden to shown.
    *
-   * @param image the arrow to be flashed
+   * @param image the arrow to be flashed.
    */
   private void flashingArrowsOn(ImageView image) {
     FadeTransition fade = new FadeTransition(Duration.millis(1), image);
@@ -748,10 +749,10 @@ public class LabController {
   /**
    * Function to move arrows towards the relevant chemical flask.
    *
-   * @param arrowDown the down arrow to be moved
-   * @param arrowUp the up arrow to be moved
-   * @param duration the duration of the animation
-   * @param distance the distance to move the arrow
+   * @param arrowDown the down arrow to be moved.
+   * @param arrowUp the up arrow to be moved.
+   * @param duration the duration of the animation.
+   * @param distance the distance to move the arrow.
    */
   private void moveArrowsIn(ImageView arrowDown, ImageView arrowUp, int duration, int distance) {
     // Initialise path lines and duration
@@ -768,10 +769,10 @@ public class LabController {
   /**
    * Function to move arrows away from the relevant chemical flask.
    *
-   * @param arrowDown the down arrow to be moved
-   * @param arrowUp the up arrow to be moved
-   * @param duration the duration of the animation
-   * @param distance the distance to move the arrow
+   * @param arrowDown the down arrow to be moved.
+   * @param arrowUp the up arrow to be moved.
+   * @param duration the duration of the animation.
+   * @param distance the distance to move the arrow.
    */
   private void moveArrowsOut(ImageView arrowDown, ImageView arrowUp, int duration, int distance) {
     // Initialise path lines and duration
@@ -788,10 +789,10 @@ public class LabController {
   /**
    * Function to switch from white arrows for green arrows.
    *
-   * @param arrowUp the up arrow to be hidden
-   * @param arrowDown the down arrow to be hidden
-   * @param arrowUp1 the up arrow to be shown
-   * @param arrowDown1 the down arrow to be shown
+   * @param arrowUp the up arrow to be hidden.
+   * @param arrowDown the down arrow to be hidden.
+   * @param arrowUp1 the up arrow to be shown.
+   * @param arrowDown1 the down arrow to be shown.
    */
   private void updateColourIndication(
       ImageView arrowUp, ImageView arrowDown, ImageView arrowUp1, ImageView arrowDown1) {
@@ -804,7 +805,7 @@ public class LabController {
   /**
    * Function to show chemical task and its relevant javafx elements.
    *
-   * @param visibility whether to show or hide the chemicals
+   * @param visibility whether to show or hide the chemicals.
    */
   public void enableChemicals(Boolean visibility) {
     // Set visiblity of elements for chemical task

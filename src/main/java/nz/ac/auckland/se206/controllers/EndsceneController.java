@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.SceneManager;
 
+/** A controller class for end scene. */
 public class EndsceneController {
   @FXML private Button btnMenu;
 

@@ -13,6 +13,7 @@ import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
 
+/** A controller class for the intro scene. */
 public class IntroController {
   public static Task<Void> appendTask;
   public static ChatMessage msg;
@@ -46,7 +47,7 @@ public class IntroController {
         + " courageous compatriot!"
   };
 
-  // Initialize the introduction scene
+  /** Initialise the introduction scene with specific settings */
   public void initialize() {
     // Form the introduction message
     msg =
@@ -74,7 +75,7 @@ public class IntroController {
 
   /** Function to handle starting interaction with the AI. */
   @FXML
-  public void onClickPickDevice(MouseEvent event) {
+  private void onClickPickDevice(MouseEvent event) {
 
     setVisiblity(false);
 
@@ -86,7 +87,7 @@ public class IntroController {
 
   /** Function to handle the next interaction with the AI. */
   @FXML
-  public void onClickNext() {
+  private void onClickNext(MouseEvent event) {
     interaction++;
 
     // Hide the "Next" button

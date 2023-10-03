@@ -30,6 +30,7 @@ import nz.ac.auckland.se206.gpt.ChatTaskGenerator;
 import nz.ac.auckland.se206.gpt.GptPromptEngineering;
 import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
 
+/** A controller class for the storage scene. */
 public class StorageController {
   public static Task<Void> updateChatTask;
   public static Task<ChatMessage> storageIntroTask;
@@ -38,7 +39,7 @@ public class StorageController {
   private static TimerController timer = new TimerController();
 
   /**
-   * Function to start timer.
+   * Function to start timer when the game is started.
    *
    * @param minutes the number of minutes to set the timer to
    */
@@ -104,6 +105,11 @@ public class StorageController {
               "button0", "button1", "button2", "button3", "button4", "button5", "button6",
               "button7", "button8"));
 
+  /**
+   * Initialises the storage scene with the required settings.
+   * 
+   * @throws ApiProxyException when there is a problem with the ApiProxy.
+   */
   public void initialize() throws ApiProxyException {
     // Initialise timer
     timer = new TimerController();
