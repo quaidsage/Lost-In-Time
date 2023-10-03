@@ -69,7 +69,7 @@ public class IntroController {
    * @param event The event that triggered the function.
    */
   @FXML
-  public void onClickSkipIntro(ActionEvent event) {
+  private void onClickSkipIntro(ActionEvent event) {
     // Switch to time machine scene
     App.setUi(AppUi.TIMEMACHINE);
 
@@ -147,7 +147,7 @@ public class IntroController {
 
   /** Function to handle starting interaction with the AI. */
   @FXML
-  public void onClickPickDevice() {
+  private void onClickPickDevice() {
     // Hide relevant elements
     rectBack.setVisible(false);
     btnPick.setVisible(false);
@@ -167,7 +167,7 @@ public class IntroController {
 
   /** Function to handle the next interaction with the AI. */
   @FXML
-  public void onClickNext() {
+  private void onClickNext() {
     // Hide the "Next" button
     btnNext.setDisable(true);
 
