@@ -89,10 +89,10 @@ public class LabController {
   @FXML private ImageView blurredImage;
   @FXML private ImageView typingBubble;
 
-  ArrayList<ImageView> arrowCollection = new ArrayList<ImageView>();
+  private ArrayList<ImageView> arrowCollection = new ArrayList<ImageView>();
 
   // Fields for initializing variables
-  private int CHARACTER_DELAY = 5;
+  private int characterDelay = 5;
   private int numChemicalsAdded = 0;
   private int arrowAnimationSpeed = 85;
   private int arrowAnimationDistance = 25;
@@ -135,10 +135,8 @@ public class LabController {
       isChemicalSolution[solutionColours.get(i)] = true;
     }
 
-    // Initialise tasks
     initialiseTasks();
 
-    // Initialise elements
     initialiseElements();
   }
 
@@ -372,9 +370,9 @@ public class LabController {
     // Create a timeline and keyframes to append each character of the message to the chat text area
     Timeline timeline = new Timeline();
     if (ch.length < 100) {
-      CHARACTER_DELAY = (50 - (ch.length / 2)) + 5;
+      characterDelay = (50 - (ch.length / 2)) + 5;
     }
-    Duration delayBetweenCharacters = Duration.millis(CHARACTER_DELAY);
+    Duration delayBetweenCharacters = Duration.millis(characterDelay);
     Duration frame = delayBetweenCharacters;
     for (int i = 0; i < ch.length; i++) {
       final int I = i;
@@ -464,7 +462,12 @@ public class LabController {
         };
   }
 
+   /**
+   * Function to create a task for animation.
+   *
+   */
   public void createAnimateTask() {
+    // Create a new task for animation
     animateTask =
         new Task<Void>() {
           @Override
@@ -473,6 +476,7 @@ public class LabController {
             blurredImage.setVisible(true);
             fadeTransition();
 
+            // End the task
             return null;
           }
         };
