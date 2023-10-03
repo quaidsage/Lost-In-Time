@@ -81,3 +81,13 @@
     opacity: 0.4;
     -fx-opacity: 0.4;
 }
+
+#timeMachine {
+    opacity: 0;
+    -fx-opacity: 0;
+}
+
+#timeMachine:hover {
+    opacity: 0.4;
+    -fx-opacity: 0.4;
+}

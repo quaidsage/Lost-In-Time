@@ -10,7 +10,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
-import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
 
@@ -56,11 +55,7 @@ public class IntroController {
             "You wake up in a strange room...\n Next to you, you see a strange device glowing.");
     updateTask(txtIntro);
 
-    // Set visibility of relevant elements
-    rectBack.setVisible(true);
-    btnPick.setDisable(true);
-    btnNext.setVisible(false);
-    btnNext.setDisable(true);
+    setVisiblity(true);
   }
 
   /**
@@ -74,8 +69,40 @@ public class IntroController {
     App.setUi(AppUi.TIMEMACHINE);
 
     // Start the round function in the time machine scene
-    Thread startThread = new Thread(TimemachineController.startTask);
-    startThread.start();
+    new Thread(TimemachineController.startTask).start();
+  }
+
+  /** Function to handle starting interaction with the AI. */
+  @FXML
+  public void onClickPickDevice() {
+
+    setVisiblity(false);
+
+    // Start appending the first interaction message
+    msg = new ChatMessage("assistant", interactions[0]);
+    updateTask(txtAi);
+    new Thread(appendTask).start();
+  }
+
+  /** Function to handle the next interaction with the AI. */
+  @FXML
+  public void onClickNext() {
+    interaction++;
+
+    // Hide the "Next" button
+    btnNext.setDisable(true);
+
+    // Check if it's the last interaction, and switch to the time machine scene if so
+    if (interaction == interactions.length - 1) {
+      onClickSkipIntro(null);
+    } else if (interaction == interactions.length - 2) {
+      btnNext.setText("Onward");
+    }
+
+    // Start appending the next interaction message
+    msg = new ChatMessage("assistant", interactions[interaction]);
+    updateTask(txtAi);
+    new Thread(appendTask).start();
   }
 
   /**
@@ -85,22 +112,23 @@ public class IntroController {
    * @param chatArea The text area to append the message to.
    */
   public void appendMessage(ChatMessage msg, TextArea chatArea) {
-    // Convert message to character array
-    char[] ch = msg.getContent().toCharArray();
+    // Create timeline animation of message appending to text area
+    Timeline timeline = createMessageTimeline(msg.getContent().toCharArray(), chatArea);
+    timeline.play();
+    timeline.setOnFinished(
+        event -> {
+          btnPick.setDisable(false);
+          btnNext.setDisable(false);
+        });
+  }
 
-    // Use text-to-speech alongside chat appending
-    Task<Void> txtSpeechTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            GameState.txtToSpeech.speak(msg.getContent());
-            return null;
-          }
-        };
-
-    Thread txtSpeechThread = new Thread(txtSpeechTask);
-    txtSpeechThread.start();
-
+  /**
+   * Create a timeline which animates the message into the text area character by character.
+   *
+   * @param ch the character array to animate
+   * @return the timeline
+   */
+  private Timeline createMessageTimeline(char[] ch, TextArea chatArea) {
     // Create a timeline and keyframes to append each character of the message to the chat text area
     Timeline timeline = new Timeline();
     Duration delayBetweenCharacters = Duration.millis(characterDelay);
@@ -116,16 +144,7 @@ public class IntroController {
       timeline.getKeyFrames().add(keyFrame);
       frame = frame.add(delayBetweenCharacters);
     }
-
-    // Play the timeline animation
-    timeline.play();
-
-    // Enable the "Pick" and "Next" buttons after the animation is finished
-    timeline.setOnFinished(
-        event -> {
-          btnPick.setDisable(false);
-          btnNext.setDisable(false);
-        });
+    return timeline;
   }
 
   /**
@@ -145,46 +164,22 @@ public class IntroController {
         };
   }
 
-  /** Function to handle starting interaction with the AI. */
-  @FXML
-  private void onClickPickDevice() {
-    // Hide relevant elements
-    rectBack.setVisible(false);
-    btnPick.setVisible(false);
-    txtIntro.setVisible(false);
-    btnSkip.setVisible(false);
+  /**
+   * Sets visibility of required javafx elements.
+   *
+   * @param show Whether to show or hide specific elements.
+   */
+  private void setVisiblity(Boolean show) {
+    // Update visibility of required javafx elements
+    rectBack.setVisible(show);
+    btnNext.setVisible(!show);
+    btnPick.setVisible(show);
+    txtIntro.setVisible(show);
+    btnSkip.setVisible(show);
+    btnNext.setVisible(!show);
 
-    // Show the "Next" button
-    btnNext.setVisible(true);
-    btnNext.setDisable(true);
-
-    // Start appending the first interaction message
-    msg = new ChatMessage("assistant", interactions[0]);
-    updateTask(txtAi);
-    Thread appendThread = new Thread(appendTask);
-    appendThread.start();
-  }
-
-  /** Function to handle the next interaction with the AI. */
-  @FXML
-  private void onClickNext() {
-    // Hide the "Next" button
-    btnNext.setDisable(true);
-
-    // Increment the interaction index
-    interaction++;
-
-    // Check if it's the last interaction, and switch to the time machine scene if so
-    if (interaction == interactions.length - 1) {
-      onClickSkipIntro(null);
-    } else if (interaction == interactions.length - 2) {
-      btnNext.setText("Onward");
-    }
-
-    // Start appending the next interaction message
-    msg = new ChatMessage("assistant", interactions[interaction]);
-    updateTask(txtAi);
-    Thread appendThread = new Thread(appendTask);
-    appendThread.start();
+    // Update disable status of required javafx elements
+    btnPick.setDisable(show);
+    btnNext.setDisable(!show);
   }
 }

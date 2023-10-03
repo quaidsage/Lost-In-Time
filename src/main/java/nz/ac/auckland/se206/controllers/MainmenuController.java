@@ -34,6 +34,7 @@ public class MainmenuController {
     // Reset various game states and settings when the game starts.
 
     // Reset game state variables
+    GameState.chatLog = "";
     GameState.isLabResolved = false;
     GameState.isStorageResolved = false;
     GameState.isLabVisited = false;
