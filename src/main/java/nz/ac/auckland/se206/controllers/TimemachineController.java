@@ -15,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
+import nz.ac.auckland.se206.Delay;
 import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.SceneManager.AppUi;
@@ -50,23 +51,8 @@ public class TimemachineController {
    * @param continuation Code to execute after delay
    */
   public static void delay(int ms, Runnable continuation) {
-    // Create delay function
-    Task<Void> delayTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            try {
-              Thread.sleep(ms);
-            } catch (InterruptedException e) {
-              e.printStackTrace();
-            }
-            return null;
-          }
-        };
-    // Execute code after delay
+    Task<Void> delayTask = Delay.createDelay(ms);
     delayTask.setOnSucceeded(event -> continuation.run());
-
-    // Start delay thread
     new Thread(delayTask).start();
   }
 
