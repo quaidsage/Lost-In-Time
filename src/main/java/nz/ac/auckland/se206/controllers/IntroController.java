@@ -55,11 +55,7 @@ public class IntroController {
             "You wake up in a strange room...\n Next to you, you see a strange device glowing.");
     updateTask(txtIntro);
 
-    // Set visibility of relevant elements
-    rectBack.setVisible(true);
-    btnPick.setDisable(true);
-    btnNext.setVisible(false);
-    btnNext.setDisable(true);
+    setVisiblity(true);
   }
 
   /**
@@ -73,8 +69,40 @@ public class IntroController {
     App.setUi(AppUi.TIMEMACHINE);
 
     // Start the round function in the time machine scene
-    Thread startThread = new Thread(TimemachineController.startTask);
-    startThread.start();
+    new Thread(TimemachineController.startTask).start();
+  }
+
+  /** Function to handle starting interaction with the AI. */
+  @FXML
+  public void onClickPickDevice() {
+
+    setVisiblity(false);
+
+    // Start appending the first interaction message
+    msg = new ChatMessage("assistant", interactions[0]);
+    updateTask(txtAi);
+    new Thread(appendTask).start();
+  }
+
+  /** Function to handle the next interaction with the AI. */
+  @FXML
+  public void onClickNext() {
+    interaction++;
+
+    // Hide the "Next" button
+    btnNext.setDisable(true);
+
+    // Check if it's the last interaction, and switch to the time machine scene if so
+    if (interaction == interactions.length - 1) {
+      onClickSkipIntro(null);
+    } else if (interaction == interactions.length - 2) {
+      btnNext.setText("Onward");
+    }
+
+    // Start appending the next interaction message
+    msg = new ChatMessage("assistant", interactions[interaction]);
+    updateTask(txtAi);
+    new Thread(appendTask).start();
   }
 
   /**
@@ -136,46 +164,22 @@ public class IntroController {
         };
   }
 
-  /** Function to handle starting interaction with the AI. */
-  @FXML
-  public void onClickPickDevice() {
-    // Hide relevant elements
-    rectBack.setVisible(false);
-    btnPick.setVisible(false);
-    txtIntro.setVisible(false);
-    btnSkip.setVisible(false);
+  /**
+   * Sets visibility of required javafx elements.
+   *
+   * @param show Whether to show or hide specific elements.
+   */
+  private void setVisiblity(Boolean show) {
+    // Update visibility of required javafx elements
+    rectBack.setVisible(show);
+    btnNext.setVisible(!show);
+    btnPick.setVisible(show);
+    txtIntro.setVisible(show);
+    btnSkip.setVisible(show);
+    btnNext.setVisible(!show);
 
-    // Show the "Next" button
-    btnNext.setVisible(true);
-    btnNext.setDisable(true);
-
-    // Start appending the first interaction message
-    msg = new ChatMessage("assistant", interactions[0]);
-    updateTask(txtAi);
-    Thread appendThread = new Thread(appendTask);
-    appendThread.start();
-  }
-
-  /** Function to handle the next interaction with the AI. */
-  @FXML
-  public void onClickNext() {
-    // Hide the "Next" button
-    btnNext.setDisable(true);
-
-    // Increment the interaction index
-    interaction++;
-
-    // Check if it's the last interaction, and switch to the time machine scene if so
-    if (interaction == interactions.length - 1) {
-      onClickSkipIntro(null);
-    } else if (interaction == interactions.length - 2) {
-      btnNext.setText("Onward");
-    }
-
-    // Start appending the next interaction message
-    msg = new ChatMessage("assistant", interactions[interaction]);
-    updateTask(txtAi);
-    Thread appendThread = new Thread(appendTask);
-    appendThread.start();
+    // Update disable status of required javafx elements
+    btnPick.setDisable(show);
+    btnNext.setDisable(!show);
   }
 }
