@@ -48,7 +48,7 @@ public class DifficultyController {
    * @param event The event that triggered the function.
    */
   @FXML
-  private void switchToIntro(ActionEvent event) {
+  private void onClickContinue(ActionEvent event) {
     // Check if both difficulty and time settings are selected
     if (!isDifficultyChecked || !isTimeChecked) {
       lblSelectBoxesWarning.setText("Select a difficulty and time to begin");
@@ -76,7 +76,7 @@ public class DifficultyController {
    * @param event The event that triggered the function.
    */
   @FXML
-  private void checkedEasy(ActionEvent event) {
+  private void onClickEasy(ActionEvent event) {
     // Change game state
     currentDifficulty = Difficulty.EASY;
     isDifficultyChecked = true;
@@ -96,7 +96,7 @@ public class DifficultyController {
    * @param event The event that triggered the function.
    */
   @FXML
-  private void checkedMedium(ActionEvent event) {
+  private void onClickMedium(ActionEvent event) {
     // Change game state
     currentDifficulty = Difficulty.MEDIUM;
     isDifficultyChecked = true;
@@ -115,7 +115,7 @@ public class DifficultyController {
    * @param event The event that triggered the function.
    */
   @FXML
-  private void checkedHard(ActionEvent event) {
+  private void onClickHard(ActionEvent event) {
     // Change game state
     currentDifficulty = Difficulty.HARD;
     isDifficultyChecked = true;
@@ -130,7 +130,7 @@ public class DifficultyController {
 
   /** Handles the 2 Minutes checkbox. */
   @FXML
-  private void checkedTwoMins() {
+  private void onClickTwoMins() {
     // Change game state
     currentTimeSetting = TimeSetting.TWO;
     isTimeChecked = true;
@@ -147,7 +147,7 @@ public class DifficultyController {
 
   /** Handles the 4 Minutes checkbox. */
   @FXML
-  private void checkedFourMins() {
+  private void onClickFourMins() {
     // Change game state
     currentTimeSetting = TimeSetting.FOUR;
     isTimeChecked = true;
@@ -164,7 +164,7 @@ public class DifficultyController {
 
   /** Handles the 6 Minutes checkbox. */
   @FXML
-  private void checkedSixMins() {
+  private void onClickSixMins() {
     // Change game state
     currentTimeSetting = TimeSetting.SIX;
     isTimeChecked = true;

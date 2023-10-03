@@ -11,7 +11,7 @@
          <font>
             <Font name="System Bold" size="48.0" />
          </font></Label>
-      <Button id="btnSkip" fx:id="btnPlayAgain" layoutX="535.0" layoutY="546.0" mnemonicParsing="false" onAction="#playAgain" text="Back to Menu">
+      <Button id="btnSkip" fx:id="btnMenu" layoutX="535.0" layoutY="546.0" mnemonicParsing="false" onAction="#onClickBackToMenu" text="Back to Menu">
          <font>
             <Font name="System Bold" size="48.0" />
          </font></Button>

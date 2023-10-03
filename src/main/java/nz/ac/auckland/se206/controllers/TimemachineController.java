@@ -33,19 +33,6 @@ public class TimemachineController {
   // Initialise Timer
   private static TimerController timer = new TimerController();
 
-  // JavaFX elements
-  @FXML private Button btnSwitchToLab, btnSwitchToStorage, btnSend;
-  @FXML private Label lblTimer;
-  @FXML private TextArea chatArea;
-  @FXML private TextArea chatField;
-  @FXML private ImageView imgScientistThinking;
-  @FXML private Rectangle rectLight;
-  @FXML private Button btnTimeMachine, btnMenu;
-  @FXML private ImageView typingBubble;
-
-  // Initialise Variables
-  private int characterDelay = 5;
-
   /**
    * Function to start timer.
    *
@@ -82,6 +69,19 @@ public class TimemachineController {
     // Start delay thread
     new Thread(delayTask).start();
   }
+
+  // JavaFX elements
+  @FXML private Button btnSwitchToLab, btnSwitchToStorage, btnSend;
+  @FXML private Label lblTimer;
+  @FXML private TextArea chatArea;
+  @FXML private TextArea chatField;
+  @FXML private ImageView imgScientistThinking;
+  @FXML private Rectangle rectLight;
+  @FXML private Button btnTimeMachine, btnMenu;
+  @FXML private ImageView typingBubble;
+
+  // Initialise Variables
+  private int characterDelay = 5;
 
   public void initialize() {
     timer = new TimerController();
@@ -130,7 +130,7 @@ public class TimemachineController {
    * @param event the action event triggered by the send button
    */
   @FXML
-  private void switchToLab(ActionEvent event) {
+  private void onClickLab(ActionEvent event) {
     if (!GameState.isLabVisited) {
       GameState.isLabVisited = true;
       Thread labIntroThread = new Thread(LabController.labIntroTask);
@@ -145,7 +145,7 @@ public class TimemachineController {
    * @param event the action event triggered by the send button
    */
   @FXML
-  private void switchToStorage(ActionEvent event) {
+  private void onClickStorage(ActionEvent event) {
     if (!GameState.isStorageVisited) {
       GameState.isStorageVisited = true;
       Thread storageIntroThread = new Thread(StorageController.storageIntroTask);
@@ -160,7 +160,7 @@ public class TimemachineController {
    * @param event the action event triggered by the send button
    */
   @FXML
-  private void finishGame(ActionEvent event) {
+  private void onClickTimeMachine(ActionEvent event) {
     // Check if game is complete
     if (GameState.isLabResolved && GameState.isStorageResolved) {
       App.setUi(AppUi.ENDSCENE);
@@ -173,7 +173,7 @@ public class TimemachineController {
    * @param event the action event triggered by the send button
    */
   @FXML
-  private void showBtnTimeMachine(MouseEvent event) {
+  private void onMouseEnterTimeMachine(MouseEvent event) {
     btnTimeMachine.setOpacity(0.2);
   }
 
@@ -183,7 +183,7 @@ public class TimemachineController {
    * @param event the action event triggered by the send button
    */
   @FXML
-  private void hideBtnTimeMachine(MouseEvent event) {
+  private void onMouseExitTimeMachine(MouseEvent event) {
     btnTimeMachine.setOpacity(0);
   }
 
@@ -466,7 +466,7 @@ public class TimemachineController {
    * @throws IOException if there is an I/O error
    */
   @FXML
-  private void returnToMenu(ActionEvent event) throws IOException {
+  private void onClickReturn(ActionEvent event) throws IOException {
     App.setRoot("mainmenu");
     SceneManager.clearAllScenesExceptMainMenu();
   }

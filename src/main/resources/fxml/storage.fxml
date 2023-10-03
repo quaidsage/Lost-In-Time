@@ -31,7 +31,7 @@
          <font>
             <Font name="Monospace 821 Bold BT" size="38.0" />
          </font></Label>
-      <Button id="btnSkip" fx:id="btnSwitchToTimeMachine" layoutX="578.0" layoutY="660.0" mnemonicParsing="false" onAction="#switchToTimeMachine" prefHeight="79.0" prefWidth="406.0" text="Time Machine Room">
+      <Button id="btnSkip" fx:id="btnSwitchToTimeMachine" layoutX="578.0" layoutY="660.0" mnemonicParsing="false" onAction="#onClickTimeMachineRoom" prefHeight="79.0" prefWidth="406.0" text="Time Machine Room">
          <font>
             <Font name="System Bold" size="36.0" />
          </font></Button>
@@ -64,7 +64,7 @@
             <Image url="@../images/wepik-export-2023092011501715lG.png" />
          </image>
       </ImageView>
-      <Rectangle id="circuitBox" fx:id="circuitBox" arcHeight="5.0" arcWidth="5.0" height="62.0" layoutX="595.0" layoutY="316.0" onMouseClicked="#clickCircuitBox" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="44.0">
+      <Rectangle id="circuitBox" fx:id="circuitBox" arcHeight="5.0" arcWidth="5.0" height="62.0" layoutX="595.0" layoutY="316.0" onMouseClicked="#onClickCircuit" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="44.0">
          <fill>
             <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
                <stops>
@@ -91,28 +91,28 @@
          <children>
             <HBox prefHeight="100.0" prefWidth="300.0">
                <children>
-                  <Button fx:id="button0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: rgb(107,249,177); -fx-border-color: rgb(28,28,28);" />
-                  <Button fx:id="button1" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: rgb(107,249,177); -fx-border-color: rgb(28,28,28);" />
-                  <Button fx:id="button2" layoutX="235.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: rgb(107,249,177); -fx-border-color: rgb(28,28,28);" />
+                  <Button fx:id="button0" mnemonicParsing="false" onAction="#onClickPanel" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: rgb(107,249,177); -fx-border-color: rgb(28,28,28);" />
+                  <Button fx:id="button1" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClickPanel" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: rgb(107,249,177); -fx-border-color: rgb(28,28,28);" />
+                  <Button fx:id="button2" layoutX="235.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClickPanel" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: rgb(107,249,177); -fx-border-color: rgb(28,28,28);" />
                </children>
             </HBox>
             <HBox layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="300.0">
                <children>
-                  <Button fx:id="button3" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: rgb(107,249,177); -fx-border-color: rgb(28,28,28);" />
-                  <Button fx:id="button4" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: rgb(107,249,177); -fx-border-color: rgb(28,28,28);" />
-                  <Button fx:id="button5" layoutX="110.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: rgb(107,249,177); -fx-border-color: rgb(28,28,28);" />
+                  <Button fx:id="button3" mnemonicParsing="false" onAction="#onClickPanel" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: rgb(107,249,177); -fx-border-color: rgb(28,28,28);" />
+                  <Button fx:id="button4" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClickPanel" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: rgb(107,249,177); -fx-border-color: rgb(28,28,28);" />
+                  <Button fx:id="button5" layoutX="110.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClickPanel" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: rgb(107,249,177); -fx-border-color: rgb(28,28,28);" />
                </children>
             </HBox>
             <HBox layoutX="10.0" layoutY="110.0" prefHeight="100.0" prefWidth="300.0">
                <children>
-                  <Button fx:id="button6" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: rgb(107,249,177); -fx-border-color: rgb(28,28,28);" />
-                  <Button fx:id="button7" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: rgb(107,249,177); -fx-border-color: rgb(28,28,28);" />
-                  <Button fx:id="button8" layoutX="110.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonClicked" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: rgb(107,249,177); -fx-border-color: rgb(28,28,28);" />
+                  <Button fx:id="button6" mnemonicParsing="false" onAction="#onClickPanel" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: rgb(107,249,177); -fx-border-color: rgb(28,28,28);" />
+                  <Button fx:id="button7" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClickPanel" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: rgb(107,249,177); -fx-border-color: rgb(28,28,28);" />
+                  <Button fx:id="button8" layoutX="110.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClickPanel" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: rgb(107,249,177); -fx-border-color: rgb(28,28,28);" />
                </children>
             </HBox>
          </children>
       </VBox>
-      <Button id="btnSkip" fx:id="btnStartCircuitGame" layoutX="758.0" layoutY="316.0" mnemonicParsing="false" onAction="#start" text="Start" visible="false">
+      <Button id="btnSkip" fx:id="btnStartCircuitGame" layoutX="758.0" layoutY="316.0" mnemonicParsing="false" onAction="#onClickStartMemoryGame" text="Start" visible="false">
          <font>
             <Font name="Apple Symbols" size="24.0" />
          </font>
@@ -127,7 +127,7 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Text>
-      <Button id="btnSkip" fx:id="btnMenu" layoutX="25.0" layoutY="10.0" mnemonicParsing="false" onAction="#returnToMenu" text="Return To Menu">
+      <Button id="btnSkip" fx:id="btnMenu" layoutX="25.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClickReturn" text="Return To Menu">
          <font>
             <Font name="System Bold" size="24.0" />
          </font></Button>
