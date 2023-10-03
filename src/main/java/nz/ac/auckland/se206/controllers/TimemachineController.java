@@ -3,7 +3,6 @@ package nz.ac.auckland.se206.controllers;
 import java.io.IOException;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,10 +19,9 @@ import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
+import nz.ac.auckland.se206.gpt.ChatTaskGenerator;
 import nz.ac.auckland.se206.gpt.GptPromptEngineering;
 import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
-import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult;
-import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 
 public class TimemachineController {
   public static Task<ChatMessage> contextTask;
@@ -77,7 +75,7 @@ public class TimemachineController {
     typingBubble.setVisible(true);
 
     // Create context thread
-    contextTask = createTask(GptPromptEngineering.getContext());
+    contextTask = ChatTaskGenerator.createTask(GptPromptEngineering.getContext());
     Task<Void> contextAppendTask =
         new Task<Void>() {
           @Override
@@ -174,28 +172,6 @@ public class TimemachineController {
   }
 
   /**
-   * Creates a task to run the LLM model on a given message to be run by background thread.
-   *
-   * @param message string to attach to message to be given to the LLM
-   */
-  private Task<ChatMessage> createTask(String message) {
-    Task<ChatMessage> task =
-        new Task<ChatMessage>() {
-          @Override
-          protected ChatMessage call() throws Exception {
-            btnSend.setDisable(true);
-            ChatMessage msg = runGpt(new ChatMessage("assistant", message));
-            Platform.runLater(
-                () -> {
-                  // On message initialized...
-                });
-            return msg;
-          }
-        };
-    return task;
-  }
-
-  /**
    * Appends a chat message to the chat text area one character at a time.
    *
    * @param msg the chat message to append
@@ -251,30 +227,6 @@ public class TimemachineController {
   }
 
   /**
-   * Runs the GPT model with a given chat message.
-   *
-   * @param msg the chat message to process
-   * @return the response chat message
-   * @throws ApiProxyException if there is an error communicating with the API proxy
-   */
-  private ChatMessage runGpt(ChatMessage msg) throws ApiProxyException {
-    // Append to main game chat completion request
-    GameState.chatCompletionRequest.addMessage(msg);
-    try {
-      // Get response from GPT model
-      ChatCompletionResult chatCompletionResult = GameState.chatCompletionRequest.execute();
-      Choice result = chatCompletionResult.getChoices().iterator().next();
-
-      // Create chat message from response
-      GameState.chatCompletionRequest.addMessage(result.getChatMessage());
-      return result.getChatMessage();
-    } catch (ApiProxyException e) {
-      e.printStackTrace();
-      return null;
-    }
-  }
-
-  /**
    * Sends a message to the GPT model.
    *
    * @param event the action event triggered by the send button
@@ -310,7 +262,7 @@ public class TimemachineController {
     GameState.chatLog += "\n\n<- " + chatMessage.getContent();
 
     // Create task to run GPT model
-    Task<ChatMessage> chatTask = createTask(message);
+    Task<ChatMessage> chatTask = ChatTaskGenerator.createTask(message);
     Thread chatThread = new Thread(chatTask);
     chatThread.start();
 

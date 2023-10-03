@@ -7,7 +7,6 @@ import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,10 +26,9 @@ import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
+import nz.ac.auckland.se206.gpt.ChatTaskGenerator;
 import nz.ac.auckland.se206.gpt.GptPromptEngineering;
 import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
-import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult;
-import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 
 public class LabController {
   public static int numHints = 5;
@@ -40,6 +38,8 @@ public class LabController {
   public static Task<Void> updateChatTask;
   public static Task<ChatMessage> labIntroTask;
   public static Task<ChatMessage> labRiddleTask;
+  public static Task<Void> animateTask;
+  public static Task<Void> updateHintTask;
 
   // Initialise Timer
   private static TimerController timer = new TimerController();
@@ -105,6 +105,8 @@ public class LabController {
   private Boolean isChemicalsEnabled = false;
 
   public void initialize() throws ApiProxyException {
+    animate();
+    updateHintTask(numHints);
     // Initialise timer and bind the lblTimer to the timerController properties.
     timer = new TimerController();
     lblTimer.textProperty().bind(timer.messageProperty());
@@ -118,7 +120,7 @@ public class LabController {
     createUpdateTask();
 
     // Create task to run GPT model for intro message
-    labIntroTask = createTask(GptPromptEngineering.getLabIntro());
+    labIntroTask = ChatTaskGenerator.createTask(GptPromptEngineering.getLabIntro());
     imgScientistThinking.setVisible(true);
     typingBubble.setVisible(true);
 
@@ -275,7 +277,9 @@ public class LabController {
     }
 
     // Create task to run GPT model for riddle message
-    labRiddleTask = createTask(GptPromptEngineering.getRiddleLab(LabController.solutionColours));
+    labRiddleTask =
+        ChatTaskGenerator.createTask(
+            GptPromptEngineering.getRiddleLab(LabController.solutionColours));
     labRiddleTask.setOnSucceeded(
         e -> {
           imgScientistThinking.setVisible(false);
@@ -639,7 +643,7 @@ public class LabController {
    *
    * @param visibility whether to show or hide the chemicals
    */
-  private void enableChemicals(Boolean visibility) {
+  public void enableChemicals(Boolean visibility) {
     // Set visiblity of elements for chemical task
     chemicalBlue.setVisible(visibility);
     chemicalCyan.setVisible(visibility);
@@ -670,7 +674,8 @@ public class LabController {
     GameState.isLabResolved = true;
 
     // Create task to run GPT model for lab complete message
-    Task<ChatMessage> labCompleteTask = createTask(GptPromptEngineering.getLabComplete());
+    Task<ChatMessage> labCompleteTask =
+        ChatTaskGenerator.createTask(GptPromptEngineering.getLabComplete());
     Thread labCompleteThread = new Thread(labCompleteTask);
     labCompleteThread.start();
 
@@ -693,28 +698,6 @@ public class LabController {
     btnSwitchToTimeMachine.setDisable(false);
     startFlashingArrows();
     fadeTransitionOut();
-  }
-
-  /**
-   * Creates a task to run the LLM model on a given message to be run by background thread.
-   *
-   * @param message string to attach to message to be given to the LLM
-   */
-  private Task<ChatMessage> createTask(String message) {
-    // Create task to run GPT model
-    Task<ChatMessage> task =
-        new Task<ChatMessage>() {
-          @Override
-          protected ChatMessage call() throws Exception {
-            // Prevent user from sending further text
-            btnSend.setDisable(true);
-
-            // Run GPT model
-            ChatMessage msg = runGpt(new ChatMessage("assistant", message));
-            return msg;
-          }
-        };
-    return task;
   }
 
   /**
@@ -773,55 +756,6 @@ public class LabController {
   }
 
   /**
-   * Runs the GPT model with a given chat message.
-   *
-   * @param msg the chat message to process
-   * @return the response chat message
-   * @throws ApiProxyException if there is an error communicating with the API proxy
-   */
-  private ChatMessage runGpt(ChatMessage msg) throws ApiProxyException {
-    GameState.chatCompletionRequest.addMessage(msg);
-    try {
-      // Get response from GPT model
-      ChatCompletionResult chatCompletionResult = GameState.chatCompletionRequest.execute();
-      Choice result = chatCompletionResult.getChoices().iterator().next();
-
-      // Add response to main chat completion request
-      GameState.chatCompletionRequest.addMessage(result.getChatMessage());
-
-      // Check if users answer was correct
-      if (result.getChatMessage().getContent().startsWith("Correct")) {
-        // Show chemicals and transition
-        enableChemicals(true);
-        blurredImage.setVisible(true);
-        fadeTransition();
-      }
-
-      // Decrement hint on medium
-      if (result.getChatMessage().getContent().contains("Hint:")
-          && GameState.isDifficultyMedium == true
-          && numHints > 0) {
-        Platform.runLater(
-            () -> {
-              numHints--;
-              updateHintText(numHints);
-            });
-      }
-
-      // Prevent hints on hard and with 0 hints remaining
-      if (result.getChatMessage().getContent().contains("Hint:")
-          && (GameState.isDifficultyHard || numHints <= 0)) {
-        return new ChatMessage("assistant", "No more hints remaining...");
-      }
-
-      return result.getChatMessage();
-    } catch (ApiProxyException e) {
-      e.printStackTrace();
-      return null;
-    }
-  }
-
-  /**
    * Sends a message to the GPT model.
    *
    * @param event the action event triggered by the send button
@@ -857,7 +791,7 @@ public class LabController {
     GameState.chatLog += "\n\n<- " + chatMessage.getContent();
 
     // Create task to run GPT model
-    Task<ChatMessage> chatTask = createTask(message);
+    Task<ChatMessage> chatTask = ChatTaskGenerator.createTask(message);
     Thread chatThread = new Thread(chatTask);
     chatThread.start();
 
@@ -915,10 +849,31 @@ public class LabController {
    *
    * @param numHints the number of hints remaining
    */
-  private void updateHintText(int numHints) {
-    if (numHints >= 0) {
-      // Update number of hints to relevant number of hints
-      hintsRemaining.setText("Hints Remaining: " + String.valueOf(numHints));
-    }
+  public void updateHintTask(int numHints) {
+    updateHintTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            if (numHints >= 0) {
+              // Update number of hints to relevant number of hints
+              hintsRemaining.setText("Hints Remaining: " + String.valueOf(numHints));
+            }
+            return null;
+          }
+        };
+  }
+
+  public void animate() {
+    animateTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            enableChemicals(true);
+            blurredImage.setVisible(true);
+            fadeTransition();
+
+            return null;
+          }
+        };
   }
 }

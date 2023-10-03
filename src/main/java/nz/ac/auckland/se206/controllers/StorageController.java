@@ -26,10 +26,9 @@ import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
+import nz.ac.auckland.se206.gpt.ChatTaskGenerator;
 import nz.ac.auckland.se206.gpt.GptPromptEngineering;
 import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
-import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult;
-import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 
 public class StorageController {
   public static Task<Void> updateChatTask;
@@ -117,7 +116,7 @@ public class StorageController {
 
     createUpdateTask();
 
-    storageIntroTask = createTask(GptPromptEngineering.getStorageIntro());
+    storageIntroTask = ChatTaskGenerator.createTask(GptPromptEngineering.getStorageIntro());
 
     // Enable thinking image of scientist
     imgScientistThinking.setVisible(true);
@@ -252,7 +251,8 @@ public class StorageController {
     GameState.isStorageResolved = true;
 
     // Send complete message
-    Task<ChatMessage> storageTaskComplete = createTask(GptPromptEngineering.getStorageComplete());
+    Task<ChatMessage> storageTaskComplete =
+        ChatTaskGenerator.createTask(GptPromptEngineering.getStorageComplete());
     Thread storageThreadComplete = new Thread(storageTaskComplete);
 
     // Enable thinking animation of scientist
@@ -389,28 +389,6 @@ public class StorageController {
   }
 
   /**
-   * Creates a task to run the LLM model on a given message to be run by background thread.
-   *
-   * @param message string to attach to message to be given to the LLM
-   */
-  private Task<ChatMessage> createTask(String message) {
-    // Create task to run GPT model
-    Task<ChatMessage> task =
-        new Task<ChatMessage>() {
-          @Override
-          protected ChatMessage call() throws Exception {
-            // Prevent user from sending further text
-            btnSend.setDisable(true);
-
-            // Get response from GPT model
-            ChatMessage msg = runGpt(new ChatMessage("assistant", message));
-            return msg;
-          }
-        };
-    return task;
-  }
-
-  /**
    * Appends a chat message to the chat text area one character at a time.
    *
    * @param msg the chat message to append
@@ -466,30 +444,6 @@ public class StorageController {
   }
 
   /**
-   * Runs the GPT model with a given chat message.
-   *
-   * @param msg the chat message to process
-   * @return the response chat message
-   * @throws ApiProxyException if there is an error communicating with the API proxy
-   */
-  private ChatMessage runGpt(ChatMessage msg) throws ApiProxyException {
-    GameState.chatCompletionRequest.addMessage(msg);
-    try {
-      // Get response from GPT model
-      ChatCompletionResult chatCompletionResult = GameState.chatCompletionRequest.execute();
-      Choice result = chatCompletionResult.getChoices().iterator().next();
-
-      // Add response to main chat completion request
-      GameState.chatCompletionRequest.addMessage(result.getChatMessage());
-
-      return result.getChatMessage();
-    } catch (ApiProxyException e) {
-      e.printStackTrace();
-      return null;
-    }
-  }
-
-  /**
    * Sends a message to the GPT model.
    *
    * @param event the action event triggered by the send button
@@ -525,7 +479,7 @@ public class StorageController {
     GameState.chatLog += "\n\n<- " + chatMessage.getContent();
 
     // Create task to run GPT model
-    Task<ChatMessage> chatTask = createTask(message);
+    Task<ChatMessage> chatTask = ChatTaskGenerator.createTask(message);
     Thread chatThread = new Thread(chatTask);
     chatThread.start();
 
