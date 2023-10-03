@@ -3,10 +3,10 @@ package nz.ac.auckland.se206.controllers;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.concurrent.Task;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
@@ -64,7 +64,7 @@ public class IntroController {
    * @param event The event that triggered the function.
    */
   @FXML
-  private void onClickSkipIntro(ActionEvent event) {
+  private void onClickSkipIntro(MouseEvent event) {
     // Switch to time machine scene
     App.setUi(AppUi.TIMEMACHINE);
 
@@ -74,7 +74,7 @@ public class IntroController {
 
   /** Function to handle starting interaction with the AI. */
   @FXML
-  public void onClickPickDevice() {
+  public void onClickPickDevice(MouseEvent event) {
 
     setVisiblity(false);
 

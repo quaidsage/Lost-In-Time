@@ -21,14 +21,14 @@ public class DifficultyController {
   @FXML private Label lblSelectBoxesWarning;
 
   // Enumerations for difficulty levels
-  public enum Difficulty {
+  private enum Difficulty {
     EASY,
     MEDIUM,
     HARD
   }
 
   // Enumerations for time settings
-  public enum TimeSetting {
+  private enum TimeSetting {
     TWO,
     FOUR,
     SIX
@@ -36,7 +36,8 @@ public class DifficultyController {
 
   // Default settings and variables
   int minutes = 4;
-  boolean isDifficultyChecked, isTimeChecked = false;
+  private boolean isDifficultyChecked = false;
+  private boolean isTimeChecked = false;
 
   // Variables to track the current difficulty and time settings
   private Difficulty currentDifficulty;

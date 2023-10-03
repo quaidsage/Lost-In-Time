@@ -15,9 +15,11 @@ public class ChatTaskGenerator {
    * @param message string to attach to message to be given to the LLM
    */
   public static Task<ChatMessage> createTask(String message) {
+    // Initialise a new task for a message
     Task<ChatMessage> task =
         new Task<ChatMessage>() {
           @Override
+          // Run gpt with the message
           protected ChatMessage call() throws Exception {
             ChatMessage msg = runGpt(new ChatMessage("assistant", message));
             return msg;

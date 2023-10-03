@@ -52,17 +52,20 @@ public class TimemachineController {
   }
 
   // JavaFX elements
-  @FXML private Button btnSwitchToLab, btnSwitchToStorage, btnSend;
+  @FXML private Button btnSwitchToLab;
+  @FXML private Button btnSwitchToStorage;
+  @FXML private Button btnSend;
   @FXML private Label lblTimer;
   @FXML private TextArea chatArea;
   @FXML private TextArea chatField;
   @FXML private ImageView imgScientistThinking;
   @FXML private Rectangle rectLight;
-  @FXML private Button btnTimeMachine, btnMenu;
+  @FXML private Button btnTimeMachine;
+  @FXML private Button btnMenu;
   @FXML private ImageView typingBubble;
 
   // Initialise Variables
-  private int CHARACTER_DELAY = 5;
+  private int characterDelay = 5;
 
   public void initialize() {
     // Create task to get context from GPT model
@@ -197,9 +200,9 @@ public class TimemachineController {
     // Create a timeline and keyframes to append each character of the message to the chat text area
     Timeline timeline = new Timeline();
     if (ch.length < 100) {
-      CHARACTER_DELAY = (50 - (ch.length / 2)) + 5;
+      characterDelay = (50 - (ch.length / 2)) + 5;
     }
-    Duration delayBetweenCharacters = Duration.millis(CHARACTER_DELAY);
+    Duration delayBetweenCharacters = Duration.millis(characterDelay);
     Duration frame = delayBetweenCharacters;
     for (int i = 0; i < ch.length; i++) {
       final int I = i;
@@ -268,7 +271,9 @@ public class TimemachineController {
 
   /** Function to create an animation of the lights turning on. */
   private void animateLights() {
+    // Start animation and set the rectangle to visible
     rectLight.setVisible(true);
+    // Start a series of delays to turn the light on and off
     delay(
         500,
         () -> {
@@ -290,6 +295,7 @@ public class TimemachineController {
                             delay(
                                 100,
                                 () -> {
+                                  // Finish the animation.
                                   rectLight.setVisible(false);
                                 });
                           });

@@ -88,7 +88,7 @@ public class StorageController {
   @FXML private ImageView typingBubble;
 
   // Initialise Variables
-  private int CHARACTER_DELAY = 5;
+  private int characterDelay = 5;
   private ArrayList<Button> buttons = new ArrayList<>();
   private ArrayList<String> pattern = new ArrayList<>();
   private int patternOrder = 0;
@@ -284,9 +284,9 @@ public class StorageController {
     // Create a timeline and keyframes to append each character of the message to the chat text area
     Timeline timeline = new Timeline();
     if (ch.length < 100) {
-      CHARACTER_DELAY = (50 - (ch.length / 2)) + 5;
+      characterDelay = (50 - (ch.length / 2)) + 5;
     }
-    Duration delayBetweenCharacters = Duration.millis(CHARACTER_DELAY);
+    Duration delayBetweenCharacters = Duration.millis(characterDelay);
     Duration frame = delayBetweenCharacters;
     for (int i = 0; i < ch.length; i++) {
       final int I = i;
