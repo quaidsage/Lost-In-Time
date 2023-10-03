@@ -91,8 +91,7 @@ public class TimemachineController {
   private void onClickLab(ActionEvent event) {
     if (!GameState.isLabVisited) {
       GameState.isLabVisited = true;
-      Thread labIntroThread = new Thread(LabController.labIntroTask);
-      labIntroThread.start();
+      new Thread(LabController.labIntroTask).start();
     }
     App.setUi(AppUi.LAB);
   }
@@ -157,7 +156,7 @@ public class TimemachineController {
     }
 
     // Update chat with user message
-    updateChat("<- ", new ChatMessage("user", message));
+    updateChat("\n\n<- ", new ChatMessage("user", message));
 
     // Create task to run GPT model for response
     Task<ChatMessage> chatTask = ChatTaskGenerator.createTask(message);
@@ -167,7 +166,7 @@ public class TimemachineController {
     chatTask.setOnSucceeded(
         e -> {
           setThinkingAnimation(false);
-          updateChat("-> ", chatTask.getValue());
+          updateChat("\n\n-> ", chatTask.getValue());
         });
   }
 
@@ -237,7 +236,7 @@ public class TimemachineController {
    */
   private void updateChat(String indent, ChatMessage chatMessage) {
     // Add to chat log
-    GameState.chatLog = indent + chatMessage.getContent();
+    GameState.chatLog += indent + chatMessage.getContent();
 
     // Append to chat area
     chatArea.appendText(indent);
