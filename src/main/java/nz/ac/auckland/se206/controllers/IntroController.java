@@ -64,7 +64,7 @@ public class IntroController {
    * @param event The event that triggered the function.
    */
   @FXML
-  public void onClickSkipIntro(ActionEvent event) {
+  private void onClickSkipIntro(ActionEvent event) {
     // Switch to time machine scene
     App.setUi(AppUi.TIMEMACHINE);
 

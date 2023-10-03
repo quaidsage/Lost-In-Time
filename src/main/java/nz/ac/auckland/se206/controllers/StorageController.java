@@ -135,7 +135,7 @@ public class StorageController {
    * @param event the action event triggered by the button press
    */
   @FXML
-  void onClickPanel(ActionEvent event) {
+  private void onClickPanel(ActionEvent event) {
     if (buttonsDisabled) {
       return; // Ignore clicks while buttons are disabled
     }
@@ -167,7 +167,7 @@ public class StorageController {
    * @param event the action event triggered by the start button
    */
   @FXML
-  void onClickStartMemoryGame(ActionEvent event) {
+  private void onClickStartMemoryGame(ActionEvent event) {
     // Clear pattern and text for new game
     pattern.clear();
     text.setText("Current Streak: ");
