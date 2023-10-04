@@ -46,7 +46,7 @@ public class LabController {
   private static TimerController timer = new TimerController();
 
   /**
-   * Function to start timer
+   * Function to start the scenes timer when the game is started.
    *
    * @param minutes the number of minutes to set the timer to.
    */
@@ -105,6 +105,11 @@ public class LabController {
   private Boolean[] isChemicalSolution = {false, false, false, false, false, false, false};
   private Boolean isChemicalsEnabled = false;
 
+  /**
+   * Initialise the scene with the specific settings.
+   * 
+   * @throws ApiProxyException if there is a problem with the API proxy.
+   */
   public void initialize() throws ApiProxyException {
     // Initialise timer and bind the lblTimer to the timerController properties.
     timer = new TimerController();
@@ -628,21 +633,21 @@ public class LabController {
   private void chemAnimate(int color, Boolean show) {
     // Animate appropriate arrows
     if (show) {
-        moveArrowsIn( // Animate arrow moving inwards
-            arrowCollection.get(color),
-            arrowCollection.get(color + 7),
-            arrowAnimationSpeed,
-            arrowAnimationDistance
-        );
+      moveArrowsIn(
+        arrowCollection.get(color),
+        arrowCollection.get(color + 7),
+        arrowAnimationSpeed,
+        arrowAnimationDistance
+      );
     } else {
-        moveArrowsOut( // Animate arrow moving outwards
-            arrowCollection.get(color),
-            arrowCollection.get(color + 7),
-            arrowAnimationSpeed,
-            -arrowAnimationDistance
-        );
+      moveArrowsOut( // Animate arrow moving outwards
+        arrowCollection.get(color),
+        arrowCollection.get(color + 7),
+        arrowAnimationSpeed,
+        -arrowAnimationDistance
+      );
     }
-}
+  }
 
   /**
    * Function to fade in a given element.
