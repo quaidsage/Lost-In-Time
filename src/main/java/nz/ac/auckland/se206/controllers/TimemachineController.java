@@ -22,7 +22,7 @@ import nz.ac.auckland.se206.gpt.ChatTaskGenerator;
 import nz.ac.auckland.se206.gpt.GptPromptEngineering;
 import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
 
-/** A controller class for the time machine scene */
+/** A controller class for the time machine scene. */
 public class TimemachineController {
   public static Task<ChatMessage> contextTask;
   public static Task<Void> updateChatTask;
@@ -68,7 +68,7 @@ public class TimemachineController {
   // Initialise Variables
   private int characterDelay = 5;
 
-  /** Carries out specific tasks required when opening the scene */
+  /** Carries out specific tasks required when opening the scene. */
   public void initialize() {
     // Create task to get context from GPT model
     setThinkingAnimation(true);
@@ -102,7 +102,7 @@ public class TimemachineController {
   }
 
   /**
-   * Change scene to storage.
+   * Change scene to storage without resetting any scenes.
    *
    * @param event the action event triggered by the send button
    */
@@ -306,7 +306,7 @@ public class TimemachineController {
         });
   }
 
-  /** Function to create tasks to update elements outside class controller */
+  /** Function to create tasks to update elements outside class controller. */
   private void initialiseTasks() {
     // Create task to update chat area for this scene
     createUpdateTask();

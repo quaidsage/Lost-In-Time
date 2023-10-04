@@ -47,7 +47,7 @@ public class IntroController {
         + " courageous compatriot!"
   };
 
-  /** Initialise the introduction scene with specific settings */
+  /** Initialise the introduction scene with specific settings. */
   public void initialize() {
     // Form the introduction message
     msg =

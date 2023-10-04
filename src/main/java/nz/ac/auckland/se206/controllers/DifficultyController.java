@@ -11,16 +11,6 @@ import nz.ac.auckland.se206.SceneManager.AppUi;
 
 /** A controller class for the difficulty selection scene. */
 public class DifficultyController {
-  // Define FXML elements
-  @FXML private Button btnSwitchToTimeMachine;
-  @FXML private CheckBox chkbxEasy;
-  @FXML private CheckBox chkbxMedium;
-  @FXML private CheckBox chkbxHard;
-  @FXML private CheckBox chkbxTwoMins;
-  @FXML private CheckBox chkbxFourMins;
-  @FXML private CheckBox chkbxSixMins;
-  @FXML private Label lblSelectBoxesWarning;
-
   // Enumerations for difficulty levels
   private enum Difficulty {
     EASY,
@@ -34,6 +24,17 @@ public class DifficultyController {
     FOUR,
     SIX
   }
+
+  // Define FXML elements
+  @FXML private Button btnSwitchToTimeMachine;
+  @FXML private CheckBox chkbxEasy;
+  @FXML private CheckBox chkbxMedium;
+  @FXML private CheckBox chkbxHard;
+  @FXML private CheckBox chkbxTwoMins;
+  @FXML private CheckBox chkbxFourMins;
+  @FXML private CheckBox chkbxSixMins;
+  @FXML private Label lblSelectBoxesWarning;
+  
 
   // Default settings and variables
   private int minutes = 4;

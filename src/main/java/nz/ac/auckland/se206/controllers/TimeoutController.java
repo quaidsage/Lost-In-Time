@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.SceneManager;
 
-/** A class to control the scene in event of a timeout in the game */
+/** A class to control the scene in event of a timeout in the game. */
 public class TimeoutController {
 
   @FXML private Button btnMenu;

@@ -11,7 +11,7 @@ public class GptPromptEngineering {
 
   /**
    * Generates a GPT prompt engineering string for a riddle with the given word.
-   *
+   * 
    * @param wordToGuess the word to be guessed in the riddle
    * @return the generated prompt engineering string
    */
@@ -49,7 +49,7 @@ public class GptPromptEngineering {
 
   /**
    * Function to generate the riddle for the labratory task.
-   *
+   * 
    * @param solutionColours the colours of the chemicals that the user must combine
    * @return the generated prompt engineering string
    */
