@@ -2,6 +2,7 @@ package nz.ac.auckland.se206.gpt;
 
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.scene.control.TextArea;
 import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.controllers.LabController;
 import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
@@ -75,5 +76,17 @@ public class ChatTaskGenerator {
       e.printStackTrace();
       return null;
     }
+  }
+
+  public static String getUserMessage(TextArea chatField) {
+    // Get the text from the chat area and clear it
+    String message = chatField.getText();
+    chatField.clear();
+
+    // Check if message is empty
+    if (message.trim().isEmpty()) {
+      return null;
+    }
+    return message;
   }
 }

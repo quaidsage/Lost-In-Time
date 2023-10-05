@@ -236,28 +236,17 @@ public class StorageController {
    */
   @FXML
   private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
-    // Get message from chat field
-    String message = chatField.getText();
-    chatField.clear();
+    String userMessage = ChatTaskGenerator.getUserMessage(chatField);
+    updateChat("\n\n<- ", new ChatMessage("user", userMessage));
 
-    // Check if message is empty
-    if (message.trim().isEmpty()) {
-      System.out.println("message is empty");
-      return;
-    }
-
-    // Add users message to chat area, chat log, and other scenes
-    updateChat("\n\n<- ", new ChatMessage("user", message));
-
-    // Get response for users message from GPT model
-    Task<ChatMessage> chatTask = ChatTaskGenerator.createTask(message);
-    new Thread(chatTask).start();
+    Task<ChatMessage> aiResponseTask = ChatTaskGenerator.createTask(userMessage);
+    new Thread(aiResponseTask).start();
 
     setThinkingAnimation(true);
-    chatTask.setOnSucceeded(
+    aiResponseTask.setOnSucceeded(
         e -> {
           setThinkingAnimation(false);
-          updateChat("\n\n-> ", chatTask.getValue());
+          updateChat("\n\n-> ", aiResponseTask.getValue());
         });
   }
 
