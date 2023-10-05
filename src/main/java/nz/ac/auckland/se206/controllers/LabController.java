@@ -23,7 +23,6 @@ import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.Delay;
 import nz.ac.auckland.se206.GameState;
-import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
 import nz.ac.auckland.se206.gpt.ChatTaskGenerator;
@@ -107,7 +106,7 @@ public class LabController {
 
   /**
    * Initialise the scene with the specific settings.
-   * 
+   *
    * @throws ApiProxyException if there is a problem with the API proxy.
    */
   public void initialize() throws ApiProxyException {
@@ -164,7 +163,6 @@ public class LabController {
   @FXML
   private void onClickReturn(ActionEvent event) throws IOException {
     App.setRoot("mainmenu");
-    SceneManager.clearAllScenesExceptMainMenu();
   }
 
   /**
@@ -634,18 +632,16 @@ public class LabController {
     // Animate appropriate arrows
     if (show) {
       moveArrowsIn(
-        arrowCollection.get(color),
-        arrowCollection.get(color + 7),
-        arrowAnimationSpeed,
-        arrowAnimationDistance
-      );
+          arrowCollection.get(color),
+          arrowCollection.get(color + 7),
+          arrowAnimationSpeed,
+          arrowAnimationDistance);
     } else {
       moveArrowsOut( // Animate arrow moving outwards
-        arrowCollection.get(color),
-        arrowCollection.get(color + 7),
-        arrowAnimationSpeed,
-        -arrowAnimationDistance
-      );
+          arrowCollection.get(color),
+          arrowCollection.get(color + 7),
+          arrowAnimationSpeed,
+          -arrowAnimationDistance);
     }
   }
 
