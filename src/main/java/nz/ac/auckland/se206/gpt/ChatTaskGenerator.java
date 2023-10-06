@@ -1,8 +1,11 @@
 package nz.ac.auckland.se206.gpt;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.control.TextArea;
+import javafx.util.Duration;
 import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.controllers.LabController;
 import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
@@ -11,6 +14,8 @@ import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 
 /** A class to generate a chat task. This class is used by many scenes within the game. */
 public class ChatTaskGenerator {
+  static int characterDelay = 5;
+
   /**
    * Creates a task to run the LLM model on a given message to be run by background thread.
    *
@@ -88,5 +93,53 @@ public class ChatTaskGenerator {
       return null;
     }
     return message;
+  }
+
+  /**
+   * Creates a task to generate a timeline to append text character by character to given chat area.
+   *
+   * @param msg the chat message to append
+   * @param chatArea the chat area to append the message to
+   * @return the timeline task
+   */
+  public static Task<Timeline> createMessageTimeline(ChatMessage msg, TextArea chatArea) {
+    // Convert from ChatMessage to char array
+    char[] ch = msg.getContent().toCharArray();
+
+    Task<Timeline> timelineTask =
+        new Task<Timeline>() {
+          @Override
+          protected Timeline call() throws Exception {
+            // Create a timeline and keyframes to append each character of the message to the chat
+            // text area
+            Timeline timeline = new Timeline();
+            if (ch.length < 100) {
+              characterDelay = (50 - (ch.length / 2)) + 5;
+            } else {
+              characterDelay = 5;
+            }
+
+            // Set duration between each character
+            Duration delayBetweenCharacters = Duration.millis(characterDelay);
+            Duration frame = delayBetweenCharacters;
+
+            // Add keyframes for each character
+            for (int i = 0; i < ch.length; i++) {
+              final int I = i;
+              KeyFrame keyFrame =
+                  new KeyFrame(
+                      frame,
+                      event -> {
+                        chatArea.appendText(String.valueOf(ch[I]));
+                      });
+              timeline.getKeyFrames().add(keyFrame);
+              frame = frame.add(delayBetweenCharacters);
+            }
+
+            return timeline;
+          }
+        };
+
+    return timelineTask;
   }
 }
