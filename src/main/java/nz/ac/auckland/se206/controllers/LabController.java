@@ -34,7 +34,6 @@ public class LabController {
   public static ArrayList<Integer> solutionColours;
 
   // Fields related to Task
-  public static Task<Void> updateChatTask;
   public static Task<ChatMessage> labIntroTask;
   public static Task<ChatMessage> labRiddleTask;
   public static Task<Void> animateTask;
@@ -117,6 +116,9 @@ public class LabController {
           timer.reset();
         });
 
+    // Set chat area
+    ChatTaskGenerator.labChatArea = chatArea;
+
     // Create task to run GPT model for intro message
     labIntroTask = ChatTaskGenerator.createTask(GptPromptEngineering.getLabIntro());
     setThinkingAnimation(true);
@@ -150,6 +152,7 @@ public class LabController {
    */
   @FXML
   private void onClickTimeMachineRoom(ActionEvent event) {
+    new Thread(ChatTaskGenerator.createUpdateTask("timemachine")).start();
     App.setUi(AppUi.TIMEMACHINE);
   }
 
@@ -385,35 +388,12 @@ public class LabController {
     // Append to chat area
     chatArea.appendText(indent);
     appendChatMessage(chatMessage);
-
-    // Update chat area in other scenes
-    new Thread(TimemachineController.updateChatTask).start();
-    new Thread(StorageController.updateChatTask).start();
   }
 
   /** Function to initalise the relevant tasks for scene. */
   private void initialiseTasks() {
-    createUpdateTask();
     createAnimateTask();
     updateHintTask(numHints);
-  }
-
-  /** Function to create task to update chat area for scene. */
-  public void createUpdateTask() {
-    // Create task to update chat area with chat log
-    updateChatTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            // Update the scenes chat area
-            chatArea.setText(GameState.chatLog);
-            chatArea.appendText("");
-
-            // Remake task for next call
-            createUpdateTask();
-            return null;
-          }
-        };
   }
 
   /**

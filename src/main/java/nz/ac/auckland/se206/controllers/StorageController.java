@@ -31,7 +31,6 @@ import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
 
 /** A controller class for the storage scene. */
 public class StorageController {
-  public static Task<Void> updateChatTask;
   public static Task<ChatMessage> storageIntroTask;
 
   // Initialise Timer
@@ -117,7 +116,8 @@ public class StorageController {
           lblTimer.setText("0:00");
         });
 
-    createUpdateTask();
+    // Set chat area
+    ChatTaskGenerator.storageChatArea = chatArea;
 
     // Get introduction message on first visit of storage room
     storageIntroTask = ChatTaskGenerator.createTask(GptPromptEngineering.getStorageIntro());
@@ -193,6 +193,7 @@ public class StorageController {
    */
   @FXML
   private void onClickTimeMachineRoom(ActionEvent event) {
+    new Thread(ChatTaskGenerator.createUpdateTask("timemachine")).start();
     App.setUi(AppUi.TIMEMACHINE);
   }
 
@@ -276,24 +277,6 @@ public class StorageController {
         });
   }
 
-  /** Function to create task to update chat area for scene. */
-  public void createUpdateTask() {
-    // Create task to append chat log to chat area
-    updateChatTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            // Append chat log to chat area
-            chatArea.setText(GameState.chatLog);
-            chatArea.appendText("");
-
-            // Create new task to update chat area
-            createUpdateTask();
-            return null;
-          }
-        };
-  }
-
   /**
    * Show/hide the thinking animation of scientist.
    *
@@ -318,10 +301,6 @@ public class StorageController {
     // Append to chat area
     chatArea.appendText(indent);
     appendChatMessage(chatMessage);
-
-    // Update chat area in other scenes
-    new Thread(LabController.updateChatTask).start();
-    new Thread(TimemachineController.updateChatTask).start();
   }
 
   /** Function to handle when the user wins the minigame. */

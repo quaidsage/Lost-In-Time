@@ -22,7 +22,6 @@ import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
 /** A controller class for the time machine scene. */
 public class TimemachineController {
   public static Task<ChatMessage> contextTask;
-  public static Task<Void> updateChatTask;
   public static ChatMessage chatTaskValue;
   public static Task<Void> startTask;
   private static TimerController timer = new TimerController();
@@ -92,6 +91,7 @@ public class TimemachineController {
       GameState.isLabVisited = true;
       new Thread(LabController.labIntroTask).start();
     }
+    new Thread(ChatTaskGenerator.createUpdateTask("lab")).start();
     App.setUi(AppUi.LAB);
   }
 
@@ -107,6 +107,7 @@ public class TimemachineController {
       Thread storageIntroThread = new Thread(StorageController.storageIntroTask);
       storageIntroThread.start();
     }
+    new Thread(ChatTaskGenerator.createUpdateTask("storage")).start();
     App.setUi(AppUi.STORAGE);
   }
 
@@ -208,10 +209,6 @@ public class TimemachineController {
     // Append to chat area
     chatArea.appendText(indent);
     appendChatMessage(chatMessage);
-
-    // Update chat area in other scenes
-    new Thread(LabController.updateChatTask).start();
-    new Thread(StorageController.updateChatTask).start();
   }
 
   /** Function to animate the start of the round. */
@@ -272,8 +269,8 @@ public class TimemachineController {
 
   /** Function to create tasks to update elements outside class controller. */
   private void initialiseTasks() {
-    // Create task to update chat area for this scene
-    createUpdateTask();
+    // Set chat area
+    ChatTaskGenerator.timemachineChatArea = chatArea;
 
     // Create task to start round
     startTask =
@@ -281,24 +278,6 @@ public class TimemachineController {
           @Override
           protected Void call() throws Exception {
             startRound();
-            return null;
-          }
-        };
-  }
-
-  /** Function to create task to update chat area for scene. */
-  public void createUpdateTask() {
-    // Create task to update chat area
-    updateChatTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            // Update chat area with chat log
-            chatArea.setText(GameState.chatLog);
-            chatArea.appendText("");
-
-            // Create new task for next update of chat area
-            createUpdateTask();
             return null;
           }
         };

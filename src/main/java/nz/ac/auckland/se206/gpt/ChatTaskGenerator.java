@@ -15,6 +15,10 @@ import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 /** A class to generate a chat task. This class is used by many scenes within the game. */
 public class ChatTaskGenerator {
   static int characterDelay = 5;
+  static TextArea chatArea;
+  public static TextArea labChatArea;
+  public static TextArea storageChatArea;
+  public static TextArea timemachineChatArea;
 
   /**
    * Creates a task to run the LLM model on a given message to be run by background thread.
@@ -141,5 +145,31 @@ public class ChatTaskGenerator {
         };
 
     return timelineTask;
+  }
+
+  /** Function to create task to update chat area for scene. */
+  public static Task<Void> createUpdateTask(String scene) {
+    if (scene == "lab") {
+      chatArea = labChatArea;
+    } else if (scene == "storage") {
+      chatArea = storageChatArea;
+    } else if (scene == "timemachine") {
+      chatArea = timemachineChatArea;
+    } else {
+      System.out.println("BAD");
+    }
+    // Create task to append chat log to chat area
+    Task<Void> updateChatTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            // Append chat log to chat area
+            chatArea.setText(GameState.chatLog);
+            chatArea.appendText("");
+
+            return null;
+          }
+        };
+    return updateChatTask;
   }
 }
