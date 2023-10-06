@@ -319,28 +319,20 @@ public class LabController {
    */
   @FXML
   private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
-    // Get message from chat field
-    String message = chatField.getText();
-    chatField.clear();
+    // Get user message and update chat with user message
+    String userMessage = ChatTaskGenerator.getUserMessage(chatField);
+    updateChat("\n\n<- ", new ChatMessage("user", userMessage));
 
-    // Check if message is empty
-    if (message.trim().isEmpty()) {
-      System.out.println("message is empty");
-      return;
-    }
-
-    // Update chat area with user message
-    updateChat("\n\n<- ", new ChatMessage("user", message));
-
-    // Get response from GPT model
-    Task<ChatMessage> chatTask = ChatTaskGenerator.createTask(message);
-    new Thread(chatTask).start();
-
+    // Create task to run GPT model for AI response
+    Task<ChatMessage> aiResponseTask = ChatTaskGenerator.createTask(userMessage);
+    new Thread(aiResponseTask).start();
     setThinkingAnimation(true);
-    chatTask.setOnSucceeded(
+
+    aiResponseTask.setOnSucceeded(
         e -> {
+          // Update chat with AI response
           setThinkingAnimation(false);
-          updateChat("\n\n-> ", chatTask.getValue());
+          updateChat("\n\n-> ", aiResponseTask.getValue());
         });
   }
 

@@ -236,15 +236,18 @@ public class StorageController {
    */
   @FXML
   private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
+    // Get user message and update chat with user message
     String userMessage = ChatTaskGenerator.getUserMessage(chatField);
     updateChat("\n\n<- ", new ChatMessage("user", userMessage));
 
+    // Create task to run GPT model for AI response
     Task<ChatMessage> aiResponseTask = ChatTaskGenerator.createTask(userMessage);
     new Thread(aiResponseTask).start();
-
     setThinkingAnimation(true);
+
     aiResponseTask.setOnSucceeded(
         e -> {
+          // Update chat with AI response
           setThinkingAnimation(false);
           updateChat("\n\n-> ", aiResponseTask.getValue());
         });
