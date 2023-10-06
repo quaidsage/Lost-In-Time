@@ -107,7 +107,7 @@ public class LabController {
 
   /**
    * Initialise the scene with the specific settings.
-   * 
+   *
    * @throws ApiProxyException if there is a problem with the API proxy.
    */
   public void initialize() throws ApiProxyException {
@@ -634,18 +634,16 @@ public class LabController {
     // Animate appropriate arrows
     if (show) {
       moveArrowsIn(
-        arrowCollection.get(color),
-        arrowCollection.get(color + 7),
-        arrowAnimationSpeed,
-        arrowAnimationDistance
-      );
+          arrowCollection.get(color),
+          arrowCollection.get(color + 7),
+          arrowAnimationSpeed,
+          arrowAnimationDistance);
     } else {
       moveArrowsOut( // Animate arrow moving outwards
-        arrowCollection.get(color),
-        arrowCollection.get(color + 7),
-        arrowAnimationSpeed,
-        -arrowAnimationDistance
-      );
+          arrowCollection.get(color),
+          arrowCollection.get(color + 7),
+          arrowAnimationSpeed,
+          -arrowAnimationDistance);
     }
   }
 
