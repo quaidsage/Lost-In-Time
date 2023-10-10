@@ -6,7 +6,9 @@ import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
 import javafx.util.Duration;
+import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.controllers.LabController;
 import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
@@ -15,11 +17,17 @@ import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 
 /** A class to generate a chat task. This class is used by many scenes within the game. */
 public class ChatTaskGenerator {
+  static String currentScene;
   static int characterDelay = 5;
   static TextArea chatArea;
+  static ImageView imgScientistThinking;
+  static ImageView typingBubble;
   public static TextArea labChatArea;
   public static TextArea storageChatArea;
   public static TextArea timemachineChatArea;
+  public static ImageView[] labScientistImages;
+  public static ImageView[] storageScientistImages;
+  public static ImageView[] timemachineScientistImages;
 
   /**
    * Creates a task to run the LLM model on a given message to be run by background thread.
@@ -50,6 +58,9 @@ public class ChatTaskGenerator {
   private static ChatMessage runGpt(ChatMessage msg) throws ApiProxyException {
     // Append to main game chat completion request
     GameState.chatCompletionRequest.addMessage(msg);
+
+    // Enable thinking animation
+    setThinkingAnimation(true);
 
     try {
       // Get response from GPT model
@@ -88,6 +99,12 @@ public class ChatTaskGenerator {
     }
   }
 
+  /**
+   * Function to retrieve the message the user intends to send from text input.
+   *
+   * @param chatField the text input field
+   * @return the message the user intends to send
+   */
   public static String getUserMessage(TextArea chatField) {
     // Get the text from the chat area and clear it
     String message = chatField.getText();
@@ -97,6 +114,7 @@ public class ChatTaskGenerator {
     if (message.trim().isEmpty()) {
       return null;
     }
+
     return message;
   }
 
@@ -180,23 +198,16 @@ public class ChatTaskGenerator {
    * @param indent the indent of the message
    * @param chatMessage the chat message to update
    */
-  public static Task<Void> updateChat(
-      TextArea chatArea, String indent, ChatMessage msg, Button btnSend) {
-    Task<Void> updateChatTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            // Add to chat log
-            GameState.chatLog += indent + msg.getContent();
+  public static void updateChat(TextArea chatArea, String indent, ChatMessage msg, Button btnSend) {
+    // Disable thinking animation
+    setThinkingAnimation(false);
 
-            // Append to chat area
-            chatArea.appendText(indent);
-            appendChatMessage(chatArea, msg, btnSend);
+    // Add to chat log
+    GameState.chatLog += indent + msg.getContent();
 
-            return null;
-          }
-        };
-    return updateChatTask;
+    // Append indentation to chat area.
+    chatArea.appendText(indent);
+    appendChatMessage(chatArea, msg, btnSend);
   }
 
   /**
@@ -221,5 +232,27 @@ public class ChatTaskGenerator {
                 btnSend.setDisable(false);
               });
         });
+  }
+
+  /**
+   * Show/hide the thinking animation of scientist.
+   *
+   * @param isThinking whether the scientist is thinking
+   */
+  public static void setThinkingAnimation(Boolean isThinking) {
+    String scene = App.getUi();
+    if (scene == "lab") {
+      imgScientistThinking = labScientistImages[0];
+      typingBubble = labScientistImages[1];
+    } else if (scene == "storage") {
+      imgScientistThinking = storageScientistImages[0];
+      typingBubble = storageScientistImages[1];
+    } else if (scene == "timemachine") {
+      imgScientistThinking = timemachineScientistImages[0];
+      typingBubble = timemachineScientistImages[1];
+    }
+    // Toggle visibility of scientist thinking animation
+    imgScientistThinking.setVisible(isThinking);
+    typingBubble.setVisible(isThinking);
   }
 }

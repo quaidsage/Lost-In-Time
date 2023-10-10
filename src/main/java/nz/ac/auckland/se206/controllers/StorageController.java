@@ -119,6 +119,9 @@ public class StorageController {
     // Set chat area
     ChatTaskGenerator.storageChatArea = chatArea;
 
+    // Set animation images
+    ChatTaskGenerator.storageScientistImages = new ImageView[] {imgScientistThinking, typingBubble};
+
     // Get introduction message on first visit of storage room
     storageIntroTask = ChatTaskGenerator.createTask(GptPromptEngineering.getStorageIntro());
     setThinkingAnimation(true);

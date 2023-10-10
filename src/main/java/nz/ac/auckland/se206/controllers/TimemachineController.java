@@ -62,23 +62,23 @@ public class TimemachineController {
 
   /** Carries out specific tasks required when opening the scene. */
   public void initialize() {
-    // Create task to get context from GPT model
+    // Generate ai response for the context of the game
     contextTask = ChatTaskGenerator.createTask(GptPromptEngineering.getContext());
     contextTask.setOnSucceeded(
         e -> {
-          System.out.println(contextTask.getValue().getContent());
+          ChatTaskGenerator.updateChat(chatArea, "-> ", contextTask.getValue(), btnSend);
         });
     new Thread(contextTask).start();
 
+    // Initialise timer and bind the lblTimer to the timerController properties.
     timer = new TimerController();
-    // Bind the lblTimer to the timerController properties.
     lblTimer.textProperty().bind(timer.messageProperty());
     timer.setOnSucceeded(
         e -> {
-          // Add code here to implement the loss of the game
           lblTimer.setText("0:00");
         });
 
+    // Initialise relevant tasks
     initialiseTasks();
   }
 
@@ -106,8 +106,7 @@ public class TimemachineController {
   private void onClickStorage(ActionEvent event) {
     if (!GameState.isStorageVisited) {
       GameState.isStorageVisited = true;
-      Thread storageIntroThread = new Thread(StorageController.storageIntroTask);
-      storageIntroThread.start();
+      new Thread(StorageController.storageIntroTask).start();
     }
     new Thread(ChatTaskGenerator.createUpdateTask("storage")).start();
     App.setUi(AppUi.STORAGE);
@@ -148,36 +147,16 @@ public class TimemachineController {
   private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
     // Get user message and update chat with user message
     String userMessage = ChatTaskGenerator.getUserMessage(chatField);
-    new Thread(
-            ChatTaskGenerator.updateChat(
-                chatArea, "\n\n<- ", new ChatMessage("user", userMessage), btnSend))
-        .start();
+    ChatTaskGenerator.updateChat(
+        chatArea, "\n\n<- ", new ChatMessage("user", userMessage), btnSend);
 
     // Create task to run GPT model for AI response
     Task<ChatMessage> aiResponseTask = ChatTaskGenerator.createTask(userMessage);
-    new Thread(aiResponseTask).start();
-    setThinkingAnimation(true);
-
     aiResponseTask.setOnSucceeded(
         e -> {
-          // Update chat with AI response
-          setThinkingAnimation(false);
-          new Thread(
-                  ChatTaskGenerator.updateChat(
-                      chatArea, "\n\n-> ", aiResponseTask.getValue(), btnSend))
-              .start();
+          ChatTaskGenerator.updateChat(chatArea, "\n\n-> ", aiResponseTask.getValue(), btnSend);
         });
-  }
-
-  /**
-   * Show/hide the thinking animation of scientist.
-   *
-   * @param isThinking whether the scientist is thinking
-   */
-  public void setThinkingAnimation(Boolean isThinking) {
-    // Enable thinking image of scientist
-    imgScientistThinking.setVisible(isThinking);
-    typingBubble.setVisible(isThinking);
+    new Thread(aiResponseTask).start();
   }
 
   /** Function to animate the start of the round. */
@@ -233,6 +212,8 @@ public class TimemachineController {
   private void initialiseTasks() {
     // Set chat area
     ChatTaskGenerator.timemachineChatArea = chatArea;
+    ChatTaskGenerator.timemachineScientistImages =
+        new ImageView[] {imgScientistThinking, typingBubble};
 
     // Create task to start round
     startTask =
