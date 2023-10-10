@@ -114,18 +114,11 @@ public class LabController {
           timer.reset();
         });
 
-    // Set chat area
-    ChatTaskGenerator.labChatArea = chatArea;
-
-    // Set thinking animation
-    ChatTaskGenerator.thinkingAnimationImages.add(imgScientistThinking);
-    ChatTaskGenerator.thinkingAnimationImages.add(typingBubble);
-
     // Create task to run GPT model for intro message
     labIntroTask = ChatTaskGenerator.createTask(GptPromptEngineering.getLabIntro());
     labIntroTask.setOnSucceeded(
         e -> {
-          ChatTaskGenerator.updateChat(chatArea, "\n\n-> ", labIntroTask.getValue(), btnSend);
+          ChatTaskGenerator.updateChat("\n\n-> ", labIntroTask.getValue());
           chemicalGeneral.setVisible(true);
         });
 
@@ -154,7 +147,6 @@ public class LabController {
   @FXML
   private void onClickTimeMachineRoom(ActionEvent event) {
     App.setUi(AppUi.TIMEMACHINE);
-    new Thread(ChatTaskGenerator.createUpdateTask("timemachine")).start();
   }
 
   /**
@@ -198,7 +190,7 @@ public class LabController {
     new Thread(labRiddleTask).start();
     labRiddleTask.setOnSucceeded(
         e -> {
-          ChatTaskGenerator.updateChat(chatArea, "\n\n-> ", labRiddleTask.getValue(), btnSend);
+          ChatTaskGenerator.updateChat("\n\n-> ", labRiddleTask.getValue());
         });
   }
 
@@ -321,20 +313,30 @@ public class LabController {
   private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
     // Get user message and update chat with user message
     String userMessage = ChatTaskGenerator.getUserMessage(chatField);
-    ChatTaskGenerator.updateChat(
-        chatArea, "\n\n<- ", new ChatMessage("user", userMessage), btnSend);
+    ChatTaskGenerator.updateChat("\n\n<- ", new ChatMessage("user", userMessage));
 
     // Create task to run GPT model for AI response
     Task<ChatMessage> aiResponseTask = ChatTaskGenerator.createTask(userMessage);
     aiResponseTask.setOnSucceeded(
         e -> {
-          ChatTaskGenerator.updateChat(chatArea, "\n\n-> ", aiResponseTask.getValue(), btnSend);
+          ChatTaskGenerator.updateChat("\n\n-> ", aiResponseTask.getValue());
         });
     new Thread(aiResponseTask).start();
   }
 
   /** Function to initalise the relevant tasks for scene. */
   private void initialiseTasks() {
+    // Set chat area
+    ChatTaskGenerator.chatAreas.add(chatArea);
+
+    // Set send button
+    ChatTaskGenerator.sendButtons.add(btnSend);
+
+    // Set thinking animation
+    ChatTaskGenerator.thinkingAnimationImages.add(imgScientistThinking);
+    ChatTaskGenerator.thinkingAnimationImages.add(typingBubble);
+
+    // Create tasks for animation and updating hint label
     createAnimateTask();
     updateHintTask(numHints);
   }
@@ -479,7 +481,7 @@ public class LabController {
 
     labCompleteTask.setOnSucceeded(
         e -> {
-          ChatTaskGenerator.updateChat(chatArea, "\n\n-> ", labCompleteTask.getValue(), btnSend);
+          ChatTaskGenerator.updateChat("\n\n-> ", labCompleteTask.getValue());
         });
 
     baseImage.setVisible(true);

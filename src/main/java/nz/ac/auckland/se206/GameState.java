@@ -30,9 +30,6 @@ public class GameState {
   /** Current text to speech for game. */
   public static TextToSpeech txtToSpeech;
 
-  /** Current chat log for the game. */
-  public static String chatLog = "";
-
   /** Main AI Core. */
   public static ChatCompletionRequest chatCompletionRequest;
 

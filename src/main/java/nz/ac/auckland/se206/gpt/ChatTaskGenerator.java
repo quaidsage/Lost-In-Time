@@ -17,15 +17,13 @@ import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 
 /** A class to generate a chat task. This class is used by many scenes within the game. */
 public class ChatTaskGenerator {
-  static String currentScene;
   static int characterDelay = 5;
   static TextArea chatArea;
   static ImageView imgScientistThinking;
   static ImageView typingBubble;
-  public static TextArea labChatArea;
-  public static TextArea storageChatArea;
-  public static TextArea timemachineChatArea;
+  public static ArrayList<TextArea> chatAreas = new ArrayList<TextArea>();
   public static ArrayList<ImageView> thinkingAnimationImages = new ArrayList<ImageView>();
+  public static ArrayList<Button> sendButtons = new ArrayList<Button>();
 
   /**
    * Creates a task to run the LLM model on a given message to be run by background thread.
@@ -164,48 +162,23 @@ public class ChatTaskGenerator {
     return timelineTask;
   }
 
-  /** Function to create task to update chat area for scene. */
-  public static Task<Void> createUpdateTask(String scene) {
-    if (scene == "lab") {
-      chatArea = labChatArea;
-    } else if (scene == "storage") {
-      chatArea = storageChatArea;
-    } else if (scene == "timemachine") {
-      chatArea = timemachineChatArea;
-    } else {
-      System.out.println("BAD");
-    }
-    // Create task to append chat log to chat area
-    Task<Void> updateChatTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            // Append chat log to chat area
-            chatArea.setText(GameState.chatLog);
-            chatArea.appendText("");
-
-            return null;
-          }
-        };
-    return updateChatTask;
-  }
-
   /**
-   * Function to update chatlog, current scene chat area, and chat areas of other scenes.
+   * Function to disable relevant elements and append incoming chat message to chat areas.
    *
    * @param indent the indent of the message
    * @param chatMessage the chat message to update
+   * @param btnSend the send button
+   * @param chatArea the chat area to append the message to
    */
-  public static void updateChat(TextArea chatArea, String indent, ChatMessage msg, Button btnSend) {
+  public static void updateChat(String indent, ChatMessage msg) {
     // Disable thinking animation
     setThinkingAnimation(false);
 
-    // Add to chat log
-    GameState.chatLog += indent + msg.getContent();
-
-    // Append indentation to chat area.
-    chatArea.appendText(indent);
-    appendChatMessage(chatArea, msg, btnSend);
+    // Append indentation and message to chat areas.
+    for (int i = 0; i < chatAreas.size(); i++) {
+      chatAreas.get(i).appendText(indent);
+      appendChatMessage(chatAreas.get(i), msg);
+    }
   }
 
   /**
@@ -213,8 +186,8 @@ public class ChatTaskGenerator {
    *
    * @param msg the chat message to append
    */
-  public static void appendChatMessage(TextArea chatArea, ChatMessage msg, Button btnSend) {
-    btnSend.setDisable(true);
+  public static void appendChatMessage(TextArea chatArea, ChatMessage msg) {
+    setSendButtonDisable(true);
 
     // Create timeline task to create the timeline to animate the text in chat area
     Task<Timeline> timelineTask = ChatTaskGenerator.createMessageTimeline(msg, chatArea);
@@ -227,7 +200,7 @@ public class ChatTaskGenerator {
           timeline.play();
           timeline.setOnFinished(
               event -> {
-                btnSend.setDisable(false);
+                setSendButtonDisable(false);
               });
         });
   }
@@ -240,6 +213,12 @@ public class ChatTaskGenerator {
   public static void setThinkingAnimation(Boolean isThinking) {
     for (int i = 0; i < thinkingAnimationImages.size(); i++) {
       thinkingAnimationImages.get(i).setVisible(isThinking);
+    }
+  }
+
+  public static void setSendButtonDisable(boolean isDisable) {
+    for (int i = 0; i < sendButtons.size(); i++) {
+      sendButtons.get(i).setDisable(isDisable);
     }
   }
 }

@@ -116,19 +116,7 @@ public class StorageController {
           lblTimer.setText("0:00");
         });
 
-    // Set chat area
-    ChatTaskGenerator.storageChatArea = chatArea;
-
-    // Set thinking animation
-    ChatTaskGenerator.thinkingAnimationImages.add(imgScientistThinking);
-    ChatTaskGenerator.thinkingAnimationImages.add(typingBubble);
-
-    // Get introduction message on first visit of storage room
-    storageIntroTask = ChatTaskGenerator.createTask(GptPromptEngineering.getStorageIntro());
-    storageIntroTask.setOnSucceeded(
-        e -> {
-          ChatTaskGenerator.updateChat(chatArea, "\n\n-> ", storageIntroTask.getValue(), btnSend);
-        });
+    initialiseTasks();
 
     buttons.addAll(
         Arrays.asList(
@@ -196,7 +184,6 @@ public class StorageController {
   @FXML
   private void onClickTimeMachineRoom(ActionEvent event) {
     App.setUi(AppUi.TIMEMACHINE);
-    new Thread(ChatTaskGenerator.createUpdateTask("timemachine")).start();
   }
 
   /** Function to handle when the circuit minigame is opened. */
@@ -240,14 +227,13 @@ public class StorageController {
   private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
     // Get user message and update chat with user message
     String userMessage = ChatTaskGenerator.getUserMessage(chatField);
-    ChatTaskGenerator.updateChat(
-        chatArea, "\n\n<- ", new ChatMessage("user", userMessage), btnSend);
+    ChatTaskGenerator.updateChat("\n\n<- ", new ChatMessage("user", userMessage));
 
     // Create task to run GPT model for AI response
     Task<ChatMessage> aiResponseTask = ChatTaskGenerator.createTask(userMessage);
     aiResponseTask.setOnSucceeded(
         e -> {
-          ChatTaskGenerator.updateChat(chatArea, "\n\n-> ", aiResponseTask.getValue(), btnSend);
+          ChatTaskGenerator.updateChat("\n\n-> ", aiResponseTask.getValue());
         });
     new Thread(aiResponseTask).start();
   }
@@ -276,8 +262,7 @@ public class StorageController {
         ChatTaskGenerator.createTask(GptPromptEngineering.getStorageComplete());
     storageTaskComplete.setOnSucceeded(
         e -> {
-          ChatTaskGenerator.updateChat(
-              chatArea, "\n\n-> ", storageTaskComplete.getValue(), btnSend);
+          ChatTaskGenerator.updateChat("\n\n-> ", storageTaskComplete.getValue());
         });
     new Thread(storageTaskComplete).start();
   }
@@ -384,5 +369,24 @@ public class StorageController {
 
     // Start transition
     pause.play();
+  }
+
+  private void initialiseTasks() {
+    // Set chat area
+    ChatTaskGenerator.chatAreas.add(chatArea);
+
+    // Set send button
+    ChatTaskGenerator.sendButtons.add(btnSend);
+
+    // Set thinking animation
+    ChatTaskGenerator.thinkingAnimationImages.add(imgScientistThinking);
+    ChatTaskGenerator.thinkingAnimationImages.add(typingBubble);
+
+    // Get introduction message on first visit of storage room
+    storageIntroTask = ChatTaskGenerator.createTask(GptPromptEngineering.getStorageIntro());
+    storageIntroTask.setOnSucceeded(
+        e -> {
+          ChatTaskGenerator.updateChat("\n\n-> ", storageIntroTask.getValue());
+        });
   }
 }

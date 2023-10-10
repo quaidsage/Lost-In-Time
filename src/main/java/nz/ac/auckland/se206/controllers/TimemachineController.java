@@ -66,7 +66,7 @@ public class TimemachineController {
     contextTask = ChatTaskGenerator.createTask(GptPromptEngineering.getContext());
     contextTask.setOnSucceeded(
         e -> {
-          ChatTaskGenerator.updateChat(chatArea, "-> ", contextTask.getValue(), btnSend);
+          ChatTaskGenerator.updateChat("-> ", contextTask.getValue());
         });
     new Thread(contextTask).start();
 
@@ -94,7 +94,6 @@ public class TimemachineController {
       GameState.isLabVisited = true;
       new Thread(LabController.labIntroTask).start();
     }
-    new Thread(ChatTaskGenerator.createUpdateTask("lab")).start();
   }
 
   /**
@@ -109,7 +108,6 @@ public class TimemachineController {
       GameState.isStorageVisited = true;
       new Thread(StorageController.storageIntroTask).start();
     }
-    new Thread(ChatTaskGenerator.createUpdateTask("storage")).start();
   }
 
   /**
@@ -147,14 +145,13 @@ public class TimemachineController {
   private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
     // Get user message and update chat with user message
     String userMessage = ChatTaskGenerator.getUserMessage(chatField);
-    ChatTaskGenerator.updateChat(
-        chatArea, "\n\n<- ", new ChatMessage("user", userMessage), btnSend);
+    ChatTaskGenerator.updateChat("\n\n<- ", new ChatMessage("user", userMessage));
 
     // Create task to run GPT model for AI response
     Task<ChatMessage> aiResponseTask = ChatTaskGenerator.createTask(userMessage);
     aiResponseTask.setOnSucceeded(
         e -> {
-          ChatTaskGenerator.updateChat(chatArea, "\n\n-> ", aiResponseTask.getValue(), btnSend);
+          ChatTaskGenerator.updateChat("\n\n-> ", aiResponseTask.getValue());
         });
     new Thread(aiResponseTask).start();
   }
@@ -211,7 +208,10 @@ public class TimemachineController {
   /** Function to create tasks to update elements outside class controller. */
   private void initialiseTasks() {
     // Set chat area
-    ChatTaskGenerator.timemachineChatArea = chatArea;
+    ChatTaskGenerator.chatAreas.add(chatArea);
+
+    // Set send button
+    ChatTaskGenerator.sendButtons.add(btnSend);
 
     // Set thinking animation
     ChatTaskGenerator.thinkingAnimationImages.add(imgScientistThinking);

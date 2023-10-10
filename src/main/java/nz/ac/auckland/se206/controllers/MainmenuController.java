@@ -36,7 +36,6 @@ public class MainmenuController {
   @FXML
   private void onClickBeginGame(ActionEvent event) throws IOException {
     // Reset various game states and settings when the game starts.
-    GameState.chatLog = "";
     GameState.isLabResolved = false;
     GameState.isStorageResolved = false;
     GameState.isLabVisited = false;
