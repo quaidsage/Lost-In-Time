@@ -22,7 +22,9 @@ public class MainmenuController {
   public void initialize() {
     // This method is automatically called when the FXML is loaded.
     // It can be used for any initialization tasks.
-    textToSpeech("Lost in time. Restore the fabric of time.");
+
+    // TODO: Re-enable tts
+    // textToSpeech("Lost in time. Restore the fabric of time.");
   }
 
   /**
@@ -34,9 +36,6 @@ public class MainmenuController {
   @FXML
   private void onClickBeginGame(ActionEvent event) throws IOException {
     // Reset various game states and settings when the game starts.
-
-    // Reset game state variables
-    GameState.chatLog = "";
     GameState.isLabResolved = false;
     GameState.isStorageResolved = false;
     GameState.isLabVisited = false;
@@ -49,6 +48,8 @@ public class MainmenuController {
     // Initialise AI chat parameters
     GameState.chatCompletionRequest =
         new ChatCompletionRequest().setN(1).setTemperature(0.2).setTopP(0.5).setMaxTokens(200);
+
+    SceneManager.clearAllScenesExceptMainMenu();
 
     // Create a task to load various FXML files for different scenes
     Task<Void> loadTask =
@@ -71,7 +72,8 @@ public class MainmenuController {
     SceneManager.addUi(AppUi.DIFFICULTY, App.loadFxml("difficulty"));
     App.setUi(AppUi.DIFFICULTY);
     SceneManager.addUi(AppUi.INTRO, App.loadFxml("intro"));
-    textToSpeech("Select difficulty level and time limit.");
+    // TODO: RE-eanble tts
+    // textToSpeech("Select difficulty level and time limit.");
   }
 
   /**

@@ -4,7 +4,6 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import nz.ac.auckland.se206.App;
-import nz.ac.auckland.se206.SceneManager;
 
 /** A class to control the scene in event of a timeout in the game. */
 public class TimeoutController {
@@ -20,6 +19,5 @@ public class TimeoutController {
   @FXML
   private void onClickBackToMenu() throws IOException {
     App.setRoot("mainmenu");
-    SceneManager.clearAllScenesExceptMainMenu();
   }
 }

@@ -1,8 +1,6 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,11 +9,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.Delay;
 import nz.ac.auckland.se206.GameState;
-import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
 import nz.ac.auckland.se206.gpt.ChatTaskGenerator;
@@ -24,8 +20,7 @@ import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
 
 /** A controller class for the time machine scene. */
 public class TimemachineController {
-  public static Task<ChatMessage> contextTask;
-  public static Task<Void> updateChatTask;
+  public Task<ChatMessage> contextTask;
   public static ChatMessage chatTaskValue;
   public static Task<Void> startTask;
   private static TimerController timer = new TimerController();
@@ -65,25 +60,25 @@ public class TimemachineController {
   @FXML private Button btnMenu;
   @FXML private ImageView typingBubble;
 
-  // Initialise Variables
-  private int characterDelay = 5;
-
   /** Carries out specific tasks required when opening the scene. */
   public void initialize() {
-    // Create task to get context from GPT model
-    setThinkingAnimation(true);
+    // Generate ai response for the context of the game
     contextTask = ChatTaskGenerator.createTask(GptPromptEngineering.getContext());
+    contextTask.setOnSucceeded(
+        e -> {
+          ChatTaskGenerator.updateChat("-> ", contextTask.getValue());
+        });
     new Thread(contextTask).start();
 
+    // Initialise timer and bind the lblTimer to the timerController properties.
     timer = new TimerController();
-    // Bind the lblTimer to the timerController properties.
     lblTimer.textProperty().bind(timer.messageProperty());
     timer.setOnSucceeded(
         e -> {
-          // Add code here to implement the loss of the game
           lblTimer.setText("0:00");
         });
 
+    // Initialise relevant tasks
     initialiseTasks();
   }
 
@@ -94,11 +89,11 @@ public class TimemachineController {
    */
   @FXML
   private void onClickLab(ActionEvent event) {
+    App.setUi(AppUi.LAB);
     if (!GameState.isLabVisited) {
       GameState.isLabVisited = true;
       new Thread(LabController.labIntroTask).start();
     }
-    App.setUi(AppUi.LAB);
   }
 
   /**
@@ -108,12 +103,11 @@ public class TimemachineController {
    */
   @FXML
   private void onClickStorage(ActionEvent event) {
+    App.setUi(AppUi.STORAGE);
     if (!GameState.isStorageVisited) {
       GameState.isStorageVisited = true;
-      Thread storageIntroThread = new Thread(StorageController.storageIntroTask);
-      storageIntroThread.start();
+      new Thread(StorageController.storageIntroTask).start();
     }
-    App.setUi(AppUi.STORAGE);
   }
 
   /**
@@ -138,7 +132,6 @@ public class TimemachineController {
   @FXML
   private void onClickReturn(ActionEvent event) throws IOException {
     App.setRoot("mainmenu");
-    SceneManager.clearAllScenesExceptMainMenu();
   }
 
   /**
@@ -150,104 +143,17 @@ public class TimemachineController {
    */
   @FXML
   private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
-    // Get message from chat field
-    String message = chatField.getText();
-    chatField.clear();
+    // Get user message and update chat with user message
+    String userMessage = ChatTaskGenerator.getUserMessage(chatField);
+    ChatTaskGenerator.updateChat("\n\n<- ", new ChatMessage("user", userMessage));
 
-    // Check if message is empty
-    if (message.trim().isEmpty()) {
-      System.out.println("message is empty");
-      return;
-    }
-
-    // Update chat with user message
-    updateChat("\n\n<- ", new ChatMessage("user", message));
-
-    // Create task to run GPT model for response
-    Task<ChatMessage> chatTask = ChatTaskGenerator.createTask(message);
-    new Thread(chatTask).start();
-
-    setThinkingAnimation(true);
-    chatTask.setOnSucceeded(
+    // Create task to run GPT model for AI response
+    Task<ChatMessage> aiResponseTask = ChatTaskGenerator.createTask(userMessage);
+    aiResponseTask.setOnSucceeded(
         e -> {
-          setThinkingAnimation(false);
-          updateChat("\n\n-> ", chatTask.getValue());
+          ChatTaskGenerator.updateChat("\n\n-> ", aiResponseTask.getValue());
         });
-  }
-
-  /**
-   * Appends a chat message to the chat text area one character at a time.
-   *
-   * @param msg the chat message to append
-   */
-  public void appendChatMessage(ChatMessage msg) {
-    btnSend.setDisable(true);
-
-    // Create timeline animation of message appending to text area
-    Timeline timeline = createMessageTimeline(msg.getContent().toCharArray());
-    timeline.play();
-    timeline.setOnFinished(
-        event -> {
-          btnSend.setDisable(false);
-        });
-  }
-
-  /**
-   * Create a timeline which animates the message into the text area character by character.
-   *
-   * @param ch the character array to animate
-   * @return the timeline
-   */
-  private Timeline createMessageTimeline(char[] ch) {
-    // Create a timeline and keyframes to append each character of the message to the chat text area
-    Timeline timeline = new Timeline();
-    if (ch.length < 100) {
-      characterDelay = (50 - (ch.length / 2)) + 5;
-    }
-    Duration delayBetweenCharacters = Duration.millis(characterDelay);
-    Duration frame = delayBetweenCharacters;
-    for (int i = 0; i < ch.length; i++) {
-      final int I = i;
-      KeyFrame keyFrame =
-          new KeyFrame(
-              frame,
-              event -> {
-                chatArea.appendText(String.valueOf(ch[I]));
-              });
-      timeline.getKeyFrames().add(keyFrame);
-      frame = frame.add(delayBetweenCharacters);
-    }
-    return timeline;
-  }
-
-  /**
-   * Show/hide the thinking animation of scientist.
-   *
-   * @param isThinking whether the scientist is thinking
-   */
-  public void setThinkingAnimation(Boolean isThinking) {
-    // Enable thinking image of scientist
-    imgScientistThinking.setVisible(isThinking);
-    typingBubble.setVisible(isThinking);
-  }
-
-  /**
-   * Function to update chatlog, current scene chat area, and chat areas of other scenes.
-   *
-   * @param indent the indent of the message
-   * @param chatMessage the chat message to update
-   */
-  private void updateChat(String indent, ChatMessage chatMessage) {
-    // Add to chat log
-    GameState.chatLog += indent + chatMessage.getContent();
-
-    // Append to chat area
-    chatArea.appendText(indent);
-    appendChatMessage(chatMessage);
-
-    // Update chat area in other scenes
-    new Thread(LabController.updateChatTask).start();
-    new Thread(StorageController.updateChatTask).start();
+    new Thread(aiResponseTask).start();
   }
 
   /** Function to animate the start of the round. */
@@ -261,14 +167,7 @@ public class TimemachineController {
     LabController.labStartTimer(IntroController.minutes);
     StorageController.storageStartTimer(IntroController.minutes);
 
-    // Starting prompt
-    delay(
-        2000,
-        () -> {
-          setThinkingAnimation(false);
-
-          updateChat("-> ", contextTask.getValue());
-        });
+    chatArea.setText(contextTask.getValue().getContent());
   }
 
   /** Function to create an animation of the lights turning on. */
@@ -308,8 +207,15 @@ public class TimemachineController {
 
   /** Function to create tasks to update elements outside class controller. */
   private void initialiseTasks() {
-    // Create task to update chat area for this scene
-    createUpdateTask();
+    // Set chat area
+    ChatTaskGenerator.chatAreas.add(chatArea);
+
+    // Set send button
+    ChatTaskGenerator.sendButtons.add(btnSend);
+
+    // Set thinking animation
+    ChatTaskGenerator.thinkingAnimationImages.add(imgScientistThinking);
+    ChatTaskGenerator.thinkingAnimationImages.add(typingBubble);
 
     // Create task to start round
     startTask =
@@ -317,24 +223,6 @@ public class TimemachineController {
           @Override
           protected Void call() throws Exception {
             startRound();
-            return null;
-          }
-        };
-  }
-
-  /** Function to create task to update chat area for scene. */
-  public void createUpdateTask() {
-    // Create task to update chat area
-    updateChatTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            // Update chat area with chat log
-            chatArea.setText(GameState.chatLog);
-            chatArea.appendText("");
-
-            // Create new task for next update of chat area
-            createUpdateTask();
             return null;
           }
         };

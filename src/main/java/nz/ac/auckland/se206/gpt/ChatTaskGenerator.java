@@ -1,7 +1,14 @@
 package nz.ac.auckland.se206.gpt;
 
+import java.util.ArrayList;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.controllers.LabController;
 import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
@@ -10,6 +17,14 @@ import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
 
 /** A class to generate a chat task. This class is used by many scenes within the game. */
 public class ChatTaskGenerator {
+  static int characterDelay = 5;
+  static TextArea chatArea;
+  static ImageView imgScientistThinking;
+  static ImageView typingBubble;
+  public static ArrayList<TextArea> chatAreas = new ArrayList<TextArea>();
+  public static ArrayList<ImageView> thinkingAnimationImages = new ArrayList<ImageView>();
+  public static ArrayList<Button> sendButtons = new ArrayList<Button>();
+
   /**
    * Creates a task to run the LLM model on a given message to be run by background thread.
    *
@@ -39,6 +54,9 @@ public class ChatTaskGenerator {
   private static ChatMessage runGpt(ChatMessage msg) throws ApiProxyException {
     // Append to main game chat completion request
     GameState.chatCompletionRequest.addMessage(msg);
+
+    // Enable thinking animation
+    setThinkingAnimation(true);
 
     try {
       // Get response from GPT model
@@ -74,6 +92,133 @@ public class ChatTaskGenerator {
     } catch (ApiProxyException e) {
       e.printStackTrace();
       return null;
+    }
+  }
+
+  /**
+   * Function to retrieve the message the user intends to send from text input.
+   *
+   * @param chatField the text input field
+   * @return the message the user intends to send
+   */
+  public static String getUserMessage(TextArea chatField) {
+    // Get the text from the chat area and clear it
+    String message = chatField.getText();
+    chatField.clear();
+
+    // Check if message is empty
+    if (message.trim().isEmpty()) {
+      return null;
+    }
+
+    return message;
+  }
+
+  /**
+   * Creates a task to generate a timeline to append text character by character to given chat area.
+   *
+   * @param msg the chat message to append
+   * @param chatArea the chat area to append the message to
+   * @return the timeline task
+   */
+  public static Task<Timeline> createMessageTimeline(ChatMessage msg, TextArea chatArea) {
+    // Convert from ChatMessage to char array
+    char[] ch = msg.getContent().toCharArray();
+
+    Task<Timeline> timelineTask =
+        new Task<Timeline>() {
+          @Override
+          protected Timeline call() throws Exception {
+            // Create a timeline and keyframes to append each character of the message to the chat
+            // text area
+            Timeline timeline = new Timeline();
+            if (ch.length < 100) {
+              characterDelay = (50 - (ch.length / 2)) + 5;
+            } else {
+              characterDelay = 5;
+            }
+
+            // Set duration between each character
+            Duration delayBetweenCharacters = Duration.millis(characterDelay);
+            Duration frame = delayBetweenCharacters;
+
+            // Add keyframes for each character
+            for (int i = 0; i < ch.length; i++) {
+              final int I = i;
+              KeyFrame keyFrame =
+                  new KeyFrame(
+                      frame,
+                      event -> {
+                        chatArea.appendText(String.valueOf(ch[I]));
+                      });
+              timeline.getKeyFrames().add(keyFrame);
+              frame = frame.add(delayBetweenCharacters);
+            }
+
+            return timeline;
+          }
+        };
+
+    return timelineTask;
+  }
+
+  /**
+   * Function to disable relevant elements and append incoming chat message to chat areas.
+   *
+   * @param indent the indent of the message
+   * @param chatMessage the chat message to update
+   * @param btnSend the send button
+   * @param chatArea the chat area to append the message to
+   */
+  public static void updateChat(String indent, ChatMessage msg) {
+    // Disable thinking animation
+    setThinkingAnimation(false);
+
+    // Append indentation and message to chat areas.
+    for (int i = 0; i < chatAreas.size(); i++) {
+      chatAreas.get(i).appendText(indent);
+      appendChatMessage(chatAreas.get(i), msg);
+    }
+  }
+
+  /**
+   * Appends a chat message to the chat text area one character at a time.
+   *
+   * @param msg the chat message to append
+   */
+  public static void appendChatMessage(TextArea chatArea, ChatMessage msg) {
+    setSendButtonDisable(true);
+
+    // Create timeline task to create the timeline to animate the text in chat area
+    Task<Timeline> timelineTask = ChatTaskGenerator.createMessageTimeline(msg, chatArea);
+    new Thread(timelineTask).start();
+
+    // Play timeline generated by task
+    timelineTask.setOnSucceeded(
+        e -> {
+          Timeline timeline = timelineTask.getValue();
+          timeline.play();
+          timeline.setOnFinished(
+              event -> {
+                setSendButtonDisable(false);
+              });
+        });
+  }
+
+  /**
+   * Show/hide the thinking animation of scientist.
+   *
+   * @param isThinking whether the scientist is thinking
+   */
+  public static void setThinkingAnimation(Boolean isThinking) {
+    for (int i = 0; i < thinkingAnimationImages.size(); i++) {
+      thinkingAnimationImages.get(i).setVisible(isThinking);
+    }
+  }
+
+  public static void setSendButtonDisable(boolean isDisable) {
+    for (int i = 0; i < sendButtons.size(); i++) {
+      sendButtons.get(i).setDisable(isDisable);
     }
   }
 }

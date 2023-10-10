@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import javafx.animation.FadeTransition;
-import javafx.animation.KeyFrame;
 import javafx.animation.PathTransition;
-import javafx.animation.Timeline;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,7 +21,6 @@ import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.Delay;
 import nz.ac.auckland.se206.GameState;
-import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
 import nz.ac.auckland.se206.gpt.ChatTaskGenerator;
@@ -36,7 +33,6 @@ public class LabController {
   public static ArrayList<Integer> solutionColours;
 
   // Fields related to Task
-  public static Task<Void> updateChatTask;
   public static Task<ChatMessage> labIntroTask;
   public static Task<ChatMessage> labRiddleTask;
   public static Task<Void> animateTask;
@@ -93,7 +89,6 @@ public class LabController {
   private ArrayList<ImageView> arrowCollection = new ArrayList<ImageView>();
 
   // Fields for initializing variables
-  private int characterDelay = 5;
   private int numChemicalsAdded = 0;
   private int arrowAnimationSpeed = 85;
   private int arrowAnimationDistance = 25;
@@ -103,7 +98,6 @@ public class LabController {
 
   // Fields related to chemical solutions
   private Boolean[] isChemicalSolution = {false, false, false, false, false, false, false};
-  private Boolean isChemicalsEnabled = false;
 
   /**
    * Initialise the scene with the specific settings.
@@ -122,11 +116,10 @@ public class LabController {
 
     // Create task to run GPT model for intro message
     labIntroTask = ChatTaskGenerator.createTask(GptPromptEngineering.getLabIntro());
-    setThinkingAnimation(true);
     labIntroTask.setOnSucceeded(
         e -> {
-          setThinkingAnimation(false);
-          updateChat("\n\n-> ", labIntroTask.getValue());
+          ChatTaskGenerator.updateChat("\n\n-> ", labIntroTask.getValue());
+          chemicalGeneral.setVisible(true);
         });
 
     // Set solution chemicals
@@ -164,7 +157,6 @@ public class LabController {
   @FXML
   private void onClickReturn(ActionEvent event) throws IOException {
     App.setRoot("mainmenu");
-    SceneManager.clearAllScenesExceptMainMenu();
   }
 
   /**
@@ -192,15 +184,13 @@ public class LabController {
     btnSwitchToTimeMachine.setDisable(true);
 
     // Create task to run GPT model for riddle message
-    setThinkingAnimation(true);
     labRiddleTask =
         ChatTaskGenerator.createTask(
             GptPromptEngineering.getRiddleLab(LabController.solutionColours));
     new Thread(labRiddleTask).start();
     labRiddleTask.setOnSucceeded(
         e -> {
-          setThinkingAnimation(false);
-          updateChat("\n\n-> ", labRiddleTask.getValue());
+          ChatTaskGenerator.updateChat("\n\n-> ", labRiddleTask.getValue());
         });
   }
 
@@ -321,132 +311,34 @@ public class LabController {
    */
   @FXML
   private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
-    // Get message from chat field
-    String message = chatField.getText();
-    chatField.clear();
+    // Get user message and update chat with user message
+    String userMessage = ChatTaskGenerator.getUserMessage(chatField);
+    ChatTaskGenerator.updateChat("\n\n<- ", new ChatMessage("user", userMessage));
 
-    // Check if message is empty
-    if (message.trim().isEmpty()) {
-      System.out.println("message is empty");
-      return;
-    }
-
-    // Update chat area with user message
-    updateChat("\n\n<- ", new ChatMessage("user", message));
-
-    // Get response from GPT model
-    Task<ChatMessage> chatTask = ChatTaskGenerator.createTask(message);
-    new Thread(chatTask).start();
-
-    setThinkingAnimation(true);
-    chatTask.setOnSucceeded(
+    // Create task to run GPT model for AI response
+    Task<ChatMessage> aiResponseTask = ChatTaskGenerator.createTask(userMessage);
+    aiResponseTask.setOnSucceeded(
         e -> {
-          setThinkingAnimation(false);
-          updateChat("\n\n-> ", chatTask.getValue());
+          ChatTaskGenerator.updateChat("\n\n-> ", aiResponseTask.getValue());
         });
-  }
-
-  /**
-   * Appends a chat message to the chat text area one character at a time.
-   *
-   * @param msg the chat message to append.
-   */
-  public void appendChatMessage(ChatMessage msg) {
-    btnSend.setDisable(true);
-
-    // Create timeline to animate the appending of message
-    Timeline timeline = createMessageTimeline(msg.getContent().toCharArray());
-    timeline.play();
-    timeline.setOnFinished(
-        event -> {
-          btnSend.setDisable(false);
-          if (!isChemicalsEnabled) {
-            chemicalGeneral.setVisible(true);
-          }
-        });
-  }
-
-  /**
-   * Create a timeline which animates the message into the text area character by character.
-   *
-   * @param ch the character array to animate.
-   * @return the timeline.
-   */
-  private Timeline createMessageTimeline(char[] ch) {
-    // Create a timeline and keyframes to append each character of the message to the chat text area
-    Timeline timeline = new Timeline();
-    if (ch.length < 100) {
-      characterDelay = (50 - (ch.length / 2)) + 5;
-    }
-    Duration delayBetweenCharacters = Duration.millis(characterDelay);
-    Duration frame = delayBetweenCharacters;
-    for (int i = 0; i < ch.length; i++) {
-      final int I = i;
-      KeyFrame keyFrame =
-          new KeyFrame(
-              frame,
-              event -> {
-                chatArea.appendText(String.valueOf(ch[I]));
-              });
-      timeline.getKeyFrames().add(keyFrame);
-      frame = frame.add(delayBetweenCharacters);
-    }
-    return timeline;
-  }
-
-  /**
-   * Show/hide the thinking animation of scientist.
-   *
-   * @param isThinking whether the scientist is thinking.
-   */
-  public void setThinkingAnimation(Boolean isThinking) {
-    // Enable thinking image of scientist
-    imgScientistThinking.setVisible(isThinking);
-    typingBubble.setVisible(isThinking);
-  }
-
-  /**
-   * Function to update chatlog, current scene chat area, and chat areas of other scenes.
-   *
-   * @param indent the indent of the message.
-   * @param chatMessage the chat message to update.
-   */
-  private void updateChat(String indent, ChatMessage chatMessage) {
-    // Add to chat log
-    GameState.chatLog += indent + chatMessage.getContent();
-
-    // Append to chat area
-    chatArea.appendText(indent);
-    appendChatMessage(chatMessage);
-
-    // Update chat area in other scenes
-    new Thread(TimemachineController.updateChatTask).start();
-    new Thread(StorageController.updateChatTask).start();
+    new Thread(aiResponseTask).start();
   }
 
   /** Function to initalise the relevant tasks for scene. */
   private void initialiseTasks() {
-    createUpdateTask();
+    // Set chat area
+    ChatTaskGenerator.chatAreas.add(chatArea);
+
+    // Set send button
+    ChatTaskGenerator.sendButtons.add(btnSend);
+
+    // Set thinking animation
+    ChatTaskGenerator.thinkingAnimationImages.add(imgScientistThinking);
+    ChatTaskGenerator.thinkingAnimationImages.add(typingBubble);
+
+    // Create tasks for animation and updating hint label
     createAnimateTask();
     updateHintTask(numHints);
-  }
-
-  /** Function to create task to update chat area for scene. */
-  public void createUpdateTask() {
-    // Create task to update chat area with chat log
-    updateChatTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            // Update the scenes chat area
-            chatArea.setText(GameState.chatLog);
-            chatArea.appendText("");
-
-            // Remake task for next call
-            createUpdateTask();
-            return null;
-          }
-        };
   }
 
   /**
@@ -589,7 +481,7 @@ public class LabController {
 
     labCompleteTask.setOnSucceeded(
         e -> {
-          updateChat("\n\n-> ", labCompleteTask.getValue());
+          ChatTaskGenerator.updateChat("\n\n-> ", labCompleteTask.getValue());
         });
 
     baseImage.setVisible(true);
@@ -820,8 +712,5 @@ public class LabController {
     chemicalGreen.setVisible(visibility);
     chemicalOrange.setVisible(visibility);
     chemicalGeneral.setVisible(false);
-
-    // Change game state
-    isChemicalsEnabled = true;
   }
 }
