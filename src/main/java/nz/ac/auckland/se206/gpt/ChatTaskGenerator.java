@@ -1,5 +1,6 @@
 package nz.ac.auckland.se206.gpt;
 
+import java.util.ArrayList;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -8,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
-import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.controllers.LabController;
 import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
@@ -25,9 +25,7 @@ public class ChatTaskGenerator {
   public static TextArea labChatArea;
   public static TextArea storageChatArea;
   public static TextArea timemachineChatArea;
-  public static ImageView[] labScientistImages;
-  public static ImageView[] storageScientistImages;
-  public static ImageView[] timemachineScientistImages;
+  public static ArrayList<ImageView> thinkingAnimationImages = new ArrayList<ImageView>();
 
   /**
    * Creates a task to run the LLM model on a given message to be run by background thread.
@@ -240,19 +238,8 @@ public class ChatTaskGenerator {
    * @param isThinking whether the scientist is thinking
    */
   public static void setThinkingAnimation(Boolean isThinking) {
-    String scene = App.getUi();
-    if (scene == "lab") {
-      imgScientistThinking = labScientistImages[0];
-      typingBubble = labScientistImages[1];
-    } else if (scene == "storage") {
-      imgScientistThinking = storageScientistImages[0];
-      typingBubble = storageScientistImages[1];
-    } else if (scene == "timemachine") {
-      imgScientistThinking = timemachineScientistImages[0];
-      typingBubble = timemachineScientistImages[1];
+    for (int i = 0; i < thinkingAnimationImages.size(); i++) {
+      thinkingAnimationImages.get(i).setVisible(isThinking);
     }
-    // Toggle visibility of scientist thinking animation
-    imgScientistThinking.setVisible(isThinking);
-    typingBubble.setVisible(isThinking);
   }
 }

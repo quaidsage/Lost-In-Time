@@ -89,12 +89,12 @@ public class TimemachineController {
    */
   @FXML
   private void onClickLab(ActionEvent event) {
+    App.setUi(AppUi.LAB);
     if (!GameState.isLabVisited) {
       GameState.isLabVisited = true;
       new Thread(LabController.labIntroTask).start();
     }
     new Thread(ChatTaskGenerator.createUpdateTask("lab")).start();
-    App.setUi(AppUi.LAB);
   }
 
   /**
@@ -104,12 +104,12 @@ public class TimemachineController {
    */
   @FXML
   private void onClickStorage(ActionEvent event) {
+    App.setUi(AppUi.STORAGE);
     if (!GameState.isStorageVisited) {
       GameState.isStorageVisited = true;
       new Thread(StorageController.storageIntroTask).start();
     }
     new Thread(ChatTaskGenerator.createUpdateTask("storage")).start();
-    App.setUi(AppUi.STORAGE);
   }
 
   /**
@@ -212,8 +212,10 @@ public class TimemachineController {
   private void initialiseTasks() {
     // Set chat area
     ChatTaskGenerator.timemachineChatArea = chatArea;
-    ChatTaskGenerator.timemachineScientistImages =
-        new ImageView[] {imgScientistThinking, typingBubble};
+
+    // Set thinking animation
+    ChatTaskGenerator.thinkingAnimationImages.add(imgScientistThinking);
+    ChatTaskGenerator.thinkingAnimationImages.add(typingBubble);
 
     // Create task to start round
     startTask =
