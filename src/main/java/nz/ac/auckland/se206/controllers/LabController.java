@@ -311,17 +311,7 @@ public class LabController {
    */
   @FXML
   private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
-    // Get user message and update chat with user message
-    String userMessage = ChatTaskGenerator.getUserMessage(chatField);
-    ChatTaskGenerator.updateChat("\n\n<- ", new ChatMessage("user", userMessage));
-
-    // Create task to run GPT model for AI response
-    Task<ChatMessage> aiResponseTask = ChatTaskGenerator.createTask(userMessage);
-    aiResponseTask.setOnSucceeded(
-        e -> {
-          ChatTaskGenerator.updateChat("\n\n-> ", aiResponseTask.getValue());
-        });
-    new Thread(aiResponseTask).start();
+    ChatTaskGenerator.onSendMessage(chatField);
   }
 
   /** Function to initalise the relevant tasks for scene. */

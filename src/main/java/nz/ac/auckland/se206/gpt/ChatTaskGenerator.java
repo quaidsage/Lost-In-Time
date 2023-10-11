@@ -25,6 +25,20 @@ public class ChatTaskGenerator {
   public static ArrayList<ImageView> thinkingAnimationImages = new ArrayList<ImageView>();
   public static ArrayList<Button> sendButtons = new ArrayList<Button>();
 
+  public static void onSendMessage(TextArea chatField) {
+    // Get user message and update chat with user message
+    String userMessage = ChatTaskGenerator.getUserMessage(chatField);
+    updateChat("\n\n<- ", new ChatMessage("user", userMessage));
+
+    // Create task to run GPT model for AI response
+    Task<ChatMessage> aiResponseTask = createTask(userMessage);
+    aiResponseTask.setOnSucceeded(
+        e -> {
+          ChatTaskGenerator.updateChat("\n\n-> ", aiResponseTask.getValue());
+        });
+    new Thread(aiResponseTask).start();
+  }
+
   /**
    * Creates a task to run the LLM model on a given message to be run by background thread.
    *
