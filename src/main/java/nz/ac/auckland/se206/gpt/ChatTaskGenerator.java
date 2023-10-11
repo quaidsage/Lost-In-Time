@@ -25,6 +25,11 @@ public class ChatTaskGenerator {
   public static ArrayList<ImageView> thinkingAnimationImages = new ArrayList<ImageView>();
   public static ArrayList<Button> sendButtons = new ArrayList<Button>();
 
+  /**
+   * Function to handle user messages and returning an ai response to all game scenes.
+   *
+   * @param chatField the text area to get the user message from
+   */
   public static void onSendMessage(TextArea chatField) {
     // Get user message and update chat with user message
     String userMessage = ChatTaskGenerator.getUserMessage(chatField);
@@ -46,6 +51,7 @@ public class ChatTaskGenerator {
    * Creates a task to run the LLM model on a given message to be run by background thread.
    *
    * @param message string to attach to message to be given to the LLM
+   * @return the task to be run by the background thread
    */
   public static Task<ChatMessage> createTask(String message) {
     // Initialise a new task for a message
@@ -183,9 +189,7 @@ public class ChatTaskGenerator {
    * Function to disable relevant elements and append incoming chat message to chat areas.
    *
    * @param indent the indent of the message
-   * @param chatMessage the chat message to update
-   * @param btnSend the send button
-   * @param chatArea the chat area to append the message to
+   * @param msg the chat message to update
    */
   public static void updateChat(String indent, ChatMessage msg) {
     // Disable thinking animation
@@ -201,6 +205,7 @@ public class ChatTaskGenerator {
   /**
    * Appends a chat message to the chat text area one character at a time.
    *
+   * @param chatArea the chat area to append the message to
    * @param msg the chat message to append
    */
   public static void appendChatMessage(TextArea chatArea, ChatMessage msg) {
@@ -233,6 +238,11 @@ public class ChatTaskGenerator {
     }
   }
 
+  /**
+   * Function to enable/disable the sendButton for all game scenes.
+   *
+   * @param isDisable whether the send button is disabled
+   */
   public static void setSendButtonDisable(boolean isDisable) {
     for (int i = 0; i < sendButtons.size(); i++) {
       sendButtons.get(i).setDisable(isDisable);

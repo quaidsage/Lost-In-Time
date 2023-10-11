@@ -375,13 +375,12 @@ public class LabController {
           @Override
           protected Void call() throws Exception {
             // Initialise white arrows
-            int posx = 180;
             int posy = 170;
             for (int i = 0; i < 14; i++) { // 0-6 are up arrows, 8-13 are down arrows
               ImageView arrow = new ImageView("file:src/main/resources/images/arrow_white.png");
 
               // Set properties of arrow
-              posx = 180 + (110 * i);
+              int posx = 180 + (110 * i);
               if (i > 6) { // >6 are arrows along bottom row
                 posx = posx + (105 * (i - 6));
                 posy = 555;
@@ -408,7 +407,7 @@ public class LabController {
               ImageView arrow = new ImageView("file:src/main/resources/images/arrow_green.png");
 
               // Set properties
-              posx = 180 + (110 * i);
+              int posx = 180 + (110 * i);
               if (i > 6) {
                 posx = 100 + (105 * (i - 6));
                 posy = 530;

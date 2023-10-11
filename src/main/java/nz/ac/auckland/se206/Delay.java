@@ -6,10 +6,10 @@ import javafx.concurrent.Task;
 public class Delay {
 
   /**
-   * Creates a delay for printing text.
-   * 
-   * @param ms gives the delay in milliseconds.
-   * @return when task is created.
+   * Function to create a delay with given time.
+   *
+   * @param ms milliseconds of delay.
+   * @return the task to be run by the background thread
    */
   public static Task<Void> createDelay(int ms) {
     // Create delay function
