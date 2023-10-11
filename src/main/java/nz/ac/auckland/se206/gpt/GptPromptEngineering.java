@@ -11,7 +11,7 @@ public class GptPromptEngineering {
 
   /**
    * Generates a GPT prompt engineering string for a riddle with the given word.
-   * 
+   *
    * @param wordToGuess the word to be guessed in the riddle
    * @return the generated prompt engineering string
    */
@@ -25,9 +25,9 @@ public class GptPromptEngineering {
   }
 
   /**
-   * Method to get the message to run chatGPT when the lab is entered initially.
-   * 
-   * @return the message to be sent to chat GPT.
+   * Method to get the message to run ChatGPT when the lab is entered initially.
+   *
+   * @return the message to be sent to ChatGPT.
    */
   public static String getLabIntro() {
     return "You are the digital conciousness of a mad scientist helping the user. You have already"
@@ -36,9 +36,9 @@ public class GptPromptEngineering {
   }
 
   /**
-   * Method to get the message to run chatGPT when the storage is entered initially.
-   * 
-   * @return the message to be sent to chat GPT.
+   * Method to get the message to run ChatGPT when the storage is entered initially.
+   *
+   * @return the message to be sent to ChatGPT.
    */
   public static String getStorageIntro() {
     return "You are the digital conciousness of a mad scientist helping the user. You have already"
@@ -49,7 +49,7 @@ public class GptPromptEngineering {
 
   /**
    * Function to generate the riddle for the labratory task.
-   * 
+   *
    * @param solutionColours the colours of the chemicals that the user must combine
    * @return the generated prompt engineering string
    */
@@ -114,9 +114,9 @@ public class GptPromptEngineering {
   }
 
   /**
-   * Method to get the message to run chatGPT when the lab task is completed.
-   * 
-   * @return the message to be sent to chatGPT.
+   * Method to get the message to run ChatGPT when the lab task is completed.
+   *
+   * @return the message to be sent to ChatGPT.
    */
   public static String getLabComplete() {
     return "You are the digital conciousness of a mad scientist helping the user. You have already"
@@ -127,9 +127,9 @@ public class GptPromptEngineering {
   }
 
   /**
-   * Method to get the message to run chatGPT when the storage task is completed.
-   * 
-   * @return the message to be sent to chatGPT.
+   * Method to get the message to run ChatGPT when the storage task is completed.
+   *
+   * @return the message to be sent to ChatGPT.
    */
   public static String getStorageComplete() {
     return "You are the digital conciousness of a mad scientist helping the user. You have already"

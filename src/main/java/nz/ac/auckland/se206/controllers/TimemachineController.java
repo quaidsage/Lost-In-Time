@@ -20,7 +20,6 @@ import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
 
 /** A controller class for the time machine scene. */
 public class TimemachineController {
-  public Task<ChatMessage> contextTask;
   public static ChatMessage chatTaskValue;
   public static Task<Void> startTask;
   private static TimerController timer = new TimerController();
@@ -59,6 +58,9 @@ public class TimemachineController {
   @FXML private Button btnTimeMachine;
   @FXML private Button btnMenu;
   @FXML private ImageView typingBubble;
+
+  // Initialise contextTask
+  private Task<ChatMessage> contextTask;
 
   /** Carries out specific tasks required when opening the scene. */
   public void initialize() {
@@ -143,17 +145,7 @@ public class TimemachineController {
    */
   @FXML
   private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
-    // Get user message and update chat with user message
-    String userMessage = ChatTaskGenerator.getUserMessage(chatField);
-    ChatTaskGenerator.updateChat("\n\n<- ", new ChatMessage("user", userMessage));
-
-    // Create task to run GPT model for AI response
-    Task<ChatMessage> aiResponseTask = ChatTaskGenerator.createTask(userMessage);
-    aiResponseTask.setOnSucceeded(
-        e -> {
-          ChatTaskGenerator.updateChat("\n\n-> ", aiResponseTask.getValue());
-        });
-    new Thread(aiResponseTask).start();
+    ChatTaskGenerator.onSendMessage(chatField);
   }
 
   /** Function to animate the start of the round. */

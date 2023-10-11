@@ -311,17 +311,7 @@ public class LabController {
    */
   @FXML
   private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
-    // Get user message and update chat with user message
-    String userMessage = ChatTaskGenerator.getUserMessage(chatField);
-    ChatTaskGenerator.updateChat("\n\n<- ", new ChatMessage("user", userMessage));
-
-    // Create task to run GPT model for AI response
-    Task<ChatMessage> aiResponseTask = ChatTaskGenerator.createTask(userMessage);
-    aiResponseTask.setOnSucceeded(
-        e -> {
-          ChatTaskGenerator.updateChat("\n\n-> ", aiResponseTask.getValue());
-        });
-    new Thread(aiResponseTask).start();
+    ChatTaskGenerator.onSendMessage(chatField);
   }
 
   /** Function to initalise the relevant tasks for scene. */
@@ -385,13 +375,12 @@ public class LabController {
           @Override
           protected Void call() throws Exception {
             // Initialise white arrows
-            int posx = 180;
             int posy = 170;
             for (int i = 0; i < 14; i++) { // 0-6 are up arrows, 8-13 are down arrows
               ImageView arrow = new ImageView("file:src/main/resources/images/arrow_white.png");
 
               // Set properties of arrow
-              posx = 180 + (110 * i);
+              int posx = 180 + (110 * i);
               if (i > 6) { // >6 are arrows along bottom row
                 posx = posx + (105 * (i - 6));
                 posy = 555;
@@ -418,7 +407,7 @@ public class LabController {
               ImageView arrow = new ImageView("file:src/main/resources/images/arrow_green.png");
 
               // Set properties
-              posx = 180 + (110 * i);
+              int posx = 180 + (110 * i);
               if (i > 6) {
                 posx = 100 + (105 * (i - 6));
                 posy = 530;
@@ -531,7 +520,8 @@ public class LabController {
           arrowAnimationSpeed,
           arrowAnimationDistance);
     } else {
-      moveArrowsOut( // Animate arrow moving outwards
+      // Animate arrow moving outwards
+      moveArrowsOut(
           arrowCollection.get(color),
           arrowCollection.get(color + 7),
           arrowAnimationSpeed,

@@ -24,8 +24,8 @@ public class SceneManager {
   private static HashMap<AppUi, Parent> sceneMap = new HashMap<AppUi, Parent>();
 
   /**
-   * Adds a ui to the hashmap that contains all scenes.
-   * 
+   * Adds a Ui to the hashmap that contains all scenes.
+   *
    * @param ui the UI to be added as the key for the root.
    * @param root the root of the scene being added.
    */
