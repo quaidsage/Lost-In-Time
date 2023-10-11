@@ -521,7 +521,8 @@ public class LabController {
           arrowAnimationSpeed,
           arrowAnimationDistance);
     } else {
-      moveArrowsOut( // Animate arrow moving outwards
+      // Animate arrow moving outwards
+      moveArrowsOut(
           arrowCollection.get(color),
           arrowCollection.get(color + 7),
           arrowAnimationSpeed,
