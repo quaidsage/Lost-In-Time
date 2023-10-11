@@ -11,6 +11,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.paint.RadialGradient?>
 <?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -59,35 +60,19 @@
          <font>
             <Font name="Monospace 821 Bold BT" size="24.0" />
          </font></Button>
-      <ImageView fx:id="circuitBoxImg" fitHeight="60.0" fitWidth="56.0" layoutX="590.0" layoutY="319.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="circuitBoxImg" fitHeight="60.0" fitWidth="56.0" layoutX="590.0" layoutY="315.0" pickOnBounds="true">
          <image>
             <Image url="@../images/wepik-export-2023092011501715lG.png" />
          </image>
       </ImageView>
-      <Rectangle id="circuitBox" fx:id="circuitBox" arcHeight="5.0" arcWidth="5.0" height="62.0" layoutX="595.0" layoutY="316.0" onMouseClicked="#onClickCircuit" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="44.0">
-         <fill>
-            <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
-               <stops>
-                  <Stop>
-                     <color>
-                        <Color red="0.686274528503418" green="0.8274509906768799" blue="0.8784313797950745" />
-                     </color>
-                  </Stop>
-                  <Stop offset="1.0">
-                     <color>
-                        <Color red="0.686274528503418" green="0.8274509906768799" blue="0.8784313797950745" />
-                     </color>
-                  </Stop>
-               </stops>
-            </RadialGradient>
-         </fill></Rectangle>
+      <Circle fx:id="circuitLed" fill="#1fff2c" layoutX="626.0" layoutY="328.0" radius="3.0" stroke="BLACK" strokeType="INSIDE" />
       <Rectangle fx:id="circuitGameBg" arcHeight="5.0" arcWidth="5.0" fill="#141414" height="585.0" layoutX="25.0" layoutY="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="960.0" />
-      <ImageView fx:id="circuitGameImg" fitHeight="571.0" fitWidth="622.0" layoutX="218.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true" visible="false">
+      <ImageView fx:id="circuitGameImg" fitHeight="571.0" fitWidth="622.0" layoutX="230.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/wepik-export-2023092011501715lG.png" />
          </image>
       </ImageView>
-      <VBox fx:id="memoryGame" layoutX="394.0" layoutY="258.0" prefHeight="257.0" prefWidth="222.0" visible="false">
+      <VBox fx:id="memoryGame" layoutX="405.0" layoutY="300.0" prefHeight="257.0" prefWidth="222.0" visible="false">
          <children>
             <HBox prefHeight="100.0" prefWidth="300.0">
                <children>
@@ -112,19 +97,24 @@
             </HBox>
          </children>
       </VBox>
-      <Button id="btnSkip" fx:id="btnStartCircuitGame" layoutX="758.0" layoutY="316.0" mnemonicParsing="false" onAction="#onClickStartMemoryGame" text="Start" visible="false">
+      <Text fx:id="info2" fill="#6bf9b1" layoutX="25.0" layoutY="347.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Observe the pattern in which the squares are highlighted carefully, and repeat it. Get 4 in a row in order to fix the power." textAlignment="CENTER" visible="false" wrappingWidth="317.0">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Text>
+      <Button id="btnSkip" fx:id="btnStartCircuitGame" layoutX="753.0" layoutY="338.0" mnemonicParsing="false" onAction="#onClickStartMemoryGame" text="Start" visible="false">
          <font>
             <Font name="Apple Symbols" size="24.0" />
          </font>
       </Button>
-      <Text fx:id="text" fill="#6bf9b1" layoutX="113.0" layoutY="291.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Streak:" visible="false" wrappingWidth="125.3896484375">
-         <font>
-            <Font name="System Bold" size="31.0" />
-         </font>
-      </Text>
-      <Text fx:id="info" fill="#6bf9b1" layoutX="232.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Get 5 right in a row to complete the circuit!" textAlignment="CENTER" visible="false" wrappingWidth="544.0">
+      <Text fx:id="text" fill="#6bf9b1" layoutX="354.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Streak:" visible="false" wrappingWidth="336.0">
          <font>
             <Font name="System Bold" size="24.0" />
+         </font>
+      </Text>
+      <Text fx:id="info" fill="#6bf9b1" layoutX="33.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time to test your memory!" textAlignment="CENTER" visible="false" wrappingWidth="302.0">
+         <font>
+            <Font name="System Bold" size="20.0" />
          </font>
       </Text>
       <Button id="btnSkip" fx:id="btnMenu" layoutX="25.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClickReturn" text="Return To Menu">
@@ -141,5 +131,22 @@
             <Image url="@../images/typing_bubble1.gif" />
          </image>
       </ImageView>
+      <Rectangle id="circuitBox" fx:id="circuitBox" arcHeight="5.0" arcWidth="5.0" height="67.0" layoutX="595.0" layoutY="311.0" onMouseClicked="#onClickCircuit" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="44.0">
+         <fill>
+            <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.686274528503418" green="0.8274509906768799" blue="0.8784313797950745" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="0.686274528503418" green="0.8274509906768799" blue="0.8784313797950745" />
+                     </color>
+                  </Stop>
+               </stops>
+            </RadialGradient>
+         </fill></Rectangle>
    </children>
 </Pane>
