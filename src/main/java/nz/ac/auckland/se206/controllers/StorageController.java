@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
@@ -17,6 +18,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
@@ -84,7 +86,9 @@ public class StorageController {
   @FXML private Button button8;
   @FXML private Button btnMenu;
   @FXML private Text info;
+  @FXML private Text info2;
   @FXML private ImageView typingBubble;
+  @FXML private Circle circuitLed;
 
   // Initialise Variables
   private ArrayList<Button> buttons = new ArrayList<>();
@@ -94,7 +98,7 @@ public class StorageController {
   private int turn = 1;
   private Random random = new Random();
   private int consecutiveRounds = 0;
-  private int targetConsecutiveRounds = 4;
+  private int targetConsecutiveRounds = 3;
   private boolean buttonsDisabled = false;
   private ArrayList<String> possibleButtons =
       new ArrayList<>(
@@ -121,6 +125,8 @@ public class StorageController {
     buttons.addAll(
         Arrays.asList(
             button0, button1, button2, button3, button4, button5, button6, button7, button8));
+
+    startFlashing();
   }
 
   /**
@@ -202,6 +208,7 @@ public class StorageController {
     btnStartCircuitGame.setVisible(true);
     text.setVisible(true);
     info.setVisible(true);
+    info2.setVisible(true);
     btnSwitchToTimeMachine.setDisable(true);
   }
 
@@ -238,6 +245,15 @@ public class StorageController {
     new Thread(aiResponseTask).start();
   }
 
+  private void startFlashing() {
+    FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.5), circuitLed);
+    fadeTransition.setFromValue(1.0);
+    fadeTransition.setToValue(0.0);
+    fadeTransition.setAutoReverse(true);
+    fadeTransition.setCycleCount(FadeTransition.INDEFINITE);
+    fadeTransition.play();
+  }
+
   /** Function to handle when the user wins the minigame. */
   private void winGame() {
     // Hide minigame elements
@@ -247,6 +263,7 @@ public class StorageController {
     btnStartCircuitGame.setVisible(false);
     text.setVisible(false);
     info.setVisible(false);
+    info2.setVisible(false);
     circuitBox.setVisible(false);
     btnSwitchToTimeMachine.setDisable(false);
 
@@ -284,7 +301,7 @@ public class StorageController {
   /** Function to handle when the minigame must be reset. */
   private void resetGame() {
     consecutiveRounds = 0; // Reset consecutive rounds
-    text.setText("Wrong - Start Again");
+    text.setText("Wrong - Click Start to try again");
     pattern.clear();
     counter = 0;
     turn = 1;
@@ -315,13 +332,13 @@ public class StorageController {
     buttonsDisabled = true; // Disable buttons during pattern display
 
     // Initialise pause transition
-    PauseTransition pause = new PauseTransition(Duration.seconds(0.75));
+    PauseTransition pause = new PauseTransition(Duration.seconds(0.65));
     pause.setOnFinished(
         e -> {
           Timeline timeline =
               new Timeline(
                   new KeyFrame(
-                      Duration.seconds(0.75),
+                      Duration.seconds(0.65),
                       event -> {
                         showNext();
                       }));
