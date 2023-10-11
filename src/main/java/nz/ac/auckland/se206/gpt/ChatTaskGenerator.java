@@ -28,6 +28,9 @@ public class ChatTaskGenerator {
   public static void onSendMessage(TextArea chatField) {
     // Get user message and update chat with user message
     String userMessage = ChatTaskGenerator.getUserMessage(chatField);
+    if (userMessage == null) {
+      return;
+    }
     updateChat("\n\n<- ", new ChatMessage("user", userMessage));
 
     // Create task to run GPT model for AI response
@@ -214,7 +217,7 @@ public class ChatTaskGenerator {
           timeline.play();
           timeline.setOnFinished(
               event -> {
-                setSendButtonDisable(false);
+                if (!msg.getRole().equals("user")) setSendButtonDisable(false);
               });
         });
   }
