@@ -132,10 +132,10 @@ public class MainmenuController {
   }
 
   /**
-   * TODO JAVADOCS.
+   * Function to toggle whether to mute or unmute TTS.
    *
-   * @throws EngineStateError
-   * @throws AudioException
+   * @throws EngineStateError If there is an error with the speech engine
+   * @throws AudioException If there is an error with the audio
    */
   @FXML
   private void muteTTS(ActionEvent event) throws AudioException, EngineStateError {
@@ -150,7 +150,7 @@ public class MainmenuController {
     }
   }
 
-  /** TODO JAVADOCS. */
+  /** Function to disable the skip button until all fxml files are loaded. */
   public static void disableSkipButton() {
     Task<Void> disableSkipButtonTask =
         new Task<Void>() {
