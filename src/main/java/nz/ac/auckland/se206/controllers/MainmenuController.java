@@ -15,6 +15,7 @@ import nz.ac.auckland.se206.gpt.openai.ChatCompletionRequest;
 /** A controller class for the main menu scene. */
 public class MainmenuController {
   public static Button btnSkip;
+  public static Button btnContinue;
 
   @FXML private Button btnBeginGame;
 
@@ -44,6 +45,8 @@ public class MainmenuController {
     GameState.isDifficultyEasy = false;
     GameState.isDifficultyMedium = false;
     GameState.isDifficultyHard = false;
+    DifficultyController.isDifficultyChecked = false;
+    DifficultyController.isTimeChecked = false;
     LabController.numHints = 5;
 
     // Initialise AI chat parameters
@@ -71,13 +74,34 @@ public class MainmenuController {
           System.out.println("All scenes loaded.");
           disableSkipButton();
         });
-    new Thread(loadTask).start();
+    Thread loadThread = new Thread(loadTask);
+    loadThread.setDaemon(true);
+    loadThread.start();
 
     // Set the UI to the difficulty selection screen
     SceneManager.addUi(AppUi.DIFFICULTY, App.loadFxml("difficulty"));
     App.setUi(AppUi.DIFFICULTY);
     SceneManager.addUi(AppUi.INTRO, App.loadFxml("intro"));
     textToSpeech("Select difficulty level and time limit.");
+
+    // Set the continue button to the difficulty selection screen
+    Task<Void> disableContinueButtonTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            while (App.currentUi == AppUi.DIFFICULTY) {
+              if (DifficultyController.isDifficultyChecked && DifficultyController.isTimeChecked) {
+                btnContinue.setDisable(false);
+              } else {
+                btnContinue.setDisable(true);
+              }
+            }
+            return null;
+          }
+        };
+    Thread disableContinueButtonThread = new Thread(disableContinueButtonTask);
+    disableContinueButtonThread.setDaemon(true);
+    disableContinueButtonThread.start();
   }
 
   /**
