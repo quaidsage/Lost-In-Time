@@ -113,6 +113,11 @@ public class ChatTaskGenerator {
         return new ChatMessage("assistant", "No more hints remaining...");
       }
 
+      // Generate TTS
+      if (!msg.getContent().equals(GptPromptEngineering.getContext())) {
+        TextToSpeech.runTTS(result.getChatMessage().getContent());
+      }
+
       return result.getChatMessage();
     } catch (ApiProxyException e) {
       e.printStackTrace();

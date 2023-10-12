@@ -17,6 +17,7 @@ import nz.ac.auckland.se206.gpt.ChatMessage;
 import nz.ac.auckland.se206.gpt.ChatTaskGenerator;
 import nz.ac.auckland.se206.gpt.GptPromptEngineering;
 import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
+import nz.ac.auckland.se206.speech.TextToSpeech;
 
 /** A controller class for the time machine scene. */
 public class TimemachineController {
@@ -63,6 +64,7 @@ public class TimemachineController {
 
   // Initialise contextTask
   private Task<ChatMessage> contextTask;
+  private ChatMessage contextResponse;
 
   /** Carries out specific tasks required when opening the scene. */
   public void initialize() {
@@ -70,8 +72,10 @@ public class TimemachineController {
     contextTask = ChatTaskGenerator.createTask(GptPromptEngineering.getContext());
     contextTask.setOnSucceeded(
         e -> {
-          ChatTaskGenerator.updateChat("-> ", contextTask.getValue());
+          contextResponse = contextTask.getValue();
+          IntroController.isContextGenerated = true;
         });
+    IntroController.isContextGenerated = false;
     Thread contextThread = new Thread(contextTask);
     contextThread.setDaemon(true);
     contextThread.start();
@@ -167,7 +171,8 @@ public class TimemachineController {
     LabController.labStartTimer(IntroController.minutes);
     StorageController.storageStartTimer(IntroController.minutes);
 
-    chatArea.setText(contextTask.getValue().getContent());
+    ChatTaskGenerator.updateChat("-> ", contextResponse);
+    TextToSpeech.runTTS(contextResponse.getContent());
   }
 
   /** Function to create an animation of the lights turning on. */

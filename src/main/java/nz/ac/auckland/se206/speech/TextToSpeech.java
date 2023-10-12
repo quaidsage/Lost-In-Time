@@ -1,10 +1,12 @@
 package nz.ac.auckland.se206.speech;
 
+import javafx.concurrent.Task;
 import javax.speech.AudioException;
 import javax.speech.Central;
 import javax.speech.EngineException;
 import javax.speech.synthesis.Synthesizer;
 import javax.speech.synthesis.SynthesizerModeDesc;
+import nz.ac.auckland.se206.gpt.ChatTaskGenerator;
 
 /** Text-to-speech API using the JavaX speech library. */
 public class TextToSpeech {
@@ -110,5 +112,30 @@ public class TextToSpeech {
     } catch (final EngineException e) {
       throw new TextToSpeechException(e.getMessage());
     }
+  }
+
+  /**
+   * Function to handle text to speech in seperate thread.
+   *
+   * @param msg The message to be spoken
+   */
+  public static void runTTS(String msg) {
+    // This method uses text-to-speech to speak the provided message.
+
+    // Create a task for text-to-speech
+    Task<Void> ttsTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            // Create an instance of TextToSpeech and speak the message
+            ChatTaskGenerator.textToSpeech.speak(msg);
+            return null;
+          }
+        };
+
+    // Create a thread to run the text-to-speech task
+    Thread ttsThread = new Thread(ttsTask);
+    ttsThread.setDaemon(true);
+    ttsThread.start();
   }
 }

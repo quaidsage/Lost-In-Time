@@ -9,8 +9,8 @@ import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.SceneManager.AppUi;
-import nz.ac.auckland.se206.gpt.ChatTaskGenerator;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionRequest;
+import nz.ac.auckland.se206.speech.TextToSpeech;
 
 /** A controller class for the main menu scene. */
 public class MainmenuController {
@@ -19,14 +19,12 @@ public class MainmenuController {
 
   @FXML private Button btnBeginGame;
 
-  private int count = 0;
-
   /** Initialises the main menu scene with the required settings. */
   public void initialize() {
     // This method is automatically called when the FXML is loaded.
     // It can be used for any initialization tasks.
 
-    textToSpeech("Lost in time. Restore the fabric of time.");
+    TextToSpeech.runTTS("Lost in time. Restore the fabric of time.");
   }
 
   /**
@@ -82,7 +80,7 @@ public class MainmenuController {
     SceneManager.addUi(AppUi.DIFFICULTY, App.loadFxml("difficulty"));
     App.setUi(AppUi.DIFFICULTY);
     SceneManager.addUi(AppUi.INTRO, App.loadFxml("intro"));
-    textToSpeech("Select difficulty level and time limit.");
+    TextToSpeech.runTTS("Select difficulty level and time limit.");
 
     // Set the continue button to the difficulty selection screen
     Task<Void> disableContinueButtonTask =
@@ -104,40 +102,23 @@ public class MainmenuController {
     disableContinueButtonThread.start();
   }
 
-  /**
-   * Function to handle text to speech in seperate thread.
-   *
-   * @param msg The message to be spoken
-   */
-  private void textToSpeech(String msg) {
-    // This method uses text-to-speech to speak the provided message.
-
-    // Create a task for text-to-speech
-    Task<Void> ttsTask =
+  public static void disableSkipButton() {
+    Task<Void> disableSkipButtonTask =
         new Task<Void>() {
           @Override
           protected Void call() throws Exception {
-            // Create an instance of TextToSpeech and speak the message
-
-            ChatTaskGenerator.textToSpeech.speak(msg);
-
-            if (count == 1) {
-              // Terminate the text-to-speech when done
-              ChatTaskGenerator.textToSpeech.terminate();
+            while (App.currentUi == AppUi.INTRO) {
+              if (IntroController.isContextGenerated) {
+                btnSkip.setDisable(false);
+              } else {
+                btnSkip.setDisable(true);
+              }
             }
-
-            count++;
             return null;
           }
         };
-
-    // Create a thread to run the text-to-speech task
-    Thread ttsThread = new Thread(ttsTask);
-    ttsThread.setDaemon(true);
-    ttsThread.start();
-  }
-
-  public static void disableSkipButton() {
-    btnSkip.setDisable(false);
+    Thread disableSkipButtonThread = new Thread(disableSkipButtonTask);
+    disableSkipButtonThread.setDaemon(true);
+    disableSkipButtonThread.start();
   }
 }
