@@ -9,8 +9,8 @@ import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.SceneManager.AppUi;
+import nz.ac.auckland.se206.gpt.ChatTaskGenerator;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionRequest;
-import nz.ac.auckland.se206.speech.TextToSpeech;
 
 /** A controller class for the main menu scene. */
 public class MainmenuController {
@@ -25,8 +25,7 @@ public class MainmenuController {
     // This method is automatically called when the FXML is loaded.
     // It can be used for any initialization tasks.
 
-    // TODO: Re-enable tts
-    // textToSpeech("Lost in time. Restore the fabric of time.");
+    textToSpeech("Lost in time. Restore the fabric of time.");
   }
 
   /**
@@ -78,8 +77,7 @@ public class MainmenuController {
     SceneManager.addUi(AppUi.DIFFICULTY, App.loadFxml("difficulty"));
     App.setUi(AppUi.DIFFICULTY);
     SceneManager.addUi(AppUi.INTRO, App.loadFxml("intro"));
-    // TODO: RE-eanble tts
-    // textToSpeech("Select difficulty level and time limit.");
+    textToSpeech("Select difficulty level and time limit.");
   }
 
   /**
@@ -96,12 +94,12 @@ public class MainmenuController {
           @Override
           protected Void call() throws Exception {
             // Create an instance of TextToSpeech and speak the message
-            TextToSpeech textToSpeech = new TextToSpeech();
-            textToSpeech.speak(msg);
+
+            ChatTaskGenerator.textToSpeech.speak(msg);
 
             if (count == 1) {
               // Terminate the text-to-speech when done
-              textToSpeech.terminate();
+              ChatTaskGenerator.textToSpeech.terminate();
             }
 
             count++;
@@ -110,7 +108,9 @@ public class MainmenuController {
         };
 
     // Create a thread to run the text-to-speech task
-    new Thread(ttsTask).start();
+    Thread ttsThread = new Thread(ttsTask);
+    ttsThread.setDaemon(true);
+    ttsThread.start();
   }
 
   public static void disableSkipButton() {
