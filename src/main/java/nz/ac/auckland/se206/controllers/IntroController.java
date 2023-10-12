@@ -33,18 +33,22 @@ public class IntroController {
 
   // Array of introduction messages
   private String[] interactions = {
-    "Greetings, intrepid traveler! You've stumbled into quite the temporal predicament.\n\n",
-    "My consciousness resides within this contraption, a victim of the very device that brought you"
-        + " here. Fear not, for I am a mad scientist with a penchant for fixing the"
-        + " unfathomable.\n\n",
-    "Alas, our time machine thirsts for a replenishment of time fluid, its essence for proper"
-        + " function depleted, and it yearns to be powered on once more.\n\n",
-    "Seek the time fluid reservoir within the machine's core, and find the temporal power switch"
-        + " nearby. As you administer the rejuvenating elixir and breathe life into the circuits,"
-        + " we edge closer to restoring the fabric of time.\n\n",
-    "We must hurry though, for the time machine has become unstable and will soon collapse",
-    "Let us not dally; our future awaits, both in this era and the moments yet to come. Onward, my"
-        + " courageous compatriot!"
+    "-> Greetings, intrepid traveler! You've stumbled into quite the temporal predicament.",
+    "\n\n"
+        + "-> My consciousness resides within this contraption, a victim of the very device that"
+        + " brought you here. Fear not, for I am a mad scientist with a penchant for fixing the"
+        + " unfathomable.",
+    "\n\n"
+        + "-> Alas, our time machine thirsts for a replenishment of time fluid, its essence for"
+        + " proper function depleted, and it yearns to be powered on once more.",
+    "\n\n"
+        + "-> Seek the time fluid reservoir within the machine's core, and find the temporal power"
+        + " switch nearby. As you administer the rejuvenating elixir and breathe life into the"
+        + " circuits, we edge closer to restoring the fabric of time.",
+    "\n\n-> We must hurry though, for the time machine has become unstable and will soon collapse",
+    "\n\n"
+        + "-> Let us not dally; our future awaits, both in this era and the moments yet to come."
+        + " Onward, my courageous compatriot!"
   };
 
   /** Initialise the introduction scene with specific settings. */
@@ -57,6 +61,8 @@ public class IntroController {
     updateTask(txtIntro);
 
     setVisiblity(true);
+
+    MainmenuController.btnSkip = btnSkip;
   }
 
   /**
@@ -94,9 +100,10 @@ public class IntroController {
     btnNext.setDisable(true);
 
     // Check if it's the last interaction, and switch to the time machine scene if so
-    if (interaction == interactions.length - 1) {
+    if (interaction == interactions.length) {
       onClickSkipIntro(null);
-    } else if (interaction == interactions.length - 2) {
+      return;
+    } else if (interaction == interactions.length - 1) {
       btnNext.setText("Onward");
     }
 

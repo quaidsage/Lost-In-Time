@@ -14,6 +14,8 @@ import nz.ac.auckland.se206.speech.TextToSpeech;
 
 /** A controller class for the main menu scene. */
 public class MainmenuController {
+  public static Button btnSkip;
+
   @FXML private Button btnBeginGame;
 
   private int count = 0;
@@ -65,8 +67,12 @@ public class MainmenuController {
             return null;
           }
         };
-    Thread loadThread = new Thread(loadTask);
-    loadThread.start();
+    loadTask.setOnSucceeded(
+        e -> {
+          System.out.println("All scenes loaded.");
+          disableSkipButton();
+        });
+    new Thread(loadTask).start();
 
     // Set the UI to the difficulty selection screen
     SceneManager.addUi(AppUi.DIFFICULTY, App.loadFxml("difficulty"));
@@ -105,5 +111,9 @@ public class MainmenuController {
 
     // Create a thread to run the text-to-speech task
     new Thread(ttsTask).start();
+  }
+
+  public static void disableSkipButton() {
+    btnSkip.setDisable(false);
   }
 }
