@@ -12,12 +12,14 @@ import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
+import nz.ac.auckland.se206.speech.TextToSpeech;
 
 /** A controller class for the intro scene. */
 public class IntroController {
   public static Task<Void> appendTask;
   public static ChatMessage msg;
   public static int minutes;
+  public static boolean isContextGenerated;
 
   // Define FXML elements
   @FXML private Button btnSkip;
@@ -60,9 +62,9 @@ public class IntroController {
             "You wake up in a strange room...\n Next to you, you see a strange device glowing.");
     updateTask(txtIntro);
 
-    setVisiblity(true);
-
     MainmenuController.btnSkip = btnSkip;
+
+    setVisiblity(true);
   }
 
   /**
@@ -90,6 +92,7 @@ public class IntroController {
     // Start appending the first interaction message
     msg = new ChatMessage("assistant", interactions[0]);
     updateTask(txtAi);
+    TextToSpeech.runTTS(msg.getContent());
     Thread appendThread = new Thread(appendTask);
     appendThread.setDaemon(true);
     appendThread.start();
@@ -114,6 +117,8 @@ public class IntroController {
     // Start appending the next interaction message
     msg = new ChatMessage("assistant", interactions[interaction]);
     updateTask(txtAi);
+    TextToSpeech.runTTS(msg.getContent());
+    TextToSpeech.runTTS(msg.getContent());
     Thread appendThread = new Thread(appendTask);
     appendThread.setDaemon(true);
     appendThread.start();

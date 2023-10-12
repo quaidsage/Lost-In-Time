@@ -22,6 +22,7 @@ public class ChatTaskGenerator {
   static TextArea chatArea;
   static ImageView imgScientistThinking;
   static ImageView typingBubble;
+  public static ChatMessage contextResponse;
   public static ArrayList<TextArea> chatAreas = new ArrayList<TextArea>();
   public static ArrayList<ImageView> thinkingAnimationImages = new ArrayList<ImageView>();
   public static ArrayList<Button> sendButtons = new ArrayList<Button>();
@@ -111,6 +112,11 @@ public class ChatTaskGenerator {
       if (result.getChatMessage().getContent().contains("Hint:")
           && (GameState.isDifficultyHard || LabController.numHints <= 0)) {
         return new ChatMessage("assistant", "No more hints remaining...");
+      }
+
+      // Generate TTS
+      if (!msg.getContent().equals(GptPromptEngineering.getContext())) {
+        TextToSpeech.runTTS(result.getChatMessage().getContent());
       }
 
       return result.getChatMessage();
