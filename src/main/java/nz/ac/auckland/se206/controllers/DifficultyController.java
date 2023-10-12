@@ -1,5 +1,6 @@
 package nz.ac.auckland.se206.controllers;
 
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -34,7 +35,6 @@ public class DifficultyController {
   @FXML private CheckBox chkbxFourMins;
   @FXML private CheckBox chkbxSixMins;
   @FXML private Label lblSelectBoxesWarning;
-  
 
   // Default settings and variables
   private int minutes = 4;
@@ -44,6 +44,28 @@ public class DifficultyController {
   // Variables to track the current difficulty and time settings
   private Difficulty currentDifficulty;
   private TimeSetting currentTimeSetting;
+
+  /** Initialise check of check-box selection. */
+  public void initialize() {
+    Task<Void> disableContinueButtonTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            // Disable the continue button until both difficulty and time settings are selected
+            while (App.currentUi == AppUi.DIFFICULTY || App.currentUi == AppUi.MAINMENU) {
+              if (isDifficultyChecked && isTimeChecked) {
+                btnSwitchToTimeMachine.setDisable(false);
+              } else {
+                btnSwitchToTimeMachine.setDisable(true);
+              }
+            }
+            return null;
+          }
+        };
+    Thread disableContinueButtonThread = new Thread(disableContinueButtonTask);
+    disableContinueButtonThread.setDaemon(true);
+    disableContinueButtonThread.start();
+  }
 
   /**
    * Function to handle switching to intro scene.
