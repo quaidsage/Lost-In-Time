@@ -19,7 +19,19 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" style="-fx-background-color: rgb(28,28,28);" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.StorageController">
    <children>
-      <ImageView fx:id="background" fitHeight="585.0" fitWidth="960.0" layoutX="25.0" layoutY="67.0" pickOnBounds="true">
+   <ImageView fitHeight="739.0" fitWidth="1349.0" layoutX="-13.0" layoutY="-12.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/BaseUI.jpg" />
+         </image>
+         <effect>
+            <DropShadow height="96.72" radius="42.8525" spread="0.79" width="76.69">
+               <color>
+                  <Color red="0.1184210553765297" green="0.1184210553765297" blue="0.1184210553765297" />
+               </color>
+            </DropShadow>
+         </effect>
+      </ImageView>
+      <ImageView fx:id="background" fitHeight="593.0" fitWidth="960.0" layoutX="25.0" layoutY="60.0" pickOnBounds="true">
          <image>
             <Image url="@../images/wepik-export-20230918120206Hm9p.png" />
          </image>
@@ -38,9 +50,9 @@
             <Font name="Monospace 821 Bold BT" size="32.0" />
          </font>
       </Label>
-      <Button id="btnSkip" fx:id="btnSwitchToTimeMachine" layoutX="578.0" layoutY="660.0" mnemonicParsing="false" onAction="#onClickTimeMachineRoom" prefHeight="79.0" prefWidth="406.0" text="Time Machine Room">
+      <Button id="btnSkip" fx:id="btnSwitchToTimeMachine" layoutX="639.0" layoutY="676.0" mnemonicParsing="false" onAction="#onClickTimeMachineRoom" prefHeight="41.0" prefWidth="350.0" text="Time Machine Room">
          <font>
-            <Font name="System Bold" size="36.0" />
+            <Font name="Monospace 821 Bold BT" size="27.0" />
          </font></Button>
       <TextArea id="chatField" fx:id="chatField" layoutX="1027.0" layoutY="571.0" prefHeight="106.0" prefWidth="208.0" promptText="Enter message..." stylesheets="@../css/style.css" wrapText="true">
          <font>
@@ -123,13 +135,13 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Text>
-      <Button id="btnSkip" fx:id="btnMenu" layoutX="25.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClickReturn" text="Return To Menu">
+      <Button id="btnSkip" fx:id="btnMenu" layoutX="25.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickReturn" stylesheets="@../css/style.css" text="Return To Menu">
          <font>
-            <Font name="System Bold" size="24.0" />
+            <Font name="Monospace 821 Bold BT" size="17.0" />
          </font></Button>
-      <Text fill="#6bf9b1" layoutX="749.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently in: Storage Room" wrappingWidth="235.0">
+      <Text fill="#6bf9b1" layoutX="463.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently in: Storage Room" textAlignment="RIGHT" wrappingWidth="522.0">
          <font>
-            <Font name="Apple Symbols" size="24.0" />
+            <Font name="Monospace 821 Bold BT" size="20.0" />
          </font>
       </Text>
       <ImageView fx:id="typingBubble" fitHeight="70.0" fitWidth="107.0" layoutX="1212.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true" visible="false">

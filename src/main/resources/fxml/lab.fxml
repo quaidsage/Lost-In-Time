@@ -17,7 +17,19 @@
 
 <Pane fx:id="paneLab" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" style="-fx-background-color: rgb(28,28,28);" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.LabController">
    <children>
-      <ImageView fx:id="baseImage" fitHeight="585.0" fitWidth="960.0" layoutX="25.0" layoutY="67.0" pickOnBounds="true">
+   <ImageView fitHeight="739.0" fitWidth="1349.0" layoutX="-13.0" layoutY="-12.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/BaseUI.jpg" />
+         </image>
+         <effect>
+            <DropShadow height="96.72" radius="42.8525" spread="0.79" width="76.69">
+               <color>
+                  <Color red="0.1184210553765297" green="0.1184210553765297" blue="0.1184210553765297" />
+               </color>
+            </DropShadow>
+         </effect>
+      </ImageView>
+      <ImageView fx:id="baseImage" fitHeight="593.0" fitWidth="960.0" layoutX="25.0" layoutY="59.0" pickOnBounds="true">
          <image>
             <Image url="@../images/lab.jpg" />
          </image>
@@ -41,9 +53,9 @@
             <Font name="Monospace 821 Bold BT" size="32.0" />
          </font>
       </Label>
-      <Button id="btnSkip" fx:id="btnSwitchToTimeMachine" layoutX="25.0" layoutY="660.0" mnemonicParsing="false" onAction="#onClickTimeMachineRoom" prefHeight="79.0" prefWidth="408.0" text="Time Machine Room">
+      <Button id="btnSkip" fx:id="btnSwitchToTimeMachine" layoutX="25.0" layoutY="677.0" mnemonicParsing="false" onAction="#onClickTimeMachineRoom" prefHeight="41.0" prefWidth="350.0" text="Time Machine Room">
          <font>
-            <Font name="System Bold" size="36.0" />
+            <Font name="Monospace 821 Bold BT" size="27.0" />
          </font></Button>
       <TextArea id="chatField" fx:id="chatField" layoutX="1027.0" layoutY="571.0" prefHeight="106.0" prefWidth="208.0" promptText="Enter message..." stylesheets="@../css/style.css" wrapText="true">
          <font>
@@ -69,7 +81,7 @@
          <font>
             <Font name="Monospace 821 Bold BT" size="24.0" />
          </font></Button>
-      <Polyline id="chemGeneral" fx:id="chemicalGeneral" layoutX="319.0" layoutY="313.0" onMouseClicked="#onClickChemicals" opacity="0.0" points="335.0, 98.0, 335.0, 199.0, 124.0, 161.0, 124.0, 86.0" stroke="TRANSPARENT" strokeType="INSIDE">
+      <Polyline id="chemGeneral" fx:id="chemicalGeneral" layoutX="319.0" layoutY="313.0" onMouseClicked="#onClickChemicals" opacity="0.0" points="335.0, 98.0, 335.0, 199.0, 124.0, 161.0, 124.0, 75.0" stroke="TRANSPARENT" strokeType="INSIDE">
          <fill>
             <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
                <stops>
@@ -95,13 +107,13 @@
       <Rectangle fx:id="chemicalOrange" arcHeight="5.0" arcWidth="5.0" fill="#ff6969" height="236.0" layoutX="680.0" layoutY="255.0" onMouseClicked="#onClickChemical" onMouseEntered="#onMouseEnterChemical" onMouseExited="#onMouseExitChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="67.0" />
       <Rectangle fx:id="chemicalRed" arcHeight="5.0" arcWidth="5.0" fill="#ff7e38" height="237.0" layoutX="780.0" layoutY="255.0" onMouseClicked="#onClickChemical" onMouseEntered="#onMouseEnterChemical" onMouseExited="#onMouseExitChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="72.0" />
       <Rectangle fx:id="transitionScene" arcHeight="5.0" arcWidth="5.0" height="775.0" layoutX="-14.0" layoutY="-11.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="1427.0" />
-      <Button id="btnSkip" fx:id="btnMenu" layoutX="25.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClickReturn" text="Return To Menu">
+      <Button id="btnSkip" fx:id="btnMenu" layoutX="25.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickReturn" stylesheets="@../css/style.css" text="Return To Menu">
          <font>
-            <Font name="System Bold" size="24.0" />
+            <Font name="Monospace 821 Bold BT" size="17.0" />
          </font></Button>
-      <Text fill="#6bf9b1" layoutX="790.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently in: Lab Room" wrappingWidth="194.64062500000003">
+      <Text fill="#6bf9b1" layoutX="547.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently in: Lab Room" textAlignment="RIGHT" wrappingWidth="439.1156921386719">
          <font>
-            <Font name="Apple Symbols" size="24.0" />
+            <Font name="Monospace 821 Bold BT" size="20.0" />
          </font>
       </Text>
      <ImageView fx:id="typingBubble" fitHeight="70.0" fitWidth="107.0" layoutX="1212.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true" visible="false">
