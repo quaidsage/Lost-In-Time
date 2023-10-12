@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "Monospace 821 Bold BT";
+    src: url("../fonts/monospace-821-bold-bt.ttf") format("woff"), url("../fonts/monospace-821-bold-bt.ttf") format("opentype"), url("../fonts/monospace-821-bold-bt.ttf") format("truetype");
+}
+
 .text-area {
     background-color: rgb(48, 48, 48), rgb(48, 48, 48);
     color: rgb(107, 249, 177);

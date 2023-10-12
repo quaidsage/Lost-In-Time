@@ -7,18 +7,11 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" style="-fx-background-color: rgb(28,28,28);" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.EndsceneController">
    <children>
-      <Label layoutX="104.0" layoutY="254.0" prefHeight="70.0" prefWidth="1194.0" text="You win! You successfully escaped using the time machine." textFill="#6bf9b1">
-         <font>
-            <Font name="System Bold" size="48.0" />
-         </font></Label>
-      <Button id="btnSkip" fx:id="btnMenu" layoutX="534.0" layoutY="423.0" mnemonicParsing="false" onAction="#onClickBackToMenu" text="Back to Menu">
-         <font>
-            <Font name="System Bold" size="48.0" />
-         </font></Button>
-      <Label layoutX="593.0" layoutY="177.0" prefHeight="70.0" prefWidth="207.0" text="Well done..." textFill="#6bf9b1">
-         <font>
-            <Font name="Apple Symbols" size="48.0" />
-         </font>
+      <Label layoutX="104.0" layoutY="254.0" prefHeight="70.0" prefWidth="1194.0" text="You win! You successfully escaped using the time machine." textFill="#6bf9b1" style="-fx-font-size: 36.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
+      </Label>
+      <Button id="btnSkip" fx:id="btnMenu" layoutX="534.0" layoutY="423.0" mnemonicParsing="false" onAction="#onClickBackToMenu" text="Back to Menu" style="-fx-font-size: 36.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
+      </Button>
+      <Label layoutX="593.0" layoutY="177.0" prefHeight="70.0" prefWidth="207.0" text="Well done..." textFill="#6bf9b1" style="-fx-font-size: 40.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
       </Label>
    </children>
 </Pane>
