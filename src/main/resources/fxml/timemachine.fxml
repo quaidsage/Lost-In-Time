@@ -35,6 +35,7 @@
          <font>
             <Font name="System Bold" size="36.0" />
          </font></Button>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#303030" height="64.0" layoutX="1030.0" layoutY="276.0" stroke="TRANSPARENT" strokeType="INSIDE" width="342.0" />
       <TextArea id="chatField" fx:id="chatField" layoutX="1027.0" layoutY="571.0" prefHeight="106.0" prefWidth="208.0" promptText="Enter message..." stylesheets="@../css/style.css" wrapText="true">
          <font>
             <Font name="Monospace 821 Bold BT" size="18.0" />
@@ -45,7 +46,6 @@
             <Font name="Monospace 821 Bold BT" size="16.0" />
          </font>
       </TextArea>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#303030" height="64.0" layoutX="1030.0" layoutY="276.0" stroke="TRANSPARENT" strokeType="INSIDE" width="342.0" />
       <ImageView fitHeight="150.0" fitWidth="277.0" layoutX="1032.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/scientist.gif" />
