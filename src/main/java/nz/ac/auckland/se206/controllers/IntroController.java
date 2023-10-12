@@ -62,9 +62,9 @@ public class IntroController {
             "You wake up in a strange room...\n Next to you, you see a strange device glowing.");
     updateTask(txtIntro);
 
-    setVisiblity(true);
-
     MainmenuController.btnSkip = btnSkip;
+
+    setVisiblity(true);
   }
 
   /**
@@ -92,9 +92,7 @@ public class IntroController {
     // Start appending the first interaction message
     msg = new ChatMessage("assistant", interactions[0]);
     updateTask(txtAi);
-    if (!MainmenuController.isTTSMuted) {
-      TextToSpeech.runTTS(msg.getContent());
-    }
+    TextToSpeech.runTTS(msg.getContent());
     Thread appendThread = new Thread(appendTask);
     appendThread.setDaemon(true);
     appendThread.start();
@@ -119,9 +117,7 @@ public class IntroController {
     // Start appending the next interaction message
     msg = new ChatMessage("assistant", interactions[interaction]);
     updateTask(txtAi);
-    if (!MainmenuController.isTTSMuted) {
-      TextToSpeech.runTTS(msg.getContent());
-    }
+    TextToSpeech.runTTS(msg.getContent());
     TextToSpeech.runTTS(msg.getContent());
     Thread appendThread = new Thread(appendTask);
     appendThread.setDaemon(true);

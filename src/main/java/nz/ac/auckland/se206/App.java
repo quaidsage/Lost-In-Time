@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.SceneManager.AppUi;
+import nz.ac.auckland.se206.gpt.ChatTaskGenerator;
 
 /**
  * This is the entry point of the JavaFX application, while you can change this class, it should
@@ -25,6 +26,9 @@ public class App extends Application {
 
   public static void setRoot(String fxml) throws IOException {
     scene.setRoot(loadFxml(fxml));
+
+    // Clear TTS
+    ChatTaskGenerator.textToSpeech.clear();
   }
 
   /**
@@ -58,6 +62,12 @@ public class App extends Application {
   // Sets the Ui without resetting the state
   public static void setUi(AppUi newUi) {
     scene.setRoot(SceneManager.getUiRoot(newUi));
+
+    // Remove tts queue when switching non-game scenes
+    if (currentUi == AppUi.MAINMENU || currentUi == AppUi.DIFFICULTY || currentUi == AppUi.INTRO) {
+      ChatTaskGenerator.textToSpeech.clear();
+    }
+
     currentUi = newUi;
   }
 

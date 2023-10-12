@@ -72,10 +72,14 @@ public class DifficultyController {
 
       // Set the selected time setting for the intro screen
       IntroController.minutes = minutes;
+
       Thread appendThread = new Thread(IntroController.appendTask);
       appendThread.setDaemon(true);
       appendThread.start();
+
       App.setUi(AppUi.INTRO);
+
+      MainmenuController.disableSkipButton();
     }
   }
 

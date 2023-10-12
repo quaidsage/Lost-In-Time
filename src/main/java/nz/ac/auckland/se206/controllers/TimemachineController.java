@@ -15,7 +15,6 @@ import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
 import nz.ac.auckland.se206.gpt.ChatTaskGenerator;
-import nz.ac.auckland.se206.gpt.GptPromptEngineering;
 import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 
@@ -62,23 +61,8 @@ public class TimemachineController {
   @FXML private Button btnMenu;
   @FXML private ImageView typingBubble;
 
-  // Initialise contextTask
-  private Task<ChatMessage> contextTask;
-  private ChatMessage contextResponse;
-
   /** Carries out specific tasks required when opening the scene. */
   public void initialize() {
-    // Generate ai response for the context of the game
-    contextTask = ChatTaskGenerator.createTask(GptPromptEngineering.getContext());
-    contextTask.setOnSucceeded(
-        e -> {
-          contextResponse = contextTask.getValue();
-          IntroController.isContextGenerated = true;
-        });
-    IntroController.isContextGenerated = false;
-    Thread contextThread = new Thread(contextTask);
-    contextThread.setDaemon(true);
-    contextThread.start();
 
     // Initialise timer and bind the lblTimer to the timerController properties.
     timer = new TimerController();
@@ -171,11 +155,29 @@ public class TimemachineController {
     LabController.labStartTimer(IntroController.minutes);
     StorageController.storageStartTimer(IntroController.minutes);
 
-    // Append context to chat and if unmuted, use TTS
-    ChatTaskGenerator.updateChat("-> ", contextResponse);
-    if (!MainmenuController.isTTSMuted) {
-      TextToSpeech.runTTS(contextResponse.getContent());
-    }
+    // Add context response to start of game
+    Task<Void> appendContextTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            while ((App.currentUi != AppUi.TIMEMACHINE)
+                || ChatTaskGenerator.contextResponse == null) {
+              Thread.sleep(100);
+            }
+            return null;
+          }
+        };
+    appendContextTask.setOnSucceeded(
+        e -> {
+          // Append context to chat and if unmuted, use TTS
+          ChatTaskGenerator.updateChat("-> ", ChatTaskGenerator.contextResponse);
+          if (!MainmenuController.isTTSMuted) {
+            TextToSpeech.runTTS(ChatTaskGenerator.contextResponse.getContent());
+          }
+        });
+    Thread appendContextThread = new Thread(appendContextTask);
+    appendContextThread.setDaemon(true);
+    appendContextThread.start();
   }
 
   /** Function to create an animation of the lights turning on. */

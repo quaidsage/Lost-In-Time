@@ -7,6 +7,7 @@ import javax.speech.EngineException;
 import javax.speech.EngineStateError;
 import javax.speech.synthesis.Synthesizer;
 import javax.speech.synthesis.SynthesizerModeDesc;
+import nz.ac.auckland.se206.controllers.MainmenuController;
 import nz.ac.auckland.se206.gpt.ChatTaskGenerator;
 
 /** Text-to-speech API using the JavaX speech library. */
@@ -121,7 +122,10 @@ public class TextToSpeech {
    * @param msg The message to be spoken
    */
   public static void runTTS(String msg) {
-    // This method uses text-to-speech to speak the provided message.
+    // If TTS is muted, return
+    if (MainmenuController.isTTSMuted) {
+      return;
+    }
 
     // Create a task for text-to-speech
     Task<Void> ttsTask =
@@ -153,5 +157,10 @@ public class TextToSpeech {
     } else {
       synthesizer.resume();
     }
+  }
+
+  /** Function to clear current queue of text. */
+  public void clear() {
+    synthesizer.cancelAll();
   }
 }
