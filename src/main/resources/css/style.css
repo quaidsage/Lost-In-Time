@@ -51,6 +51,15 @@
     -fx-text-fill: rgb(42, 42, 42);
 }
 
+#btnSend:hover,
+#btnSkip:hover {
+    background-color: rgb(100, 242, 170);
+    -fx-background-color: rgb(100, 242, 170);
+    -fx-text-fill: rgb(38, 38, 38);
+    cursor: hand;
+    -fx-cursor: hand;
+}
+
 #lblTimer {
     color: rgb(107, 249, 177);
     -fx-text-fill: rgb(107, 249, 177);
@@ -75,6 +84,8 @@
 #chemGeneral:hover {
     opacity: 0.4;
     -fx-opacity: 0.4;
+    cursor: hand;
+    -fx-cursor: hand;
 }
 
 #circuitBox {
@@ -85,6 +96,8 @@
 #circuitBox:hover {
     opacity: 0.4;
     -fx-opacity: 0.4;
+    cursor: hand;
+    -fx-cursor: hand;
 }
 
 #timeMachine {
@@ -95,4 +108,11 @@
 #timeMachine:hover {
     opacity: 0.4;
     -fx-opacity: 0.4;
+    cursor: hand;
+    -fx-cursor: hand;
+}
+
+.check-box:hover {
+    cursor: hand;
+    -fx-cursor: hand;
 }

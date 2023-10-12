@@ -57,7 +57,9 @@ public class StorageController {
   public static void delay(int ms, Runnable continuation) {
     Task<Void> delayTask = Delay.createDelay(ms);
     delayTask.setOnSucceeded(event -> continuation.run());
-    new Thread(delayTask).start();
+    Thread delayThread = new Thread(delayTask);
+    delayThread.setDaemon(true);
+    delayThread.start();
   }
 
   // JavaFX elements
@@ -271,7 +273,9 @@ public class StorageController {
         e -> {
           ChatTaskGenerator.updateChat("\n\n-> ", storageTaskComplete.getValue());
         });
-    new Thread(storageTaskComplete).start();
+    Thread storageTaskCompleteThread = new Thread(storageTaskComplete);
+    storageTaskCompleteThread.setDaemon(true);
+    storageTaskCompleteThread.start();
   }
 
   /** Function to handle the next round of minigame. */

@@ -14,6 +14,7 @@ import nz.ac.auckland.se206.controllers.LabController;
 import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
+import nz.ac.auckland.se206.speech.TextToSpeech;
 
 /** A class to generate a chat task. This class is used by many scenes within the game. */
 public class ChatTaskGenerator {
@@ -24,6 +25,7 @@ public class ChatTaskGenerator {
   public static ArrayList<TextArea> chatAreas = new ArrayList<TextArea>();
   public static ArrayList<ImageView> thinkingAnimationImages = new ArrayList<ImageView>();
   public static ArrayList<Button> sendButtons = new ArrayList<Button>();
+  public static TextToSpeech textToSpeech = new TextToSpeech();
 
   /**
    * Function to handle user messages and returning an ai response to all game scenes.

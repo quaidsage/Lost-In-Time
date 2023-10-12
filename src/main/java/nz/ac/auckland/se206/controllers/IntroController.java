@@ -76,7 +76,9 @@ public class IntroController {
     App.setUi(AppUi.TIMEMACHINE);
 
     // Start the round function in the time machine scene
-    new Thread(TimemachineController.startTask).start();
+    Thread startThread = new Thread(TimemachineController.startTask);
+    startThread.setDaemon(true);
+    startThread.start();
   }
 
   /** Function to handle starting interaction with the AI. */
@@ -88,7 +90,9 @@ public class IntroController {
     // Start appending the first interaction message
     msg = new ChatMessage("assistant", interactions[0]);
     updateTask(txtAi);
-    new Thread(appendTask).start();
+    Thread appendThread = new Thread(appendTask);
+    appendThread.setDaemon(true);
+    appendThread.start();
   }
 
   /** Function to handle the next interaction with the AI. */
@@ -110,7 +114,9 @@ public class IntroController {
     // Start appending the next interaction message
     msg = new ChatMessage("assistant", interactions[interaction]);
     updateTask(txtAi);
-    new Thread(appendTask).start();
+    Thread appendThread = new Thread(appendTask);
+    appendThread.setDaemon(true);
+    appendThread.start();
   }
 
   /**

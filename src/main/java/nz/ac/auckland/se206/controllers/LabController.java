@@ -60,7 +60,9 @@ public class LabController {
   public static void delay(int ms, Runnable continuation) {
     Task<Void> delayTask = Delay.createDelay(ms);
     delayTask.setOnSucceeded(event -> continuation.run());
-    new Thread(delayTask).start();
+    Thread delayThread = new Thread(delayTask);
+    delayThread.setDaemon(true);
+    delayThread.start();
   }
 
   // Fields for JavaFX elements
@@ -187,7 +189,9 @@ public class LabController {
     labRiddleTask =
         ChatTaskGenerator.createTask(
             GptPromptEngineering.getRiddleLab(LabController.solutionColours));
-    new Thread(labRiddleTask).start();
+    Thread labRiddleThread = new Thread(labRiddleTask);
+    labRiddleThread.setDaemon(true);
+    labRiddleThread.start();
     labRiddleTask.setOnSucceeded(
         e -> {
           ChatTaskGenerator.updateChat("\n\n-> ", labRiddleTask.getValue());
@@ -445,7 +449,9 @@ public class LabController {
             return null;
           }
         };
-    new Thread(initLabTask).start();
+    Thread initLabThread = new Thread(initLabTask);
+    initLabThread.setDaemon(true);
+    initLabThread.start();
   }
 
   /** Increment number of solutions added and check if puzzle is complete. */
@@ -466,7 +472,9 @@ public class LabController {
     // Create task to run GPT model for lab complete message
     Task<ChatMessage> labCompleteTask =
         ChatTaskGenerator.createTask(GptPromptEngineering.getLabComplete());
-    new Thread(labCompleteTask).start();
+    Thread labCompleteThread = new Thread(labCompleteTask);
+    labCompleteThread.setDaemon(true);
+    labCompleteThread.start();
 
     labCompleteTask.setOnSucceeded(
         e -> {

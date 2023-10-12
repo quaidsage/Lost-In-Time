@@ -5,21 +5,20 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" style="-fx-background-color: rgb(28,28,28);" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.DifficultyController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" style="-fx-background-color: rgb(28,28,28);" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.DifficultyController">
    <children>
-      <Label layoutX="239.0" layoutY="231.0" text="Difficulty:" textFill="#6bf9b1" style="-fx-font-size: 48.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
+      <Label layoutX="239.0" layoutY="231.0" style="-fx-font-size: 48.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" text="Difficulty:" textFill="#6bf9b1">
       </Label>
-      <Label layoutX="859.0" layoutY="231.0" text="Time Limit:" textFill="#6bf9b1" style="-fx-font-size: 48.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
+      <Label layoutX="859.0" layoutY="231.0" style="-fx-font-size: 48.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" text="Time Limit:" textFill="#6bf9b1">
       </Label>
       <VBox layoutX="267.0" layoutY="306.0" prefHeight="212.0" prefWidth="322.0" style="-fx-font-size: 20.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
          <children>
-            <CheckBox fx:id="chkbxEasy" mnemonicParsing="false" onAction="#onClickEasy" prefHeight="44.0" prefWidth="305.0" text="Easy    - unlimited hints" textFill="#6bf9b1" >
+            <CheckBox fx:id="chkbxEasy" mnemonicParsing="false" onAction="#onClickEasy" prefHeight="44.0" prefWidth="305.0" style="{-fx-cursor: default;}:hover{-fx-cursor: hand;}" text="Easy         - Unlimited Hints" textFill="#6bf9b1">
             </CheckBox>
-            <CheckBox fx:id="chkbxMedium" mnemonicParsing="false" onAction="#onClickMedium" prefHeight="44.0" prefWidth="233.0" text="Medium - 5 hints" textFill="#6bf9b1">
+            <CheckBox fx:id="chkbxMedium" mnemonicParsing="false" onAction="#onClickMedium" prefHeight="44.0" prefWidth="233.0" text="Medium  - 5 Hints" textFill="#6bf9b1">
             </CheckBox>
-            <CheckBox fx:id="chkbxHard" mnemonicParsing="false" onAction="#onClickHard" prefHeight="44.0" prefWidth="233.0" text="Hard    - no hints" textFill="#6bf9b1">
+            <CheckBox fx:id="chkbxHard" mnemonicParsing="false" onAction="#onClickHard" prefHeight="44.0" prefWidth="233.0" text="Hard        - No Hints" textFill="#6bf9b1">
             </CheckBox>
          </children>
       </VBox>
@@ -33,11 +32,11 @@
             </CheckBox>
          </children>
       </VBox>
-      <Button id="btnSkip" fx:id="btnSwitchToTimeMachine" layoutX="1131.0" layoutY="624.0" mnemonicParsing="false" onAction="#onClickContinue" stylesheets="@../css/style.css" text="Continue" style="-fx-font-size: 36.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
+      <Button id="btnSkip" fx:id="btnSwitchToTimeMachine" disable="true" layoutX="1131.0" layoutY="624.0" mnemonicParsing="false" onAction="#onClickContinue" style="-fx-font-size: 36.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="Continue">
       </Button>
-      <Label layoutX="74.0" layoutY="46.0" prefHeight="70.0" prefWidth="909.0" text="Select Difficulty Level and Time Limit" textFill="#6bf9b1" style="-fx-font-size: 48.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
+      <Label layoutX="74.0" layoutY="46.0" prefHeight="70.0" prefWidth="909.0" style="-fx-font-size: 48.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" text="Select Difficulty Level and Time Limit" textFill="#6bf9b1">
       </Label>
-      <Label fx:id="lblSelectBoxesWarning" layoutX="606.0" layoutY="629.0" prefHeight="70.0" prefWidth="469.0" textAlignment="CENTER" textFill="#6bf9b1" style="-fx-font-size: 36.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
+      <Label fx:id="lblSelectBoxesWarning" layoutX="606.0" layoutY="629.0" prefHeight="70.0" prefWidth="469.0" style="-fx-font-size: 36.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" textAlignment="CENTER" textFill="#6bf9b1">
       </Label>
    </children>
 </Pane>

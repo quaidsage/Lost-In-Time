@@ -43,7 +43,9 @@ public class TimemachineController {
   public static void delay(int ms, Runnable continuation) {
     Task<Void> delayTask = Delay.createDelay(ms);
     delayTask.setOnSucceeded(event -> continuation.run());
-    new Thread(delayTask).start();
+    Thread delayThread = new Thread(delayTask);
+    delayThread.setDaemon(true);
+    delayThread.start();
   }
 
   // JavaFX elements
@@ -70,7 +72,9 @@ public class TimemachineController {
         e -> {
           ChatTaskGenerator.updateChat("-> ", contextTask.getValue());
         });
-    new Thread(contextTask).start();
+    Thread contextThread = new Thread(contextTask);
+    contextThread.setDaemon(true);
+    contextThread.start();
 
     // Initialise timer and bind the lblTimer to the timerController properties.
     timer = new TimerController();
@@ -94,7 +98,9 @@ public class TimemachineController {
     App.setUi(AppUi.LAB);
     if (!GameState.isLabVisited) {
       GameState.isLabVisited = true;
-      new Thread(LabController.labIntroTask).start();
+      Thread labIntroThread = new Thread(LabController.labIntroTask);
+      labIntroThread.setDaemon(true);
+      labIntroThread.start();
     }
   }
 
@@ -108,7 +114,9 @@ public class TimemachineController {
     App.setUi(AppUi.STORAGE);
     if (!GameState.isStorageVisited) {
       GameState.isStorageVisited = true;
-      new Thread(StorageController.storageIntroTask).start();
+      Thread storageIntroThread = new Thread(StorageController.storageIntroTask);
+      storageIntroThread.setDaemon(true);
+      storageIntroThread.start();
     }
   }
 

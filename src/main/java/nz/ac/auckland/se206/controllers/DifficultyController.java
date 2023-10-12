@@ -34,16 +34,21 @@ public class DifficultyController {
   @FXML private CheckBox chkbxFourMins;
   @FXML private CheckBox chkbxSixMins;
   @FXML private Label lblSelectBoxesWarning;
-  
 
   // Default settings and variables
   private int minutes = 4;
-  private boolean isDifficultyChecked = false;
-  private boolean isTimeChecked = false;
+  public static boolean isDifficultyChecked = false;
+  public static boolean isTimeChecked = false;
 
   // Variables to track the current difficulty and time settings
   private Difficulty currentDifficulty;
   private TimeSetting currentTimeSetting;
+
+  /** Apply settings on initialisation */
+  public void initialize() {
+    // Send button to switch scenes to time machine to main menu to disable
+    MainmenuController.btnContinue = btnSwitchToTimeMachine;
+  }
 
   /**
    * Function to handle switching to intro scene.
@@ -68,6 +73,7 @@ public class DifficultyController {
       // Set the selected time setting for the intro screen
       IntroController.minutes = minutes;
       Thread appendThread = new Thread(IntroController.appendTask);
+      appendThread.setDaemon(true);
       appendThread.start();
       App.setUi(AppUi.INTRO);
     }
