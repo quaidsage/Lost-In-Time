@@ -45,24 +45,13 @@
          </effect>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#303030" height="64.0" layoutX="1030.0" layoutY="276.0" stroke="TRANSPARENT" strokeType="INSIDE" width="342.0" />
-      <Label id="lblTimer" fx:id="lblTimer" layoutX="1153.0" layoutY="276.0" prefHeight="41.0" prefWidth="118.0" stylesheets="@../css/style.css" text="XX:XX" textFill="#6bf9b1">
-         <font>
-            <Font name="Monospace 821 Bold BT" size="32.0" />
-         </font>
+      <Label id="lblTimer" fx:id="lblTimer" layoutX="1153.0" layoutY="276.0" prefHeight="41.0" prefWidth="118.0" stylesheets="@../css/style.css" text="XX:XX" textFill="#6bf9b1" style="-fx-font-size: 32.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
       </Label>
-      <Button id="btnSkip" fx:id="btnSwitchToTimeMachine" layoutX="639.0" layoutY="676.0" mnemonicParsing="false" onAction="#onClickTimeMachineRoom" prefHeight="41.0" prefWidth="350.0" text="Time Machine Room">
-         <font>
-            <Font name="Monospace 821 Bold BT" size="27.0" />
-         </font></Button>
-      <TextArea id="chatField" fx:id="chatField" layoutX="1027.0" layoutY="571.0" prefHeight="106.0" prefWidth="208.0" promptText="Enter message..." stylesheets="@../css/style.css" wrapText="true">
-         <font>
-            <Font name="Monospace 821 Bold BT" size="18.0" />
-         </font>
+      <Button id="btnSkip" fx:id="btnSwitchToTimeMachine" layoutX="639.0" layoutY="676.0" mnemonicParsing="false" onAction="#onClickTimeMachineRoom" prefHeight="41.0" prefWidth="350.0" text="Time Machine Room" style="-fx-font-size: 27.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
+      </Button>
+      <TextArea id="chatField" fx:id="chatField" layoutX="1027.0" layoutY="571.0" prefHeight="106.0" prefWidth="208.0" promptText="Enter message..." stylesheets="@../css/style.css" wrapText="true" style="-fx-font-size: 18.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
       </TextArea>
-      <TextArea id="chatArea" fx:id="chatArea" editable="false" layoutX="1030.0" layoutY="336.0" prefHeight="194.0" prefWidth="342.0" stylesheets="@../css/style.css" wrapText="true">
-         <font>
-            <Font name="Monospace 821 Bold BT" size="16.0" />
-         </font>
+      <TextArea id="chatArea" fx:id="chatArea" editable="false" layoutX="1030.0" layoutY="336.0" prefHeight="194.0" prefWidth="342.0" stylesheets="@../css/style.css" wrapText="true" style="-fx-font-size: 16.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
       </TextArea>
       <ImageView fitHeight="150.0" fitWidth="277.0" layoutX="1032.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -74,10 +63,8 @@
             <Image url="@../images/scientist-processing.gif" />
          </image>
       </ImageView>
-      <Button id="btnSend" fx:id="btnSend" layoutX="1265.0" layoutY="600.0" mnemonicParsing="false" onAction="#onSendMessage" stylesheets="@../css/style.css" text="Send" textFill="#6bf9b1">
-         <font>
-            <Font name="Monospace 821 Bold BT" size="24.0" />
-         </font></Button>
+      <Button id="btnSend" fx:id="btnSend" layoutX="1265.0" layoutY="600.0" mnemonicParsing="false" onAction="#onSendMessage" stylesheets="@../css/style.css" text="Send" textFill="#6bf9b1" style="-fx-font-size: 24.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
+</Button>
       <ImageView fx:id="circuitBoxImg" fitHeight="60.0" fitWidth="56.0" layoutX="590.0" layoutY="315.0" pickOnBounds="true">
          <image>
             <Image url="@../images/wepik-export-2023092011501715lG.png" />
@@ -115,34 +102,17 @@
             </HBox>
          </children>
       </VBox>
-      <Text fx:id="info2" fill="#6bf9b1" layoutX="25.0" layoutY="347.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Observe the pattern in which the squares are highlighted carefully, and repeat it. Get 4 in a row in order to fix the power." textAlignment="CENTER" visible="false" wrappingWidth="317.0">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
+      <Text fx:id="info2" fill="#6bf9b1" layoutX="25.0" layoutY="347.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Observe the pattern in which the squares are highlighted carefully, and repeat it. Get 4 in a row in order to fix the power." textAlignment="CENTER" visible="false" wrappingWidth="317.0" style="-fx-font-size: 20.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
       </Text>
-      <Button id="btnSkip" fx:id="btnStartCircuitGame" layoutX="753.0" layoutY="338.0" mnemonicParsing="false" onAction="#onClickStartMemoryGame" text="Start" visible="false">
-         <font>
-            <Font name="Apple Symbols" size="24.0" />
-         </font>
+      <Button id="btnSkip" fx:id="btnStartCircuitGame" layoutX="753.0" layoutY="338.0" mnemonicParsing="false" onAction="#onClickStartMemoryGame" text="Start" visible="false" style="-fx-font-size: 24.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
       </Button>
-      <Text fx:id="text" fill="#6bf9b1" layoutX="354.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Streak:" visible="false" wrappingWidth="336.0">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font>
+      <Text fx:id="text" fill="#6bf9b1" layoutX="354.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Streak:" visible="false" wrappingWidth="336.0" style="-fx-font-size: 24.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
       </Text>
-      <Text fx:id="info" fill="#6bf9b1" layoutX="33.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time to test your memory!" textAlignment="CENTER" visible="false" wrappingWidth="302.0">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
+      <Text fx:id="info" fill="#6bf9b1" layoutX="33.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time to test your memory!" textAlignment="CENTER" visible="false" wrappingWidth="302.0" style="-fx-font-size: 20.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
       </Text>
-      <Button id="btnSkip" fx:id="btnMenu" layoutX="25.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickReturn" stylesheets="@../css/style.css" text="Return To Menu">
-         <font>
-            <Font name="Monospace 821 Bold BT" size="17.0" />
-         </font></Button>
-      <Text fill="#6bf9b1" layoutX="463.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently in: Storage Room" textAlignment="RIGHT" wrappingWidth="522.0">
-         <font>
-            <Font name="Monospace 821 Bold BT" size="20.0" />
-         </font>
+      <Button id="btnSkip" fx:id="btnMenu" layoutX="25.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickReturn" stylesheets="@../css/style.css" text="Return To Menu" style="-fx-font-size: 17.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
+</Button>
+      <Text fill="#6bf9b1" layoutX="463.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently in: Storage Room" textAlignment="RIGHT" wrappingWidth="522.0" style="-fx-font-size: 20.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
       </Text>
       <ImageView fx:id="typingBubble" fitHeight="70.0" fitWidth="107.0" layoutX="1212.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>

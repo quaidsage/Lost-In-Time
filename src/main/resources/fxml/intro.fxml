@@ -25,10 +25,7 @@
             <DropShadow />
          </effect>
       </ImageView>
-      <TextArea id="chatArea" fx:id="txtAi" editable="false" layoutX="552.0" layoutY="329.0" prefHeight="211.0" prefWidth="346.0" stylesheets="@../css/style.css" wrapText="true">
-         <font>
-            <Font name="Monospace 821 Bold BT" size="16.0" />
-         </font>
+      <TextArea id="chatArea" fx:id="txtAi" editable="false" layoutX="552.0" layoutY="329.0" prefHeight="211.0" prefWidth="346.0" stylesheets="@../css/style.css" wrapText="true" style="-fx-font-size: 16.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
       </TextArea>
       <ImageView fx:id="imgScientistThinking" fitHeight="150.0" fitWidth="277.0" layoutX="559.0" layoutY="80.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -41,29 +38,16 @@
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#303030" height="49.0" layoutX="552.0" layoutY="282.0" stroke="TRANSPARENT" strokeType="INSIDE" width="346.0" />
-      <Label id="lblTimer" fx:id="lblTimer" alignment="CENTER" layoutX="667.0" layoutY="287.0" prefHeight="19.0" prefWidth="116.0" stylesheets="@../css/style.css" text="XX:XX" textFill="#6bf9b1">
-         <font>
-            <Font name="Monospace 821 Bold BT" size="32.0" />
-         </font>
+      <Label id="lblTimer" fx:id="lblTimer" alignment="CENTER" layoutX="667.0" layoutY="287.0" prefHeight="19.0" prefWidth="116.0" stylesheets="@../css/style.css" text="XX:XX" textFill="#6bf9b1" style="-fx-font-size: 32.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
       </Label>
       <Rectangle fx:id="rectBack" arcHeight="5.0" arcWidth="5.0" fill="#303030" height="853.0" layoutX="-74.0" layoutY="-67.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="1522.0" />
-      <TextArea id="txtIntro" fx:id="txtIntro" layoutX="178.0" layoutY="240.0" prefHeight="359.0" prefWidth="1058.0" stylesheets="@../css/style.css" wrapText="true">
-         <font>
-            <Font name="Monospace 821 Bold BT" size="38.0" />
-         </font></TextArea>
-      <Button id="btnSkip" fx:id="btnSkip" disable="true" layoutX="1163.0" layoutY="670.0" mnemonicParsing="false" onAction="#onClickSkipIntro" stylesheets="@../css/style.css" text="Skip Intro">
-         <font>
-            <Font name="Monospace 821 Bold BT" size="29.0" />
-         </font></Button>
-      <Button id="btnSkip" fx:id="btnPick" layoutX="515.0" layoutY="645.0" mnemonicParsing="false" onAction="#onClickPickDevice" prefHeight="83.0" prefWidth="389.0" stylesheets="@../css/style.css" text="Pick up device...">
-         <font>
-            <Font name="System Bold" size="38.0" />
-         </font>
+      <TextArea id="txtIntro" fx:id="txtIntro" layoutX="178.0" layoutY="240.0" prefHeight="359.0" prefWidth="1058.0" stylesheets="@../css/style.css" wrapText="true" style="-fx-font-size: 38.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
+</TextArea>
+      <Button id="btnSkip" fx:id="btnSkip" disable="true" layoutX="1163.0" layoutY="670.0" mnemonicParsing="false" onAction="#onClickSkipIntro" stylesheets="@../css/style.css" text="Skip Intro" style="-fx-font-size: 29.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
+</Button>
+      <Button id="btnSkip" fx:id="btnPick" layoutX="515.0" layoutY="645.0" mnemonicParsing="false" onAction="#onClickPickDevice" prefHeight="83.0" prefWidth="389.0" stylesheets="@../css/style.css" text="Pick up device..." style="-fx-font-size: 38.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
       </Button>
-      <Button id="btnSkip" fx:id="btnNext" disable="true" layoutX="553.0" layoutY="580.0" mnemonicParsing="false" onAction="#onClickNext" prefHeight="101.0" prefWidth="208.0" stylesheets="@../css/style.css" text="Next">
-         <font>
-            <Font name="Monospace 821 Bold BT" size="41.0" />
-         </font>
+      <Button id="btnSkip" fx:id="btnNext" disable="true" layoutX="553.0" layoutY="580.0" mnemonicParsing="false" onAction="#onClickNext" prefHeight="101.0" prefWidth="208.0" stylesheets="@../css/style.css" text="Next" style="-fx-font-size: 36.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
       </Button>
    </children>
 </Pane>
