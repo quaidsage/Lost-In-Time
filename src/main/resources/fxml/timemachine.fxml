@@ -7,12 +7,25 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" style="-fx-background-color: rgb(28,28,28);" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.TimemachineController">
    <children>
+      <ImageView fitHeight="739.0" fitWidth="1349.0" layoutX="-13.0" layoutY="-12.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/BaseUI.jpg" />
+         </image>
+         <effect>
+            <DropShadow height="96.72" radius="42.8525" spread="0.79" width="76.69">
+               <color>
+                  <Color red="0.1184210553765297" green="0.1184210553765297" blue="0.1184210553765297" />
+               </color>
+            </DropShadow>
+         </effect>
+      </ImageView>
       <ImageView fitHeight="585.0" fitWidth="960.0" layoutX="25.0" layoutY="67.0" pickOnBounds="true">
          <image>
             <Image url="@../images/wepik-export-20230918035914v2a6.png" />
@@ -27,13 +40,13 @@
          </effect>
       </ImageView>
 
-      <Button id="btnSkip" fx:id="btnSwitchToStorage" layoutX="25.0" layoutY="664.0" mnemonicParsing="false" onAction="#onClickStorage" prefHeight="32.0" prefWidth="188.0" text="Storage">
+      <Button id="btnSkip" fx:id="btnSwitchToStorage" layoutX="25.0" layoutY="678.0" mnemonicParsing="false" onAction="#onClickStorage" prefHeight="32.0" prefWidth="188.0" text="Storage">
          <font>
-            <Font name="System Bold" size="36.0" />
+            <Font name="Monospace 821 Bold BT" size="27.0" />
          </font></Button>
-      <Button id="btnSkip" fx:id="btnSwitchToLab" layoutX="841.0" layoutY="664.0" mnemonicParsing="false" onAction="#onClickLab" prefHeight="70.0" prefWidth="147.0" text="Lab">
+      <Button id="btnSkip" fx:id="btnSwitchToLab" layoutX="824.0" layoutY="678.0" mnemonicParsing="false" onAction="#onClickLab" prefHeight="41.0" prefWidth="161.0" text="Lab">
          <font>
-            <Font name="System Bold" size="36.0" />
+            <Font name="Monospace 821 Bold BT" size="27.0" />
          </font></Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#303030" height="64.0" layoutX="1030.0" layoutY="276.0" stroke="TRANSPARENT" strokeType="INSIDE" width="342.0" />
       <TextArea id="chatField" fx:id="chatField" layoutX="1027.0" layoutY="571.0" prefHeight="106.0" prefWidth="208.0" promptText="Enter message..." stylesheets="@../css/style.css" wrapText="true">
@@ -72,14 +85,14 @@
          </image>
       </ImageView>
       <Rectangle fx:id="rectLight" arcHeight="5.0" arcWidth="5.0" height="596.0" layoutX="25.0" layoutY="60.0" stroke="BLACK" strokeType="INSIDE" width="960.0" />
-      <Button id="btnSkip" fx:id="btnMenu" layoutX="25.0" layoutY="10.0" mnemonicParsing="false" onAction="#onClickReturn" stylesheets="@../css/style.css" text="Return To Menu">
+      <Button id="btnSkip" fx:id="btnMenu" layoutX="25.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickReturn" stylesheets="@../css/style.css" text="Return To Menu">
          <font>
-            <Font name="System Bold" size="24.0" />
+            <Font name="Monospace 821 Bold BT" size="17.0" />
          </font></Button>
 <Button id="timeMachine" fx:id="btnTimeMachine" layoutX="339.0" layoutY="129.0" mnemonicParsing="false" onAction="#onClickTimeMachine" opacity="0.0" prefHeight="471.0" prefWidth="349.0" text="Time Machine" textFill="WHITE" />
-      <Text fill="#6bf9b1" layoutX="706.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently in: Time Machine Room" wrappingWidth="281.3333435058594">
+      <Text fill="#6bf9b1" layoutX="536.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently in: Time Machine Room" textAlignment="RIGHT" wrappingWidth="449.0">
          <font>
-            <Font name="Apple Symbols" size="24.0" />
+            <Font name="Monospace 821 Bold BT" size="20.0" />
          </font>
       </Text>
    </children>
