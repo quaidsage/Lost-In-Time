@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
@@ -21,6 +22,9 @@
          <image>
             <Image url="@../images/device.png" />
          </image>
+         <effect>
+            <DropShadow height="53.24" radius="31.25" width="73.76" />
+         </effect>
       </ImageView>
 
       <Button id="btnSkip" fx:id="btnSwitchToStorage" layoutX="25.0" layoutY="664.0" mnemonicParsing="false" onAction="#onClickStorage" prefHeight="32.0" prefWidth="188.0" text="Storage">
@@ -31,34 +35,35 @@
          <font>
             <Font name="System Bold" size="36.0" />
          </font></Button>
-      <TextArea id="chatField" fx:id="chatField" layoutX="1025.0" layoutY="570.0" prefHeight="106.0" prefWidth="207.0" promptText="Enter message..." stylesheets="@../css/style.css" wrapText="true">
+      <TextArea id="chatField" fx:id="chatField" layoutX="1027.0" layoutY="571.0" prefHeight="106.0" prefWidth="208.0" promptText="Enter message..." stylesheets="@../css/style.css" wrapText="true">
          <font>
             <Font name="Monospace 821 Bold BT" size="18.0" />
          </font>
       </TextArea>
-      <TextArea id="chatArea" fx:id="chatArea" editable="false" layoutX="1030.0" layoutY="277.0" prefHeight="253.0" prefWidth="342.0" stylesheets="@../css/style.css" wrapText="true">
+      <TextArea id="chatArea" fx:id="chatArea" editable="false" layoutX="1030.0" layoutY="336.0" prefHeight="194.0" prefWidth="342.0" stylesheets="@../css/style.css" wrapText="true">
          <font>
             <Font name="Monospace 821 Bold BT" size="16.0" />
          </font>
       </TextArea>
-      <ImageView fitHeight="150.0" fitWidth="277.0" layoutX="1032.0" layoutY="68.0" pickOnBounds="true" preserveRatio="true">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#303030" height="64.0" layoutX="1030.0" layoutY="276.0" stroke="TRANSPARENT" strokeType="INSIDE" width="342.0" />
+      <ImageView fitHeight="150.0" fitWidth="277.0" layoutX="1032.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/scientist.png" />
+            <Image url="@../images/scientist.gif" />
          </image>
       </ImageView>
-      <ImageView fx:id="imgScientistThinking" fitHeight="150.0" fitWidth="277.0" layoutX="1032.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgScientistThinking" fitHeight="150.0" fitWidth="277.0" layoutX="1032.0" layoutY="72.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/scientist-process.png" />
+            <Image url="@../images/scientist-processing.gif" />
          </image>
       </ImageView>
-      <Button id="btnSend" fx:id="btnSend" layoutX="1265.0" layoutY="600.0" mnemonicParsing="false" onAction="#onSendMessage" stylesheets="@../css/style.css" text="Send" textFill="#6bf9b1">
+      <Button id="btnSkip" fx:id="btnSend" layoutX="1265.0" layoutY="600.0" mnemonicParsing="false" onAction="#onSendMessage" stylesheets="@../css/style.css" text="Send" textFill="#6bf9b1">
          <font>
             <Font name="Monospace 821 Bold BT" size="24.0" />
          </font>
       </Button>
-      <Label id="lblTimer" fx:id="lblTimer" layoutX="1232.0" layoutY="71.0" prefHeight="51.0" prefWidth="116.0" stylesheets="@../css/style.css" text="XX:XX" textFill="#6bf9b1">
+      <Label id="lblTimer" fx:id="lblTimer" layoutX="1153.0" layoutY="276.0" prefHeight="41.0" prefWidth="118.0" stylesheets="@../css/style.css" text="XX:XX" textFill="#6bf9b1">
          <font>
-            <Font name="Monospace 821 Bold BT" size="38.0" />
+            <Font name="Monospace 821 Bold BT" size="32.0" />
          </font>
       </Label>
       <ImageView fx:id="typingBubble" fitHeight="70.0" fitWidth="107.0" layoutX="1212.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true" visible="false">
