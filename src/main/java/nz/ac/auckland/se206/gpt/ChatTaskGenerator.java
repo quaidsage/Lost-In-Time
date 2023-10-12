@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.controllers.LabController;
+import nz.ac.auckland.se206.controllers.MainmenuController;
 import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionResult.Choice;
@@ -114,7 +115,8 @@ public class ChatTaskGenerator {
       }
 
       // Generate TTS
-      if (!msg.getContent().equals(GptPromptEngineering.getContext())) {
+      if (!msg.getContent().equals(GptPromptEngineering.getContext())
+          && !MainmenuController.isTTSMuted) {
         TextToSpeech.runTTS(result.getChatMessage().getContent());
       }
 

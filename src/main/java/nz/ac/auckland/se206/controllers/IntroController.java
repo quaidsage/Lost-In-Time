@@ -33,7 +33,6 @@ public class IntroController {
   private int characterDelay = 5;
   private int interaction = 0;
 
-
   // Array of introduction messages
   private String[] interactions = {
     "-> Greetings, intrepid traveler! You've stumbled into quite the temporal predicament.",
@@ -93,7 +92,9 @@ public class IntroController {
     // Start appending the first interaction message
     msg = new ChatMessage("assistant", interactions[0]);
     updateTask(txtAi);
-    TextToSpeech.runTTS(msg.getContent());
+    if (!MainmenuController.isTTSMuted) {
+      TextToSpeech.runTTS(msg.getContent());
+    }
     Thread appendThread = new Thread(appendTask);
     appendThread.setDaemon(true);
     appendThread.start();
@@ -118,6 +119,9 @@ public class IntroController {
     // Start appending the next interaction message
     msg = new ChatMessage("assistant", interactions[interaction]);
     updateTask(txtAi);
+    if (!MainmenuController.isTTSMuted) {
+      TextToSpeech.runTTS(msg.getContent());
+    }
     TextToSpeech.runTTS(msg.getContent());
     Thread appendThread = new Thread(appendTask);
     appendThread.setDaemon(true);

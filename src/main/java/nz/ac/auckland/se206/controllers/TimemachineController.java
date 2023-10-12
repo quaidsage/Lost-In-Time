@@ -171,8 +171,11 @@ public class TimemachineController {
     LabController.labStartTimer(IntroController.minutes);
     StorageController.storageStartTimer(IntroController.minutes);
 
+    // Append context to chat and if unmuted, use TTS
     ChatTaskGenerator.updateChat("-> ", contextResponse);
-    TextToSpeech.runTTS(contextResponse.getContent());
+    if (!MainmenuController.isTTSMuted) {
+      TextToSpeech.runTTS(contextResponse.getContent());
+    }
   }
 
   /** Function to create an animation of the lights turning on. */

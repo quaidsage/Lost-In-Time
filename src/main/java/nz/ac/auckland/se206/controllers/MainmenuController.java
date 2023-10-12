@@ -5,19 +5,26 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javax.speech.AudioException;
+import javax.speech.EngineStateError;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.SceneManager;
 import nz.ac.auckland.se206.SceneManager.AppUi;
+import nz.ac.auckland.se206.gpt.ChatTaskGenerator;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionRequest;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 
 /** A controller class for the main menu scene. */
 public class MainmenuController {
+
   public static Button btnSkip;
   public static Button btnContinue;
 
+  public static boolean isTTSMuted = false;
+
   @FXML private Button btnBeginGame;
+  @FXML private Button btnMute;
 
   /** Initialises the main menu scene with the required settings. */
   public void initialize() {
@@ -102,6 +109,26 @@ public class MainmenuController {
     disableContinueButtonThread.start();
   }
 
+  /**
+   * TODO JAVADOCS.
+   *
+   * @throws EngineStateError
+   * @throws AudioException
+   */
+  @FXML
+  private void muteTTS(ActionEvent event) throws AudioException, EngineStateError {
+    if (isTTSMuted) {
+      isTTSMuted = false;
+      ChatTaskGenerator.textToSpeech.pause(false);
+      btnMute.setText("Mute TTS (TEMP BUTTON)");
+    } else {
+      isTTSMuted = true;
+      ChatTaskGenerator.textToSpeech.pause(true);
+      btnMute.setText("Unmute TTS (TEMP BUTTON)");
+    }
+  }
+
+  /** TODO JAVADOCS. */
   public static void disableSkipButton() {
     Task<Void> disableSkipButtonTask =
         new Task<Void>() {

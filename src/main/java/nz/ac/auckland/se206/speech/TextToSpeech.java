@@ -4,6 +4,7 @@ import javafx.concurrent.Task;
 import javax.speech.AudioException;
 import javax.speech.Central;
 import javax.speech.EngineException;
+import javax.speech.EngineStateError;
 import javax.speech.synthesis.Synthesizer;
 import javax.speech.synthesis.SynthesizerModeDesc;
 import nz.ac.auckland.se206.gpt.ChatTaskGenerator;
@@ -137,5 +138,20 @@ public class TextToSpeech {
     Thread ttsThread = new Thread(ttsTask);
     ttsThread.setDaemon(true);
     ttsThread.start();
+  }
+
+  /**
+   * Function to pause text to speech.
+   *
+   * @param isPaused Whether to pause or resume the text to speech
+   * @throws EngineStateError
+   * @throws AudioException
+   */
+  public void pause(boolean setPause) throws AudioException, EngineStateError {
+    if (setPause) {
+      synthesizer.pause();
+    } else {
+      synthesizer.resume();
+    }
   }
 }
