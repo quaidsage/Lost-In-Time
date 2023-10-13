@@ -1,6 +1,10 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,6 +16,7 @@ import javafx.scene.shape.Rectangle;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.Delay;
 import nz.ac.auckland.se206.GameState;
+import nz.ac.auckland.se206.RestartManager;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
 import nz.ac.auckland.se206.gpt.ChatTaskGenerator;
@@ -22,7 +27,8 @@ import nz.ac.auckland.se206.speech.TextToSpeech;
 public class TimemachineController {
   public static ChatMessage chatTaskValue;
   public static Task<Void> startTask;
-  private static TimerController timer = new TimerController();
+  public static BooleanProperty appendContextProperty = new SimpleBooleanProperty(false);
+  public static TimerController timer = new TimerController();
 
   /**
    * Function to start the time in the timemachinescene.
@@ -74,6 +80,21 @@ public class TimemachineController {
 
     // Initialise relevant tasks
     initialiseTasks();
+
+    // Create listener to when ready to append context
+    ChangeListener<Boolean> changeListener =
+        new ChangeListener<Boolean>() {
+          @Override
+          public void changed(
+              ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+            // Append context to chat and if unmuted, use TTS
+            ChatTaskGenerator.updateChat("-> ", ChatTaskGenerator.contextResponse);
+            if (!MainmenuController.isTTSMuted) {
+              TextToSpeech.runTextToSpeech(ChatTaskGenerator.contextResponse.getContent());
+            }
+          }
+        };
+    appendContextProperty.addListener(changeListener);
   }
 
   /**
@@ -129,7 +150,7 @@ public class TimemachineController {
    */
   @FXML
   private void onClickReturn(ActionEvent event) throws IOException {
-    App.setRoot("mainmenu");
+    App.setUi(AppUi.MAINMENU);
   }
 
   /**
@@ -145,43 +166,20 @@ public class TimemachineController {
   }
 
   /** Function to animate the start of the round. */
-  public void startRound() {
+  public static void startRound(Rectangle rectLight, Label lblTimer) {
+
     // Light flash animation
-    animateLights();
+    animateLights(rectLight);
 
     // Start timer. Change 'minutes' variable to change the length of the game
     lblTimer.setVisible(true);
     timemachineStartTimer(IntroController.minutes);
     LabController.labStartTimer(IntroController.minutes);
     StorageController.storageStartTimer(IntroController.minutes);
-
-    // Add context response to start of game
-    Task<Void> appendContextTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            while ((App.currentUi != AppUi.TIMEMACHINE)
-                || ChatTaskGenerator.contextResponse == null) {
-              Thread.sleep(100);
-            }
-            return null;
-          }
-        };
-    appendContextTask.setOnSucceeded(
-        e -> {
-          // Append context to chat and if unmuted, use TTS
-          ChatTaskGenerator.updateChat("-> ", ChatTaskGenerator.contextResponse);
-          if (!MainmenuController.isTTSMuted) {
-            TextToSpeech.runTextToSpeech(ChatTaskGenerator.contextResponse.getContent());
-          }
-        });
-    Thread appendContextThread = new Thread(appendContextTask);
-    appendContextThread.setDaemon(true);
-    appendContextThread.start();
   }
 
   /** Function to create an animation of the lights turning on. */
-  private void animateLights() {
+  private static void animateLights(Rectangle rectLight) {
     // Start animation and set the rectangle to visible
     rectLight.setVisible(true);
     // Start a series of delays to turn the light on and off
@@ -216,7 +214,7 @@ public class TimemachineController {
   }
 
   /** Function to create tasks to update elements outside class controller. */
-  private void initialiseTasks() {
+  public void initialiseTasks() {
     // Set chat area
     ChatTaskGenerator.chatAreas.add(chatArea);
 
@@ -227,12 +225,20 @@ public class TimemachineController {
     ChatTaskGenerator.thinkingAnimationImages.add(imgScientistThinking);
     ChatTaskGenerator.thinkingAnimationImages.add(typingBubble);
 
+    // Set timer label and light rectangle to restart manager
+    RestartManager.timemachineLabel = lblTimer;
+    RestartManager.timemachineRect = rectLight;
+
+    createStartTask(rectLight, lblTimer);
+  }
+
+  public static void createStartTask(Rectangle rectLight, Label lblTimer) {
     // Create task to start round
     startTask =
         new Task<Void>() {
           @Override
           protected Void call() throws Exception {
-            startRound();
+            startRound(rectLight, lblTimer);
             return null;
           }
         };

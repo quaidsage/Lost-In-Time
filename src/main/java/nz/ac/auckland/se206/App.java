@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.SceneManager.AppUi;
+import nz.ac.auckland.se206.controllers.MainmenuController;
 import nz.ac.auckland.se206.gpt.ChatTaskGenerator;
 
 /**
@@ -25,6 +26,7 @@ public class App extends Application {
   }
 
   public static void setRoot(String fxml) throws IOException {
+    // If restarting to main menu, ensure fxml files are not loaded twice
     scene.setRoot(loadFxml(fxml));
 
     // Clear TTS
@@ -52,7 +54,8 @@ public class App extends Application {
   @Override
   public void start(final Stage stage) throws IOException {
     // Load game starting with the main menu
-    scene = new Scene(App.loadFxml("mainmenu"), 1400, 750);
+    SceneManager.addUi(AppUi.MAINMENU, App.loadFxml("mainmenu"));
+    scene = new Scene(SceneManager.getUiRoot(AppUi.MAINMENU), 1400, 750);
     stage.setScene(scene);
     stage.setResizable(false);
     stage.getIcons().add(new Image("file:src/main/resources/images/scientist-process.png"));
@@ -61,6 +64,14 @@ public class App extends Application {
 
   // Sets the Ui without resetting the state
   public static void setUi(AppUi newUi) {
+    if (newUi == AppUi.MAINMENU) {
+      System.out.println("RESTARTING");
+      MainmenuController.hasRestarted = true;
+      ChatTaskGenerator.textToSpeech.clear();
+      RestartManager.restartGame();
+      MainmenuController.newContextResponse();
+    }
+
     scene.setRoot(SceneManager.getUiRoot(newUi));
 
     // Remove tts queue when switching non-game scenes

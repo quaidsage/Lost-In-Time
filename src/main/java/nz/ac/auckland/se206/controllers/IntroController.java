@@ -10,6 +10,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
+import nz.ac.auckland.se206.RestartManager;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
 import nz.ac.auckland.se206.gpt.ChatTaskGenerator;
@@ -20,7 +21,9 @@ public class IntroController {
   public static Task<Void> appendTask;
   public static ChatMessage msg;
   public static int minutes;
-  public static boolean isTasksLoaded;
+  public static boolean isFilesLoaded;
+  public static boolean isContextLoaded = false;
+  public static int interaction = 0;
 
   // Define FXML elements
   @FXML private Button btnSkip;
@@ -32,7 +35,6 @@ public class IntroController {
 
   // Define variables for the introduction
   private int characterDelay = 5;
-  private int interaction = 0;
 
   // Array of introduction messages
   private String[] interactions = {
@@ -66,6 +68,9 @@ public class IntroController {
     MainmenuController.btnSkip = btnSkip;
 
     setVisiblity(true);
+
+    RestartManager.introElements =
+        new Object[] {btnSkip, btnPick, txtIntro, btnNext, rectBack, txtAi};
   }
 
   /**
@@ -78,6 +83,12 @@ public class IntroController {
     // Switch to time machine scene
     App.setUi(AppUi.TIMEMACHINE);
 
+    // If context is preloaded, load appending
+    if (isContextLoaded) {
+      TimemachineController.appendContextProperty.set(
+          !TimemachineController.appendContextProperty.get());
+    }
+
     // Start the round function in the time machine scene
     Thread startThread = new Thread(TimemachineController.startTask);
     startThread.setDaemon(true);
@@ -87,21 +98,9 @@ public class IntroController {
   /** Function to handle starting interaction with the AI. */
   @FXML
   private void onClickPickDevice(ActionEvent event) {
-
+    btnNext.setText("Next");
     setVisiblity(false);
-
-    // Start appending the first interaction message
-    msg = new ChatMessage("assistant", interactions[0]);
-    updateTask(txtAi);
-
-    // Run text to speech for new line
-    ChatTaskGenerator.textToSpeech.clear();
-    TextToSpeech.runTextToSpeech(msg.getContent());
-
-    // Append the line to chat area
-    Thread appendThread = new Thread(appendTask);
-    appendThread.setDaemon(true);
-    appendThread.start();
+    interact();
   }
 
   /** Function to handle the next interaction with the AI. */
@@ -120,6 +119,10 @@ public class IntroController {
       btnNext.setText("Onward");
     }
 
+    interact();
+  }
+
+  public void interact() {
     // Start appending the next interaction message
     msg = new ChatMessage("assistant", interactions[interaction]);
     updateTask(txtAi);
@@ -198,14 +201,13 @@ public class IntroController {
    *
    * @param show Whether to show or hide specific elements.
    */
-  private void setVisiblity(Boolean show) {
+  public void setVisiblity(Boolean show) {
     // Update visibility of required javafx elements
     rectBack.setVisible(show);
     btnNext.setVisible(!show);
     btnPick.setVisible(show);
     txtIntro.setVisible(show);
     btnSkip.setVisible(show);
-    btnNext.setVisible(!show);
 
     // Update disable status of required javafx elements
     btnPick.setDisable(show);

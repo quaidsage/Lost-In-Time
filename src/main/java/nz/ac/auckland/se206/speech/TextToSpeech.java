@@ -160,7 +160,7 @@ public class TextToSpeech {
   }
 
   /** Function to clear current queue of text. */
-  public void clear() {
+  public void clear() throws EngineStateError {
     synthesizer.cancelAll();
   }
 }
