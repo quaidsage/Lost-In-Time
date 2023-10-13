@@ -121,7 +121,7 @@ public class TextToSpeech {
    *
    * @param msg The message to be spoken
    */
-  public static void runTTS(String msg) {
+  public static void runTextToSpeech(String msg) {
     // If TTS is muted, return
     if (MainmenuController.isTTSMuted) {
       return;
@@ -147,9 +147,9 @@ public class TextToSpeech {
   /**
    * Function to pause text to speech.
    *
-   * @param isPaused Whether to pause or resume the text to speech
-   * @throws EngineStateError
-   * @throws AudioException
+   * @param setPause Whether to pause or resume the text to speech
+   * @throws EngineStateError If there is an error with the speech engine
+   * @throws AudioException If there is an error with the audio
    */
   public void pause(boolean setPause) throws AudioException, EngineStateError {
     if (setPause) {

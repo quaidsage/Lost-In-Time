@@ -12,6 +12,7 @@ import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
+import nz.ac.auckland.se206.gpt.ChatTaskGenerator;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 
 /** A controller class for the intro scene. */
@@ -19,7 +20,7 @@ public class IntroController {
   public static Task<Void> appendTask;
   public static ChatMessage msg;
   public static int minutes;
-  public static boolean isContextGenerated;
+  public static boolean isTasksLoaded;
 
   // Define FXML elements
   @FXML private Button btnSkip;
@@ -92,7 +93,12 @@ public class IntroController {
     // Start appending the first interaction message
     msg = new ChatMessage("assistant", interactions[0]);
     updateTask(txtAi);
-    TextToSpeech.runTTS(msg.getContent());
+
+    // Run text to speech for new line
+    ChatTaskGenerator.textToSpeech.clear();
+    TextToSpeech.runTextToSpeech(msg.getContent());
+
+    // Append the line to chat area
     Thread appendThread = new Thread(appendTask);
     appendThread.setDaemon(true);
     appendThread.start();
@@ -117,7 +123,12 @@ public class IntroController {
     // Start appending the next interaction message
     msg = new ChatMessage("assistant", interactions[interaction]);
     updateTask(txtAi);
-    TextToSpeech.runTTS(msg.getContent());
+
+    // Run text to speech for new line
+    ChatTaskGenerator.textToSpeech.clear();
+    TextToSpeech.runTextToSpeech(msg.getContent());
+
+    // Append the line to chat area
     Thread appendThread = new Thread(appendTask);
     appendThread.setDaemon(true);
     appendThread.start();
