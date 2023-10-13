@@ -13,6 +13,7 @@ import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.controllers.DifficultyController;
 import nz.ac.auckland.se206.controllers.IntroController;
 import nz.ac.auckland.se206.controllers.LabController;
+import nz.ac.auckland.se206.controllers.StorageController;
 import nz.ac.auckland.se206.controllers.TimemachineController;
 import nz.ac.auckland.se206.controllers.TimerController;
 import nz.ac.auckland.se206.gpt.ChatTaskGenerator;
@@ -28,6 +29,8 @@ public class RestartManager {
   public static Label labLabel;
   public static Polyline labChemicals;
   public static ArrayList<ImageView> labArrowCollection;
+  public static Label storageLabel;
+  public static Object[] storageElements;
 
   /** TODO JAVADOCS */
   public static void restartGame() {
@@ -149,9 +152,36 @@ public class RestartManager {
     LabController.solutionColours = solutionColours;
   }
 
+  /** TODO JAVADOCS */
   private static void restartStorageScene() {
+    // Reset game states
     GameState.isStorageResolved = false;
     GameState.isStorageVisited = false;
+    StorageController.counter = 0;
+    StorageController.patternOrder = 0;
+    StorageController.turn = 1;
+    StorageController.consecutiveRounds = 0;
+
+    // Initialise timer
+    StorageController.timer = new TimerController();
+    storageLabel.textProperty().bind(StorageController.timer.messageProperty());
+    StorageController.timer.setOnSucceeded(
+        e -> {
+          storageLabel.setText("0:00");
+        });
+
+    // Get introduction message on first visit of storage room
+    StorageController.storageIntroTask =
+        ChatTaskGenerator.createTask(GptPromptEngineering.getStorageIntro());
+    StorageController.storageIntroTask.setOnSucceeded(
+        e -> {
+          ChatTaskGenerator.updateChat("\n\n-> ", StorageController.storageIntroTask.getValue());
+        });
+
+    // Enable visibility of mini-game elements
+    ((ImageView) storageElements[0]).setVisible(true);
+    ((Rectangle) storageElements[1]).setVisible(true);
+    ((ImageView) storageElements[2]).setVisible(true);
   }
 
   /** TODO JAVADOCS */

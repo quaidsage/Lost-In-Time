@@ -25,6 +25,7 @@ import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.Delay;
 import nz.ac.auckland.se206.GameState;
+import nz.ac.auckland.se206.RestartManager;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
 import nz.ac.auckland.se206.gpt.ChatTaskGenerator;
@@ -34,9 +35,13 @@ import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
 /** A controller class for the storage scene. */
 public class StorageController {
   public static Task<ChatMessage> storageIntroTask;
+  public static int patternOrder = 0;
+  public static int counter = 0;
+  public static int turn = 1;
+  public static int consecutiveRounds = 0;
 
   // Initialise Timer
-  private static TimerController timer = new TimerController();
+  public static TimerController timer = new TimerController();
 
   /**
    * Function to start timer when the game is started.
@@ -95,11 +100,8 @@ public class StorageController {
   // Initialise Variables
   private ArrayList<Button> buttons = new ArrayList<>();
   private ArrayList<String> pattern = new ArrayList<>();
-  private int patternOrder = 0;
-  private int counter = 0;
-  private int turn = 1;
+
   private Random random = new Random();
-  private int consecutiveRounds = 0;
   private int targetConsecutiveRounds = 3;
   private boolean buttonsDisabled = false;
   private ArrayList<String> possibleButtons =
@@ -392,6 +394,10 @@ public class StorageController {
     // Set thinking animation
     ChatTaskGenerator.thinkingAnimationImages.add(imgScientistThinking);
     ChatTaskGenerator.thinkingAnimationImages.add(typingBubble);
+
+    // Add timer label and minigame elements to restart manager
+    RestartManager.storageLabel = lblTimer;
+    RestartManager.storageElements = new Object[] {background, circuitBox, circuitBoxImg};
 
     // Get introduction message on first visit of storage room
     storageIntroTask = ChatTaskGenerator.createTask(GptPromptEngineering.getStorageIntro());
