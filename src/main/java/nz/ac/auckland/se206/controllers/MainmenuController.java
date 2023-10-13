@@ -100,6 +100,7 @@ public class MainmenuController {
     GameState.isDifficultyEasy = false;
     GameState.isDifficultyMedium = false;
     GameState.isDifficultyHard = false;
+    IntroController.isContextGenerated = false;
     DifficultyController.isDifficultyChecked = false;
     DifficultyController.isTimeChecked = false;
     LabController.numHints = 5;
