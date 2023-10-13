@@ -32,7 +32,7 @@ public class MainmenuController {
   public void initialize() {
 
     // Initialise with TTS message
-    TextToSpeech.runTTS("Lost in time. Restore the fabric of time.");
+    TextToSpeech.runTextToSpeech("Lost in time. Restore the fabric of time.");
 
     // Create a task to load various FXML files for different scenes
     Task<Void> loadTask =
@@ -55,16 +55,17 @@ public class MainmenuController {
 
     loadTask.setOnSucceeded(
         e -> {
-          IntroController.isContextGenerated = true;
+          IntroController.isTasksLoaded = true;
 
           // Generate context for start of the game
           ChatTaskGenerator.contextResponse = null;
+          System.out.println("====================-----> Generating context");
           Task<ChatMessage> contextTask =
               ChatTaskGenerator.createTask(GptPromptEngineering.getContext());
           contextTask.setOnSucceeded(
               event -> {
                 ChatTaskGenerator.contextResponse = contextTask.getValue();
-                System.out.println("done generation");
+                System.out.println("====================-----> Done generation");
               });
           Thread contextThread = new Thread(contextTask);
           contextThread.setDaemon(true);
@@ -109,7 +110,7 @@ public class MainmenuController {
         new ChatCompletionRequest().setN(1).setTemperature(0.2).setTopP(0.5).setMaxTokens(200);
 
     App.setUi(AppUi.DIFFICULTY);
-    TextToSpeech.runTTS("Select difficulty level and time limit.");
+    TextToSpeech.runTextToSpeech("Select difficulty level and time limit.");
 
     // Set the continue button to the difficulty selection screen
     Task<Void> disableContinueButtonTask =
@@ -157,7 +158,7 @@ public class MainmenuController {
           @Override
           protected Void call() throws Exception {
             while (App.currentUi == AppUi.INTRO) {
-              if (IntroController.isContextGenerated) {
+              if (IntroController.isTasksLoaded) {
                 btnSkip.setDisable(false);
               } else {
                 btnSkip.setDisable(true);

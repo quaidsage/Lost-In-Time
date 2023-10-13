@@ -78,6 +78,7 @@ public class ChatTaskGenerator {
    * @throws ApiProxyException if there is an error communicating with the API proxy
    */
   private static ChatMessage runGpt(ChatMessage msg) throws ApiProxyException {
+    System.out.println("====================-----> Running GPT");
     // Append to main game chat completion request
     GameState.chatCompletionRequest.addMessage(msg);
 
@@ -92,6 +93,8 @@ public class ChatTaskGenerator {
       // Create chat message from response
       GameState.chatCompletionRequest.addMessage(result.getChatMessage());
 
+      System.out.println(
+          "====================-----> Checking if response meets game state requirements");
       // Check if users answer was correct
       if (result.getChatMessage().getContent().startsWith("Correct")) {
         new Thread(LabController.animateTask).start();
@@ -115,8 +118,9 @@ public class ChatTaskGenerator {
       }
 
       // Generate TTS
+      System.out.println("====================-----> Generating TTS");
       if (!msg.getContent().equals(GptPromptEngineering.getContext())) {
-        TextToSpeech.runTTS(result.getChatMessage().getContent());
+        TextToSpeech.runTextToSpeech(result.getChatMessage().getContent());
       }
 
       return result.getChatMessage();
