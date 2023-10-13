@@ -21,6 +21,7 @@ import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.Delay;
 import nz.ac.auckland.se206.GameState;
+import nz.ac.auckland.se206.RestartManager;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
 import nz.ac.auckland.se206.gpt.ChatTaskGenerator;
@@ -31,6 +32,7 @@ import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
 public class LabController {
   public static int numHints = 5;
   public static ArrayList<Integer> solutionColours;
+  public static int numChemicalsAdded = 0;
 
   // Fields related to Task
   public static Task<ChatMessage> labIntroTask;
@@ -38,8 +40,11 @@ public class LabController {
   public static Task<Void> animateTask;
   public static Task<Void> updateHintTask;
 
+  // Fields related to chemical solutions
+  public static Boolean[] isChemicalSolution = {false, false, false, false, false, false, false};
+
   // Initialise Timer
-  private static TimerController timer = new TimerController();
+  public static TimerController timer = new TimerController();
 
   /**
    * Function to start the scenes timer when the game is started.
@@ -91,15 +96,11 @@ public class LabController {
   private ArrayList<ImageView> arrowCollection = new ArrayList<ImageView>();
 
   // Fields for initializing variables
-  private int numChemicalsAdded = 0;
   private int arrowAnimationSpeed = 85;
   private int arrowAnimationDistance = 25;
   private int fadeTransitionSpeed = 1500;
   private Duration flashDuration = Duration.millis(0);
   private int numFlashes = 0;
-
-  // Fields related to chemical solutions
-  private Boolean[] isChemicalSolution = {false, false, false, false, false, false, false};
 
   /**
    * Initialise the scene with the specific settings.
@@ -187,8 +188,7 @@ public class LabController {
 
     // Create task to run GPT model for riddle message
     labRiddleTask =
-        ChatTaskGenerator.createTask(
-            GptPromptEngineering.getRiddleLab(LabController.solutionColours));
+        ChatTaskGenerator.createTask(GptPromptEngineering.getRiddleLab(solutionColours));
     Thread labRiddleThread = new Thread(labRiddleTask);
     labRiddleThread.setDaemon(true);
     labRiddleThread.start();
@@ -330,6 +330,11 @@ public class LabController {
     ChatTaskGenerator.thinkingAnimationImages.add(imgScientistThinking);
     ChatTaskGenerator.thinkingAnimationImages.add(typingBubble);
 
+    // Add timer label, arrows, and general chemicals to restart manager
+    RestartManager.labLabel = lblTimer;
+    RestartManager.labArrowCollection = arrowCollection;
+    RestartManager.labChemicals = chemicalGeneral;
+
     // Create tasks for animation and updating hint label
     createAnimateTask();
     updateHintTask(numHints);
@@ -365,6 +370,7 @@ public class LabController {
             blurredImage.setVisible(true);
             fadeTransition();
 
+            createAnimateTask();
             // End the task
             return null;
           }

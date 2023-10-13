@@ -67,6 +67,7 @@ public class App extends Application {
     if (newUi == AppUi.MAINMENU) {
       System.out.println("RESTARTING");
       MainmenuController.hasRestarted = true;
+      ChatTaskGenerator.textToSpeech.clear();
       RestartManager.restartGame();
       MainmenuController.newContextResponse();
     }

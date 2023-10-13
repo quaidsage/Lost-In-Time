@@ -1,16 +1,22 @@
 package nz.ac.auckland.se206;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Rectangle;
+import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.controllers.DifficultyController;
 import nz.ac.auckland.se206.controllers.IntroController;
 import nz.ac.auckland.se206.controllers.LabController;
 import nz.ac.auckland.se206.controllers.TimemachineController;
 import nz.ac.auckland.se206.controllers.TimerController;
 import nz.ac.auckland.se206.gpt.ChatTaskGenerator;
+import nz.ac.auckland.se206.gpt.GptPromptEngineering;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionRequest;
 
 public class RestartManager {
@@ -19,16 +25,13 @@ public class RestartManager {
   public static Object[] introElements;
   public static Label timemachineLabel;
   public static Rectangle timemachineRect;
+  public static Label labLabel;
+  public static Polyline labChemicals;
+  public static ArrayList<ImageView> labArrowCollection;
 
+  /** TODO JAVADOCS */
   public static void restartGame() {
     // Reset various game states and settings when the game starts.
-    GameState.isLabResolved = false;
-    GameState.isStorageResolved = false;
-    GameState.isLabVisited = false;
-    GameState.isStorageVisited = false;
-    GameState.isDifficultyEasy = false;
-    GameState.isDifficultyMedium = false;
-    GameState.isDifficultyHard = false;
     LabController.numHints = 5;
 
     // Initialise AI chat parameters
@@ -40,9 +43,16 @@ public class RestartManager {
 
     clearGameChatAreas();
     restartTimemachineScene();
+    restartLabScene();
+    restartStorageScene();
   }
 
+  /** TODO JAVADOCS */
   private static void restartDifficultyScene() {
+    GameState.isDifficultyEasy = false;
+    GameState.isDifficultyMedium = false;
+    GameState.isDifficultyHard = false;
+
     DifficultyController.isDifficultyChecked = false;
     DifficultyController.isTimeChecked = false;
     DifficultyController.booleanProperty.set(true);
@@ -53,6 +63,7 @@ public class RestartManager {
     }
   }
 
+  /** TODO JAVADOCS */
   private static void restartIntroScene() {
     IntroController.interaction = 0;
     IntroController.isContextLoaded = false;
@@ -76,6 +87,7 @@ public class RestartManager {
     ((TextArea) introElements[5]).setText("");
   }
 
+  /** TODO JAVADOCS */
   private static void restartTimemachineScene() {
     // Initialise timer and bind the lblTimer to the timerController properties.
     TimemachineController.timer = new TimerController();
@@ -89,6 +101,60 @@ public class RestartManager {
     TimemachineController.createStartTask(timemachineRect, timemachineLabel);
   }
 
+  /** TODO JAVADOCS */
+  private static void restartLabScene() {
+    GameState.isLabResolved = false;
+    GameState.isLabVisited = false;
+
+    LabController.numChemicalsAdded = 0;
+    Boolean[] isChemicalSolution = new Boolean[] {false, false, false, false, false, false, false};
+
+    // Initialise timer and bind the lblTimer to the timerController properties.
+    LabController.timer = new TimerController();
+    labLabel.textProperty().bind(LabController.timer.messageProperty());
+    LabController.timer.setOnSucceeded(
+        e -> {
+          App.setUi(AppUi.TIMEOUT);
+          LabController.timer.reset();
+        });
+
+    // Create task to run GPT model for intro message
+    LabController.labIntroTask = ChatTaskGenerator.createTask(GptPromptEngineering.getLabIntro());
+    LabController.labIntroTask.setOnSucceeded(
+        e -> {
+          ChatTaskGenerator.updateChat("\n\n-> ", LabController.labIntroTask.getValue());
+          labChemicals.setVisible(true);
+        });
+
+    // Reset arrows
+    for (int i = 0; i < 7; i++) {
+      labArrowCollection.get(i + 21).setVisible(false);
+      labArrowCollection.get(i + 14).setVisible(false);
+      labArrowCollection.get(i + 7).setVisible(true);
+      labArrowCollection.get(i).setVisible(true);
+    }
+
+    // Set solution chemicals
+    ArrayList<Integer> list = new ArrayList<Integer>();
+    for (int i = 0; i < 7; i++) {
+      list.add(i);
+    }
+    Collections.shuffle(list);
+    ArrayList<Integer> solutionColours = new ArrayList<Integer>();
+    for (int i = 0; i < 3; i++) {
+      solutionColours.add(list.get(i));
+      isChemicalSolution[solutionColours.get(i)] = true;
+    }
+    LabController.isChemicalSolution = isChemicalSolution;
+    LabController.solutionColours = solutionColours;
+  }
+
+  private static void restartStorageScene() {
+    GameState.isStorageResolved = false;
+    GameState.isStorageVisited = false;
+  }
+
+  /** TODO JAVADOCS */
   private static void clearGameChatAreas() {
     for (int i = 0; i < ChatTaskGenerator.chatAreas.size(); i++) {
       ChatTaskGenerator.chatAreas.get(i).setText("");
