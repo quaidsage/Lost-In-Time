@@ -118,7 +118,6 @@ public class IntroController {
     msg = new ChatMessage("assistant", interactions[interaction]);
     updateTask(txtAi);
     TextToSpeech.runTTS(msg.getContent());
-    TextToSpeech.runTTS(msg.getContent());
     Thread appendThread = new Thread(appendTask);
     appendThread.setDaemon(true);
     appendThread.start();
