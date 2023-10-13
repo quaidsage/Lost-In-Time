@@ -65,10 +65,12 @@ public class App extends Application {
   // Sets the Ui without resetting the state
   public static void setUi(AppUi newUi) {
     if (newUi == AppUi.MAINMENU) {
+      System.out.println("RESTARTING");
       MainmenuController.hasRestarted = true;
       RestartManager.restartGame();
       MainmenuController.newContextResponse();
     }
+
     scene.setRoot(SceneManager.getUiRoot(newUi));
 
     // Remove tts queue when switching non-game scenes

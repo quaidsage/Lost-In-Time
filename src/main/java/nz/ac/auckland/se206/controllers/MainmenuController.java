@@ -20,7 +20,6 @@ import nz.ac.auckland.se206.speech.TextToSpeech;
 /** A controller class for the main menu scene. */
 public class MainmenuController {
 
-  public static Button btnContinue;
   public static Button btnSkip;
 
   public static boolean hasRestarted = false;
@@ -31,6 +30,8 @@ public class MainmenuController {
 
   /** Initialises the main menu scene with the required settings. */
   public void initialize() {
+    // Initialise text to speech
+
     loadFxmlFiles();
 
     // Initialise AI chat parameters
@@ -43,8 +44,8 @@ public class MainmenuController {
    *
    * @param event The event that triggered this function
    * @throws IOException If the FXML file is not found
-   * @throws EngineStateError
-   * @throws AudioException
+   * @throws EngineStateError If there is an error with the speech engine
+   * @throws AudioException If there is an error with the audio
    */
   @FXML
   private void onClickBeginGame(ActionEvent event)
@@ -52,25 +53,6 @@ public class MainmenuController {
 
     App.setUi(AppUi.DIFFICULTY);
     TextToSpeech.runTTS("Select difficulty level and time limit.");
-
-    // Set the continue button to the difficulty selection screen
-    Task<Void> disableContinueButtonTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            while (App.currentUi == AppUi.DIFFICULTY) {
-              if (DifficultyController.isDifficultyChecked && DifficultyController.isTimeChecked) {
-                btnContinue.setDisable(false);
-              } else {
-                btnContinue.setDisable(true);
-              }
-            }
-            return null;
-          }
-        };
-    Thread disableContinueButtonThread = new Thread(disableContinueButtonTask);
-    disableContinueButtonThread.setDaemon(true);
-    disableContinueButtonThread.start();
   }
 
   /**
@@ -99,7 +81,7 @@ public class MainmenuController {
           @Override
           protected Void call() throws Exception {
             while (App.currentUi == AppUi.INTRO) {
-              if (IntroController.isContextGenerated) {
+              if (IntroController.isFilesLoaded) {
                 btnSkip.setDisable(false);
               } else {
                 btnSkip.setDisable(true);
@@ -140,7 +122,7 @@ public class MainmenuController {
 
     loadTask.setOnSucceeded(
         e -> {
-          IntroController.isContextGenerated = true;
+          IntroController.isFilesLoaded = true;
           newContextResponse();
         });
     Thread loadThread = new Thread(loadTask);
@@ -156,7 +138,12 @@ public class MainmenuController {
     contextTask.setOnSucceeded(
         event -> {
           ChatTaskGenerator.contextResponse = contextTask.getValue();
-          System.out.println("====== DONE GENERATING CONTEXT ======");
+          if (App.currentUi == AppUi.TIMEMACHINE) {
+            TimemachineController.appendContextProperty.set(
+                !TimemachineController.appendContextProperty.get());
+          } else {
+            IntroController.isContextLoaded = true;
+          }
         });
     Thread contextThread = new Thread(contextTask);
     contextThread.setDaemon(true);

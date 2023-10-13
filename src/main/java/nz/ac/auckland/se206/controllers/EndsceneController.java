@@ -4,6 +4,7 @@ import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import nz.ac.auckland.se206.App;
+import nz.ac.auckland.se206.SceneManager.AppUi;
 
 /** A controller class for end scene. */
 public class EndsceneController {
@@ -13,6 +14,6 @@ public class EndsceneController {
   @FXML
   private void onClickBackToMenu() throws IOException {
     // Set the root scene to the main menu when the "Play Again" button is clicked
-    App.setRoot("mainmenu");
+    App.setUi(AppUi.MAINMENU);
   }
 }

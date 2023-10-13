@@ -13,6 +13,7 @@ import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.RestartManager;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
+import nz.ac.auckland.se206.gpt.ChatTaskGenerator;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 
 /** A controller class for the intro scene. */
@@ -20,7 +21,8 @@ public class IntroController {
   public static Task<Void> appendTask;
   public static ChatMessage msg;
   public static int minutes;
-  public static boolean isContextGenerated;
+  public static boolean isFilesLoaded;
+  public static boolean isContextLoaded = false;
   public static int interaction = 0;
 
   // Define FXML elements
@@ -81,6 +83,12 @@ public class IntroController {
     // Switch to time machine scene
     App.setUi(AppUi.TIMEMACHINE);
 
+    // If context is preloaded, load appending
+    if (isContextLoaded) {
+      TimemachineController.appendContextProperty.set(
+          !TimemachineController.appendContextProperty.get());
+    }
+
     // Start the round function in the time machine scene
     Thread startThread = new Thread(TimemachineController.startTask);
     startThread.setDaemon(true);
@@ -118,6 +126,7 @@ public class IntroController {
     // Start appending the next interaction message
     msg = new ChatMessage("assistant", interactions[interaction]);
     updateTask(txtAi);
+    ChatTaskGenerator.textToSpeech.clear();
     TextToSpeech.runTTS(msg.getContent());
     Thread appendThread = new Thread(appendTask);
     appendThread.setDaemon(true);

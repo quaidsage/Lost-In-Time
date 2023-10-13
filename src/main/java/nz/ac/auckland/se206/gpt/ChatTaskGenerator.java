@@ -121,7 +121,7 @@ public class ChatTaskGenerator {
 
       return result.getChatMessage();
     } catch (ApiProxyException e) {
-      e.printStackTrace();
+      System.out.println("Error in GPT model: " + e.getMessage());
       return null;
     }
   }

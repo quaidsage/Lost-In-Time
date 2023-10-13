@@ -222,7 +222,7 @@ public class StorageController {
    */
   @FXML
   private void onClickReturn(ActionEvent event) throws IOException {
-    App.setRoot("mainmenu");
+    App.setUi(AppUi.MAINMENU);
   }
 
   /**

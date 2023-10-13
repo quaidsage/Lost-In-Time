@@ -1,5 +1,7 @@
 package nz.ac.auckland.se206.controllers;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -28,6 +30,7 @@ public class DifficultyController {
 
   public static boolean isDifficultyChecked = false;
   public static boolean isTimeChecked = false;
+  public static BooleanProperty booleanProperty = new SimpleBooleanProperty(true);
 
   // Define FXML elements
   @FXML private Button btnSwitchToTimeMachine;
@@ -48,9 +51,9 @@ public class DifficultyController {
 
   /** Apply settings on initialisation */
   public void initialize() {
-    // Send button to switch scenes to time machine to main menu to disable
-    MainmenuController.btnContinue = btnSwitchToTimeMachine;
 
+    // Bind continue button to boolean values
+    btnSwitchToTimeMachine.disableProperty().bind(booleanProperty);
     // Initialise all checkboxes to restart manager
     RestartManager.difficultyCheckBoxes =
         new CheckBox[] {
@@ -105,10 +108,11 @@ public class DifficultyController {
 
     // Handle when switching difficulties
     if (chkbxEasy.isSelected()) {
-      deselectDifficultyBoxes(currentDifficulty, isDifficultyChecked);
+      deselectDifficultyBoxes(currentDifficulty);
     } else if (isDifficultyChecked == true) {
       isDifficultyChecked = false;
     }
+    booleanProperty.set(!isDifficultyChecked || !isTimeChecked);
   }
 
   /**
@@ -124,10 +128,11 @@ public class DifficultyController {
 
     // Handle when switching difficulties
     if (chkbxMedium.isSelected()) {
-      deselectDifficultyBoxes(currentDifficulty, isDifficultyChecked);
+      deselectDifficultyBoxes(currentDifficulty);
     } else if (isDifficultyChecked == true) {
       isDifficultyChecked = false;
     }
+    booleanProperty.set(!isDifficultyChecked || !isTimeChecked);
   }
 
   /**
@@ -143,10 +148,11 @@ public class DifficultyController {
 
     // Handle when switching difficulties
     if (chkbxHard.isSelected()) {
-      deselectDifficultyBoxes(currentDifficulty, isDifficultyChecked);
+      deselectDifficultyBoxes(currentDifficulty);
     } else if (isDifficultyChecked == true) {
       isDifficultyChecked = false;
     }
+    booleanProperty.set(!isDifficultyChecked || !isTimeChecked);
   }
 
   /** Handles the 2 Minutes checkbox. */
@@ -158,11 +164,12 @@ public class DifficultyController {
 
     // Handle when switching time settings
     if (chkbxTwoMins.isSelected()) {
-      deselectTimeBoxes(currentTimeSetting, isTimeChecked);
+      deselectTimeBoxes(currentTimeSetting);
     } else if (isTimeChecked == true) {
       isTimeChecked = false;
     }
 
+    booleanProperty.set(!isDifficultyChecked || !isTimeChecked);
     minutes = 2;
   }
 
@@ -175,11 +182,12 @@ public class DifficultyController {
 
     // Handle when switching time settings
     if (chkbxFourMins.isSelected()) {
-      deselectTimeBoxes(currentTimeSetting, isTimeChecked);
+      deselectTimeBoxes(currentTimeSetting);
     } else if (isTimeChecked == true) {
       isTimeChecked = false;
     }
 
+    booleanProperty.set(!isDifficultyChecked || !isTimeChecked);
     minutes = 4;
   }
 
@@ -192,11 +200,12 @@ public class DifficultyController {
 
     // Handle when switching time settings
     if (chkbxSixMins.isSelected()) {
-      deselectTimeBoxes(currentTimeSetting, isTimeChecked);
+      deselectTimeBoxes(currentTimeSetting);
     } else if (isTimeChecked == true) {
       isTimeChecked = false;
     }
 
+    booleanProperty.set(!isDifficultyChecked || !isTimeChecked);
     minutes = 6;
   }
 
@@ -206,7 +215,7 @@ public class DifficultyController {
    * @param difficulty The difficulty to deselect.
    * @param isDifficultyChecked Whether the difficulty is checked.
    */
-  private void deselectDifficultyBoxes(Difficulty difficulty, Boolean isDifficultyChecked) {
+  private void deselectDifficultyBoxes(Difficulty difficulty) {
     // Deselect the unwanted difficulty checkboxes
     switch (difficulty) {
       case EASY:
@@ -230,7 +239,7 @@ public class DifficultyController {
    * @param timeSetting The time setting to deselect.
    * @param isTimeChecked Whether the time setting is checked.
    */
-  private void deselectTimeBoxes(TimeSetting timeSetting, Boolean isTimeChecked) {
+  private void deselectTimeBoxes(TimeSetting timeSetting) {
     // Deselect the unwanted time setting checkboxes
     switch (timeSetting) {
       case TWO:
