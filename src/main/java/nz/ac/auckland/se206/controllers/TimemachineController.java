@@ -90,7 +90,7 @@ public class TimemachineController {
             // Append context to chat and if unmuted, use TTS
             ChatTaskGenerator.updateChat("-> ", ChatTaskGenerator.contextResponse);
             if (!MainmenuController.isTTSMuted) {
-              TextToSpeech.runTTS(ChatTaskGenerator.contextResponse.getContent());
+              TextToSpeech.runTextToSpeech(ChatTaskGenerator.contextResponse.getContent());
             }
           }
         };

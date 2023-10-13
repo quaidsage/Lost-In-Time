@@ -31,7 +31,7 @@ public class MainmenuController {
   /** Initialises the main menu scene with the required settings. */
   public void initialize() {
     // Initialise text to speech
-    
+
     loadFxmlFiles();
 
     // Initialise AI chat parameters
@@ -99,7 +99,7 @@ public class MainmenuController {
    */
   private void loadFxmlFiles() {
     // Initialise with TTS message
-    TextToSpeech.runTTS("Lost in time. Restore the fabric of time.");
+    TextToSpeech.runTextToSpeech("Lost in time. Restore the fabric of time.");
 
     // Create a task to load various FXML files for different scenes
     Task<Void> loadTask =
