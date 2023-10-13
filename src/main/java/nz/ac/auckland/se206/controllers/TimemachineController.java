@@ -129,7 +129,7 @@ public class TimemachineController {
    */
   @FXML
   private void onClickReturn(ActionEvent event) throws IOException {
-    App.setRoot("mainmenu");
+    App.setUi(AppUi.MAINMENU);
   }
 
   /**

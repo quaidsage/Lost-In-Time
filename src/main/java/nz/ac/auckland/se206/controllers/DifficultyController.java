@@ -7,6 +7,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
+import nz.ac.auckland.se206.RestartManager;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 
 /** A controller class for the difficulty selection scene. */
@@ -25,6 +26,9 @@ public class DifficultyController {
     SIX
   }
 
+  public static boolean isDifficultyChecked = false;
+  public static boolean isTimeChecked = false;
+
   // Define FXML elements
   @FXML private Button btnSwitchToTimeMachine;
   @FXML private CheckBox chkbxEasy;
@@ -37,8 +41,6 @@ public class DifficultyController {
 
   // Default settings and variables
   private int minutes = 4;
-  public static boolean isDifficultyChecked = false;
-  public static boolean isTimeChecked = false;
 
   // Variables to track the current difficulty and time settings
   private Difficulty currentDifficulty;
@@ -48,6 +50,12 @@ public class DifficultyController {
   public void initialize() {
     // Send button to switch scenes to time machine to main menu to disable
     MainmenuController.btnContinue = btnSwitchToTimeMachine;
+
+    // Initialise all checkboxes to restart manager
+    RestartManager.difficultyCheckBoxes =
+        new CheckBox[] {
+          chkbxEasy, chkbxMedium, chkbxHard, chkbxTwoMins, chkbxFourMins, chkbxSixMins
+        };
   }
 
   /**

@@ -1,10 +1,7 @@
 package nz.ac.auckland.se206;
 
 import java.util.HashMap;
-import java.util.Map;
-import javafx.application.Platform;
 import javafx.scene.Parent;
-import javafx.stage.Stage;
 
 /** A class to store and manage various scenes within the game. */
 public class SceneManager {
@@ -70,42 +67,5 @@ public class SceneManager {
         return "timeout";
     }
     return "mainmenu";
-  }
-
-  /** Clears all of the scenes and closes the game. */
-  public static void clearAllScenesAndClose() {
-    for (Map.Entry<AppUi, Parent> entry : sceneMap.entrySet()) {
-      Parent root = entry.getValue();
-
-      if (root.getScene() != null && root.getScene().getWindow() instanceof Stage) {
-        Stage stage = (Stage) root.getScene().getWindow();
-        stage.close();
-      }
-    }
-
-    // Clear all scenes from the sceneMap
-    sceneMap.clear();
-
-    // Close the application
-    Platform.exit();
-  }
-
-  /** Clears all of the scenes except for the main menu. */
-  public static void clearAllScenesExceptMainMenu() {
-    for (Map.Entry<AppUi, Parent> entry : sceneMap.entrySet()) {
-      AppUi ui = entry.getKey();
-      Parent root = entry.getValue();
-
-      // Check if the scene is not MAINMENU and it has a stage
-      if (ui != AppUi.MAINMENU
-          && root.getScene() != null
-          && root.getScene().getWindow() instanceof Stage) {
-        Stage stage = (Stage) root.getScene().getWindow();
-        stage.close();
-      }
-    }
-
-    // Remove all scenes except MAINMENU from the sceneMap
-    sceneMap.entrySet().removeIf(entry -> entry.getKey() != AppUi.MAINMENU);
   }
 }

@@ -23,6 +23,7 @@ public class MainmenuController {
   public static Button btnContinue;
   public static Button btnSkip;
 
+  public static boolean hasRestarted = false;
   public static boolean isTTSMuted = true;
 
   @FXML private Button btnBeginGame;
@@ -30,55 +31,11 @@ public class MainmenuController {
 
   /** Initialises the main menu scene with the required settings. */
   public void initialize() {
+    loadFxmlFiles();
 
-    // Initialise with TTS message
-    TextToSpeech.runTTS("Lost in time. Restore the fabric of time.");
-
-    // Create a task to load various FXML files for different scenes
-    Task<Void> loadTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            // Load FXML files for different scenes and add them to the SceneManager
-            // Clear any excess scenes on restart
-            SceneManager.clearAllScenesExceptMainMenu();
-            SceneManager.addUi(AppUi.DIFFICULTY, App.loadFxml("difficulty"));
-            SceneManager.addUi(AppUi.INTRO, App.loadFxml("intro"));
-            SceneManager.addUi(AppUi.LAB, App.loadFxml("lab"));
-            SceneManager.addUi(AppUi.STORAGE, App.loadFxml("storage"));
-            SceneManager.addUi(AppUi.ENDSCENE, App.loadFxml("endscene"));
-            SceneManager.addUi(AppUi.TIMEOUT, App.loadFxml("timeout"));
-            SceneManager.addUi(AppUi.TIMEMACHINE, App.loadFxml("timemachine"));
-            return null;
-          }
-        };
-
-    loadTask.setOnSucceeded(
-        e -> {
-          IntroController.isContextGenerated = true;
-
-          // Generate context for start of the game
-          ChatTaskGenerator.contextResponse = null;
-          Task<ChatMessage> contextTask =
-              ChatTaskGenerator.createTask(GptPromptEngineering.getContext());
-          contextTask.setOnSucceeded(
-              event -> {
-                ChatTaskGenerator.contextResponse = contextTask.getValue();
-                System.out.println("done generation");
-              });
-          Thread contextThread = new Thread(contextTask);
-          contextThread.setDaemon(true);
-          contextThread.start();
-        });
-    Thread loadThread = new Thread(loadTask);
-    loadThread.setDaemon(true);
-    loadThread.start();
-
-    // TODO: Remove on removal of temporary mute button
-    // Update temp button text
-    if (isTTSMuted) {
-      btnMute.setText("Unmute TTS (TEMP BUTTON)");
-    }
+    // Initialise AI chat parameters
+    GameState.chatCompletionRequest =
+        new ChatCompletionRequest().setN(1).setTemperature(0.2).setTopP(0.5).setMaxTokens(200);
   }
 
   /**
@@ -92,22 +49,6 @@ public class MainmenuController {
   @FXML
   private void onClickBeginGame(ActionEvent event)
       throws IOException, AudioException, EngineStateError {
-    // Reset various game states and settings when the game starts.
-    GameState.isLabResolved = false;
-    GameState.isStorageResolved = false;
-    GameState.isLabVisited = false;
-    GameState.isStorageVisited = false;
-    GameState.isDifficultyEasy = false;
-    GameState.isDifficultyMedium = false;
-    GameState.isDifficultyHard = false;
-    IntroController.isContextGenerated = false;
-    DifficultyController.isDifficultyChecked = false;
-    DifficultyController.isTimeChecked = false;
-    LabController.numHints = 5;
-
-    // Initialise AI chat parameters
-    GameState.chatCompletionRequest =
-        new ChatCompletionRequest().setN(1).setTemperature(0.2).setTopP(0.5).setMaxTokens(200);
 
     App.setUi(AppUi.DIFFICULTY);
     TextToSpeech.runTTS("Select difficulty level and time limit.");
@@ -170,5 +111,55 @@ public class MainmenuController {
     Thread disableSkipButtonThread = new Thread(disableSkipButtonTask);
     disableSkipButtonThread.setDaemon(true);
     disableSkipButtonThread.start();
+  }
+
+  /**
+   * Function to load all fxml files for application in seperate thread then load first AI response.
+   */
+  private void loadFxmlFiles() {
+    // Initialise with TTS message
+    TextToSpeech.runTTS("Lost in time. Restore the fabric of time.");
+
+    // Create a task to load various FXML files for different scenes
+    Task<Void> loadTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            // Load FXML files for different scenes and add them to the SceneManager
+            // Clear any excess scenes on restart
+            SceneManager.addUi(AppUi.DIFFICULTY, App.loadFxml("difficulty"));
+            SceneManager.addUi(AppUi.INTRO, App.loadFxml("intro"));
+            SceneManager.addUi(AppUi.LAB, App.loadFxml("lab"));
+            SceneManager.addUi(AppUi.STORAGE, App.loadFxml("storage"));
+            SceneManager.addUi(AppUi.ENDSCENE, App.loadFxml("endscene"));
+            SceneManager.addUi(AppUi.TIMEOUT, App.loadFxml("timeout"));
+            SceneManager.addUi(AppUi.TIMEMACHINE, App.loadFxml("timemachine"));
+            return null;
+          }
+        };
+
+    loadTask.setOnSucceeded(
+        e -> {
+          IntroController.isContextGenerated = true;
+          newContextResponse();
+        });
+    Thread loadThread = new Thread(loadTask);
+    loadThread.setDaemon(true);
+    loadThread.start();
+  }
+
+  /** Function to create new first AI response on loading time machine. */
+  public static void newContextResponse() {
+    // Generate context for start of the game
+    ChatTaskGenerator.contextResponse = null;
+    Task<ChatMessage> contextTask = ChatTaskGenerator.createTask(GptPromptEngineering.getContext());
+    contextTask.setOnSucceeded(
+        event -> {
+          ChatTaskGenerator.contextResponse = contextTask.getValue();
+          System.out.println("====== DONE GENERATING CONTEXT ======");
+        });
+    Thread contextThread = new Thread(contextTask);
+    contextThread.setDaemon(true);
+    contextThread.start();
   }
 }
