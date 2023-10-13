@@ -31,7 +31,7 @@ public class MainmenuController {
   /** Initialises the main menu scene with the required settings. */
   public void initialize() {
     // Initialise text to speech
-
+    
     loadFxmlFiles();
 
     // Initialise AI chat parameters
@@ -50,9 +50,8 @@ public class MainmenuController {
   @FXML
   private void onClickBeginGame(ActionEvent event)
       throws IOException, AudioException, EngineStateError {
-
     App.setUi(AppUi.DIFFICULTY);
-    TextToSpeech.runTTS("Select difficulty level and time limit.");
+    TextToSpeech.runTextToSpeech("Select difficulty level and time limit.");
   }
 
   /**

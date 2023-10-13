@@ -126,8 +126,12 @@ public class IntroController {
     // Start appending the next interaction message
     msg = new ChatMessage("assistant", interactions[interaction]);
     updateTask(txtAi);
+
+    // Run text to speech for new line
     ChatTaskGenerator.textToSpeech.clear();
-    TextToSpeech.runTTS(msg.getContent());
+    TextToSpeech.runTextToSpeech(msg.getContent());
+
+    // Append the line to chat area
     Thread appendThread = new Thread(appendTask);
     appendThread.setDaemon(true);
     appendThread.start();
