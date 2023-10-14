@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -83,6 +84,9 @@ public class TimemachineController {
   @FXML private Pane desktopView;
   @FXML private Button btnControlBox;
 
+  private Circle currentCircle;
+  private int res;
+
   /** Carries out specific tasks required when opening the scene. */
   public void initialize() {
 
@@ -96,6 +100,13 @@ public class TimemachineController {
 
     // Initialise relevant tasks
     initialiseTasks();
+
+    circle1.setRadius(110);
+    circle2.setRadius(95);
+    circle3.setRadius(80);
+    circle4.setRadius(65);
+    currentCircle = null;
+    res = row1.getChildren().size();
 
     // Create listener to when ready to append context
     ChangeListener<Boolean> changeListener =
@@ -203,6 +214,113 @@ public class TimemachineController {
   @FXML
   private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
     ChatTaskGenerator.onSendMessage(chatField);
+  }
+
+  // selects the smallest circle that is, the top ring, and makes it glow to show it is selected
+  public void selectCircle(MouseEvent event) {
+    if (currentCircle == null) {
+      currentCircle = getCircle((Circle) event.getPickResult().getIntersectedNode());
+      Glow glow = new Glow();
+      glow.setLevel(0.5);
+      currentCircle.setEffect(glow);
+    } else {
+
+      if (currentCircle
+              .getId()
+              .compareTo(getCircle((Circle) event.getPickResult().getIntersectedNode()).getId())
+          > 0) {
+        String row = event.getPickResult().getIntersectedNode().getParent().getId();
+        if (row.equals("row1")) {
+          row1.getChildren().add(currentCircle);
+        } else if (row.equals("row2")) {
+          row2.getChildren().add(currentCircle);
+        } else if (row.equals("row3")) {
+          row3.getChildren().add(currentCircle);
+        }
+      }
+      currentCircle.setEffect(null);
+      currentCircle = null;
+    }
+
+    if (row3.getChildren().size() == res) {
+      winGame();
+    }
+  }
+
+  private void winGame() {
+    hackGame.setVisible(false);
+    desktopView.setVisible(false);
+    btnControlBox.setVisible(false);
+  }
+
+  // drops circle on both blank as well as a non blank row appropriately
+  public void dropCircle(MouseEvent event) {
+    String row = event.getPickResult().getIntersectedNode().getId();
+
+    if (row.equals("row1")) {
+      if (currentCircle == null) return;
+      else if (row1.getChildren().size() == 0) {
+        row1.getChildren().add(currentCircle);
+        currentCircle.setEffect(null);
+        currentCircle = null;
+      } else {
+        if (currentCircle.getId().compareTo(getCircle((Circle) row1.getChildren().get(0)).getId())
+            > 0) {
+          row1.getChildren().add(currentCircle);
+          currentCircle.setEffect(null);
+          currentCircle = null;
+        } else {
+          currentCircle.setEffect(null);
+          currentCircle = null;
+        }
+      }
+    } else if (row.equals("row2")) {
+      if (currentCircle == null) return;
+      else if (row2.getChildren().size() == 0) {
+        row2.getChildren().add(currentCircle);
+        currentCircle.setEffect(null);
+        currentCircle = null;
+      } else {
+        if (currentCircle.getId().compareTo(getCircle((Circle) row2.getChildren().get(0)).getId())
+            > 0) {
+          row2.getChildren().add(currentCircle);
+          currentCircle.setEffect(null);
+          currentCircle = null;
+        } else {
+          currentCircle.setEffect(null);
+          currentCircle = null;
+        }
+      }
+    } else if (row.equals("row3")) {
+      if (currentCircle == null) return;
+      else if (row3.getChildren().size() == 0) {
+        row3.getChildren().add(currentCircle);
+        currentCircle.setEffect(null);
+        currentCircle = null;
+      } else {
+        if (currentCircle.getId().compareTo(getCircle((Circle) row3.getChildren().get(0)).getId())
+            > 0) {
+          row3.getChildren().add(currentCircle);
+          currentCircle.setEffect(null);
+          currentCircle = null;
+        } else {
+          currentCircle.setEffect(null);
+          currentCircle = null;
+        }
+      }
+    }
+  }
+
+  // gets the smallest circle of the row of whichever circle you press
+  // that is you don't want to select a bigger circle when a smaller circle is already present
+  public Circle getCircle(Circle circle) {
+    Circle toChoseCircle = circle;
+    StackPane row = (StackPane) circle.getParent();
+    for (int i = 0; i < row.getChildren().size(); i++) {
+      if (row.getChildren().get(i).getId().compareTo(toChoseCircle.getId()) > 0)
+        toChoseCircle = (Circle) row.getChildren().get(i);
+    }
+    return toChoseCircle;
   }
 
   /** Function to animate the start of the round. */

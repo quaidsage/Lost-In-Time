@@ -109,16 +109,16 @@
             <Rectangle arcHeight="5.0" arcWidth="5.0" height="462.0" layoutX="35.0" layoutY="65.0" stroke="RED" strokeType="INSIDE" strokeWidth="3.0" width="823.0" />
             <HBox layoutX="64.0" layoutY="94.0" prefHeight="409.0" prefWidth="768.0">
                <children>
-                  <StackPane fx:id="row1" prefHeight="150.0" prefWidth="255.0">
+                  <StackPane fx:id="row1" onMouseClicked="#dropCircle" prefHeight="150.0" prefWidth="255.0">
                      <children>
-                        <Circle fx:id="circle1" fill="DODGERBLUE" radius="115.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Circle fx:id="circle2" fill="DODGERBLUE" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Circle fx:id="circle3" fill="DODGERBLUE" radius="85.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Circle fx:id="circle4" fill="DODGERBLUE" radius="70.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="circle1" fill="DODGERBLUE" onMouseClicked="#selectCircle" radius="115.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="circle2" fill="DODGERBLUE" onMouseClicked="#selectCircle" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="circle3" fill="DODGERBLUE" onMouseClicked="#selectCircle" radius="85.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="circle4" fill="DODGERBLUE" onMouseClicked="#selectCircle" radius="70.0" stroke="BLACK" strokeType="INSIDE" />
                      </children>
                   </StackPane>
-                  <StackPane fx:id="row2" prefHeight="150.0" prefWidth="255.0" />
-                  <StackPane fx:id="row3" prefHeight="150.0" prefWidth="255.0" />
+                  <StackPane fx:id="row2" onMouseClicked="#dropCircle" prefHeight="150.0" prefWidth="255.0" />
+                  <StackPane fx:id="row3" onMouseClicked="#dropCircle" prefHeight="150.0" prefWidth="255.0" />
                </children>
             </HBox>
          </children>
