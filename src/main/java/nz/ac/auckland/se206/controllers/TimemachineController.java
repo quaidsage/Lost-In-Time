@@ -83,6 +83,9 @@ public class TimemachineController {
   @FXML private Pane hackGame;
   @FXML private Pane desktopView;
   @FXML private Button btnControlBox;
+  @FXML private Button btnHelp;
+  @FXML private Button btnReturn;
+  @FXML private Pane hackInstructions;
 
   private Circle currentCircle;
   private int res;
@@ -100,6 +103,8 @@ public class TimemachineController {
 
     // Initialise relevant tasks
     initialiseTasks();
+
+    GameState.isControlBoxResolved = false;
 
     circle1.setRadius(110);
     circle2.setRadius(95);
@@ -176,10 +181,12 @@ public class TimemachineController {
    */
   @FXML
   private void onClickControlBox(ActionEvent event) {
-    // Check if game is complete
-    if (GameState.isLabResolved && GameState.isStorageResolved) {
-      desktopView.setVisible(true);
-    }
+    // Check if other two tasks are complete
+    // if (GameState.isLabResolved && GameState.isStorageResolved) {
+    //   desktopView.setVisible(true);
+    // }
+
+    desktopView.setVisible(true);
   }
 
   /**
@@ -191,6 +198,21 @@ public class TimemachineController {
   private void onClickHackFile(MouseEvent event) {
     // Check if game is complete
     hackGame.setVisible(true);
+  }
+
+  /**
+   * Function that handles if the help button is clicked.
+   *
+   * @param event the action event triggered by the send button
+   */
+  @FXML
+  private void onClickHelp(ActionEvent event) {
+    hackInstructions.setVisible(true);
+  }
+
+  @FXML
+  private void onClickHideInstructions(ActionEvent event) {
+    hackInstructions.setVisible(false);
   }
 
   /**
