@@ -98,6 +98,7 @@
       <Pane fx:id="hackGame" layoutX="56.0" layoutY="86.0" visible="false">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" height="545.0" stroke="BLACK" strokeType="INSIDE" width="900.0" />
+            <Button fx:id="btnHelp" layoutX="811.0" layoutY="18.0" mnemonicParsing="false" onAction="#onClickHelp" text="Help" />
             <Label layoutX="413.0" layoutY="16.0" text="hack.exe" textFill="#d01c1c">
                <font>
                   <Font size="24.0" />
@@ -109,18 +110,50 @@
             <Rectangle arcHeight="5.0" arcWidth="5.0" height="462.0" layoutX="35.0" layoutY="65.0" stroke="RED" strokeType="INSIDE" strokeWidth="3.0" width="823.0" />
             <HBox layoutX="64.0" layoutY="94.0" prefHeight="409.0" prefWidth="768.0">
                <children>
+                  <StackPane prefHeight="150.0" prefWidth="255.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="26.0" stroke="#4a4444" strokeType="OUTSIDE" strokeWidth="3.0" width="20.0" />
+                     </children>
+                  </StackPane>
+                  <StackPane prefHeight="150.0" prefWidth="255.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="26.0" stroke="#4a4444" strokeType="OUTSIDE" strokeWidth="3.0" width="20.0" />
+                     </children></StackPane>
+                  <StackPane prefHeight="150.0" prefWidth="255.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="26.0" stroke="#4a4444" strokeType="OUTSIDE" strokeWidth="3.0" width="20.0" />
+                     </children></StackPane>
+               </children>
+            </HBox>
+            <HBox layoutX="64.0" layoutY="94.0" prefHeight="409.0" prefWidth="768.0">
+               <children>
                   <StackPane fx:id="row1" onMouseClicked="#dropCircle" prefHeight="150.0" prefWidth="255.0">
                      <children>
-                        <Circle fx:id="circle1" fill="DODGERBLUE" onMouseClicked="#selectCircle" radius="115.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Circle fx:id="circle2" fill="DODGERBLUE" onMouseClicked="#selectCircle" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Circle fx:id="circle3" fill="DODGERBLUE" onMouseClicked="#selectCircle" radius="85.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Circle fx:id="circle4" fill="DODGERBLUE" onMouseClicked="#selectCircle" radius="70.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="circle1" fill="#4d545b" onMouseClicked="#selectCircle" radius="115.0" stroke="#141212" strokeType="INSIDE" strokeWidth="4.0" />
+                        <Circle fx:id="circle2" fill="#4d545b" onMouseClicked="#selectCircle" radius="100.0" stroke="#141212" strokeType="INSIDE" strokeWidth="3.0" />
+                        <Circle fx:id="circle3" fill="#4d545b" onMouseClicked="#selectCircle" radius="85.0" stroke="#141212" strokeType="INSIDE" strokeWidth="2.0" />
+                        <Circle fx:id="circle4" fill="#4d545b" onMouseClicked="#selectCircle" radius="70.0" stroke="#141212" strokeType="INSIDE" strokeWidth="1.5" />
                      </children>
                   </StackPane>
                   <StackPane fx:id="row2" onMouseClicked="#dropCircle" prefHeight="150.0" prefWidth="255.0" />
                   <StackPane fx:id="row3" onMouseClicked="#dropCircle" prefHeight="150.0" prefWidth="255.0" />
                </children>
             </HBox>
+            <Pane fx:id="hackInstructions" layoutX="29.0" layoutY="58.0" prefHeight="477.0" prefWidth="837.0" visible="false">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#272828" height="329.0" layoutX="181.0" layoutY="74.0" stroke="RED" strokeType="OUTSIDE" strokeWidth="3.0" width="475.0" />
+                  <Label layoutX="360.0" layoutY="89.0" text="Instructions" textFill="#e30909">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="btnReturn" layoutX="370.0" layoutY="348.0" mnemonicParsing="false" onAction="#onClickHideInstructions" text="Return to Hack" />
+                  <Text fill="WHITE" layoutX="203.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Challenge: Tower of Hanoi                                             In order to complete the hack you must move all the discs currently on the left tower to the righmost tower (represented by the white squares). Keep in mind that the discs can only be stacked on top of discs that are larger than themselves. Good luck!" wrappingWidth="430.9189453125">
+                     <font>
+                        <Font size="21.0" />
+                     </font></Text>
+               </children>
+            </Pane>
          </children>
       </Pane>
    </children>
