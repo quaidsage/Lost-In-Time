@@ -251,6 +251,7 @@ public class TimemachineController {
     hackGame.setVisible(false);
     desktopView.setVisible(false);
     btnControlBox.setVisible(false);
+    GameState.isControlBoxResolved = true;
   }
 
   // drops circle on both blank as well as a non blank row appropriately
