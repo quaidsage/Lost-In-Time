@@ -1,6 +1,8 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
+
+import javafx.animation.PathTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
@@ -12,7 +14,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.Delay;
 import nz.ac.auckland.se206.GameState;
@@ -59,6 +64,7 @@ public class TimemachineController {
   @FXML private Button btnSwitchToStorage;
   @FXML private Button btnSend;
   @FXML private Label lblTimer;
+  @FXML private Label lblTaskList;
   @FXML private TextArea chatArea;
   @FXML private TextArea chatField;
   @FXML private ImageView imgScientistThinking;
@@ -66,6 +72,9 @@ public class TimemachineController {
   @FXML private Button btnTimeMachine;
   @FXML private Button btnMenu;
   @FXML private ImageView typingBubble;
+  @FXML private Pane dropdownMenu;
+  @FXML private Button btnCloseDropdownMenu;
+  @FXML private Button btnOpenDropdownMenu;
 
   /** Carries out specific tasks required when opening the scene. */
   public void initialize() {
@@ -151,6 +160,16 @@ public class TimemachineController {
   @FXML
   private void onClickReturn(ActionEvent event) throws IOException {
     App.setUi(AppUi.MAINMENU);
+  }
+
+  @FXML
+  private void openDropdownMenu(ActionEvent event) {
+    openDropdownMenuAnimation(300);
+  }
+
+  @FXML
+  private void closeDropdownMenu(ActionEvent event) {
+    closeDropdownMenuAnimation(300);
   }
 
   /**
@@ -242,5 +261,17 @@ public class TimemachineController {
             return null;
           }
         };
+  }
+
+  private void openDropdownMenuAnimation(int duration) {
+    Line lineAcross = new Line(-133, 375, 133, 375);
+    Duration duration2 = Duration.millis(duration);
+    new PathTransition(duration2, lineAcross, dropdownMenu).play();
+  }
+
+  private void closeDropdownMenuAnimation(int duration) {
+    Line lineAcross = new Line(133, 375, -133, 375);
+    Duration duration2 = Duration.millis(duration);
+    new PathTransition(duration2, lineAcross, dropdownMenu).play();
   }
 }
