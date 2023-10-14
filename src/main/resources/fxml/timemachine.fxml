@@ -6,8 +6,11 @@
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -40,14 +43,14 @@
          </effect>
       </ImageView>
 
-      <Button id="btnSkip" fx:id="btnSwitchToStorage" layoutX="25.0" layoutY="678.0" mnemonicParsing="false" onAction="#onClickStorage" prefHeight="32.0" prefWidth="188.0" text="Storage" style="-fx-font-size: 27.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
+      <Button id="btnSkip" fx:id="btnSwitchToStorage" layoutX="25.0" layoutY="678.0" mnemonicParsing="false" onAction="#onClickStorage" prefHeight="32.0" prefWidth="188.0" style="-fx-font-size: 27.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" text="Storage">
          </Button>
-      <Button id="btnSkip" fx:id="btnSwitchToLab" layoutX="824.0" layoutY="678.0" mnemonicParsing="false" onAction="#onClickLab" prefHeight="41.0" prefWidth="161.0" text="Lab" style="-fx-font-size: 27.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;"> 
+      <Button id="btnSkip" fx:id="btnSwitchToLab" layoutX="824.0" layoutY="678.0" mnemonicParsing="false" onAction="#onClickLab" prefHeight="41.0" prefWidth="161.0" style="-fx-font-size: 27.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" text="Lab"> 
 </Button>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#303030" height="64.0" layoutX="1030.0" layoutY="276.0" stroke="TRANSPARENT" strokeType="INSIDE" width="342.0" />
-      <TextArea id="chatField" fx:id="chatField" layoutX="1027.0" layoutY="571.0" prefHeight="106.0" prefWidth="208.0" promptText="Enter message..." stylesheets="@../css/style.css" wrapText="true" style="-fx-font-size: 18.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
+      <TextArea id="chatField" fx:id="chatField" layoutX="1027.0" layoutY="571.0" prefHeight="106.0" prefWidth="208.0" promptText="Enter message..." style="-fx-font-size: 18.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" stylesheets="@../css/style.css" wrapText="true">
       </TextArea>
-      <TextArea id="chatArea" fx:id="chatArea" editable="false" layoutX="1030.0" layoutY="336.0" prefHeight="194.0" prefWidth="342.0" stylesheets="@../css/style.css" wrapText="true" style="-fx-font-size: 16.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
+      <TextArea id="chatArea" fx:id="chatArea" editable="false" layoutX="1030.0" layoutY="336.0" prefHeight="194.0" prefWidth="342.0" style="-fx-font-size: 16.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" stylesheets="@../css/style.css" wrapText="true">
       </TextArea>
       <ImageView fitHeight="150.0" fitWidth="277.0" layoutX="1032.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -59,20 +62,66 @@
             <Image url="@../images/scientist-processing.gif" />
          </image>
       </ImageView>
-      <Button id="btnSkip" fx:id="btnSend" layoutX="1265.0" layoutY="600.0" mnemonicParsing="false" onAction="#onSendMessage" stylesheets="@../css/style.css" text="Send" textFill="#6bf9b1" style="-fx-font-size: 24.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
+      <Button id="btnSkip" fx:id="btnSend" layoutX="1265.0" layoutY="600.0" mnemonicParsing="false" onAction="#onSendMessage" style="-fx-font-size: 24.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="Send" textFill="#6bf9b1">
       </Button>
-      <Label id="lblTimer" fx:id="lblTimer" layoutX="1153.0" layoutY="276.0" prefHeight="41.0" prefWidth="118.0" stylesheets="@../css/style.css" text="XX:XX" textFill="#6bf9b1" style="-fx-font-size: 32.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
+      <Label id="lblTimer" fx:id="lblTimer" layoutX="1153.0" layoutY="276.0" prefHeight="41.0" prefWidth="118.0" style="-fx-font-size: 32.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="XX:XX" textFill="#6bf9b1">
     </Label>
       <ImageView fx:id="typingBubble" fitHeight="70.0" fitWidth="107.0" layoutX="1212.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true" visible="false">
          <image>
             <Image url="@../images/typing_bubble1.gif" />
          </image>
       </ImageView>
-      <Rectangle fx:id="rectLight" arcHeight="5.0" arcWidth="5.0" height="596.0" layoutX="25.0" layoutY="60.0" stroke="BLACK" strokeType="INSIDE" width="960.0" />
-      <Button id="btnSkip" fx:id="btnMenu" layoutX="25.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickReturn" stylesheets="@../css/style.css" text="Return To Menu" style="-fx-font-size: 17.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
-</Button>
 <Button id="timeMachine" fx:id="btnTimeMachine" layoutX="339.0" layoutY="129.0" mnemonicParsing="false" onAction="#onClickTimeMachine" opacity="0.0" prefHeight="471.0" prefWidth="349.0" text="Time Machine" textFill="WHITE" />
-      <Text fill="#6bf9b1" layoutX="536.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently in: Time Machine Room" textAlignment="RIGHT" wrappingWidth="449.0" style="-fx-font-size: 20.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
+      <Button id="timeMachine" fx:id="btnControlBox" layoutX="25.0" layoutY="325.0" mnemonicParsing="false" onAction="#onClickControlBox" opacity="0.0" prefHeight="305.0" prefWidth="150.0" text="Control Box" textFill="WHITE" />
+      <Rectangle fx:id="rectLight" arcHeight="5.0" arcWidth="5.0" height="596.0" layoutX="25.0" layoutY="60.0" stroke="BLACK" strokeType="INSIDE" width="960.0" />
+      <Button id="btnSkip" fx:id="btnMenu" layoutX="25.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickReturn" style="-fx-font-size: 17.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="Return To Menu">
+</Button>
+      <Text fill="#6bf9b1" layoutX="536.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" text="Currently in: Time Machine Room" textAlignment="RIGHT" wrappingWidth="449.0">
       </Text>
+      <Pane fx:id="desktopView" layoutX="25.0" layoutY="60.0" visible="false">
+         <children>
+            <ImageView fitHeight="596.0" fitWidth="960.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../images/desktopBg.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="70.0" fitWidth="56.0" layoutX="864.0" layoutY="43.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/fileIcon.png" />
+               </image>
+            </ImageView>
+            <Rectangle fx:id="btnHackFile" arcHeight="5.0" arcWidth="5.0" fill="#1d1f22" height="85.0" layoutX="853.0" layoutY="36.0" onMouseClicked="#onClickHackFile" opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="72.0" />
+            <Rectangle fx:id="fileNameBg" arcHeight="5.0" arcWidth="5.0" fill="#0b59cd" height="19.0" layoutX="853.0" layoutY="125.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="72.0" />
+            <Label alignment="CENTER" layoutX="854.0" layoutY="126.0" prefHeight="17.0" prefWidth="72.0" text="hack.exe" textFill="WHITE" />
+         </children>
+      </Pane>
+      <Pane fx:id="hackGame" layoutX="56.0" layoutY="86.0" visible="false">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" height="545.0" stroke="BLACK" strokeType="INSIDE" width="900.0" />
+            <Label layoutX="413.0" layoutY="16.0" text="hack.exe" textFill="#d01c1c">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Circle fill="#ff231f" layoutX="7.0" layoutY="7.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="#ffc11f" layoutX="22.0" layoutY="7.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="#54ae30" layoutX="37.0" layoutY="7.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" height="462.0" layoutX="35.0" layoutY="65.0" stroke="RED" strokeType="INSIDE" strokeWidth="3.0" width="823.0" />
+            <HBox layoutX="64.0" layoutY="94.0" prefHeight="409.0" prefWidth="768.0">
+               <children>
+                  <StackPane fx:id="row1" onMouseClicked="#dropCircle" prefHeight="150.0" prefWidth="255.0">
+                     <children>
+                        <Circle fx:id="circle1" fill="DODGERBLUE" onMouseClicked="#selectCircle" radius="115.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="circle2" fill="DODGERBLUE" onMouseClicked="#selectCircle" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="circle3" fill="DODGERBLUE" onMouseClicked="#selectCircle" radius="85.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="circle4" fill="DODGERBLUE" onMouseClicked="#selectCircle" radius="70.0" stroke="BLACK" strokeType="INSIDE" />
+                     </children>
+                  </StackPane>
+                  <StackPane fx:id="row2" onMouseClicked="#dropCircle" prefHeight="150.0" prefWidth="255.0" />
+                  <StackPane fx:id="row3" onMouseClicked="#dropCircle" prefHeight="150.0" prefWidth="255.0" />
+               </children>
+            </HBox>
+         </children>
+      </Pane>
    </children>
 </Pane>

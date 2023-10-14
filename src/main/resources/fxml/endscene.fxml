@@ -3,15 +3,14 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" style="-fx-background-color: rgb(28,28,28);" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.EndsceneController">
    <children>
-      <Label layoutX="104.0" layoutY="254.0" prefHeight="70.0" prefWidth="1194.0" text="You win! You successfully escaped using the time machine." textFill="#6bf9b1" style="-fx-font-size: 36.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
+      <Label layoutX="258.0" layoutY="264.0" prefHeight="70.0" prefWidth="891.0" style="-fx-font-size: 36.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" text="You win! You successfully escaped using the time machine." textFill="#6bf9b1">
       </Label>
-      <Button id="btnSkip" fx:id="btnMenu" layoutX="534.0" layoutY="423.0" mnemonicParsing="false" onAction="#onClickBackToMenu" text="Back to Menu" style="-fx-font-size: 36.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
+      <Button id="btnSkip" fx:id="btnMenu" layoutX="586.0" layoutY="429.0" mnemonicParsing="false" onAction="#onClickBackToMenu" style="-fx-font-size: 36.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" text="Back to Menu">
       </Button>
-      <Label layoutX="593.0" layoutY="177.0" prefHeight="70.0" prefWidth="207.0" text="Well done..." textFill="#6bf9b1" style="-fx-font-size: 40.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
+      <Label layoutX="593.0" layoutY="177.0" prefHeight="70.0" prefWidth="207.0" style="-fx-font-size: 40.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" text="Well done..." textFill="#6bf9b1">
       </Label>
    </children>
 </Pane>
