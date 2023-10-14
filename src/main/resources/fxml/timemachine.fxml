@@ -77,7 +77,9 @@
          <children>
             <Button id="btnSkip" fx:id="btnCloseDropdownMenu" layoutX="226" layoutY="40" mnemonicParsing="false" onAction="#closeDropdownMenu" text="X" />
             <Button id="btnSkip" fx:id="btnMenu" layoutX="150.0" layoutY="702.0" mnemonicParsing="false" onAction="#onClickReturn" text="return to menu" />
-            <Text fx:id="txtTaskList" layoutX="41.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TASKS:  " fill="#6bf9b1" />
+            <Text fx:id="txtTask1" layoutX="60.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Make the time fluid using the chemicals in the lab" fill="#6bf9b1" wrappingWidth="160" />
+            <Text fx:id="txtTask2" layoutX="60.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Turn the time machine on using the circuit box in the storage." fill="#6bf9b1" wrappingWidth="160" />
+            <Text fx:id="txtTask3" layoutX="60.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Use the time machine to escape." fill="#6bf9b1" wrappingWidth="160" />
          </children>
       </Pane>
    </children>
