@@ -21,6 +21,9 @@ public class GameState {
   /** Indicates whether the storage task has been completed. */
   public static boolean isStorageResolved = false;
 
+  /** Indicates whether the control box task has been completed. */
+  public static boolean isControlBoxResolved = false;
+
   /** Indicates whether the user has visited the lab. */
   public static boolean isLabVisited = false;
 

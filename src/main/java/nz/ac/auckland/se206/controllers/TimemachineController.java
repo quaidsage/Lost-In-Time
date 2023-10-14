@@ -12,6 +12,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.Delay;
@@ -66,6 +70,18 @@ public class TimemachineController {
   @FXML private Button btnTimeMachine;
   @FXML private Button btnMenu;
   @FXML private ImageView typingBubble;
+  @FXML private Circle circle1;
+  @FXML private Circle circle2;
+  @FXML private Circle circle3;
+  @FXML private Circle circle4;
+  @FXML private StackPane row1;
+  @FXML private StackPane row2;
+  @FXML private StackPane row3;
+  @FXML private Rectangle btnHackFile;
+  @FXML private Rectangle fileNameBg;
+  @FXML private Pane hackGame;
+  @FXML private Pane desktopView;
+  @FXML private Button btnControlBox;
 
   /** Carries out specific tasks required when opening the scene. */
   public void initialize() {
@@ -137,9 +153,33 @@ public class TimemachineController {
   @FXML
   private void onClickTimeMachine(ActionEvent event) {
     // Check if game is complete
-    if (GameState.isLabResolved && GameState.isStorageResolved) {
+    if (GameState.isLabResolved && GameState.isStorageResolved && GameState.isControlBoxResolved) {
       App.setUi(AppUi.ENDSCENE);
     }
+  }
+
+  /**
+   * Function that handles if the control box is clicked.
+   *
+   * @param event the action event triggered by the send button
+   */
+  @FXML
+  private void onClickControlBox(ActionEvent event) {
+    // Check if game is complete
+    // if (GameState.isLabResolved && GameState.isStorageResolved) {
+    desktopView.setVisible(true);
+    // }
+  }
+
+  /**
+   * Function that handles if the hack file is clicked.
+   *
+   * @param event the action event triggered by the send button
+   */
+  @FXML
+  private void onClickHackFile(MouseEvent event) {
+    // Check if game is complete
+    hackGame.setVisible(true);
   }
 
   /**
