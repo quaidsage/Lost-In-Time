@@ -59,6 +59,66 @@ public class TimemachineController {
     delayThread.start();
   }
 
+  /** Function to animate the start of the round. */
+  public static void startRound(Rectangle rectLight, Label lblTimer) {
+
+    // Light flash animation
+    animateLights(rectLight);
+
+    // Start timer. Change 'minutes' variable to change the length of the game
+    lblTimer.setVisible(true);
+    timemachineStartTimer(IntroController.minutes);
+    LabController.labStartTimer(IntroController.minutes);
+    StorageController.storageStartTimer(IntroController.minutes);
+  }
+
+  /** Function to create an animation of the lights turning on. */
+  private static void animateLights(Rectangle rectLight) {
+    // Start animation and set the rectangle to visible
+    rectLight.setVisible(true);
+    // Start a series of delays to turn the light on and off
+    delay(
+        500,
+        () -> {
+          rectLight.setVisible(false);
+          delay(
+              100,
+              () -> {
+                rectLight.setOpacity(0.8);
+                rectLight.setVisible(true);
+                delay(
+                    300,
+                    () -> {
+                      rectLight.setVisible(false);
+                      delay(
+                          100,
+                          () -> {
+                            rectLight.setOpacity(0.4);
+                            rectLight.setVisible(true);
+                            delay(
+                                100,
+                                () -> {
+                                  // Finish the animation.
+                                  rectLight.setVisible(false);
+                                });
+                          });
+                    });
+              });
+        });
+  }
+
+  public static void createStartTask(Rectangle rectLight, Label lblTimer) {
+    // Create task to start round
+    startTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            startRound(rectLight, lblTimer);
+            return null;
+          }
+        };
+  }
+
   // JavaFX elements
   @FXML private Button btnSwitchToLab;
   @FXML private Button btnSwitchToStorage;
@@ -239,7 +299,8 @@ public class TimemachineController {
   }
 
   // selects the smallest circle that is, the top ring, and makes it glow to show it is selected
-  public void selectCircle(MouseEvent event) {
+  @FXML
+  private void selectCircle(MouseEvent event) {
     if (currentCircle == null) {
       currentCircle = getCircle((Circle) event.getPickResult().getIntersectedNode());
       Glow glow = new Glow();
@@ -277,7 +338,8 @@ public class TimemachineController {
   }
 
   // drops circle on both blank as well as a non blank row appropriately
-  public void dropCircle(MouseEvent event) {
+  @FXML
+  private void dropCircle(MouseEvent event) {
     String row = event.getPickResult().getIntersectedNode().getId();
 
     if (row.equals("row1")) {
@@ -336,7 +398,8 @@ public class TimemachineController {
 
   // gets the smallest circle of the row of whichever circle you press
   // that is you don't want to select a bigger circle when a smaller circle is already present
-  public Circle getCircle(Circle circle) {
+  @FXML
+  private Circle getCircle(Circle circle) {
     Circle toChoseCircle = circle;
     StackPane row = (StackPane) circle.getParent();
     for (int i = 0; i < row.getChildren().size(); i++) {
@@ -344,54 +407,6 @@ public class TimemachineController {
         toChoseCircle = (Circle) row.getChildren().get(i);
     }
     return toChoseCircle;
-  }
-
-  /** Function to animate the start of the round. */
-  public static void startRound(Rectangle rectLight, Label lblTimer) {
-
-    // Light flash animation
-    animateLights(rectLight);
-
-    // Start timer. Change 'minutes' variable to change the length of the game
-    lblTimer.setVisible(true);
-    timemachineStartTimer(IntroController.minutes);
-    LabController.labStartTimer(IntroController.minutes);
-    StorageController.storageStartTimer(IntroController.minutes);
-  }
-
-  /** Function to create an animation of the lights turning on. */
-  private static void animateLights(Rectangle rectLight) {
-    // Start animation and set the rectangle to visible
-    rectLight.setVisible(true);
-    // Start a series of delays to turn the light on and off
-    delay(
-        500,
-        () -> {
-          rectLight.setVisible(false);
-          delay(
-              100,
-              () -> {
-                rectLight.setOpacity(0.8);
-                rectLight.setVisible(true);
-                delay(
-                    300,
-                    () -> {
-                      rectLight.setVisible(false);
-                      delay(
-                          100,
-                          () -> {
-                            rectLight.setOpacity(0.4);
-                            rectLight.setVisible(true);
-                            delay(
-                                100,
-                                () -> {
-                                  // Finish the animation.
-                                  rectLight.setVisible(false);
-                                });
-                          });
-                    });
-              });
-        });
   }
 
   /** Function to create tasks to update elements outside class controller. */
@@ -411,17 +426,5 @@ public class TimemachineController {
     RestartManager.timemachineRect = rectLight;
 
     createStartTask(rectLight, lblTimer);
-  }
-
-  public static void createStartTask(Rectangle rectLight, Label lblTimer) {
-    // Create task to start round
-    startTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            startRound(rectLight, lblTimer);
-            return null;
-          }
-        };
   }
 }
