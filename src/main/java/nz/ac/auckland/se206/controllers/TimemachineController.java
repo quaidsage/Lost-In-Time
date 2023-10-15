@@ -17,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.Delay;
@@ -64,7 +65,6 @@ public class TimemachineController {
   @FXML private Button btnSwitchToStorage;
   @FXML private Button btnSend;
   @FXML private Label lblTimer;
-  @FXML private Label lblTaskList;
   @FXML private TextArea chatArea;
   @FXML private TextArea chatField;
   @FXML private ImageView imgScientistThinking;
@@ -75,6 +75,7 @@ public class TimemachineController {
   @FXML private Pane dropdownMenu;
   @FXML private Button btnCloseDropdownMenu;
   @FXML private Button btnOpenDropdownMenu;
+  @FXML private Text txtTaskList;
 
   /** Carries out specific tasks required when opening the scene. */
   public void initialize() {

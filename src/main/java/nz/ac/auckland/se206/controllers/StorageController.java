@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Random;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
+import javafx.animation.PathTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.concurrent.Task;
@@ -17,8 +18,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
@@ -96,6 +99,10 @@ public class StorageController {
   @FXML private Text info2;
   @FXML private ImageView typingBubble;
   @FXML private Circle circuitLed;
+  @FXML private Pane dropdownMenu;
+  @FXML private Button btnCloseDropdownMenu;
+  @FXML private Button btnOpenDropdownMenu;
+  @FXML private Text txtTaskList;
 
   // Initialise Variables
   private ArrayList<Button> buttons = new ArrayList<>();
@@ -225,6 +232,16 @@ public class StorageController {
   @FXML
   private void onClickReturn(ActionEvent event) throws IOException {
     App.setUi(AppUi.MAINMENU);
+  }
+
+  @FXML
+  private void openDropdownMenu(ActionEvent event) {
+    openDropdownMenuAnimation(300);
+  }
+
+  @FXML
+  private void closeDropdownMenu(ActionEvent event) {
+    closeDropdownMenuAnimation(300);
   }
 
   /**
@@ -405,5 +422,17 @@ public class StorageController {
         e -> {
           ChatTaskGenerator.updateChat("\n\n-> ", storageIntroTask.getValue());
         });
+  }
+
+  private void openDropdownMenuAnimation(int duration) {
+    Line lineAcross = new Line(-133, 375, 133, 375);
+    Duration duration2 = Duration.millis(duration);
+    new PathTransition(duration2, lineAcross, dropdownMenu).play();
+  }
+
+  private void closeDropdownMenuAnimation(int duration) {
+    Line lineAcross = new Line(133, 375, -133, 375);
+    Duration duration2 = Duration.millis(duration);
+    new PathTransition(duration2, lineAcross, dropdownMenu).play();
   }
 }

@@ -110,7 +110,7 @@
       </Text>
       <Text fx:id="info" fill="#6bf9b1" layoutX="33.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time to test your memory!" textAlignment="CENTER" visible="false" wrappingWidth="302.0" style="-fx-font-size: 20.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
       </Text>
-      <Button id="btnSkip" fx:id="btnMenu" layoutX="25.0" layoutY="9.0" mnemonicParsing="false" onAction="#onClickReturn" stylesheets="@../css/style.css" text="Return To Menu" style="-fx-font-size: 17.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
+       <Button id="btnSkip" fx:id="btnOpenDropdownMenu" layoutX="25.0" layoutY="9.0" mnemonicParsing="false" onAction="#openDropdownMenu" style="-fx-font-size: 17.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="≡">
 </Button>
       <Text fill="#6bf9b1" layoutX="463.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently in: Storage Room" textAlignment="RIGHT" wrappingWidth="522.0" style="-fx-font-size: 20.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
       </Text>
@@ -136,5 +136,14 @@
                </stops>
             </RadialGradient>
          </fill></Rectangle>
+         <Pane fx:id="dropdownMenu" prefHeight="750.0" prefWidth="266.0" style="-fx-background-color: rgb(28,28,28);" visible="true" translateX="-266" translateY="0" opacity="0.9">
+         <children>
+            <Button id="btnSkip" fx:id="btnCloseDropdownMenu" layoutX="226" layoutY="40" mnemonicParsing="false" onAction="#closeDropdownMenu" text="X" />
+            <Button id="btnSkip" fx:id="btnMenu" layoutX="150.0" layoutY="702.0" mnemonicParsing="false" onAction="#onClickReturn" text="return to menu" />
+            <Text fx:id="txtTask1" layoutX="60.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Make the time fluid using the chemicals in the lab" fill="#6bf9b1" wrappingWidth="160" />
+            <Text fx:id="txtTask2" layoutX="60.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Turn the time machine on using the circuit box in the storage." fill="#6bf9b1" wrappingWidth="160" />
+            <Text fx:id="txtTask3" layoutX="60.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Use the time machine to escape." fill="#6bf9b1" wrappingWidth="160" />
+         </children>
+      </Pane>
    </children>
 </Pane>
