@@ -182,11 +182,9 @@ public class TimemachineController {
   @FXML
   private void onClickControlBox(ActionEvent event) {
     // Check if other two tasks are complete
-    // if (GameState.isLabResolved && GameState.isStorageResolved) {
-    //   desktopView.setVisible(true);
-    // }
-
-    desktopView.setVisible(true);
+    if (GameState.isLabResolved && GameState.isStorageResolved) {
+      desktopView.setVisible(true);
+    }
   }
 
   /**
