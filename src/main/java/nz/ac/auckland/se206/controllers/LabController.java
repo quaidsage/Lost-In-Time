@@ -17,6 +17,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.Delay;
@@ -92,6 +93,10 @@ public class LabController {
   @FXML private ImageView baseImage;
   @FXML private ImageView blurredImage;
   @FXML private ImageView typingBubble;
+  @FXML private Pane dropdownMenu;
+  @FXML private Button btnCloseDropdownMenu;
+  @FXML private Button btnOpenDropdownMenu;
+  @FXML private Text txtTaskList;
 
   private ArrayList<ImageView> arrowCollection = new ArrayList<ImageView>();
 
@@ -160,6 +165,16 @@ public class LabController {
   @FXML
   private void onClickReturn(ActionEvent event) throws IOException {
     App.setUi(AppUi.MAINMENU);
+  }
+
+  @FXML
+  private void openDropdownMenu(ActionEvent event) {
+    openDropdownMenuAnimation(300);
+  }
+
+  @FXML
+  private void closeDropdownMenu(ActionEvent event) {
+    closeDropdownMenuAnimation(300);
   }
 
   /**
@@ -716,5 +731,17 @@ public class LabController {
     chemicalGreen.setVisible(visibility);
     chemicalOrange.setVisible(visibility);
     chemicalGeneral.setVisible(false);
+  }
+
+  private void openDropdownMenuAnimation(int duration) {
+    Line lineAcross = new Line(-133, 375, 133, 375);
+    Duration duration2 = Duration.millis(duration);
+    new PathTransition(duration2, lineAcross, dropdownMenu).play();
+  }
+
+  private void closeDropdownMenuAnimation(int duration) {
+    Line lineAcross = new Line(133, 375, -133, 375);
+    Duration duration2 = Duration.millis(duration);
+    new PathTransition(duration2, lineAcross, dropdownMenu).play();
   }
 }

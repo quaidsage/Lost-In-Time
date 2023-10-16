@@ -1,6 +1,8 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
+
+import javafx.animation.PathTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
@@ -13,11 +15,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Line;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
+import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.Delay;
 import nz.ac.auckland.se206.GameState;
@@ -131,6 +136,10 @@ public class TimemachineController {
   @FXML private Button btnTimeMachine;
   @FXML private Button btnMenu;
   @FXML private ImageView typingBubble;
+  @FXML private Pane dropdownMenu;
+  @FXML private Button btnCloseDropdownMenu;
+  @FXML private Button btnOpenDropdownMenu;
+  @FXML private Text txtTaskList;
   @FXML private Circle circle1;
   @FXML private Circle circle2;
   @FXML private Circle circle3;
@@ -284,6 +293,16 @@ public class TimemachineController {
     App.setUi(AppUi.MAINMENU);
   }
 
+  @FXML
+  private void openDropdownMenu(ActionEvent event) {
+    openDropdownMenuAnimation(300);
+  }
+
+  @FXML
+  private void closeDropdownMenu(ActionEvent event) {
+    closeDropdownMenuAnimation(300);
+  }
+
   /**
    * Sends a message to the GPT model.
    *
@@ -424,5 +443,29 @@ public class TimemachineController {
     RestartManager.timemachineRect = rectLight;
 
     createStartTask(rectLight, lblTimer);
+  }
+
+  public static void createStartTask(Rectangle rectLight, Label lblTimer) {
+    // Create task to start round
+    startTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            startRound(rectLight, lblTimer);
+            return null;
+          }
+        };
+  }
+
+  private void openDropdownMenuAnimation(int duration) {
+    Line lineAcross = new Line(-133, 375, 133, 375);
+    Duration duration2 = Duration.millis(duration);
+    new PathTransition(duration2, lineAcross, dropdownMenu).play();
+  }
+
+  private void closeDropdownMenuAnimation(int duration) {
+    Line lineAcross = new Line(133, 375, -133, 375);
+    Duration duration2 = Duration.millis(duration);
+    new PathTransition(duration2, lineAcross, dropdownMenu).play();
   }
 }
