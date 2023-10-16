@@ -15,13 +15,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Line;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.Delay;
@@ -129,6 +128,7 @@ public class TimemachineController {
   @FXML private Button btnSwitchToStorage;
   @FXML private Button btnSend;
   @FXML private Label lblTimer;
+  @FXML private Label lblTaskList;
   @FXML private TextArea chatArea;
   @FXML private TextArea chatField;
   @FXML private ImageView imgScientistThinking;
@@ -136,10 +136,6 @@ public class TimemachineController {
   @FXML private Button btnTimeMachine;
   @FXML private Button btnMenu;
   @FXML private ImageView typingBubble;
-  @FXML private Pane dropdownMenu;
-  @FXML private Button btnCloseDropdownMenu;
-  @FXML private Button btnOpenDropdownMenu;
-  @FXML private Text txtTaskList;
   @FXML private Circle circle1;
   @FXML private Circle circle2;
   @FXML private Circle circle3;
@@ -153,8 +149,10 @@ public class TimemachineController {
   @FXML private Pane desktopView;
   @FXML private Button btnControlBox;
   @FXML private Button btnHelp;
-  @FXML private Button btnReturn;
   @FXML private Pane hackInstructions;
+  @FXML private Pane dropdownMenu;
+  @FXML private Button btnCloseDropdownMenu;
+  @FXML private Button btnOpenDropdownMenu;
 
   private Circle currentCircle;
   private int res;
@@ -291,16 +289,6 @@ public class TimemachineController {
   @FXML
   private void onClickReturn(ActionEvent event) throws IOException {
     App.setUi(AppUi.MAINMENU);
-  }
-
-  @FXML
-  private void openDropdownMenu(ActionEvent event) {
-    openDropdownMenuAnimation(300);
-  }
-
-  @FXML
-  private void closeDropdownMenu(ActionEvent event) {
-    closeDropdownMenuAnimation(300);
   }
 
   /**
@@ -445,16 +433,14 @@ public class TimemachineController {
     createStartTask(rectLight, lblTimer);
   }
 
-  public static void createStartTask(Rectangle rectLight, Label lblTimer) {
-    // Create task to start round
-    startTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            startRound(rectLight, lblTimer);
-            return null;
-          }
-        };
+  @FXML
+  private void openDropdownMenu(ActionEvent event) {
+    openDropdownMenuAnimation(300);
+  }
+
+  @FXML
+  private void closeDropdownMenu(ActionEvent event) {
+    closeDropdownMenuAnimation(300);
   }
 
   private void openDropdownMenuAnimation(int duration) {
