@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.Random;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
-import javafx.animation.PathTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.concurrent.Task;
@@ -21,7 +20,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
@@ -100,6 +98,7 @@ public class StorageController {
   @FXML private ImageView typingBubble;
   @FXML private Circle circuitLed;
   @FXML private Pane dropdownMenu;
+  @FXML private Pane menuOverlay;
   @FXML private Button btnCloseDropdownMenu;
   @FXML private Button btnOpenDropdownMenu;
   @FXML private Text txtTaskList;
@@ -107,6 +106,7 @@ public class StorageController {
   // Initialise Variables
   private ArrayList<Button> buttons = new ArrayList<>();
   private ArrayList<String> pattern = new ArrayList<>();
+  private MenuController menuController;
 
   private Random random = new Random();
   private int targetConsecutiveRounds = 3;
@@ -123,6 +123,8 @@ public class StorageController {
    * @throws ApiProxyException when there is a problem with the ApiProxy.
    */
   public void initialize() throws ApiProxyException {
+    menuController = new MenuController(dropdownMenu);
+
     // Initialise timer
     timer = new TimerController();
     lblTimer.textProperty().bind(timer.messageProperty());
@@ -223,6 +225,43 @@ public class StorageController {
     btnSwitchToTimeMachine.setDisable(true);
   }
 
+
+  /**
+     * Opens the dropdown menu in response to an action event.
+     *
+     * @param event The action event that triggered this method.
+     */
+    @FXML
+    private void openDropdownMenu(ActionEvent event) {
+        // Call the openMenu method in the MenuController to open the dropdown menu.
+        menuOverlay.setVisible(true);
+        menuController.openMenu();
+    }
+
+    /**
+     * Closes the dropdown menu in response to an action event.
+     *
+     * @param event The action event that triggered this method.
+     */
+    @FXML
+    private void closeDropdownMenu(ActionEvent event) {
+        // Call the closeMenu method in the MenuController to close the dropdown menu.
+        menuOverlay.setVisible(false);
+        menuController.closeMenu();
+    }
+
+      /**
+     * Closes the dropdown menu in response to an action event.
+     *
+     * @param event The action event that triggered this method.
+     */
+    @FXML
+    private void closeDropdownMenuOverlay(MouseEvent event) {
+        // Call the closeMenu method in the MenuController to close the dropdown menu.
+        menuOverlay.setVisible(false);
+        menuController.closeMenu();
+    }
+
   /**
    * Function to handle returning to main menu.
    *
@@ -232,16 +271,6 @@ public class StorageController {
   @FXML
   private void onClickReturn(ActionEvent event) throws IOException {
     App.setUi(AppUi.MAINMENU);
-  }
-
-  @FXML
-  private void openDropdownMenu(ActionEvent event) {
-    openDropdownMenuAnimation(300);
-  }
-
-  @FXML
-  private void closeDropdownMenu(ActionEvent event) {
-    closeDropdownMenuAnimation(300);
   }
 
   /**
@@ -422,17 +451,5 @@ public class StorageController {
         e -> {
           ChatTaskGenerator.updateChat("\n\n-> ", storageIntroTask.getValue());
         });
-  }
-
-  private void openDropdownMenuAnimation(int duration) {
-    Line lineAcross = new Line(-133, 375, 133, 375);
-    Duration duration2 = Duration.millis(duration);
-    new PathTransition(duration2, lineAcross, dropdownMenu).play();
-  }
-
-  private void closeDropdownMenuAnimation(int duration) {
-    Line lineAcross = new Line(133, 375, -133, 375);
-    Duration duration2 = Duration.millis(duration);
-    new PathTransition(duration2, lineAcross, dropdownMenu).play();
   }
 }
