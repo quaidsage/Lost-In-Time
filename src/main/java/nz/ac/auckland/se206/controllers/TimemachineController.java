@@ -132,7 +132,6 @@ public class TimemachineController {
   @FXML private Rectangle rectLight;
   @FXML private Button btnTimeMachine;
   @FXML private Button btnMenu;
-  @FXML private ImageView typingBubble;
   @FXML private Circle circle1;
   @FXML private Circle circle2;
   @FXML private Circle circle3;
@@ -463,7 +462,6 @@ public class TimemachineController {
 
     // Set thinking animation
     ChatTaskGenerator.thinkingAnimationImages.add(imgScientistThinking);
-    ChatTaskGenerator.thinkingAnimationImages.add(typingBubble);
 
     // Set timer label and light rectangle to restart manager
     RestartManager.timemachineLabel = lblTimer;

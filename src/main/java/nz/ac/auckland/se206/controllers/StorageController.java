@@ -97,7 +97,6 @@ public class StorageController {
   @FXML private Button btnMenu;
   @FXML private Text info;
   @FXML private Text info2;
-  @FXML private ImageView typingBubble;
   @FXML private Circle circuitLed;
   @FXML private Pane dropdownMenu;
   @FXML private Pane menuOverlay;
@@ -441,7 +440,6 @@ public class StorageController {
 
     // Set thinking animation
     ChatTaskGenerator.thinkingAnimationImages.add(imgScientistThinking);
-    ChatTaskGenerator.thinkingAnimationImages.add(typingBubble);
 
     // Add timer label and minigame elements to restart manager
     RestartManager.storageLabel = lblTimer;

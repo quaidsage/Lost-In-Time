@@ -95,7 +95,6 @@ public class LabController {
   @FXML private Rectangle rectRightDoor;
   @FXML private ImageView baseImage;
   @FXML private ImageView blurredImage;
-  @FXML private ImageView typingBubble;
   @FXML private Pane dropdownMenu;
   @FXML private Pane menuOverlay;
   @FXML private Button btnCloseDropdownMenu;
@@ -376,7 +375,6 @@ public class LabController {
 
     // Set thinking animation
     ChatTaskGenerator.thinkingAnimationImages.add(imgScientistThinking);
-    ChatTaskGenerator.thinkingAnimationImages.add(typingBubble);
 
     // Add timer label, arrows, and general chemicals to restart manager
     RestartManager.labLabel = lblTimer;
