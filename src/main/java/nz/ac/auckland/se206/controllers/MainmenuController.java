@@ -31,7 +31,6 @@ public class MainmenuController {
   /** Initialises the main menu scene with the required settings. */
   public void initialize() {
     // Initialise text to speech
-
     loadFxmlFiles();
 
     // Initialise AI chat parameters
