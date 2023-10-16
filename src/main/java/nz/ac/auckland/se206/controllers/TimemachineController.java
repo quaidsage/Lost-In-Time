@@ -205,6 +205,7 @@ public class TimemachineController {
   @FXML
   private void onClickLab(ActionEvent event) {
     App.setUi(AppUi.LAB);
+    AnimationManager.openLabDoor();
     if (!GameState.isLabVisited) {
       GameState.isLabVisited = true;
       Thread labIntroThread = new Thread(LabController.labIntroTask);
@@ -221,7 +222,7 @@ public class TimemachineController {
   @FXML
   private void onClickStorage(ActionEvent event) {
     App.setUi(AppUi.STORAGE);
-    AnimationManager.openDoor();
+    AnimationManager.openStorageDoor();
     if (!GameState.isStorageVisited) {
       GameState.isStorageVisited = true;
       Thread storageIntroThread = new Thread(StorageController.storageIntroTask);

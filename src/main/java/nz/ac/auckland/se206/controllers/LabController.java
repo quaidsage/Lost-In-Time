@@ -19,6 +19,7 @@ import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import nz.ac.auckland.se206.AnimationManager;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.Delay;
 import nz.ac.auckland.se206.GameState;
@@ -90,6 +91,8 @@ public class LabController {
   @FXML private Rectangle chemicalGreen;
   @FXML private Rectangle chemicalRed;
   @FXML private Rectangle transitionScene;
+  @FXML private Rectangle rectLeftDoor;
+  @FXML private Rectangle rectRightDoor;
   @FXML private ImageView baseImage;
   @FXML private ImageView blurredImage;
   @FXML private ImageView typingBubble;
@@ -170,41 +173,42 @@ public class LabController {
   private void onClickReturn(ActionEvent event) throws IOException {
     App.setUi(AppUi.MAINMENU);
   }
-/**
-     * Opens the dropdown menu in response to an action event.
-     *
-     * @param event The action event that triggered this method.
-     */
-    @FXML
-    private void openDropdownMenu(ActionEvent event) {
-        // Call the openMenu method in the MenuController to open the dropdown menu.
-        menuOverlay.setVisible(true);
-        menuController.openMenu();
-    }
 
-    /**
-     * Closes the dropdown menu in response to an action event.
-     *
-     * @param event The action event that triggered this method.
-     */
-    @FXML
-    private void closeDropdownMenu(ActionEvent event) {
-        // Call the closeMenu method in the MenuController to close the dropdown menu.
-        menuOverlay.setVisible(false);
-        menuController.closeMenu();
-    }
+  /**
+   * Opens the dropdown menu in response to an action event.
+   *
+   * @param event The action event that triggered this method.
+   */
+  @FXML
+  private void openDropdownMenu(ActionEvent event) {
+    // Call the openMenu method in the MenuController to open the dropdown menu.
+    menuOverlay.setVisible(true);
+    menuController.openMenu();
+  }
 
-      /**
-     * Closes the dropdown menu in response to an action event.
-     *
-     * @param event The action event that triggered this method.
-     */
-    @FXML
-    private void closeDropdownMenuOverlay(MouseEvent event) {
-        // Call the closeMenu method in the MenuController to close the dropdown menu.
-        menuOverlay.setVisible(false);
-        menuController.closeMenu();
-    }
+  /**
+   * Closes the dropdown menu in response to an action event.
+   *
+   * @param event The action event that triggered this method.
+   */
+  @FXML
+  private void closeDropdownMenu(ActionEvent event) {
+    // Call the closeMenu method in the MenuController to close the dropdown menu.
+    menuOverlay.setVisible(false);
+    menuController.closeMenu();
+  }
+
+  /**
+   * Closes the dropdown menu in response to an action event.
+   *
+   * @param event The action event that triggered this method.
+   */
+  @FXML
+  private void closeDropdownMenuOverlay(MouseEvent event) {
+    // Call the closeMenu method in the MenuController to close the dropdown menu.
+    menuOverlay.setVisible(false);
+    menuController.closeMenu();
+  }
 
   /**
    * Function to begin lab riddle.
@@ -382,6 +386,11 @@ public class LabController {
     // Create tasks for animation and updating hint label
     createAnimateTask();
     updateHintTask(numHints);
+
+    // Add door animation to animation manager and bind their properties
+    AnimationManager.rectLabLeftDoor = rectLeftDoor;
+    AnimationManager.rectLabRightDoor = rectRightDoor;
+    rectRightDoor.visibleProperty().bind(rectLeftDoor.visibleProperty());
   }
 
   /**
