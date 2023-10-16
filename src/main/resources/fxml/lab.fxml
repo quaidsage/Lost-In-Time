@@ -16,21 +16,17 @@
 
 <Pane fx:id="paneLab" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" style="-fx-background-color: rgb(28,28,28);" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.LabController">
    <children>
-   <ImageView fitHeight="739.0" fitWidth="1349.0" layoutX="-13.0" layoutY="-12.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/BaseUI.jpg" />
-         </image>
-         <effect>
-            <DropShadow height="96.72" radius="42.8525" spread="0.79" width="76.69">
-               <color>
-                  <Color red="0.1184210553765297" green="0.1184210553765297" blue="0.1184210553765297" />
-               </color>
-            </DropShadow>
-         </effect>
-      </ImageView>
       <ImageView fx:id="baseImage" fitHeight="593.0" fitWidth="960.0" layoutX="25.0" layoutY="59.0" pickOnBounds="true">
          <image>
             <Image url="@../images/lab.jpg" />
+         </image>
+      </ImageView>
+      <Rectangle fx:id="rectLeftDoor" arcHeight="5.0" arcWidth="5.0" fill="#d9e5ff" height="593.0" layoutX="25.0" layoutY="59.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="480.0" />
+      <Rectangle fx:id="rectRightDoor" arcHeight="5.0" arcWidth="5.0" fill="#d9e5ff" height="593.0" layoutX="505.0" layoutY="59.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="480.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1c1c1c" height="750.0" layoutX="986.0" stroke="TRANSPARENT" strokeType="INSIDE" width="447.0" />
+   <ImageView fitHeight="739.0" fitWidth="1349.0" layoutX="-13.0" layoutY="-12.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/BaseUI.png" />
          </image>
       </ImageView>
       <ImageView fx:id="blurredImage" fitHeight="774.0" fitWidth="1417.0" layoutX="-9.0" layoutY="-12.0" opacity="0.0" pickOnBounds="true" visible="false">
@@ -107,21 +103,7 @@
             <Text fx:id="txtTask3" fill="#6bf9b1" layoutX="60.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Use the time machine to escape." wrappingWidth="160" />
          </children>
       </Pane>
-      <Pane fx:id="menuOverlay" onMouseClicked="#closeDropdownMenuOverlay" opacity="0" prefHeight="750" prefWidth="1174" style="-fx-background-color: rgb(28,28,28);" translateX="266" translateY="0" visible="false">
-      </Pane>
-      <Pane layoutX="1199.0" layoutY="-13.0" prefHeight="358.0" prefWidth="176.0">
-         <children>
-            <ImageView fitHeight="150.0" fitWidth="185.0" layoutX="13.0" layoutY="-15.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/paper.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="150.0" fitWidth="176.0" layoutX="-1.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/device_printer.png" />
-               </image>
-            </ImageView>
-         </children>
+      <Pane fx:id="menuOverlay" prefHeight="750" prefWidth="1174" style="-fx-background-color: rgb(28,28,28);" visible="false" translateX="266" translateY="0" opacity="0" onMouseClicked="#closeDropdownMenuOverlay">
       </Pane>
    </children>
 </Pane>

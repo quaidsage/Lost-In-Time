@@ -31,7 +31,6 @@ public class MainmenuController {
   /** Initialises the main menu scene with the required settings. */
   public void initialize() {
     // Initialise text to speech
-
     loadFxmlFiles();
 
     // Initialise AI chat parameters
@@ -123,6 +122,7 @@ public class MainmenuController {
         e -> {
           IntroController.isFilesLoaded = true;
           newContextResponse();
+          ChatTaskGenerator.enableEnterHandler();
         });
     Thread loadThread = new Thread(loadTask);
     loadThread.setDaemon(true);

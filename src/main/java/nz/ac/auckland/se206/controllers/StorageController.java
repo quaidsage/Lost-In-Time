@@ -23,6 +23,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import nz.ac.auckland.se206.AnimationManager;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.Delay;
 import nz.ac.auckland.se206.GameState;
@@ -72,6 +73,7 @@ public class StorageController {
   @FXML private Button btnSwitchToTimeMachine;
   @FXML private Button btnSend;
   @FXML private Rectangle circuitBox;
+  @FXML private ImageView imgStorageDoor;
   @FXML private ImageView background;
   @FXML private Label lblTimer;
   @FXML private ImageView circuitBoxImg;
@@ -95,7 +97,6 @@ public class StorageController {
   @FXML private Button btnMenu;
   @FXML private Text info;
   @FXML private Text info2;
-  @FXML private ImageView typingBubble;
   @FXML private Circle circuitLed;
   @FXML private Pane dropdownMenu;
   @FXML private Pane menuOverlay;
@@ -123,6 +124,7 @@ public class StorageController {
    * @throws ApiProxyException when there is a problem with the ApiProxy.
    */
   public void initialize() throws ApiProxyException {
+    // Initialise drop down menu
     menuController = new MenuController(dropdownMenu);
 
     // Initialise timer
@@ -225,42 +227,41 @@ public class StorageController {
     btnSwitchToTimeMachine.setDisable(true);
   }
 
+  /**
+   * Opens the dropdown menu in response to an action event.
+   *
+   * @param event The action event that triggered this method.
+   */
+  @FXML
+  private void openDropdownMenu(ActionEvent event) {
+    // Call the openMenu method in the MenuController to open the dropdown menu.
+    menuOverlay.setVisible(true);
+    menuController.openMenu();
+  }
 
   /**
-     * Opens the dropdown menu in response to an action event.
-     *
-     * @param event The action event that triggered this method.
-     */
-    @FXML
-    private void openDropdownMenu(ActionEvent event) {
-        // Call the openMenu method in the MenuController to open the dropdown menu.
-        menuOverlay.setVisible(true);
-        menuController.openMenu();
-    }
+   * Closes the dropdown menu in response to an action event.
+   *
+   * @param event The action event that triggered this method.
+   */
+  @FXML
+  private void closeDropdownMenu(ActionEvent event) {
+    // Call the closeMenu method in the MenuController to close the dropdown menu.
+    menuOverlay.setVisible(false);
+    menuController.closeMenu();
+  }
 
-    /**
-     * Closes the dropdown menu in response to an action event.
-     *
-     * @param event The action event that triggered this method.
-     */
-    @FXML
-    private void closeDropdownMenu(ActionEvent event) {
-        // Call the closeMenu method in the MenuController to close the dropdown menu.
-        menuOverlay.setVisible(false);
-        menuController.closeMenu();
-    }
-
-      /**
-     * Closes the dropdown menu in response to an action event.
-     *
-     * @param event The action event that triggered this method.
-     */
-    @FXML
-    private void closeDropdownMenuOverlay(MouseEvent event) {
-        // Call the closeMenu method in the MenuController to close the dropdown menu.
-        menuOverlay.setVisible(false);
-        menuController.closeMenu();
-    }
+  /**
+   * Closes the dropdown menu in response to an action event.
+   *
+   * @param event The action event that triggered this method.
+   */
+  @FXML
+  private void closeDropdownMenuOverlay(MouseEvent event) {
+    // Call the closeMenu method in the MenuController to close the dropdown menu.
+    menuOverlay.setVisible(false);
+    menuController.closeMenu();
+  }
 
   /**
    * Function to handle returning to main menu.
@@ -434,16 +435,21 @@ public class StorageController {
     // Set chat area
     ChatTaskGenerator.chatAreas.add(chatArea);
 
+    // Set text field
+    ChatTaskGenerator.chatFields.add(chatField);
+
     // Set send button
     ChatTaskGenerator.sendButtons.add(btnSend);
 
     // Set thinking animation
     ChatTaskGenerator.thinkingAnimationImages.add(imgScientistThinking);
-    ChatTaskGenerator.thinkingAnimationImages.add(typingBubble);
 
     // Add timer label and minigame elements to restart manager
     RestartManager.storageLabel = lblTimer;
     RestartManager.storageElements = new Object[] {background, circuitBox, circuitBoxImg};
+
+    // Initialise door to animation manager
+    AnimationManager.imgStorageDoor = imgStorageDoor;
 
     // Get introduction message on first visit of storage room
     storageIntroTask = ChatTaskGenerator.createTask(GptPromptEngineering.getStorageIntro());

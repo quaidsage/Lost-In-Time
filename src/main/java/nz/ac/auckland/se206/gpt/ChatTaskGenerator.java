@@ -8,6 +8,7 @@ import javafx.concurrent.Task;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.controllers.LabController;
@@ -23,6 +24,7 @@ public class ChatTaskGenerator {
   static ImageView imgScientistThinking;
   static ImageView typingBubble;
   public static ChatMessage contextResponse;
+  public static ArrayList<TextArea> chatFields = new ArrayList<TextArea>();
   public static ArrayList<TextArea> chatAreas = new ArrayList<TextArea>();
   public static ArrayList<ImageView> thinkingAnimationImages = new ArrayList<ImageView>();
   public static ArrayList<Button> sendButtons = new ArrayList<Button>();
@@ -254,6 +256,18 @@ public class ChatTaskGenerator {
   public static void setSendButtonDisable(boolean isDisable) {
     for (int i = 0; i < sendButtons.size(); i++) {
       sendButtons.get(i).setDisable(isDisable);
+    }
+  }
+
+  /** TODO JAVADOCS */
+  public static void enableEnterHandler() {
+    for (TextArea chatField : chatFields) {
+      chatField.setOnKeyPressed(
+          event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+              onSendMessage(chatField);
+            }
+          });
     }
   }
 }
