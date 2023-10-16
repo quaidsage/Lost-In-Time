@@ -18,6 +18,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import nz.ac.auckland.se206.AnimationManager;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.Delay;
 import nz.ac.auckland.se206.GameState;
@@ -131,7 +132,6 @@ public class TimemachineController {
   @FXML private Rectangle rectLight;
   @FXML private Button btnTimeMachine;
   @FXML private Button btnMenu;
-  @FXML private ImageView typingBubble;
   @FXML private Circle circle1;
   @FXML private Circle circle2;
   @FXML private Circle circle3;
@@ -204,6 +204,7 @@ public class TimemachineController {
   @FXML
   private void onClickLab(ActionEvent event) {
     App.setUi(AppUi.LAB);
+    AnimationManager.openLabDoor();
     if (!GameState.isLabVisited) {
       GameState.isLabVisited = true;
       Thread labIntroThread = new Thread(LabController.labIntroTask);
@@ -220,6 +221,7 @@ public class TimemachineController {
   @FXML
   private void onClickStorage(ActionEvent event) {
     App.setUi(AppUi.STORAGE);
+    AnimationManager.openStorageDoor();
     if (!GameState.isStorageVisited) {
       GameState.isStorageVisited = true;
       Thread storageIntroThread = new Thread(StorageController.storageIntroTask);
@@ -463,7 +465,6 @@ public class TimemachineController {
 
     // Set thinking animation
     ChatTaskGenerator.thinkingAnimationImages.add(imgScientistThinking);
-    ChatTaskGenerator.thinkingAnimationImages.add(typingBubble);
 
     // Set timer label and light rectangle to restart manager
     RestartManager.timemachineLabel = lblTimer;

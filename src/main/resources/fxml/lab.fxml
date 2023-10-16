@@ -12,26 +12,21 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Polyline?>
 <?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <Pane fx:id="paneLab" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" style="-fx-background-color: rgb(28,28,28);" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.LabController">
    <children>
-   <ImageView fitHeight="739.0" fitWidth="1349.0" layoutX="-13.0" layoutY="-12.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/BaseUI.jpg" />
-         </image>
-         <effect>
-            <DropShadow height="96.72" radius="42.8525" spread="0.79" width="76.69">
-               <color>
-                  <Color red="0.1184210553765297" green="0.1184210553765297" blue="0.1184210553765297" />
-               </color>
-            </DropShadow>
-         </effect>
-      </ImageView>
       <ImageView fx:id="baseImage" fitHeight="593.0" fitWidth="960.0" layoutX="25.0" layoutY="59.0" pickOnBounds="true">
          <image>
             <Image url="@../images/lab.jpg" />
+         </image>
+      </ImageView>
+      <Rectangle fx:id="rectLeftDoor" arcHeight="5.0" arcWidth="5.0" fill="#d9e5ff" height="593.0" layoutX="25.0" layoutY="59.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="480.0" />
+      <Rectangle fx:id="rectRightDoor" arcHeight="5.0" arcWidth="5.0" fill="#d9e5ff" height="593.0" layoutX="505.0" layoutY="59.0" opacity="0.5" stroke="BLACK" strokeType="INSIDE" width="480.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1c1c1c" height="750.0" layoutX="986.0" stroke="TRANSPARENT" strokeType="INSIDE" width="447.0" />
+   <ImageView fitHeight="739.0" fitWidth="1349.0" layoutX="-13.0" layoutY="-12.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/BaseUI.png" />
          </image>
       </ImageView>
       <ImageView fx:id="blurredImage" fitHeight="774.0" fitWidth="1417.0" layoutX="-9.0" layoutY="-12.0" opacity="0.0" pickOnBounds="true" visible="false">
@@ -48,13 +43,13 @@
          </effect>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#303030" height="64.0" layoutX="1030.0" layoutY="276.0" stroke="TRANSPARENT" strokeType="INSIDE" width="342.0" />
-      <Label id="lblTimer" fx:id="lblTimer" layoutX="1153.0" layoutY="276.0" prefHeight="41.0" prefWidth="118.0" stylesheets="@../css/style.css" text="XX:XX" textFill="#6bf9b1" style="-fx-font-size: 32.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;"> 
+      <Label id="lblTimer" fx:id="lblTimer" layoutX="1153.0" layoutY="276.0" prefHeight="41.0" prefWidth="118.0" style="-fx-font-size: 32.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="XX:XX" textFill="#6bf9b1"> 
       </Label>
-      <Button id="btnSkip" fx:id="btnSwitchToTimeMachine" layoutX="25.0" layoutY="677.0" mnemonicParsing="false" onAction="#onClickTimeMachineRoom" prefHeight="41.0" prefWidth="350.0" text="Time Machine Room" style="-fx-font-size: 27.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
+      <Button id="btnSkip" fx:id="btnSwitchToTimeMachine" layoutX="25.0" layoutY="677.0" mnemonicParsing="false" onAction="#onClickTimeMachineRoom" prefHeight="41.0" prefWidth="350.0" style="-fx-font-size: 27.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" text="Time Machine Room">
       </Button>
-      <TextArea id="chatField" fx:id="chatField" layoutX="1027.0" layoutY="571.0" prefHeight="106.0" prefWidth="208.0" promptText="Enter message..." stylesheets="@../css/style.css" wrapText="true" style="-fx-font-size: 18.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
+      <TextArea id="chatField" fx:id="chatField" layoutX="1027.0" layoutY="571.0" prefHeight="106.0" prefWidth="208.0" promptText="Enter message..." style="-fx-font-size: 18.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" stylesheets="@../css/style.css" wrapText="true">
       </TextArea>
-      <TextArea id="chatArea" fx:id="chatArea" editable="false" layoutX="1030.0" layoutY="336.0" prefHeight="194.0" prefWidth="342.0" stylesheets="@../css/style.css" wrapText="true" style="-fx-font-size: 16.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
+      <TextArea id="chatArea" fx:id="chatArea" editable="false" layoutX="1030.0" layoutY="336.0" prefHeight="194.0" prefWidth="342.0" style="-fx-font-size: 16.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" stylesheets="@../css/style.css" wrapText="true">
       </TextArea>
       <ImageView fitHeight="150.0" fitWidth="277.0" layoutX="1032.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -66,7 +61,7 @@
             <Image url="@../images/scientist-processing.gif" />
          </image>
       </ImageView>
-      <Button id="btnSend" fx:id="btnSend" layoutX="1265.0" layoutY="600.0" mnemonicParsing="false" onAction="#onSendMessage" stylesheets="@../css/style.css" text="Send" textFill="#6bf9b1" style="-fx-font-size: 24.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
+      <Button id="btnSend" fx:id="btnSend" layoutX="1265.0" layoutY="600.0" mnemonicParsing="false" onAction="#onSendMessage" style="-fx-font-size: 24.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="Send" textFill="#6bf9b1">
       </Button>
       <Polyline id="chemGeneral" fx:id="chemicalGeneral" layoutX="319.0" layoutY="313.0" onMouseClicked="#onClickChemicals" opacity="0.0" points="335.0, 98.0, 335.0, 199.0, 124.0, 161.0, 124.0, 75.0" stroke="TRANSPARENT" strokeType="INSIDE">
          <fill>
@@ -96,24 +91,19 @@
       <Rectangle fx:id="transitionScene" arcHeight="5.0" arcWidth="5.0" height="775.0" layoutX="-14.0" layoutY="-11.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="1427.0" />
        <Button id="btnSkip" fx:id="btnOpenDropdownMenu" layoutX="25.0" layoutY="9.0" mnemonicParsing="false" onAction="#openDropdownMenu" style="-fx-font-size: 17.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="≡">
 </Button>
-      <Text fill="#6bf9b1" layoutX="547.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currently in: Lab Room" textAlignment="RIGHT" wrappingWidth="439.1156921386719" style="-fx-font-size: 20.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;">
+      <Text fill="#6bf9b1" layoutX="547.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" text="Currently in: Lab Room" textAlignment="RIGHT" wrappingWidth="439.1156921386719">
       </Text>
-     <ImageView fx:id="typingBubble" fitHeight="70.0" fitWidth="107.0" layoutX="1212.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true" visible="false">
-         <image>
-            <Image url="@../images/typing_bubble1.gif" />
-         </image>
-      </ImageView>
       <Label fx:id="hintsRemaining" layoutX="1028.0" layoutY="241.0" prefHeight="26.0" prefWidth="232.0" textFill="#6bf9b1" />
-      <Pane fx:id="dropdownMenu" prefHeight="750.0" prefWidth="266.0" style="-fx-background-color: rgb(28,28,28);" visible="true" translateX="-266" translateY="0" opacity="0.9">
+      <Pane fx:id="dropdownMenu" opacity="0.9" prefHeight="750.0" prefWidth="266.0" style="-fx-background-color: rgb(28,28,28);" translateX="-266" translateY="0" visible="true">
          <children>
             <Button id="btnSkip" fx:id="btnCloseDropdownMenu" layoutX="226" layoutY="40" mnemonicParsing="false" onAction="#closeDropdownMenu" text="X" />
             <Button id="btnSkip" fx:id="btnMenu" layoutX="150.0" layoutY="702.0" mnemonicParsing="false" onAction="#onClickReturn" text="return to menu" />
-            <Text fx:id="txtTask1" layoutX="60.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Make the time fluid using the chemicals in the lab" fill="#6bf9b1" wrappingWidth="160" />
-            <Text fx:id="txtTask2" layoutX="60.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Turn the time machine on using the circuit box in the storage." fill="#6bf9b1" wrappingWidth="160" />
-            <Text fx:id="txtTask3" layoutX="60.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Use the time machine to escape." fill="#6bf9b1" wrappingWidth="160" />
+            <Text fx:id="txtTask1" fill="#6bf9b1" layoutX="60.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Make the time fluid using the chemicals in the lab" wrappingWidth="160" />
+            <Text fx:id="txtTask2" fill="#6bf9b1" layoutX="60.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Turn the time machine on using the circuit box in the storage." wrappingWidth="160" />
+            <Text fx:id="txtTask3" fill="#6bf9b1" layoutX="60.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Use the time machine to escape." wrappingWidth="160" />
          </children>
       </Pane>
-      <Pane fx:id="menuOverlay" prefHeight="750" prefWidth="1174" style="-fx-background-color: rgb(28,28,28);" visible="false" translateX="266" translateY="0" opacity="0" onMouseClicked="#closeDropdownMenuOverlay">
+      <Pane fx:id="menuOverlay" onMouseClicked="#closeDropdownMenuOverlay" opacity="0" prefHeight="750" prefWidth="1174" style="-fx-background-color: rgb(28,28,28);" translateX="266" translateY="0" visible="false">
       </Pane>
    </children>
 </Pane>

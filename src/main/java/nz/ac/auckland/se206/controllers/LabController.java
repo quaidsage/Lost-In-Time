@@ -19,6 +19,7 @@ import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import nz.ac.auckland.se206.AnimationManager;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.Delay;
 import nz.ac.auckland.se206.GameState;
@@ -90,9 +91,10 @@ public class LabController {
   @FXML private Rectangle chemicalGreen;
   @FXML private Rectangle chemicalRed;
   @FXML private Rectangle transitionScene;
+  @FXML private Rectangle rectLeftDoor;
+  @FXML private Rectangle rectRightDoor;
   @FXML private ImageView baseImage;
   @FXML private ImageView blurredImage;
-  @FXML private ImageView typingBubble;
   @FXML private Pane dropdownMenu;
   @FXML private Pane menuOverlay;
   @FXML private Button btnCloseDropdownMenu;
@@ -376,7 +378,6 @@ public class LabController {
 
     // Set thinking animation
     ChatTaskGenerator.thinkingAnimationImages.add(imgScientistThinking);
-    ChatTaskGenerator.thinkingAnimationImages.add(typingBubble);
 
     // Add timer label, arrows, and general chemicals to restart manager
     RestartManager.labLabel = lblTimer;
@@ -386,6 +387,11 @@ public class LabController {
     // Create tasks for animation and updating hint label
     createAnimateTask();
     updateHintTask(numHints);
+
+    // Add door animation to animation manager and bind their properties
+    AnimationManager.rectLabLeftDoor = rectLeftDoor;
+    AnimationManager.rectLabRightDoor = rectRightDoor;
+    rectRightDoor.visibleProperty().bind(rectLeftDoor.visibleProperty());
   }
 
   /**
