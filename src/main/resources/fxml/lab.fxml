@@ -113,5 +113,7 @@
             <Text fx:id="txtTask3" layoutX="60.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Use the time machine to escape." fill="#6bf9b1" wrappingWidth="160" />
          </children>
       </Pane>
+      <Pane fx:id="menuOverlay" prefHeight="750" prefWidth="1174" style="-fx-background-color: rgb(28,28,28);" visible="false" translateX="266" translateY="0" opacity="0" onMouseClicked="#closeDropdownMenuOverlay">
+      </Pane>
    </children>
 </Pane>

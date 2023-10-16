@@ -94,11 +94,13 @@ public class LabController {
   @FXML private ImageView blurredImage;
   @FXML private ImageView typingBubble;
   @FXML private Pane dropdownMenu;
+  @FXML private Pane menuOverlay;
   @FXML private Button btnCloseDropdownMenu;
   @FXML private Button btnOpenDropdownMenu;
   @FXML private Text txtTaskList;
 
   private ArrayList<ImageView> arrowCollection = new ArrayList<ImageView>();
+  private MenuController menuController;
 
   // Fields for initializing variables
   private int arrowAnimationSpeed = 85;
@@ -113,6 +115,8 @@ public class LabController {
    * @throws ApiProxyException if there is a problem with the API proxy.
    */
   public void initialize() throws ApiProxyException {
+    menuController = new MenuController(dropdownMenu);
+
     // Initialise timer and bind the lblTimer to the timerController properties.
     timer = new TimerController();
     lblTimer.textProperty().bind(timer.messageProperty());
@@ -166,16 +170,41 @@ public class LabController {
   private void onClickReturn(ActionEvent event) throws IOException {
     App.setUi(AppUi.MAINMENU);
   }
+/**
+     * Opens the dropdown menu in response to an action event.
+     *
+     * @param event The action event that triggered this method.
+     */
+    @FXML
+    private void openDropdownMenu(ActionEvent event) {
+        // Call the openMenu method in the MenuController to open the dropdown menu.
+        menuOverlay.setVisible(true);
+        menuController.openMenu();
+    }
 
-  @FXML
-  private void openDropdownMenu(ActionEvent event) {
-    openDropdownMenuAnimation(300);
-  }
+    /**
+     * Closes the dropdown menu in response to an action event.
+     *
+     * @param event The action event that triggered this method.
+     */
+    @FXML
+    private void closeDropdownMenu(ActionEvent event) {
+        // Call the closeMenu method in the MenuController to close the dropdown menu.
+        menuOverlay.setVisible(false);
+        menuController.closeMenu();
+    }
 
-  @FXML
-  private void closeDropdownMenu(ActionEvent event) {
-    closeDropdownMenuAnimation(300);
-  }
+      /**
+     * Closes the dropdown menu in response to an action event.
+     *
+     * @param event The action event that triggered this method.
+     */
+    @FXML
+    private void closeDropdownMenuOverlay(MouseEvent event) {
+        // Call the closeMenu method in the MenuController to close the dropdown menu.
+        menuOverlay.setVisible(false);
+        menuController.closeMenu();
+    }
 
   /**
    * Function to begin lab riddle.
@@ -731,17 +760,5 @@ public class LabController {
     chemicalGreen.setVisible(visibility);
     chemicalOrange.setVisible(visibility);
     chemicalGeneral.setVisible(false);
-  }
-
-  private void openDropdownMenuAnimation(int duration) {
-    Line lineAcross = new Line(-133, 375, 133, 375);
-    Duration duration2 = Duration.millis(duration);
-    new PathTransition(duration2, lineAcross, dropdownMenu).play();
-  }
-
-  private void closeDropdownMenuAnimation(int duration) {
-    Line lineAcross = new Line(133, 375, -133, 375);
-    Duration duration2 = Duration.millis(duration);
-    new PathTransition(duration2, lineAcross, dropdownMenu).play();
   }
 }

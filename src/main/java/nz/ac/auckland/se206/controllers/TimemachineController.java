@@ -2,7 +2,6 @@ package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
 
-import javafx.animation.PathTransition;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
@@ -19,9 +18,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.Delay;
 import nz.ac.auckland.se206.GameState;
@@ -151,14 +148,18 @@ public class TimemachineController {
   @FXML private Button btnHelp;
   @FXML private Pane hackInstructions;
   @FXML private Pane dropdownMenu;
+  @FXML private Pane menuOverlay;
   @FXML private Button btnCloseDropdownMenu;
   @FXML private Button btnOpenDropdownMenu;
 
   private Circle currentCircle;
   private int res;
+  private MenuController menuController;
 
   /** Carries out specific tasks required when opening the scene. */
   public void initialize() {
+
+    menuController = new MenuController(dropdownMenu);
 
     // Initialise timer and bind the lblTimer to the timerController properties.
     timer = new TimerController();
@@ -413,6 +414,41 @@ public class TimemachineController {
     }
     return toChoseCircle;
   }
+ /**
+     * Opens the dropdown menu in response to an action event.
+     *
+     * @param event The action event that triggered this method.
+     */
+    @FXML
+    private void openDropdownMenu(ActionEvent event) {
+        // Call the openMenu method in the MenuController to open the dropdown menu.
+        menuOverlay.setVisible(true);
+        menuController.openMenu();
+    }
+
+    /**
+     * Closes the dropdown menu in response to an action event.
+     *
+     * @param event The action event that triggered this method.
+     */
+    @FXML
+    private void closeDropdownMenu(ActionEvent event) {
+        // Call the closeMenu method in the MenuController to close the dropdown menu.
+        menuOverlay.setVisible(false);
+        menuController.closeMenu();
+    }
+
+      /**
+     * Closes the dropdown menu in response to an action event.
+     *
+     * @param event The action event that triggered this method.
+     */
+    @FXML
+    private void closeDropdownMenuOverlay(MouseEvent event) {
+        // Call the closeMenu method in the MenuController to close the dropdown menu.
+        menuOverlay.setVisible(false);
+        menuController.closeMenu();
+    }
 
   /** Function to create tasks to update elements outside class controller. */
   public void initialiseTasks() {
@@ -431,27 +467,5 @@ public class TimemachineController {
     RestartManager.timemachineRect = rectLight;
 
     createStartTask(rectLight, lblTimer);
-  }
-
-  @FXML
-  private void openDropdownMenu(ActionEvent event) {
-    openDropdownMenuAnimation(300);
-  }
-
-  @FXML
-  private void closeDropdownMenu(ActionEvent event) {
-    closeDropdownMenuAnimation(300);
-  }
-
-  private void openDropdownMenuAnimation(int duration) {
-    Line lineAcross = new Line(-133, 375, 133, 375);
-    Duration duration2 = Duration.millis(duration);
-    new PathTransition(duration2, lineAcross, dropdownMenu).play();
-  }
-
-  private void closeDropdownMenuAnimation(int duration) {
-    Line lineAcross = new Line(133, 375, -133, 375);
-    Duration duration2 = Duration.millis(duration);
-    new PathTransition(duration2, lineAcross, dropdownMenu).play();
   }
 }
