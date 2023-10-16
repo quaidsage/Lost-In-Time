@@ -1,7 +1,6 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
-
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
@@ -414,46 +413,50 @@ public class TimemachineController {
     }
     return toChoseCircle;
   }
- /**
-     * Opens the dropdown menu in response to an action event.
-     *
-     * @param event The action event that triggered this method.
-     */
-    @FXML
-    private void openDropdownMenu(ActionEvent event) {
-        // Call the openMenu method in the MenuController to open the dropdown menu.
-        menuOverlay.setVisible(true);
-        menuController.openMenu();
-    }
 
-    /**
-     * Closes the dropdown menu in response to an action event.
-     *
-     * @param event The action event that triggered this method.
-     */
-    @FXML
-    private void closeDropdownMenu(ActionEvent event) {
-        // Call the closeMenu method in the MenuController to close the dropdown menu.
-        menuOverlay.setVisible(false);
-        menuController.closeMenu();
-    }
+  /**
+   * Opens the dropdown menu in response to an action event.
+   *
+   * @param event The action event that triggered this method.
+   */
+  @FXML
+  private void openDropdownMenu(ActionEvent event) {
+    // Call the openMenu method in the MenuController to open the dropdown menu.
+    menuOverlay.setVisible(true);
+    menuController.openMenu();
+  }
 
-      /**
-     * Closes the dropdown menu in response to an action event.
-     *
-     * @param event The action event that triggered this method.
-     */
-    @FXML
-    private void closeDropdownMenuOverlay(MouseEvent event) {
-        // Call the closeMenu method in the MenuController to close the dropdown menu.
-        menuOverlay.setVisible(false);
-        menuController.closeMenu();
-    }
+  /**
+   * Closes the dropdown menu in response to an action event.
+   *
+   * @param event The action event that triggered this method.
+   */
+  @FXML
+  private void closeDropdownMenu(ActionEvent event) {
+    // Call the closeMenu method in the MenuController to close the dropdown menu.
+    menuOverlay.setVisible(false);
+    menuController.closeMenu();
+  }
+
+  /**
+   * Closes the dropdown menu in response to an action event.
+   *
+   * @param event The action event that triggered this method.
+   */
+  @FXML
+  private void closeDropdownMenuOverlay(MouseEvent event) {
+    // Call the closeMenu method in the MenuController to close the dropdown menu.
+    menuOverlay.setVisible(false);
+    menuController.closeMenu();
+  }
 
   /** Function to create tasks to update elements outside class controller. */
   public void initialiseTasks() {
     // Set chat area
     ChatTaskGenerator.chatAreas.add(chatArea);
+
+    // Set text field
+    ChatTaskGenerator.chatFields.add(chatField);
 
     // Set send button
     ChatTaskGenerator.sendButtons.add(btnSend);

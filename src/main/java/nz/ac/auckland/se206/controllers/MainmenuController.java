@@ -123,6 +123,7 @@ public class MainmenuController {
         e -> {
           IntroController.isFilesLoaded = true;
           newContextResponse();
+          ChatTaskGenerator.enableEnterHandler();
         });
     Thread loadThread = new Thread(loadTask);
     loadThread.setDaemon(true);
