@@ -111,7 +111,7 @@ public class MainmenuController {
    * @throws AudioException If there is an error with the audio
    */
   @FXML
-  private void muteTextToSpeech(ActionEvent event) throws AudioException, EngineStateError {
+  private void muteButtonActionHandler(ActionEvent event) throws AudioException, EngineStateError {
     // Check if text to speech is muted, and if it isnt, mute it.
     if (isTTSMuted) {
       isTTSMuted = false;

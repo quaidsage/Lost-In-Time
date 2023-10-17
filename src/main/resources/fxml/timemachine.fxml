@@ -69,7 +69,7 @@
 <Button id="timeMachine" fx:id="btnTimeMachine" layoutX="339.0" layoutY="129.0" mnemonicParsing="false" onAction="#onClickTimeMachine" opacity="0.0" prefHeight="471.0" prefWidth="349.0" text="Time Machine" textFill="WHITE" />
       <Button id="timeMachine" fx:id="btnControlBox" layoutX="25.0" layoutY="325.0" mnemonicParsing="false" onAction="#onClickControlBox" opacity="0.0" prefHeight="305.0" prefWidth="150.0" text="Control Box" textFill="WHITE" />
       <Rectangle fx:id="rectLight" arcHeight="5.0" arcWidth="5.0" height="596.0" layoutX="25.0" layoutY="60.0" stroke="BLACK" strokeType="INSIDE" width="960.0" />
-      <Button id="btnSkip" fx:id="btnOpenDropdownMenu" layoutX="25.0" layoutY="9.0" mnemonicParsing="false" onAction="#openDropdownMenu" style="-fx-font-size: 17.0; -fx-font-family: 'PT Mono'; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="≡">
+      <Button id="btnSkip" fx:id="btnOpenDropdownMenu" layoutX="25.0" layoutY="9.0" mnemonicParsing="false" onAction="#openDropDownMenu" style="-fx-font-size: 17.0; -fx-font-family: 'PT Mono'; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="≡">
 </Button>
       <Text fill="#6bf9b1" layoutX="536.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-family: 'PT Mono'; -fx-font-size: 20; -fx-font-weight: bold;" text="Currently in: Time Machine Room" textAlignment="RIGHT" wrappingWidth="449.0">
          <font>
@@ -159,7 +159,7 @@
       <Pane fx:id="dropdownMenu" opacity="0.9" prefHeight="750.0" prefWidth="266.0" style="-fx-background-color: rgb(28,28,28);" translateX="-266" translateY="0" visible="true">
          <children>
             <Text fill="#6bf9b1" layoutX="90.0" layoutY="94" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20.0; -fx-font-family: 'PT Mono';" text="TASKS" />
-            <Button id="btnSkip" fx:id="btnCloseDropdownMenu" layoutX="226" layoutY="40" mnemonicParsing="false" onAction="#closeDropdownMenu" text="X">
+            <Button id="btnSkip" fx:id="btnCloseDropdownMenu" layoutX="226" layoutY="40" mnemonicParsing="false" onAction="#closeDropDownMenu" text="X">
                <font>
                   <Font name="PT Mono Bold" size="13.0" />
                </font></Button>

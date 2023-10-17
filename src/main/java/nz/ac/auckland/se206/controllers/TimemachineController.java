@@ -562,7 +562,7 @@ public class TimemachineController {
    * @param event The action event that triggered this method.
    */
   @FXML
-  private void openDropdownMenu(ActionEvent event) {
+  private void openDropDownMenu(ActionEvent event) {
     App.audio.playClick();
     // Call the openMenu method in the MenuController to open the dropdown menu.
     menuOverlay.setVisible(true);
@@ -575,7 +575,7 @@ public class TimemachineController {
    * @param event The action event that triggered this method.
    */
   @FXML
-  private void closeDropdownMenu(ActionEvent event) {
+  private void closeDropDownMenu(ActionEvent event) {
     App.audio.playClick();
     // Call the closeMenu method in the MenuController to close the dropdown menu.
     menuOverlay.setVisible(false);
