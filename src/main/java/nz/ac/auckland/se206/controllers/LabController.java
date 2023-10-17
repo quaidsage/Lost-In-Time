@@ -76,13 +76,18 @@ public class LabController {
     timer.start();
   }
 
-  /** Converts the randomised solution colours to strings for use in the recipe. */
-  public static String convertRecipe(ArrayList<Integer> solutionColours) {
+  /**
+   * Converts the randomized solution colors to strings for use in the recipe.
+   *
+   * @param solutionColors An ArrayList containing integers representing colors.
+   * @return A formatted string containing the color names.
+   */
+  public static String convertRecipe(ArrayList<Integer> solutionColors) {
     String[] colorStr = new String[3];
 
-    // Convert the solution colours to strings to append to the riddle
+    // Convert the solution colors to strings to append to the riddle
     for (int i = 0; i < 3; i++) {
-      switch (solutionColours.get(i)) {
+      switch (solutionColors.get(i)) {
         case 0:
           colorStr[i] = "Blue";
           break;
@@ -106,6 +111,8 @@ public class LabController {
           break;
       }
     }
+
+    // Create a formatted string to present the color names in a list
     return "1. " + colorStr[0] + "\n2. " + colorStr[1] + "\n3. " + colorStr[2];
   }
 
@@ -602,15 +609,20 @@ public class LabController {
     txtRecipe.setText("Recipe:\n" + convertRecipe(solutionColours));
   }
 
-  /** Increment number of solutions added and check if puzzle is complete. */
+  /**
+   * Increment the number of solutions added and check if the puzzle is complete.
+   *
+   * @return true if the puzzle is complete, false otherwise.
+   */
   private Boolean isPuzzleComplete() {
-    numChemicalsAdded++;
-    if (numChemicalsAdded == 3) {
-      puzzleComplete();
-      AnimationManager.removeRecipe();
-      return true;
+    numChemicalsAdded++; // Increment the count of added solutions
+
+    if (numChemicalsAdded == 3) { // Check if the required number of solutions (3) have been added
+      puzzleComplete(); // Call a method to handle puzzle completion
+      AnimationManager.removeRecipe(); // Remove the recipe animation
+      return true; // Return true to indicate the puzzle is complete
     } else {
-      return false;
+      return false; // Return false if the puzzle is not yet complete
     }
   }
 

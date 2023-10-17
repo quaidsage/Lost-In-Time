@@ -241,7 +241,9 @@ public class ChatTaskGenerator {
           timeline.play();
           timeline.setOnFinished(
               event -> {
-                if (!msg.getRole().equals("user")) setSendButtonDisable(false);
+                if (!msg.getRole().equals("user")) {
+                  setSendButtonDisable(false);
+                }
               });
         });
   }
