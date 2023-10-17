@@ -40,7 +40,7 @@
       <Label id="lblTimer" fx:id="lblTimer" alignment="CENTER" layoutX="667.0" layoutY="287.0" prefHeight="19.0" prefWidth="116.0" style="-fx-font-size: 32.0; -fx-font-family: 'PT Mono'; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="XX:XX" textFill="#6bf9b1">
       </Label>
       <Rectangle fx:id="rectBack" arcHeight="5.0" arcWidth="5.0" fill="#303030" height="853.0" layoutX="-74.0" layoutY="-67.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="1522.0" />
-      <TextArea id="txtIntro" fx:id="txtIntro" layoutX="178.0" layoutY="240.0" prefHeight="359.0" prefWidth="1058.0" style="-fx-font-size: 38.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" stylesheets="@../css/style.css" wrapText="true">
+      <TextArea id="txtIntro" fx:id="txtIntro" layoutX="178.0" layoutY="240.0" prefHeight="359.0" prefWidth="1058.0" style="-fx-font-size: 38.0; -fx-font-family: 'PT Mono'; -fx-font-weight: bold;" stylesheets="@../css/style.css" wrapText="true">
 </TextArea>
       <Button id="btnSkip" fx:id="btnSkip" disable="true" layoutX="1163.0" layoutY="670.0" mnemonicParsing="false" onAction="#onClickSkipIntro" style="-fx-font-size: 29.0; -fx-font-family: 'PT Mono'; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="Skip Intro">
 </Button>
