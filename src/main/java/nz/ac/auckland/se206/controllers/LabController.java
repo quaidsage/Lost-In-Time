@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import javafx.animation.FadeTransition;
 import javafx.animation.PathTransition;
+import javafx.beans.binding.Bindings;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +15,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Rectangle;
@@ -45,6 +48,8 @@ public class LabController {
 
   // Initialise Timer
   public static TimerController timer = new TimerController();
+  
+  public static TaskController taskController;
 
   /**
    * Function to start the scenes timer when the game is started.
@@ -52,8 +57,8 @@ public class LabController {
    * @param minutes the number of minutes to set the timer to.
    */
   public static void labStartTimer(int minutes) {
-    timer.setMinutes(minutes);
-    timer.start();
+    // timer.setMinutes(minutes);
+    // timer.start();
   }
 
   /**
@@ -99,6 +104,12 @@ public class LabController {
   @FXML private Button btnCloseDropdownMenu;
   @FXML private Button btnOpenDropdownMenu;
   @FXML private Text txtTaskList;
+  @FXML private Circle task1Circle;
+  @FXML private Circle task2Circle;
+  @FXML private Circle task3Circle;
+  @FXML private Text txtTask1;
+  @FXML private Text txtTask2;
+  @FXML private Text txtTask3;
   @FXML private TextArea txtRecipe;
 
   private ArrayList<ImageView> arrowCollection = new ArrayList<ImageView>();
@@ -118,7 +129,29 @@ public class LabController {
    */
   public void initialize() throws ApiProxyException {
     menuController = new MenuController(dropdownMenu);
+    taskController = new TaskController();
 
+    task1Circle.fillProperty().bind(Bindings.when(taskController.labTaskCompletedProperty())
+            .then(Color.GREEN)
+            .otherwise(Color.TRANSPARENT));    
+    task2Circle.fillProperty().bind(Bindings.when(taskController.storageTaskCompletedProperty())
+            .then(Color.GREEN)
+            .otherwise(Color.TRANSPARENT));    
+    task3Circle.fillProperty().bind(Bindings.when(taskController.controlBoxTaskCompletedProperty())
+            .then(Color.GREEN)
+            .otherwise(Color.TRANSPARENT));
+
+    txtTask1.styleProperty().bind(Bindings.when(taskController.labTaskCompletedProperty())
+            .then("-fx-strikethrough: true; -fx-font-size: 16px;")
+            .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
+    txtTask2.styleProperty().bind(Bindings.when(taskController.storageTaskCompletedProperty())
+            .then("-fx-strikethrough: true; -fx-font-size: 16px;")
+            .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
+    txtTask3.styleProperty().bind(Bindings.when(taskController.controlBoxTaskCompletedProperty())
+            .then("-fx-strikethrough: true; -fx-font-size: 16px;")
+            .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
+    
+    
     // Initialise timer and bind the lblTimer to the timerController properties.
     timer = new TimerController();
     lblTimer.textProperty().bind(timer.messageProperty());
@@ -126,6 +159,10 @@ public class LabController {
         e -> {
           App.setUi(AppUi.TIMEOUT);
           timer.reset();
+        });
+    timer.setOnCancelled(
+        e -> {
+        timer.reset();
         });
 
     // Create task to run GPT model for intro message
@@ -173,6 +210,7 @@ public class LabController {
   @FXML
   private void onClickReturn(ActionEvent event) throws IOException {
     App.audio.playClick();
+    timer.cancel();
     App.setUi(AppUi.MAINMENU);
   }
 
@@ -528,10 +566,10 @@ public class LabController {
   private void puzzleComplete() {
     App.audio.playSuccess();
     GameState.isLabResolved = true;
-
+    TaskController.completeTask1();
     // Create task to run GPT model for lab complete message
     Task<ChatMessage> labCompleteTask =
-        ChatTaskGenerator.createTask(GptPromptEngineering.getLabComplete());
+    ChatTaskGenerator.createTask(GptPromptEngineering.getLabComplete());
     Thread labCompleteThread = new Thread(labCompleteTask);
     labCompleteThread.setDaemon(true);
     labCompleteThread.start();

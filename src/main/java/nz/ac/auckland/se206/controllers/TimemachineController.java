@@ -1,6 +1,7 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
@@ -16,8 +17,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import nz.ac.auckland.se206.AnimationManager;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.Delay;
@@ -35,6 +38,8 @@ public class TimemachineController {
   public static Task<Void> startTask;
   public static BooleanProperty appendContextProperty = new SimpleBooleanProperty(false);
   public static TimerController timer = new TimerController();
+  public static TaskController taskController;
+
 
   /**
    * Function to start the time in the timemachinescene.
@@ -69,8 +74,6 @@ public class TimemachineController {
     // Start timer. Change 'minutes' variable to change the length of the game
     lblTimer.setVisible(true);
     timemachineStartTimer(IntroController.minutes);
-    LabController.labStartTimer(IntroController.minutes);
-    StorageController.storageStartTimer(IntroController.minutes);
   }
 
   /** Function to create an animation of the lights turning on. */
@@ -152,6 +155,12 @@ public class TimemachineController {
   @FXML private Pane menuOverlay;
   @FXML private Button btnCloseDropdownMenu;
   @FXML private Button btnOpenDropdownMenu;
+  @FXML private Circle task1Circle;
+  @FXML private Circle task2Circle;
+  @FXML private Circle task3Circle;
+  @FXML private Text txtTask1;
+  @FXML private Text txtTask2;
+  @FXML private Text txtTask3;
 
   private Circle currentCircle;
   private int res;
@@ -161,13 +170,38 @@ public class TimemachineController {
   public void initialize() {
 
     menuController = new MenuController(dropdownMenu);
+    taskController = new TaskController();
 
+    task1Circle.fillProperty().bind(Bindings.when(taskController.labTaskCompletedProperty())
+            .then(Color.GREEN)
+            .otherwise(Color.TRANSPARENT));
+    task2Circle.fillProperty().bind(Bindings.when(taskController.storageTaskCompletedProperty())
+            .then(Color.GREEN)
+            .otherwise(Color.TRANSPARENT));
+    task3Circle.fillProperty().bind(Bindings.when(taskController.controlBoxTaskCompletedProperty())
+            .then(Color.GREEN)
+            .otherwise(Color.TRANSPARENT));
+    
+    txtTask1.styleProperty().bind(Bindings.when(taskController.labTaskCompletedProperty())
+            .then("-fx-strikethrough: true; -fx-font-size: 16px;")
+            .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
+    txtTask2.styleProperty().bind(Bindings.when(taskController.storageTaskCompletedProperty())
+            .then("-fx-strikethrough: true; -fx-font-size: 16px;")
+            .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
+    txtTask3.styleProperty().bind(Bindings.when(taskController.controlBoxTaskCompletedProperty())
+            .then("-fx-strikethrough: true; -fx-font-size: 16px;")
+            .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
+    
     // Initialise timer and bind the lblTimer to the timerController properties.
     timer = new TimerController();
     lblTimer.textProperty().bind(timer.messageProperty());
     timer.setOnSucceeded(
         e -> {
           lblTimer.setText("0:00");
+        });
+    timer.setOnCancelled(
+        e -> {
+        timer.reset();
         });
 
     // Initialise relevant tasks
@@ -244,6 +278,7 @@ public class TimemachineController {
     // Check if game is complete
     if (GameState.isLabResolved && GameState.isStorageResolved && GameState.isControlBoxResolved) {
       App.audio.playClick();
+      timer.cancel();
       App.setUi(AppUi.ENDSCENE);
       delay(1000, () -> App.audio.playSuccess());
     }
@@ -301,6 +336,7 @@ public class TimemachineController {
   @FXML
   private void onClickReturn(ActionEvent event) throws IOException {
     App.audio.playClick();
+    timer.cancel();
     App.setUi(AppUi.MAINMENU);
   }
 
@@ -357,6 +393,7 @@ public class TimemachineController {
     desktopView.setVisible(false);
     btnControlBox.setVisible(false);
     GameState.isControlBoxResolved = true;
+    TaskController.completeTask3();
   }
 
   // drops circle on both blank as well as a non blank row appropriately
