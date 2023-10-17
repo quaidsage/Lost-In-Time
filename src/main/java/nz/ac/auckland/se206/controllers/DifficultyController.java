@@ -11,6 +11,7 @@ import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.RestartManager;
 import nz.ac.auckland.se206.SceneManager.AppUi;
+import nz.ac.auckland.se206.gpt.GptPromptEngineering;
 
 /** A controller class for the difficulty selection scene. */
 public class DifficultyController {
@@ -104,7 +105,7 @@ public class DifficultyController {
     // Change game state
     currentDifficulty = Difficulty.EASY;
     isDifficultyChecked = true;
-    LabController.numHints = 6;
+    GptPromptEngineering.numHints = "infinite";
 
     // Handle when switching difficulties
     if (chkbxEasy.isSelected()) {
@@ -125,6 +126,7 @@ public class DifficultyController {
     // Change game state
     currentDifficulty = Difficulty.MEDIUM;
     isDifficultyChecked = true;
+    GptPromptEngineering.numHints = "5";
 
     // Handle when switching difficulties
     if (chkbxMedium.isSelected()) {
@@ -145,6 +147,7 @@ public class DifficultyController {
     // Change game state
     currentDifficulty = Difficulty.HARD;
     isDifficultyChecked = true;
+    GptPromptEngineering.numHints = "no";
 
     // Handle when switching difficulties
     if (chkbxHard.isSelected()) {

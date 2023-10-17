@@ -6,6 +6,7 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -20,10 +21,12 @@ import nz.ac.auckland.se206.speech.TextToSpeech;
 /** A class to generate a chat task. This class is used by many scenes within the game. */
 public class ChatTaskGenerator {
   static int characterDelay = 5;
+  public static int numHints = 5;
   static TextArea chatArea;
   static ImageView imgScientistThinking;
   static ImageView typingBubble;
   public static ChatMessage contextResponse;
+  public static Label hintsRemaining;
   public static ArrayList<TextArea> chatFields = new ArrayList<TextArea>();
   public static ArrayList<TextArea> chatAreas = new ArrayList<TextArea>();
   public static ArrayList<ImageView> thinkingAnimationImages = new ArrayList<ImageView>();
@@ -102,17 +105,17 @@ public class ChatTaskGenerator {
       // Decrement hint on medium
       if (result.getChatMessage().getContent().contains("Hint:")
           && GameState.isDifficultyMedium == true
-          && LabController.numHints > 0) {
+          && numHints > 0) {
         Platform.runLater(
             () -> {
-              LabController.numHints--;
-              new Thread(LabController.updateHintTask).start();
+              numHints--;
+              hintsRemaining.setText("Hints Remaining: " + String.valueOf(numHints));
             });
       }
 
       // Prevent hints on hard and with 0 hints remaining
       if (result.getChatMessage().getContent().contains("Hint:")
-          && (GameState.isDifficultyHard || LabController.numHints <= 0)) {
+          && (GameState.isDifficultyHard || numHints <= 0)) {
         return new ChatMessage("assistant", "No more hints remaining...");
       }
 
@@ -265,7 +268,9 @@ public class ChatTaskGenerator {
       chatField.setOnKeyPressed(
           event -> {
             if (event.getCode() == KeyCode.ENTER) {
-              onSendMessage(chatField);
+              if (!sendButtons.get(0).isDisable()) {
+                onSendMessage(chatField);
+              }
             }
           });
     }
