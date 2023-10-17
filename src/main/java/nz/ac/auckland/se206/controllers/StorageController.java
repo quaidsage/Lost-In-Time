@@ -108,7 +108,10 @@ public class StorageController {
   @FXML private Text txtTaskList;
   @FXML private Circle task1CircleStorage;
   @FXML private Circle task2CircleStorage;
-  @FXML private Circle task3CircleStorage;
+  @FXML private Circle task3CircleStorage; 
+  @FXML private Text txtTask1;
+  @FXML private Text txtTask2;
+  @FXML private Text txtTask3;
 
 
   // Initialise Variables
@@ -134,6 +137,26 @@ public class StorageController {
     taskController = new TaskController();
     menuController = new MenuController(dropdownMenu);
 
+    task1CircleStorage.fillProperty().bind(Bindings.when(taskController.labTaskCompletedProperty())
+            .then(Color.GREEN)
+            .otherwise(Color.TRANSPARENT));
+    task2CircleStorage.fillProperty().bind(Bindings.when(taskController.storageTaskCompletedProperty())
+            .then(Color.GREEN)
+            .otherwise(Color.TRANSPARENT));
+    task3CircleStorage.fillProperty().bind(Bindings.when(taskController.controlBoxTaskCompletedProperty())
+            .then(Color.GREEN)
+            .otherwise(Color.TRANSPARENT));
+    
+    txtTask1.styleProperty().bind(Bindings.when(taskController.labTaskCompletedProperty())
+            .then("-fx-strikethrough: true; -fx-font-size: 16px;")
+            .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
+    txtTask2.styleProperty().bind(Bindings.when(taskController.storageTaskCompletedProperty())
+            .then("-fx-strikethrough: true; -fx-font-size: 16px;")
+            .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
+    txtTask3.styleProperty().bind(Bindings.when(taskController.controlBoxTaskCompletedProperty())
+            .then("-fx-strikethrough: true; -fx-font-size: 16px;")
+            .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
+    
     // Initialise timer
     timer = new TimerController();
     lblTimer.textProperty().bind(timer.messageProperty());
@@ -322,6 +345,7 @@ public class StorageController {
 
     // Update game state
     GameState.isStorageResolved = true;
+    TaskController.completeTask2();
 
     // Get AI response for completing task
     Task<ChatMessage> storageTaskComplete =

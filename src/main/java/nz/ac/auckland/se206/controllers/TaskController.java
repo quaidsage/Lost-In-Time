@@ -6,13 +6,13 @@ import javafx.beans.property.SimpleBooleanProperty;
 public class TaskController {
 
   /** Indicates whether the riddle has been resolved. */
-  private final static BooleanProperty isLabResolved = new SimpleBooleanProperty(false);
+  private static BooleanProperty isLabResolved = new SimpleBooleanProperty(false);
 
   /** Indicates whether the storage task has been completed. */
-  private final static BooleanProperty isStorageResolved = new SimpleBooleanProperty(false);
+  private static BooleanProperty isStorageResolved = new SimpleBooleanProperty(false);
 
   /** Indicates whether the control box task has been completed. */
-  private final static BooleanProperty isControlBoxResolved = new SimpleBooleanProperty(false);
+  private static BooleanProperty isControlBoxResolved = new SimpleBooleanProperty(false);
 
   public BooleanProperty labTaskCompletedProperty() {
     return isLabResolved;
@@ -48,6 +48,18 @@ public class TaskController {
 
   public void setControlBoxTaskCompleter(Boolean completed) {
     isLabResolved.set(completed);    
+  }
+
+  public static void completeTask1() {
+    isLabResolved.set(true);
+  }
+
+public static void completeTask2() {
+    isStorageResolved.set(true);
+  }
+
+public static void completeTask3() {
+    isControlBoxResolved.set(true);
   }
 
 }
