@@ -103,16 +103,19 @@ public class AudioController {
     playMedia("/sounds/labdoor.mp3");
   }
 
+  /** Play the lab door close sound effect. */
   public void playLabDoorClose() {
     this.volume = volume / 3;
     playMedia("/sounds/labdoor.mp3");
     this.volume = volume * 3;
   }
 
+  /** Play the storage door open sound effect. */
   public void playStorageDoor() {
     playMedia("/sounds/storagedoor.wav");
   }
 
+  /** Play the storage door close sound effect. */
   public void playStorageDoorClose() {
     // Reduce the volume to 1/5 of its current value
     this.volume = volume / 5;
