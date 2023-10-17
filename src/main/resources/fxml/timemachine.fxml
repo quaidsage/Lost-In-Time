@@ -158,7 +158,7 @@
       </Pane>
       <Pane fx:id="dropdownMenu" opacity="0.9" prefHeight="750.0" prefWidth="266.0" style="-fx-background-color: rgb(28,28,28);" translateX="-266" translateY="0" visible="true">
          <children>
-            <Text fill="#6bf9b1" layoutX="90.0" layoutY="94" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20.0;" text="TASKS" />
+            <Text fill="#6bf9b1" layoutX="90.0" layoutY="94" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20.0; -fx-font-family: 'PT Mono';" text="TASKS" />
             <Button id="btnSkip" fx:id="btnCloseDropdownMenu" layoutX="226" layoutY="40" mnemonicParsing="false" onAction="#closeDropdownMenu" text="X">
                <font>
                   <Font name="PT Mono Bold" size="13.0" />

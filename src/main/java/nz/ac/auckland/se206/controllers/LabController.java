@@ -49,17 +49,8 @@ public class LabController {
   // Initialise Timer
   public static TimerController timer = new TimerController();
 
+  // Initialsie Timer
   public static TaskController taskController;
-
-  /**
-   * Function to start the scenes timer when the game is started.
-   *
-   * @param minutes the number of minutes to set the timer to.
-   */
-  public static void labStartTimer(int minutes) {
-    // timer.setMinutes(minutes);
-    // timer.start();
-  }
 
   /**
    * Delays given code by a given number of milliseconds.
@@ -73,6 +64,39 @@ public class LabController {
     Thread delayThread = new Thread(delayTask);
     delayThread.setDaemon(true);
     delayThread.start();
+  }
+
+  /** Converts the randomised solution colours to strings for use in the recipe. */
+  public static String convertRecipe(ArrayList<Integer> solutionColours) {
+    String[] colorStr = new String[3];
+
+    // Convert the solution colours to strings to append to the riddle
+    for (int i = 0; i < 3; i++) {
+      switch (solutionColours.get(i)) {
+        case 0:
+          colorStr[i] = "Blue";
+          break;
+        case 1:
+          colorStr[i] = "Purple";
+          break;
+        case 2:
+          colorStr[i] = "Cyan";
+          break;
+        case 3:
+          colorStr[i] = "Green";
+          break;
+        case 4:
+          colorStr[i] = "Yellow";
+          break;
+        case 5:
+          colorStr[i] = "Orange";
+          break;
+        default:
+          colorStr[i] = "Red";
+          break;
+      }
+    }
+    return "1. " + colorStr[0] + "\n2. " + colorStr[1] + "\n3. " + colorStr[2];
   }
 
   // Fields for JavaFX elements
@@ -131,6 +155,7 @@ public class LabController {
     menuController = new MenuController(dropdownMenu);
     taskController = new TaskController();
 
+    // Bind the circles for the task list to the gamestate variables.
     task1Circle
         .fillProperty()
         .bind(
@@ -150,6 +175,7 @@ public class LabController {
                 .then(Color.GREEN)
                 .otherwise(Color.TRANSPARENT));
 
+    // Bind the text for the task list to the gamestate variables.
     txtTask1
         .styleProperty()
         .bind(
@@ -298,6 +324,7 @@ public class LabController {
 
     // Create task to run GPT model for riddle message
     labRiddleTask = ChatTaskGenerator.createTask(GptPromptEngineering.getRiddleLab());
+
     Thread labRiddleThread = new Thread(labRiddleTask);
     labRiddleThread.setDaemon(true);
     labRiddleThread.start();
@@ -827,40 +854,7 @@ public class LabController {
     chemicalYellow.setVisible(visibility);
     chemicalGreen.setVisible(visibility);
     chemicalOrange.setVisible(visibility);
+    // Set the general chemical rectangle to invisible
     chemicalGeneral.setVisible(false);
-  }
-
-  /** TODO JAVADOCS */
-  public static String convertRecipe(ArrayList<Integer> solutionColours) {
-    String[] colorStr = new String[3];
-
-    // Convert the solution colours to strings to append to the riddle
-    for (int i = 0; i < 3; i++) {
-      switch (solutionColours.get(i)) {
-        case 0:
-          colorStr[i] = "Blue";
-          break;
-        case 1:
-          colorStr[i] = "Purple";
-          break;
-        case 2:
-          colorStr[i] = "Cyan";
-          break;
-        case 3:
-          colorStr[i] = "Green";
-          break;
-        case 4:
-          colorStr[i] = "Yellow";
-          break;
-        case 5:
-          colorStr[i] = "Orange";
-          break;
-        default:
-          colorStr[i] = "Red";
-          break;
-      }
-    }
-
-    return "1. " + colorStr[0] + "\n2. " + colorStr[1] + "\n3. " + colorStr[2];
   }
 }

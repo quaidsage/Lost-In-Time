@@ -40,15 +40,14 @@ public class GameState {
   public static String getNextStep() {
     // Check state
     if (isLabResolved && isStorageResolved) { // User has completed both tasks
-      return "go to the time machine room and repair the time machine to stabilise it and return to"
-          + " the present";
+      return "go to the time machine room and hack the time machine to stabilise it.";
     } else if (isLabResolved && !isStorageResolved) { //  User has completed only lab task
-      return "go to the storage room and restore power to the time machine";
+      return "go to the storage room and restore power to the time machine.";
     } else if (!isLabResolved && isStorageResolved) { // User has completed only storage task
-      return "go to the labratory and create the time fluid";
+      return "go to the labratory and create the time fluid.";
     } else { // User has completed neither task
       return "go to either the labratory to create the time fluid or the storage room to restore"
-          + " power to the time machine";
+          + " power to the time machine.";
     }
   }
 }

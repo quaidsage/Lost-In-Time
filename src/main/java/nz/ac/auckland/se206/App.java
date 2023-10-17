@@ -64,9 +64,14 @@ public class App extends Application {
     stage.getIcons().add(new Image("file:src/main/resources/images/scientist-process.png"));
     stage.setOnCloseRequest(
         e -> {
-          ChatTaskGenerator.textToSpeech.clear();
-          ChatTaskGenerator.textToSpeech.terminate();
-          audio.stop();
+          try {
+            ChatTaskGenerator.textToSpeech.clear();
+            ChatTaskGenerator.textToSpeech.terminate();
+            audio.stop();
+          } catch (Exception er) {
+            stage.close();
+            System.exit(1);
+          }
         });
     stage.show();
   }
@@ -77,7 +82,7 @@ public class App extends Application {
       MainmenuController.hasRestarted = true;
       ChatTaskGenerator.textToSpeech.clear();
       RestartManager.restartGame();
-      MainmenuController.newContextResponse();
+      MainmenuController.createNewContextResponse();
     }
 
     scene.setRoot(SceneManager.getUiRoot(newUi));
