@@ -32,7 +32,6 @@ import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
 
 /** A controller class for the lab scene. */
 public class LabController {
-  public static int numHints = 5;
   public static ArrayList<Integer> solutionColours;
   public static int numChemicalsAdded = 0;
 
@@ -40,7 +39,6 @@ public class LabController {
   public static Task<ChatMessage> labIntroTask;
   public static Task<ChatMessage> labRiddleTask;
   public static Task<Void> animateTask;
-  public static Task<Void> updateHintTask;
 
   // Fields related to chemical solutions
   public static Boolean[] isChemicalSolution = {false, false, false, false, false, false, false};
@@ -219,8 +217,7 @@ public class LabController {
   @FXML
   private void onClickChemicals(MouseEvent event) {
     if (GameState.isDifficultyMedium == true) {
-      numHints = 5;
-      hintsRemaining.setText("Hints Remaining: " + String.valueOf(numHints));
+      hintsRemaining.setText("Hints Remaining: " + String.valueOf(ChatTaskGenerator.numHints));
     } else if (GameState.isDifficultyEasy == true) {
       hintsRemaining.setText("Unlimited hints available");
     } else {
@@ -380,14 +377,17 @@ public class LabController {
     // Set thinking animation
     ChatTaskGenerator.thinkingAnimationImages.add(imgScientistThinking);
 
-    // Add timer label, arrows, and general chemicals to restart manager
+    // Add hint text
+    ChatTaskGenerator.hintsRemaining = hintsRemaining;
+
+    // Add timer label, arrows, recipe txt, and general chemicals to restart manager
     RestartManager.labLabel = lblTimer;
     RestartManager.labArrowCollection = arrowCollection;
     RestartManager.labChemicals = chemicalGeneral;
+    RestartManager.labTxtRecipe = txtRecipe;
 
     // Create tasks for animation and updating hint label
     createAnimateTask();
-    updateHintTask(numHints);
 
     // Add door animation to animation manager and bind their properties
     AnimationManager.rectLabLeftDoor = rectLeftDoor;
@@ -397,25 +397,6 @@ public class LabController {
     // Add printing animation
     AnimationManager.imgLabPaper = imgPaper;
     AnimationManager.txtLabRecipe = txtRecipe;
-  }
-
-  /**
-   * Function to update the label showing the user their remaining hints.
-   *
-   * @param numHints the number of hints remaining.
-   */
-  public void updateHintTask(int numHints) {
-    updateHintTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            if (numHints >= 0) {
-              // Update number of hints to relevant number of hints
-              hintsRemaining.setText("Hints Remaining: " + String.valueOf(numHints));
-            }
-            return null;
-          }
-        };
   }
 
   /** Function to create a task for animation. */
@@ -520,7 +501,7 @@ public class LabController {
     initLabThread.start();
 
     // Initialise recipe text
-    txtRecipe.setText("Recipe:\n" + convertRecipe());
+    txtRecipe.setText("Recipe:\n" + convertRecipe(solutionColours));
   }
 
   /** Increment number of solutions added and check if puzzle is complete. */
@@ -783,7 +764,7 @@ public class LabController {
   }
 
   /** TODO JAVADOCS */
-  public String convertRecipe() {
+  public static String convertRecipe(ArrayList<Integer> solutionColours) {
     String[] colorStr = new String[3];
 
     // Convert the solution colours to strings to append to the riddle
