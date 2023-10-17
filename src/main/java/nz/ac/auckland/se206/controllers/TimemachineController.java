@@ -2,6 +2,7 @@ package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ChangeListener;
@@ -17,8 +18,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.Delay;
 import nz.ac.auckland.se206.GameState;
@@ -35,6 +38,8 @@ public class TimemachineController {
   public static Task<Void> startTask;
   public static BooleanProperty appendContextProperty = new SimpleBooleanProperty(false);
   public static TimerController timer = new TimerController();
+  public static TaskController taskController;
+
 
   /**
    * Function to start the time in the timemachinescene.
@@ -151,6 +156,12 @@ public class TimemachineController {
   @FXML private Pane menuOverlay;
   @FXML private Button btnCloseDropdownMenu;
   @FXML private Button btnOpenDropdownMenu;
+  @FXML private Circle task1Circle;
+  @FXML private Circle task2Circle;
+  @FXML private Circle task3Circle;
+  @FXML private Text txtTask1;
+  @FXML private Text txtTask2;
+  @FXML private Text txtTask3;
 
   private Circle currentCircle;
   private int res;
@@ -160,6 +171,7 @@ public class TimemachineController {
   public void initialize() {
 
     menuController = new MenuController(dropdownMenu);
+    taskController = new TaskController();
 
     // Initialise timer and bind the lblTimer to the timerController properties.
     timer = new TimerController();
@@ -414,7 +426,8 @@ public class TimemachineController {
     }
     return toChoseCircle;
   }
- /**
+
+  /**
      * Opens the dropdown menu in response to an action event.
      *
      * @param event The action event that triggered this method.

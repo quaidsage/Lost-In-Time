@@ -8,6 +8,7 @@ import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,6 +20,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -43,6 +45,8 @@ public class StorageController {
 
   // Initialise Timer
   public static TimerController timer = new TimerController();
+
+  public static TaskController taskController;
 
   /**
    * Function to start timer when the game is started.
@@ -102,6 +106,10 @@ public class StorageController {
   @FXML private Button btnCloseDropdownMenu;
   @FXML private Button btnOpenDropdownMenu;
   @FXML private Text txtTaskList;
+  @FXML private Circle task1CircleStorage;
+  @FXML private Circle task2CircleStorage;
+  @FXML private Circle task3CircleStorage;
+
 
   // Initialise Variables
   private ArrayList<Button> buttons = new ArrayList<>();
@@ -123,6 +131,7 @@ public class StorageController {
    * @throws ApiProxyException when there is a problem with the ApiProxy.
    */
   public void initialize() throws ApiProxyException {
+    taskController = new TaskController();
     menuController = new MenuController(dropdownMenu);
 
     // Initialise timer

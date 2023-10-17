@@ -14,6 +14,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Rectangle;
@@ -98,6 +99,10 @@ public class LabController {
   @FXML private Button btnCloseDropdownMenu;
   @FXML private Button btnOpenDropdownMenu;
   @FXML private Text txtTaskList;
+  @FXML private Circle task1Circle;
+  @FXML private Circle task2Circle;
+  @FXML private Circle task3Circle;
+
 
   private ArrayList<ImageView> arrowCollection = new ArrayList<ImageView>();
   private MenuController menuController;
@@ -521,7 +526,7 @@ public class LabController {
 
     // Create task to run GPT model for lab complete message
     Task<ChatMessage> labCompleteTask =
-        ChatTaskGenerator.createTask(GptPromptEngineering.getLabComplete());
+    ChatTaskGenerator.createTask(GptPromptEngineering.getLabComplete());
     Thread labCompleteThread = new Thread(labCompleteTask);
     labCompleteThread.setDaemon(true);
     labCompleteThread.start();
