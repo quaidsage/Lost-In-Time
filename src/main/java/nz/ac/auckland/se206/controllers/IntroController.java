@@ -121,6 +121,7 @@ public class IntroController {
     interact();
   }
 
+  /** Function to handle interaction with the AI in the intro scene. */
   public void interact() {
     // Start appending the next interaction message
     msg = new ChatMessage("assistant", interactions[interaction]);

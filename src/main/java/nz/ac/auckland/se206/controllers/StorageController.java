@@ -63,6 +63,16 @@ public class StorageController {
     delayThread.start();
   }
 
+  /**
+   * Function to start the time in the timemachinescene.
+   *
+   * @param minutes the number of minutes to set the timer to.
+   */
+  public static void storageStartTimer(int minutes) {
+    timer.setMinutes(minutes);
+    timer.start();
+  }
+
   // JavaFX elements
   @FXML private Button btnSwitchToTimeMachine;
   @FXML private Button btnSend;

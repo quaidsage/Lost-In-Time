@@ -50,7 +50,7 @@ public class DifficultyController {
   private Difficulty currentDifficulty;
   private TimeSetting currentTimeSetting;
 
-  /** Apply settings on initialisation */
+  /** Apply settings on initialisation of the difficulty scene. */
   public void initialize() {
 
     // Bind continue button to boolean values
