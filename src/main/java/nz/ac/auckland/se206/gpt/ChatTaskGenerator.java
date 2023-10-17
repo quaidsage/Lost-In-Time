@@ -258,16 +258,19 @@ public class ChatTaskGenerator {
    * @param isDisable whether the send button is disabled
    */
   public static void setSendButtonDisable(boolean isDisable) {
+    // disable send buttons while the chat is thinking
     for (int i = 0; i < sendButtons.size(); i++) {
       sendButtons.get(i).setDisable(isDisable);
     }
   }
 
-  /** TODO JAVADOCS */
+  /** Enables the enter handler for sending messages. */
   public static void enableEnterHandler() {
+    // Allow enter the send messages
     for (TextArea chatField : chatFields) {
       chatField.setOnKeyPressed(
           event -> {
+            // If enter is pressed, send message and idsable button.
             if (event.getCode() == KeyCode.ENTER) {
               if (!sendButtons.get(0).isDisable()) {
                 onSendMessage(chatField);

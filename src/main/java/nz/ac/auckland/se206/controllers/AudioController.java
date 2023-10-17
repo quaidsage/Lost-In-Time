@@ -7,8 +7,8 @@ import javafx.scene.media.MediaView;
 import nz.ac.auckland.se206.Delay;
 
 /**
- * This class represents an audio controller for managing audio playback in a game.
- * It provides methods for playing various sound effects and controlling audio settings.
+ * This class represents an audio controller for managing audio playback in a game. It provides
+ * methods for playing various sound effects and controlling audio settings.
  */
 public class AudioController {
 
@@ -58,65 +58,47 @@ public class AudioController {
     this.volume = volume;
   }
 
-  /**
-   * Play the lights sound effect.
-   */
+  /** Play the lights sound effect. */
   public void playLights() {
     playMedia("/sounds/lights.wav");
   }
 
-  /**
-   * Play the click sound effect.
-   */
+  /** Play the click sound effect. */
   public void playClick() {
     playMedia("/sounds/click.wav");
   }
 
-  /**
-   * Play the success sound effect.
-   */
+  /** Play the success sound effect. */
   public void playSuccess() {
     playMedia("/sounds/success.wav");
   }
 
-  /**
-   * Play the print sound effect.
-   */
+  /** Play the print sound effect. */
   public void playPrint() {
     playMedia("/sounds/print.wav");
   }
 
-  /**
-   * Play the fail sound effect.
-   */
+  /** Play the fail sound effect. */
   public void playFail() {
     playMedia("/sounds/fail.mp3");
   }
 
-  /**
-   * Play the keypad sound effect.
-   */
+  /** Play the keypad sound effect. */
   public void playKeypad() {
     playMedia("/sounds/keypad.wav");
   }
 
-  /**
-   * Play the pattern sound effect.
-   */
+  /** Play the pattern sound effect. */
   public void playPattern() {
     playMedia("/sounds/pattern.wav");
   }
 
-  /**
-   * Play the scan sound effect.
-   */
+  /** Play the scan sound effect. */
   public void playScan() {
     playMedia("/sounds/scan.wav");
   }
 
-  /**
-   * Play the lab door sound effect.
-   */
+  /** Play the lab door sound effect. */
   public void playLabDoor() {
     playMedia("/sounds/labdoor.mp3");
   }
@@ -143,9 +125,7 @@ public class AudioController {
         });
   }
 
-  /**
-   * Stop the currently playing audio.
-   */
+  /** Stop the currently playing audio. */
   public void stop() {
     mediaView.getMediaPlayer().stop();
   }
