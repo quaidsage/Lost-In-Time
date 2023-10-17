@@ -44,7 +44,7 @@
 </TextArea>
       <Button id="btnSkip" fx:id="btnSkip" disable="true" layoutX="1163.0" layoutY="670.0" mnemonicParsing="false" onAction="#onClickSkipIntro" style="-fx-font-size: 29.0; -fx-font-family: 'PT Mono'; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="Skip Intro">
 </Button>
-      <Button id="btnSkip" fx:id="btnPick" layoutX="505.0" layoutY="644.0" mnemonicParsing="false" onAction="#onClickPickDevice" prefHeight="83.0" prefWidth="440.0" style="-fx-font-size: 38.0; -fx-font-family: 'PT Mono'; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="Pick up device...">
+      <Button id="btnSkip" fx:id="btnPick" layoutX="502.0" layoutY="640.0" mnemonicParsing="false" onAction="#onClickPickDevice" prefHeight="83.0" prefWidth="447.0" style="-fx-font-size: 38.0; -fx-font-family: 'PT Mono'; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="Pick up device...">
       </Button>
       <Button id="btnSkip" fx:id="btnNext" disable="true" layoutX="553.0" layoutY="580.0" mnemonicParsing="false" onAction="#onClickNext" prefHeight="101.0" prefWidth="208.0" style="-fx-font-size: 36.0; -fx-font-family: 'PT Mono'; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="Next">
       </Button>
