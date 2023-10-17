@@ -76,7 +76,11 @@ public class App extends Application {
     stage.show();
   }
 
-  // Sets the Ui without resetting the state
+  /**
+   * Sets the Ui without resetting the state of each game scene.
+   *
+   * @param newUi the Ui to be changed to.
+   */
   public static void setUi(AppUi newUi) {
     if (newUi == AppUi.MAINMENU) {
       MainmenuController.hasRestarted = true;
