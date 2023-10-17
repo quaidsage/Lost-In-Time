@@ -116,12 +116,12 @@ public class MainmenuController {
     if (isTTSMuted) {
       isTTSMuted = false;
       ChatTaskGenerator.textToSpeech.pause(false);
-      btnMute.setText("Mute TTS (TEMP BUTTON)");
+      btnMute.setText("Mute Text To Speech");
     } else {
       // If it is muted, do the opposite.
       isTTSMuted = true;
       ChatTaskGenerator.textToSpeech.pause(true);
-      btnMute.setText("Unmute TTS (TEMP BUTTON)");
+      btnMute.setText("Unmute Text To Speech");
     }
   }
 
