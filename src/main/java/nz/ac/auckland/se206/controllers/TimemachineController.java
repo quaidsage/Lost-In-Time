@@ -75,11 +75,13 @@ public class TimemachineController {
 
   /** Function to create an animation of the lights turning on. */
   private static void animateLights(Rectangle rectLight) {
+    App.audio.playLights();
+
     // Start animation and set the rectangle to visible
     rectLight.setVisible(true);
     // Start a series of delays to turn the light on and off
     delay(
-        500,
+        800,
         () -> {
           rectLight.setVisible(false);
           delay(
@@ -97,7 +99,7 @@ public class TimemachineController {
                             rectLight.setOpacity(0.4);
                             rectLight.setVisible(true);
                             delay(
-                                100,
+                                200,
                                 () -> {
                                   // Finish the animation.
                                   rectLight.setVisible(false);
@@ -243,6 +245,7 @@ public class TimemachineController {
     if (GameState.isLabResolved && GameState.isStorageResolved && GameState.isControlBoxResolved) {
       App.audio.playClick();
       App.setUi(AppUi.ENDSCENE);
+      delay(1000, () -> App.audio.playSuccess());
     }
   }
 
@@ -348,6 +351,8 @@ public class TimemachineController {
   }
 
   private void winGame() {
+    App.audio.playSuccess();
+
     hackGame.setVisible(false);
     desktopView.setVisible(false);
     btnControlBox.setVisible(false);

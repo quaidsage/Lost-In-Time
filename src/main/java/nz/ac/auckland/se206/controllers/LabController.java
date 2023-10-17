@@ -161,6 +161,7 @@ public class LabController {
   @FXML
   private void onClickTimeMachineRoom(ActionEvent event) {
     App.audio.playClick();
+    App.audio.playLabDoorClose();
     App.setUi(AppUi.TIMEMACHINE);
   }
 
@@ -525,6 +526,7 @@ public class LabController {
 
   /** Function to execute events for when the lab task is finished. */
   private void puzzleComplete() {
+    App.audio.playSuccess();
     GameState.isLabResolved = true;
 
     // Create task to run GPT model for lab complete message

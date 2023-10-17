@@ -62,13 +62,18 @@ public class App extends Application {
     stage.setScene(scene);
     stage.setResizable(false);
     stage.getIcons().add(new Image("file:src/main/resources/images/scientist-process.png"));
+    stage.setOnCloseRequest(
+        e -> {
+          ChatTaskGenerator.textToSpeech.clear();
+          ChatTaskGenerator.textToSpeech.terminate();
+          audio.stop();
+        });
     stage.show();
   }
 
   // Sets the Ui without resetting the state
   public static void setUi(AppUi newUi) {
     if (newUi == AppUi.MAINMENU) {
-      System.out.println("RESTARTING");
       MainmenuController.hasRestarted = true;
       ChatTaskGenerator.textToSpeech.clear();
       RestartManager.restartGame();
