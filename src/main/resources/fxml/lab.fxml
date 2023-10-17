@@ -29,7 +29,7 @@
             <Image url="@../images/BaseUI.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="blurredImage" fitHeight="593.0" fitWidth="960.0" layoutX="25.0" layoutY="59.0" pickOnBounds="true">
+      <ImageView fx:id="blurredImage" fitHeight="593.0" fitWidth="960.0" layoutX="25.0" layoutY="59.0" opacity="0.0" pickOnBounds="true" visible="false">
          <image>
             <Image url="@../images/blurred_lab.jpg" />
          </image>
