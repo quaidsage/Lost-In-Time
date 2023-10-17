@@ -280,17 +280,27 @@ public class TimemachineController {
   }
 
   /**
-   * Change scene to storage without resetting any scenes.
+   * Change the scene to storage without resetting any scenes.
    *
    * @param event the action event triggered by the send button
    */
   @FXML
   private void onClickStorage(ActionEvent event) {
+    // Play a click sound
     App.audio.playClick();
+
+    // Set the UI to the storage scene
     App.setUi(AppUi.STORAGE);
+
+    // Open the storage door using an animation
     AnimationManager.openStorageDoor();
+
+    // Check if the storage has not been visited yet
     if (!GameState.isStorageVisited) {
+      // Mark the storage as visited
       GameState.isStorageVisited = true;
+
+      // Start a separate thread to run the storage intro task
       Thread storageIntroThread = new Thread(StorageController.storageIntroTask);
       storageIntroThread.setDaemon(true);
       storageIntroThread.start();
@@ -387,21 +397,28 @@ public class TimemachineController {
     ChatTaskGenerator.onSendMessage(chatField);
   }
 
-  // selects the smallest circle that is, the top ring, and makes it glow to show it is selected
+  /// This method selects the smallest circle, representing the top ring, and makes it glow to
+  // indicate selection
   @FXML
   private void selectCircle(MouseEvent event) {
+    // Play a click sound
     App.audio.playClick();
+
     if (currentCircle == null) {
+      // If no circle is currently selected, select the one clicked
       currentCircle = getCircle((Circle) event.getPickResult().getIntersectedNode());
+
+      // Add a glow effect to the selected circle
       Glow glow = new Glow();
       glow.setLevel(0.5);
       currentCircle.setEffect(glow);
     } else {
-
+      // If a circle is already selected, check if the newly clicked circle is smaller
       if (currentCircle
               .getId()
               .compareTo(getCircle((Circle) event.getPickResult().getIntersectedNode()).getId())
           > 0) {
+        // Determine which row to move the circle to based on the clicked circle's parent
         String row = event.getPickResult().getIntersectedNode().getParent().getId();
         if (row.equals("row1")) {
           row1.getChildren().add(currentCircle);
@@ -411,10 +428,13 @@ public class TimemachineController {
           row3.getChildren().add(currentCircle);
         }
       }
+
+      // Remove the glow effect and reset the current selection
       currentCircle.setEffect(null);
       currentCircle = null;
     }
 
+    // Check if all circles are in row3, which indicates a win
     if (row3.getChildren().size() == res) {
       winGame();
     }

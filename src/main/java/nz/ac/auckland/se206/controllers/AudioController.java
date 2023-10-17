@@ -114,13 +114,23 @@ public class AudioController {
   }
 
   public void playStorageDoorClose() {
+    // Reduce the volume to 1/5 of its current value
     this.volume = volume / 5;
+
+    // Play the 'storagedoor.wav' media file
     playMedia("/sounds/storagedoor.wav");
+
+    // Delay for 350 milliseconds and then execute the following code
     delay(
         350,
         () -> {
+          // Reduce the volume to 1/4 of its current value
           this.volume = volume / 4;
+
+          // Play the 'storagedoorclose.m4a' media file
           playMedia("/sounds/storagedoorclose.m4a");
+
+          // Increase the volume back to 20 times its current value
           this.volume = volume * 20;
         });
   }
