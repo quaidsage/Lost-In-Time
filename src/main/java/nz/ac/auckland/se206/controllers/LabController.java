@@ -66,6 +66,16 @@ public class LabController {
     delayThread.start();
   }
 
+  /**
+   * Function to start the time in the timemachinescene.
+   *
+   * @param minutes the number of minutes to set the timer to.
+   */
+  public static void labStartTimer(int minutes) {
+    timer.setMinutes(minutes);
+    timer.start();
+  }
+
   /** Converts the randomised solution colours to strings for use in the recipe. */
   public static String convertRecipe(ArrayList<Integer> solutionColours) {
     String[] colorStr = new String[3];
@@ -201,10 +211,6 @@ public class LabController {
     timer.setOnSucceeded(
         e -> {
           App.setUi(AppUi.TIMEOUT);
-          timer.reset();
-        });
-    timer.setOnCancelled(
-        e -> {
           timer.reset();
         });
 

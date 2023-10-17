@@ -74,6 +74,8 @@ public class TimemachineController {
     // Start timer. Change 'minutes' variable to change the length of the game
     lblTimer.setVisible(true);
     timemachineStartTimer(IntroController.minutes);
+    StorageController.storageStartTimer(IntroController.minutes);
+    LabController.labStartTimer(IntroController.minutes);
   }
 
   /** Function to create an animation of the lights turning on. */
