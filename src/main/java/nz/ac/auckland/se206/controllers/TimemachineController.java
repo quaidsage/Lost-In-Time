@@ -29,6 +29,7 @@ import nz.ac.auckland.se206.RestartManager;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.gpt.ChatMessage;
 import nz.ac.auckland.se206.gpt.ChatTaskGenerator;
+import nz.ac.auckland.se206.gpt.GptPromptEngineering;
 import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 
@@ -425,6 +426,14 @@ public class TimemachineController {
     btnControlBox.setVisible(false);
     GameState.isControlBoxResolved = true;
     TaskController.completeTask3();
+
+    // Get AI response for completing task
+    Task<ChatMessage> hackTaskComplete =
+        ChatTaskGenerator.createTask(GptPromptEngineering.getHackComplete());
+    hackTaskComplete.setOnSucceeded(
+        e -> {
+          ChatTaskGenerator.updateChat("\n\n-> ", hackTaskComplete.getValue());
+        });
   }
 
   /**

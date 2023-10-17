@@ -154,7 +154,7 @@ public class DifficultyController {
     // Change game state
     currentDifficulty = Difficulty.HARD;
     isDifficultyChecked = true;
-    GptPromptEngineering.numHints = "no";
+    GptPromptEngineering.numHints = "0";
 
     // Handle when switching difficulties
     if (chkbxHard.isSelected()) {

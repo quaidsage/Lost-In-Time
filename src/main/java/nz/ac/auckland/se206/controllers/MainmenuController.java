@@ -84,7 +84,7 @@ public class MainmenuController {
 
     // Initialise AI chat parameters
     GameState.chatCompletionRequest =
-        new ChatCompletionRequest().setN(1).setTemperature(0.2).setTopP(0.5).setMaxTokens(200);
+        new ChatCompletionRequest().setN(1).setTemperature(0.17).setTopP(0.6).setMaxTokens(400);
   }
 
   /**

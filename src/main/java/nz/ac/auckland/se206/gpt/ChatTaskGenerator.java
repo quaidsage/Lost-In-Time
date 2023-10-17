@@ -45,6 +45,8 @@ public class ChatTaskGenerator {
     if (userMessage == null) {
       return;
     }
+    userMessage.trim();
+
     updateChat("\n\n<- ", new ChatMessage("user", userMessage));
 
     // Create task to run GPT model for AI response
@@ -98,6 +100,8 @@ public class ChatTaskGenerator {
       // Create chat message from response
       GameState.chatCompletionRequest.addMessage(result.getChatMessage());
 
+      System.out.println(result.getChatMessage().getContent());
+
       // Check if users answer was correct
       if (result.getChatMessage().getContent().startsWith("Correct")) {
         new Thread(LabController.animateTask).start();
@@ -122,6 +126,7 @@ public class ChatTaskGenerator {
 
       // Generate TTS
       if (!msg.getContent().equals(GptPromptEngineering.getContext())) {
+        textToSpeech.clear();
         TextToSpeech.runTextToSpeech(result.getChatMessage().getContent());
       }
 

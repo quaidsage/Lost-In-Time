@@ -322,6 +322,7 @@ public class LabController {
 
     // Create task to run GPT model for riddle message
     labRiddleTask = ChatTaskGenerator.createTask(GptPromptEngineering.getRiddleLab());
+
     Thread labRiddleThread = new Thread(labRiddleTask);
     labRiddleThread.setDaemon(true);
     labRiddleThread.start();
