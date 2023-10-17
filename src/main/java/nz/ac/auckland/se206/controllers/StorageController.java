@@ -99,11 +99,10 @@ public class StorageController {
   @FXML private Text txtTaskList;
   @FXML private Circle task1CircleStorage;
   @FXML private Circle task2CircleStorage;
-  @FXML private Circle task3CircleStorage; 
+  @FXML private Circle task3CircleStorage;
   @FXML private Text txtTask1;
   @FXML private Text txtTask2;
   @FXML private Text txtTask3;
-
 
   // Initialise Variables
   private ArrayList<Button> buttons = new ArrayList<>();
@@ -129,26 +128,44 @@ public class StorageController {
     // Initialise drop down menu
     menuController = new MenuController(dropdownMenu);
 
-    task1CircleStorage.fillProperty().bind(Bindings.when(taskController.labTaskCompletedProperty())
-            .then(Color.GREEN)
-            .otherwise(Color.TRANSPARENT));
-    task2CircleStorage.fillProperty().bind(Bindings.when(taskController.storageTaskCompletedProperty())
-            .then(Color.GREEN)
-            .otherwise(Color.TRANSPARENT));
-    task3CircleStorage.fillProperty().bind(Bindings.when(taskController.controlBoxTaskCompletedProperty())
-            .then(Color.GREEN)
-            .otherwise(Color.TRANSPARENT));
-    
-    txtTask1.styleProperty().bind(Bindings.when(taskController.labTaskCompletedProperty())
-            .then("-fx-strikethrough: true; -fx-font-size: 16px;")
-            .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
-    txtTask2.styleProperty().bind(Bindings.when(taskController.storageTaskCompletedProperty())
-            .then("-fx-strikethrough: true; -fx-font-size: 16px;")
-            .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
-    txtTask3.styleProperty().bind(Bindings.when(taskController.controlBoxTaskCompletedProperty())
-            .then("-fx-strikethrough: true; -fx-font-size: 16px;")
-            .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
-    
+    task1CircleStorage
+        .fillProperty()
+        .bind(
+            Bindings.when(taskController.labTaskCompletedProperty())
+                .then(Color.GREEN)
+                .otherwise(Color.TRANSPARENT));
+    task2CircleStorage
+        .fillProperty()
+        .bind(
+            Bindings.when(taskController.storageTaskCompletedProperty())
+                .then(Color.GREEN)
+                .otherwise(Color.TRANSPARENT));
+    task3CircleStorage
+        .fillProperty()
+        .bind(
+            Bindings.when(taskController.controlBoxTaskCompletedProperty())
+                .then(Color.GREEN)
+                .otherwise(Color.TRANSPARENT));
+
+    txtTask1
+        .styleProperty()
+        .bind(
+            Bindings.when(taskController.labTaskCompletedProperty())
+                .then("-fx-strikethrough: true; -fx-font-size: 16px;")
+                .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
+    txtTask2
+        .styleProperty()
+        .bind(
+            Bindings.when(taskController.storageTaskCompletedProperty())
+                .then("-fx-strikethrough: true; -fx-font-size: 16px;")
+                .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
+    txtTask3
+        .styleProperty()
+        .bind(
+            Bindings.when(taskController.controlBoxTaskCompletedProperty())
+                .then("-fx-strikethrough: true; -fx-font-size: 16px;")
+                .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
+
     // Initialise timer
     timer = new TimerController();
     lblTimer.textProperty().bind(timer.messageProperty());
@@ -158,7 +175,7 @@ public class StorageController {
         });
     timer.setOnCancelled(
         e -> {
-        timer.reset();
+          timer.reset();
         });
 
     initialiseTasks();
@@ -306,6 +323,8 @@ public class StorageController {
   private void onClickReturn(ActionEvent event) throws IOException {
     App.audio.playClick();
     timer.cancel();
+    menuOverlay.setVisible(false);
+    menuController.closeMenu();
     App.setUi(AppUi.MAINMENU);
   }
 
@@ -487,7 +506,20 @@ public class StorageController {
 
     // Add timer label and minigame elements to restart manager
     RestartManager.storageLabel = lblTimer;
-    RestartManager.storageElements = new Object[] {background, circuitBox, circuitBoxImg};
+    RestartManager.storageElements =
+        new Object[] {
+          background,
+          circuitBox,
+          circuitBoxImg,
+          circuitGameBg,
+          circuitGameImg,
+          memoryGame,
+          btnStartCircuitGame,
+          text,
+          info,
+          info2,
+          btnSwitchToTimeMachine
+        };
 
     // Initialise door to animation manager
     AnimationManager.imgStorageDoor = imgStorageDoor;

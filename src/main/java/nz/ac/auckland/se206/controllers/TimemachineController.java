@@ -40,7 +40,6 @@ public class TimemachineController {
   public static TimerController timer = new TimerController();
   public static TaskController taskController;
 
-
   /**
    * Function to start the time in the timemachinescene.
    *
@@ -172,26 +171,44 @@ public class TimemachineController {
     menuController = new MenuController(dropdownMenu);
     taskController = new TaskController();
 
-    task1Circle.fillProperty().bind(Bindings.when(taskController.labTaskCompletedProperty())
-            .then(Color.GREEN)
-            .otherwise(Color.TRANSPARENT));
-    task2Circle.fillProperty().bind(Bindings.when(taskController.storageTaskCompletedProperty())
-            .then(Color.GREEN)
-            .otherwise(Color.TRANSPARENT));
-    task3Circle.fillProperty().bind(Bindings.when(taskController.controlBoxTaskCompletedProperty())
-            .then(Color.GREEN)
-            .otherwise(Color.TRANSPARENT));
-    
-    txtTask1.styleProperty().bind(Bindings.when(taskController.labTaskCompletedProperty())
-            .then("-fx-strikethrough: true; -fx-font-size: 16px;")
-            .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
-    txtTask2.styleProperty().bind(Bindings.when(taskController.storageTaskCompletedProperty())
-            .then("-fx-strikethrough: true; -fx-font-size: 16px;")
-            .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
-    txtTask3.styleProperty().bind(Bindings.when(taskController.controlBoxTaskCompletedProperty())
-            .then("-fx-strikethrough: true; -fx-font-size: 16px;")
-            .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
-    
+    task1Circle
+        .fillProperty()
+        .bind(
+            Bindings.when(taskController.labTaskCompletedProperty())
+                .then(Color.GREEN)
+                .otherwise(Color.TRANSPARENT));
+    task2Circle
+        .fillProperty()
+        .bind(
+            Bindings.when(taskController.storageTaskCompletedProperty())
+                .then(Color.GREEN)
+                .otherwise(Color.TRANSPARENT));
+    task3Circle
+        .fillProperty()
+        .bind(
+            Bindings.when(taskController.controlBoxTaskCompletedProperty())
+                .then(Color.GREEN)
+                .otherwise(Color.TRANSPARENT));
+
+    txtTask1
+        .styleProperty()
+        .bind(
+            Bindings.when(taskController.labTaskCompletedProperty())
+                .then("-fx-strikethrough: true; -fx-font-size: 16px;")
+                .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
+    txtTask2
+        .styleProperty()
+        .bind(
+            Bindings.when(taskController.storageTaskCompletedProperty())
+                .then("-fx-strikethrough: true; -fx-font-size: 16px;")
+                .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
+    txtTask3
+        .styleProperty()
+        .bind(
+            Bindings.when(taskController.controlBoxTaskCompletedProperty())
+                .then("-fx-strikethrough: true; -fx-font-size: 16px;")
+                .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
+
     // Initialise timer and bind the lblTimer to the timerController properties.
     timer = new TimerController();
     lblTimer.textProperty().bind(timer.messageProperty());
@@ -201,7 +218,7 @@ public class TimemachineController {
         });
     timer.setOnCancelled(
         e -> {
-        timer.reset();
+          timer.reset();
         });
 
     // Initialise relevant tasks
@@ -336,6 +353,8 @@ public class TimemachineController {
   @FXML
   private void onClickReturn(ActionEvent event) throws IOException {
     App.audio.playClick();
+    menuOverlay.setVisible(false);
+    menuController.closeMenu();
     timer.cancel();
     App.setUi(AppUi.MAINMENU);
   }

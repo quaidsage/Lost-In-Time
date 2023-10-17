@@ -48,7 +48,7 @@ public class LabController {
 
   // Initialise Timer
   public static TimerController timer = new TimerController();
-  
+
   public static TaskController taskController;
 
   /**
@@ -131,27 +131,44 @@ public class LabController {
     menuController = new MenuController(dropdownMenu);
     taskController = new TaskController();
 
-    task1Circle.fillProperty().bind(Bindings.when(taskController.labTaskCompletedProperty())
-            .then(Color.GREEN)
-            .otherwise(Color.TRANSPARENT));    
-    task2Circle.fillProperty().bind(Bindings.when(taskController.storageTaskCompletedProperty())
-            .then(Color.GREEN)
-            .otherwise(Color.TRANSPARENT));    
-    task3Circle.fillProperty().bind(Bindings.when(taskController.controlBoxTaskCompletedProperty())
-            .then(Color.GREEN)
-            .otherwise(Color.TRANSPARENT));
+    task1Circle
+        .fillProperty()
+        .bind(
+            Bindings.when(taskController.labTaskCompletedProperty())
+                .then(Color.GREEN)
+                .otherwise(Color.TRANSPARENT));
+    task2Circle
+        .fillProperty()
+        .bind(
+            Bindings.when(taskController.storageTaskCompletedProperty())
+                .then(Color.GREEN)
+                .otherwise(Color.TRANSPARENT));
+    task3Circle
+        .fillProperty()
+        .bind(
+            Bindings.when(taskController.controlBoxTaskCompletedProperty())
+                .then(Color.GREEN)
+                .otherwise(Color.TRANSPARENT));
 
-    txtTask1.styleProperty().bind(Bindings.when(taskController.labTaskCompletedProperty())
-            .then("-fx-strikethrough: true; -fx-font-size: 16px;")
-            .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
-    txtTask2.styleProperty().bind(Bindings.when(taskController.storageTaskCompletedProperty())
-            .then("-fx-strikethrough: true; -fx-font-size: 16px;")
-            .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
-    txtTask3.styleProperty().bind(Bindings.when(taskController.controlBoxTaskCompletedProperty())
-            .then("-fx-strikethrough: true; -fx-font-size: 16px;")
-            .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
-    
-    
+    txtTask1
+        .styleProperty()
+        .bind(
+            Bindings.when(taskController.labTaskCompletedProperty())
+                .then("-fx-strikethrough: true; -fx-font-size: 16px;")
+                .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
+    txtTask2
+        .styleProperty()
+        .bind(
+            Bindings.when(taskController.storageTaskCompletedProperty())
+                .then("-fx-strikethrough: true; -fx-font-size: 16px;")
+                .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
+    txtTask3
+        .styleProperty()
+        .bind(
+            Bindings.when(taskController.controlBoxTaskCompletedProperty())
+                .then("-fx-strikethrough: true; -fx-font-size: 16px;")
+                .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
+
     // Initialise timer and bind the lblTimer to the timerController properties.
     timer = new TimerController();
     lblTimer.textProperty().bind(timer.messageProperty());
@@ -162,7 +179,7 @@ public class LabController {
         });
     timer.setOnCancelled(
         e -> {
-        timer.reset();
+          timer.reset();
         });
 
     // Create task to run GPT model for intro message
@@ -211,6 +228,8 @@ public class LabController {
   private void onClickReturn(ActionEvent event) throws IOException {
     App.audio.playClick();
     timer.cancel();
+    menuOverlay.setVisible(false);
+    menuController.closeMenu();
     App.setUi(AppUi.MAINMENU);
   }
 
@@ -569,7 +588,7 @@ public class LabController {
     TaskController.completeTask1();
     // Create task to run GPT model for lab complete message
     Task<ChatMessage> labCompleteTask =
-    ChatTaskGenerator.createTask(GptPromptEngineering.getLabComplete());
+        ChatTaskGenerator.createTask(GptPromptEngineering.getLabComplete());
     Thread labCompleteThread = new Thread(labCompleteTask);
     labCompleteThread.setDaemon(true);
     labCompleteThread.start();
