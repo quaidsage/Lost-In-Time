@@ -39,6 +39,7 @@ public class ChatTaskGenerator {
    * @param chatField the text area to get the user message from
    */
   public static void onSendMessage(TextArea chatField) {
+
     // Get user message and update chat with user message
     String userMessage = ChatTaskGenerator.getUserMessage(chatField);
     if (userMessage == null) {

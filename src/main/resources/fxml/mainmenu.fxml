@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.media.MediaView?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" style="-fx-background-color: rgb(48,48,48);" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.MainmenuController">
    <children>
@@ -12,5 +13,6 @@
       <Label layoutX="534.0" layoutY="253.0" style="-fx-font-size: 26.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" text="RESTORE THE FABRIC OF TIME" textAlignment="CENTER" textFill="#6bf9b1">
       </Label>
       <Button fx:id="btnMute" layoutX="14.0" layoutY="690.0" mnemonicParsing="false" onAction="#muteTTS" prefHeight="38.0" prefWidth="220.0" text="Mute TTS (TEMP BUTTON)" />
+      <MediaView fx:id="mediaView" fitHeight="200.0" fitWidth="200.0" opacity="0.0" />
    </children>
 </Pane>

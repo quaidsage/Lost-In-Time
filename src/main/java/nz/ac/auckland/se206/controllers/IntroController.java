@@ -80,6 +80,8 @@ public class IntroController {
    */
   @FXML
   private void onClickSkipIntro(ActionEvent event) {
+    App.audio.playClick();
+
     // Switch to time machine scene
     App.setUi(AppUi.TIMEMACHINE);
 
@@ -98,6 +100,8 @@ public class IntroController {
   /** Function to handle starting interaction with the AI. */
   @FXML
   private void onClickPickDevice(ActionEvent event) {
+    App.audio.playClick();
+
     btnNext.setText("Next");
     setVisiblity(false);
     interact();
@@ -106,6 +110,7 @@ public class IntroController {
   /** Function to handle the next interaction with the AI. */
   @FXML
   private void onClickNext(ActionEvent event) {
+    App.audio.playClick();
     interaction++;
 
     // Hide the "Next" button

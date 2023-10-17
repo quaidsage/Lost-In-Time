@@ -203,6 +203,7 @@ public class TimemachineController {
    */
   @FXML
   private void onClickLab(ActionEvent event) {
+    App.audio.playClick();
     App.setUi(AppUi.LAB);
     AnimationManager.openLabDoor();
     if (!GameState.isLabVisited) {
@@ -220,6 +221,7 @@ public class TimemachineController {
    */
   @FXML
   private void onClickStorage(ActionEvent event) {
+    App.audio.playClick();
     App.setUi(AppUi.STORAGE);
     AnimationManager.openStorageDoor();
     if (!GameState.isStorageVisited) {
@@ -239,6 +241,7 @@ public class TimemachineController {
   private void onClickTimeMachine(ActionEvent event) {
     // Check if game is complete
     if (GameState.isLabResolved && GameState.isStorageResolved && GameState.isControlBoxResolved) {
+      App.audio.playClick();
       App.setUi(AppUi.ENDSCENE);
     }
   }
@@ -252,6 +255,7 @@ public class TimemachineController {
   private void onClickControlBox(ActionEvent event) {
     // Check if other two tasks are complete
     if (GameState.isLabResolved && GameState.isStorageResolved) {
+      App.audio.playClick();
       desktopView.setVisible(true);
     }
   }
@@ -263,6 +267,7 @@ public class TimemachineController {
    */
   @FXML
   private void onClickHackFile(MouseEvent event) {
+    App.audio.playClick();
     // Check if game is complete
     hackGame.setVisible(true);
   }
@@ -274,11 +279,13 @@ public class TimemachineController {
    */
   @FXML
   private void onClickHelp(ActionEvent event) {
+    App.audio.playClick();
     hackInstructions.setVisible(true);
   }
 
   @FXML
   private void onClickHideInstructions(ActionEvent event) {
+    App.audio.playClick();
     hackInstructions.setVisible(false);
   }
 
@@ -290,6 +297,7 @@ public class TimemachineController {
    */
   @FXML
   private void onClickReturn(ActionEvent event) throws IOException {
+    App.audio.playClick();
     App.setUi(AppUi.MAINMENU);
   }
 
@@ -302,12 +310,14 @@ public class TimemachineController {
    */
   @FXML
   private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
+    App.audio.playClick();
     ChatTaskGenerator.onSendMessage(chatField);
   }
 
   // selects the smallest circle that is, the top ring, and makes it glow to show it is selected
   @FXML
   private void selectCircle(MouseEvent event) {
+    App.audio.playClick();
     if (currentCircle == null) {
       currentCircle = getCircle((Circle) event.getPickResult().getIntersectedNode());
       Glow glow = new Glow();
@@ -347,6 +357,7 @@ public class TimemachineController {
   // drops circle on both blank as well as a non blank row appropriately
   @FXML
   private void dropCircle(MouseEvent event) {
+    App.audio.playClick();
     String row = event.getPickResult().getIntersectedNode().getId();
 
     if (row.equals("row1")) {
@@ -423,6 +434,7 @@ public class TimemachineController {
    */
   @FXML
   private void openDropdownMenu(ActionEvent event) {
+    App.audio.playClick();
     // Call the openMenu method in the MenuController to open the dropdown menu.
     menuOverlay.setVisible(true);
     menuController.openMenu();
@@ -435,6 +447,7 @@ public class TimemachineController {
    */
   @FXML
   private void closeDropdownMenu(ActionEvent event) {
+    App.audio.playClick();
     // Call the closeMenu method in the MenuController to close the dropdown menu.
     menuOverlay.setVisible(false);
     menuController.closeMenu();
@@ -447,6 +460,7 @@ public class TimemachineController {
    */
   @FXML
   private void closeDropdownMenuOverlay(MouseEvent event) {
+    App.audio.playClick();
     // Call the closeMenu method in the MenuController to close the dropdown menu.
     menuOverlay.setVisible(false);
     menuController.closeMenu();

@@ -160,6 +160,7 @@ public class LabController {
    */
   @FXML
   private void onClickTimeMachineRoom(ActionEvent event) {
+    App.audio.playClick();
     App.setUi(AppUi.TIMEMACHINE);
   }
 
@@ -170,6 +171,7 @@ public class LabController {
    */
   @FXML
   private void onClickReturn(ActionEvent event) throws IOException {
+    App.audio.playClick();
     App.setUi(AppUi.MAINMENU);
   }
 
@@ -180,6 +182,7 @@ public class LabController {
    */
   @FXML
   private void openDropdownMenu(ActionEvent event) {
+    App.audio.playClick();
     // Call the openMenu method in the MenuController to open the dropdown menu.
     menuOverlay.setVisible(true);
     menuController.openMenu();
@@ -192,6 +195,7 @@ public class LabController {
    */
   @FXML
   private void closeDropdownMenu(ActionEvent event) {
+    App.audio.playClick();
     // Call the closeMenu method in the MenuController to close the dropdown menu.
     menuOverlay.setVisible(false);
     menuController.closeMenu();
@@ -204,6 +208,7 @@ public class LabController {
    */
   @FXML
   private void closeDropdownMenuOverlay(MouseEvent event) {
+    App.audio.playClick();
     // Call the closeMenu method in the MenuController to close the dropdown menu.
     menuOverlay.setVisible(false);
     menuController.closeMenu();
@@ -216,6 +221,7 @@ public class LabController {
    */
   @FXML
   private void onClickChemicals(MouseEvent event) {
+    App.audio.playClick();
     if (GameState.isDifficultyMedium == true) {
       hintsRemaining.setText("Hints Remaining: " + String.valueOf(ChatTaskGenerator.numHints));
     } else if (GameState.isDifficultyEasy == true) {
@@ -360,6 +366,7 @@ public class LabController {
    */
   @FXML
   private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
+    App.audio.playClick();
     ChatTaskGenerator.onSendMessage(chatField);
   }
 
@@ -558,6 +565,7 @@ public class LabController {
    */
   private void chemClicked(int color) {
     if (isChemicalSolution[color]) {
+      App.audio.playClick();
       updateArrows(color);
       isPuzzleComplete();
       isChemicalSolution[color] = false;

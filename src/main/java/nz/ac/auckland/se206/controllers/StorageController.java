@@ -151,6 +151,7 @@ public class StorageController {
    */
   @FXML
   private void onClickPanel(ActionEvent event) {
+    App.audio.playClick();
     if (buttonsDisabled) {
       return; // Ignore clicks while buttons are disabled
     }
@@ -183,6 +184,7 @@ public class StorageController {
    */
   @FXML
   private void onClickStartMemoryGame(ActionEvent event) {
+    App.audio.playClick();
     // Clear pattern and text for new game
     pattern.clear();
     text.setText("Current Streak: ");
@@ -204,13 +206,14 @@ public class StorageController {
    */
   @FXML
   private void onClickTimeMachineRoom(ActionEvent event) {
+    App.audio.playClick();
     App.setUi(AppUi.TIMEMACHINE);
   }
 
   /** Function to handle when the circuit minigame is opened. */
   @FXML
   private void onClickCircuit(MouseEvent event) {
-
+    App.audio.playClick();
     // Hide the circuit box
     background.setVisible(false);
     circuitBox.setVisible(false);
@@ -234,6 +237,7 @@ public class StorageController {
    */
   @FXML
   private void openDropdownMenu(ActionEvent event) {
+    App.audio.playClick();
     // Call the openMenu method in the MenuController to open the dropdown menu.
     menuOverlay.setVisible(true);
     menuController.openMenu();
@@ -246,6 +250,7 @@ public class StorageController {
    */
   @FXML
   private void closeDropdownMenu(ActionEvent event) {
+    App.audio.playClick();
     // Call the closeMenu method in the MenuController to close the dropdown menu.
     menuOverlay.setVisible(false);
     menuController.closeMenu();
@@ -258,6 +263,7 @@ public class StorageController {
    */
   @FXML
   private void closeDropdownMenuOverlay(MouseEvent event) {
+    App.audio.playClick();
     // Call the closeMenu method in the MenuController to close the dropdown menu.
     menuOverlay.setVisible(false);
     menuController.closeMenu();
@@ -271,6 +277,7 @@ public class StorageController {
    */
   @FXML
   private void onClickReturn(ActionEvent event) throws IOException {
+    App.audio.playClick();
     App.setUi(AppUi.MAINMENU);
   }
 
@@ -283,6 +290,7 @@ public class StorageController {
    */
   @FXML
   private void onSendMessage(ActionEvent event) throws ApiProxyException, IOException {
+    App.audio.playClick();
     ChatTaskGenerator.onSendMessage(chatField);
   }
 

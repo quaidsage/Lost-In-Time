@@ -19,6 +19,7 @@ public class TimeoutController {
    */
   @FXML
   private void onClickBackToMenu() throws IOException {
+    App.audio.playClick();
     App.setUi(AppUi.MAINMENU);
   }
 }
