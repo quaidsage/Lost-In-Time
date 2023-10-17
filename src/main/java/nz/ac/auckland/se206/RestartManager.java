@@ -7,8 +7,10 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import nz.ac.auckland.se206.SceneManager.AppUi;
 import nz.ac.auckland.se206.controllers.DifficultyController;
 import nz.ac.auckland.se206.controllers.IntroController;
@@ -187,6 +189,21 @@ public class RestartManager {
     ((ImageView) storageElements[0]).setVisible(true);
     ((Rectangle) storageElements[1]).setVisible(true);
     ((ImageView) storageElements[2]).setVisible(true);
+
+    // Disable visibility of other elements
+    ((Rectangle) storageElements[3]).setVisible(false);
+    ((ImageView) storageElements[4]).setVisible(false);
+    ((VBox) storageElements[5]).setVisible(false);
+    ((Button) storageElements[6]).setVisible(false);
+    ((Text) storageElements[7]).setVisible(false);
+    ((Text) storageElements[8]).setVisible(false);
+    ((Text) storageElements[9]).setVisible(false);
+
+    // Re enable switch to time machine button
+    ((Button) storageElements[10]).setDisable(false);
+
+    // Reset text
+    ((Text) storageElements[7]).setText("Current Streak: ");
   }
 
   /** TODO JAVADOCS */

@@ -364,6 +364,9 @@ public class TimemachineController {
   private void onClickReturn(ActionEvent event) throws IOException {
     // Play audio.
     App.audio.playClick();
+    menuOverlay.setVisible(false);
+    menuController.closeMenu();
+
     // Cancel timer and reset UI to the mainmenu.
     timer.cancel();
     App.setUi(AppUi.MAINMENU);

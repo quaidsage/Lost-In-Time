@@ -324,6 +324,8 @@ public class StorageController {
   private void onClickReturn(ActionEvent event) throws IOException {
     App.audio.playClick();
     timer.cancel();
+    menuOverlay.setVisible(false);
+    menuController.closeMenu();
     App.setUi(AppUi.MAINMENU);
   }
 
@@ -507,7 +509,20 @@ public class StorageController {
 
     // Add timer label and minigame elements to restart manager
     RestartManager.storageLabel = lblTimer;
-    RestartManager.storageElements = new Object[] {background, circuitBox, circuitBoxImg};
+    RestartManager.storageElements =
+        new Object[] {
+          background,
+          circuitBox,
+          circuitBoxImg,
+          circuitGameBg,
+          circuitGameImg,
+          memoryGame,
+          btnStartCircuitGame,
+          text,
+          info,
+          info2,
+          btnSwitchToTimeMachine
+        };
 
     // Initialise door to animation manager
     AnimationManager.imgStorageDoor = imgStorageDoor;

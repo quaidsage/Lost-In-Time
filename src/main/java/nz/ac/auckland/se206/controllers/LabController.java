@@ -254,6 +254,8 @@ public class LabController {
   private void onClickReturn(ActionEvent event) throws IOException {
     App.audio.playClick();
     timer.cancel();
+    menuOverlay.setVisible(false);
+    menuController.closeMenu();
     App.setUi(AppUi.MAINMENU);
   }
 
