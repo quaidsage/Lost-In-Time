@@ -29,7 +29,7 @@
             <Image url="@../images/BaseUI.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="blurredImage" fitHeight="774.0" fitWidth="1417.0" layoutX="-9.0" layoutY="-12.0" opacity="0.0" pickOnBounds="true" visible="false">
+      <ImageView fx:id="blurredImage" fitHeight="593.0" fitWidth="960.0" layoutX="25.0" layoutY="59.0" pickOnBounds="true">
          <image>
             <Image url="@../images/blurred_lab.jpg" />
          </image>
@@ -81,13 +81,13 @@
             </RadialGradient>
          </fill>
       </Polyline>
-      <Rectangle fx:id="chemicalCyan" arcHeight="5.0" arcWidth="5.0" fill="#6ed8ff" height="237.0" layoutX="380.0" layoutY="255.0" onMouseClicked="#onClickChemical" onMouseEntered="#onMouseEnterChemical" onMouseExited="#onMouseExitChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="65.0" />
-      <Rectangle fx:id="chemicalBlue" arcHeight="5.0" arcWidth="5.0" fill="#484bff" height="238.0" layoutX="180.0" layoutY="255.0" onMouseClicked="#onClickChemical" onMouseEntered="#onMouseEnterChemical" onMouseExited="#onMouseExitChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="67.0" />
-      <Rectangle fx:id="chemicalPurple" arcHeight="5.0" arcWidth="5.0" fill="#ac4aff" height="237.0" layoutX="280.0" layoutY="255.0" onMouseClicked="#onClickChemical" onMouseEntered="#onMouseEnterChemical" onMouseExited="#onMouseExitChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="72.0" />
-      <Rectangle fx:id="chemicalYellow" arcHeight="5.0" arcWidth="5.0" fill="#e8ff64" height="238.0" layoutX="580.0" layoutY="255.0" onMouseClicked="#onClickChemical" onMouseEntered="#onMouseEnterChemical" onMouseExited="#onMouseExitChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="72.0" />
-      <Rectangle fx:id="chemicalGreen" arcHeight="5.0" arcWidth="5.0" fill="#6eff66" height="241.0" layoutX="480.0" layoutY="255.0" onMouseClicked="#onClickChemical" onMouseEntered="#onMouseEnterChemical" onMouseExited="#onMouseExitChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="67.0" />
-      <Rectangle fx:id="chemicalOrange" arcHeight="5.0" arcWidth="5.0" fill="#ff6969" height="236.0" layoutX="680.0" layoutY="255.0" onMouseClicked="#onClickChemical" onMouseEntered="#onMouseEnterChemical" onMouseExited="#onMouseExitChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="67.0" />
-      <Rectangle fx:id="chemicalRed" arcHeight="5.0" arcWidth="5.0" fill="#ff7e38" height="237.0" layoutX="780.0" layoutY="255.0" onMouseClicked="#onClickChemical" onMouseEntered="#onMouseEnterChemical" onMouseExited="#onMouseExitChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="72.0" />
+      <Rectangle fx:id="chemicalCyan" arcHeight="5.0" arcWidth="5.0" fill="#6ed8ff" height="237.0" layoutX="375.0" layoutY="235.0" onMouseClicked="#onClickChemical" onMouseEntered="#onMouseEnterChemical" onMouseExited="#onMouseExitChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="65.0" />
+      <Rectangle fx:id="chemicalBlue" arcHeight="5.0" arcWidth="5.0" fill="#484bff" height="238.0" layoutX="175.0" layoutY="240.0" onMouseClicked="#onClickChemical" onMouseEntered="#onMouseEnterChemical" onMouseExited="#onMouseExitChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="67.0" />
+      <Rectangle fx:id="chemicalPurple" arcHeight="5.0" arcWidth="5.0" fill="#ac4aff" height="237.0" layoutX="270.0" layoutY="235.0" onMouseClicked="#onClickChemical" onMouseEntered="#onMouseEnterChemical" onMouseExited="#onMouseExitChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="72.0" />
+      <Rectangle fx:id="chemicalYellow" arcHeight="5.0" arcWidth="5.0" fill="#e8ff64" height="238.0" layoutX="565.0" layoutY="235.0" onMouseClicked="#onClickChemical" onMouseEntered="#onMouseEnterChemical" onMouseExited="#onMouseExitChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="72.0" />
+      <Rectangle fx:id="chemicalGreen" arcHeight="5.0" arcWidth="5.0" fill="#6eff66" height="241.0" layoutX="470.0" layoutY="235.0" onMouseClicked="#onClickChemical" onMouseEntered="#onMouseEnterChemical" onMouseExited="#onMouseExitChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="67.0" />
+      <Rectangle fx:id="chemicalOrange" arcHeight="5.0" arcWidth="5.0" fill="#ff6969" height="236.0" layoutX="665.0" layoutY="235.0" onMouseClicked="#onClickChemical" onMouseEntered="#onMouseEnterChemical" onMouseExited="#onMouseExitChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="67.0" />
+      <Rectangle fx:id="chemicalRed" arcHeight="5.0" arcWidth="5.0" fill="#ff7e38" height="237.0" layoutX="760.0" layoutY="235.0" onMouseClicked="#onClickChemical" onMouseEntered="#onMouseEnterChemical" onMouseExited="#onMouseExitChemical" opacity="0.0" stroke="#70d9ff00" strokeType="INSIDE" visible="false" width="72.0" />
       <Rectangle fx:id="transitionScene" arcHeight="5.0" arcWidth="5.0" height="775.0" layoutX="-14.0" layoutY="-11.0" opacity="0.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="1427.0" />
        <Button id="btnSkip" fx:id="btnOpenDropdownMenu" layoutX="25.0" layoutY="9.0" mnemonicParsing="false" onAction="#openDropdownMenu" style="-fx-font-size: 17.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="≡">
 </Button>
@@ -107,10 +107,17 @@
       </Pane>
       <Pane layoutX="1199.0" layoutY="9.0" prefHeight="308.0" prefWidth="177.0">
          <children>
-            <ImageView fx:id="imgPaper" fitHeight="142.0" fitWidth="143.0" layoutX="14.0" layoutY="-20.0" pickOnBounds="true">
+            <ImageView fx:id="imgPaper" fitHeight="142.0" fitWidth="143.0" layoutX="14.0" layoutY="-30.0" pickOnBounds="true">
                <image>
                   <Image url="@../images/paper.png" />
                </image>
+               <effect>
+                  <DropShadow height="48.84" radius="15.492500000000001" width="15.13">
+                     <color>
+                        <Color opacity="0.6221374273300171" />
+                     </color>
+                  </DropShadow>
+               </effect>
             </ImageView>
             <TextArea id="txtRecipe" fx:id="txtRecipe" layoutX="18.0" layoutY="-40.0" prefHeight="115.0" prefWidth="134.0" style="-fx-font-size: 15; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" text="Recipe" wrapText="true" />
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8ebade" height="186.0" layoutX="14.0" layoutY="-56.0" stroke="TRANSPARENT" strokeType="INSIDE" width="143.0">

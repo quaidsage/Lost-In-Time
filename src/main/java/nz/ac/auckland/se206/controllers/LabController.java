@@ -426,15 +426,15 @@ public class LabController {
           @Override
           protected Void call() throws Exception {
             // Initialise white arrows
-            int posy = 170;
+            int posy = 150;
             for (int i = 0; i < 14; i++) { // 0-6 are up arrows, 8-13 are down arrows
               ImageView arrow = new ImageView("file:src/main/resources/images/arrow_white.png");
 
               // Set properties of arrow
-              int posx = 180 + (110 * i);
+              int posx = 193 + (98 * i);
               if (i > 6) { // >6 are arrows along bottom row
-                posx = 180 + (110 * (i - 7));
-                posy = 555;
+                posx = 193 + (98 * (i - 7));
+                posy = 530;
                 arrow.rotateProperty().setValue(180.0);
               }
               arrow.setOpacity(0);
@@ -453,15 +453,15 @@ public class LabController {
             }
 
             // Initialise Green arrows
-            posy = 195;
+            posy = 175;
             for (int i = 0; i < 14; i++) { // 0-6 are up arrows, 7-13 are down arrows
               ImageView arrow = new ImageView("file:src/main/resources/images/arrow_green.png");
 
               // Set properties
-              int posx = 180 + (110 * i);
+              int posx = 193 + (98 * i);
               if (i > 6) {
-                posx = 100 + (105 * (i - 6));
-                posy = 530;
+                posx = 193 + (98 * (i - 7));
+                posy = 515;
                 arrow.rotateProperty().setValue(180.0);
               }
               arrow.setOpacity(0);
