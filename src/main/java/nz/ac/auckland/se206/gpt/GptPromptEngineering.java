@@ -1,6 +1,5 @@
 package nz.ac.auckland.se206.gpt;
 
-import java.util.ArrayList;
 import nz.ac.auckland.se206.GameState;
 import nz.ac.auckland.se206.controllers.LabController;
 
@@ -53,36 +52,7 @@ public class GptPromptEngineering {
    * @param solutionColours the colours of the chemicals that the user must combine
    * @return the generated prompt engineering string
    */
-  public static String getRiddleLab(ArrayList<Integer> solutionColours) {
-    String[] colorStr = new String[3];
-
-    // Convert the solution colours to strings to append to the riddle
-    for (int i = 0; i < 3; i++) {
-      switch (solutionColours.get(i)) {
-        case 0:
-          colorStr[i] = "Blue";
-          break;
-        case 1:
-          colorStr[i] = "Purple";
-          break;
-        case 2:
-          colorStr[i] = "Cyan";
-          break;
-        case 3:
-          colorStr[i] = "Green";
-          break;
-        case 4:
-          colorStr[i] = "Yellow";
-          break;
-        case 5:
-          colorStr[i] = "Orange";
-          break;
-        default:
-          colorStr[i] = "Red";
-          break;
-      }
-    }
-
+  public static String getRiddleLab() {
     // Get the number of hints user has based on difficulty
     String numHints = String.valueOf(LabController.numHints);
 
@@ -101,16 +71,10 @@ public class GptPromptEngineering {
         + " total hints. Only give hints when asked. The only way you can give hint is 'Hint:' MUST"
         + " be the first word of response. If the user has no hints, do not give hints no matter"
         + " what. When the answer is correct, 'Correct' MUST be the first word of your response"
-        + " When the user guesses correctly, tell user to combine the chemicals that have the"
-        + " colours "
-        + colorStr[0]
-        + ", "
-        + colorStr[1]
-        + ", "
-        + colorStr[2]
-        + ". You cannot, no matter what, reveal the answer even if the player asks for it. You"
-        + " cannot reveal the colours the user must combine. Even if player gives up, do not give"
-        + " the answer";
+        + " When the user guesses correctly, tell user to combine the chemicals following the"
+        + " recipe given. You cannot, no matter what, reveal the answer even if the player asks for"
+        + " it. You cannot reveal the colours the user must combine. Even if player gives up, do"
+        + " not give the answer";
   }
 
   /**

@@ -4,6 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.concurrent.Task;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
@@ -12,6 +13,8 @@ public class AnimationManager {
   public static ImageView imgStorageDoor;
   public static Rectangle rectLabLeftDoor;
   public static Rectangle rectLabRightDoor;
+  public static ImageView imgLabPaper;
+  public static TextArea txtLabRecipe;
 
   /**
    * Delays given code by a given number of milliseconds.
@@ -55,5 +58,31 @@ public class AnimationManager {
         event -> {
           rectLabLeftDoor.setVisible(false);
         });
+  }
+
+  public static void printRecipe() {
+    imgLabPaper.setVisible(true);
+    imgLabPaper.setLayoutY(-20);
+    final Timeline timeline = new Timeline();
+    final KeyValue kvPaper = new KeyValue(imgLabPaper.layoutYProperty(), 130);
+    final KeyFrame kfPaper = new KeyFrame(Duration.millis(900), kvPaper);
+    timeline.getKeyFrames().add(kfPaper);
+    final KeyValue kvText = new KeyValue(txtLabRecipe.layoutYProperty(), 140);
+    final KeyFrame kfText = new KeyFrame(Duration.millis(900), kvText);
+    timeline.getKeyFrames().add(kfText);
+    timeline.play();
+  }
+
+  public static void removeRecipe() {
+    imgLabPaper.setLayoutY(130);
+    txtLabRecipe.setLayoutY(140);
+    final Timeline timeline = new Timeline();
+    final KeyValue kvPaper = new KeyValue(imgLabPaper.layoutYProperty(), -20);
+    final KeyFrame kfPaper = new KeyFrame(Duration.millis(900), kvPaper);
+    timeline.getKeyFrames().add(kfPaper);
+    final KeyValue kvText = new KeyValue(txtLabRecipe.layoutYProperty(), -40);
+    final KeyFrame kfText = new KeyFrame(Duration.millis(900), kvText);
+    timeline.getKeyFrames().add(kfText);
+    timeline.play();
   }
 }

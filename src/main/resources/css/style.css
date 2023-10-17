@@ -116,3 +116,24 @@
     cursor: hand;
     -fx-cursor: hand;
 }
+
+#txtRecipe {
+    background-color: #FFF2D6;
+    color: rgb(28, 28, 28);
+    -fx-background-color: #FFF2D6;
+    -fx-text-fill: rgb(28, 28, 28);
+}
+
+#txtRecipe .content {
+    background-color: #FFF2D6;
+    color: rgb(28, 28, 28);
+    -fx-background-color: #FFF2D6;
+    -fx-text-fill: rgb(28, 28, 28);
+}
+
+#txtRecipe:focused .content {
+    background-color: #FFF2D6;
+    color: rgb(28, 28, 28);
+    -fx-background-color: #FFF2D6;
+    -fx-text-fill: rgb(28, 28, 28);
+}

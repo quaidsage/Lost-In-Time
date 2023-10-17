@@ -103,7 +103,31 @@
             <Text fx:id="txtTask3" fill="#6bf9b1" layoutX="60.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Use the time machine to escape." wrappingWidth="160" />
          </children>
       </Pane>
-      <Pane fx:id="menuOverlay" prefHeight="750" prefWidth="1174" style="-fx-background-color: rgb(28,28,28);" visible="false" translateX="266" translateY="0" opacity="0" onMouseClicked="#closeDropdownMenuOverlay">
+      <Pane fx:id="menuOverlay" onMouseClicked="#closeDropdownMenuOverlay" opacity="0" prefHeight="750" prefWidth="1174" style="-fx-background-color: rgb(28,28,28);" translateX="266" translateY="0" visible="false">
+      </Pane>
+      <Pane layoutX="1199.0" layoutY="9.0" prefHeight="308.0" prefWidth="177.0">
+         <children>
+            <ImageView fx:id="imgPaper" fitHeight="142.0" fitWidth="143.0" layoutX="14.0" layoutY="-20.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../images/paper.png" />
+               </image>
+            </ImageView>
+            <TextArea id="txtRecipe" fx:id="txtRecipe" layoutX="18.0" layoutY="-40.0" prefHeight="115.0" prefWidth="134.0" style="-fx-font-size: 15; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" text="Recipe" wrapText="true" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#8ebade" height="186.0" layoutX="14.0" layoutY="-56.0" stroke="TRANSPARENT" strokeType="INSIDE" width="143.0">
+               <effect>
+                  <DropShadow height="255.0" radius="63.25" width="0.0">
+                     <color>
+                        <Color green="0.19736842811107635" blue="0.11184210330247879" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Rectangle>
+            <ImageView fitHeight="150.0" fitWidth="177.0" layoutX="-1.0" layoutY="-10.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/device_printer.png" />
+               </image>
+            </ImageView>
+         </children>
       </Pane>
    </children>
 </Pane>

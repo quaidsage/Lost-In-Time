@@ -81,6 +81,7 @@ public class LabController {
   @FXML private TextArea chatArea;
   @FXML private TextArea chatField;
   @FXML private ImageView imgScientistThinking;
+  @FXML private ImageView imgPaper;
   @FXML private Button btnMenu;
   @FXML private Polyline chemicalGeneral;
   @FXML private Rectangle chemicalCyan;
@@ -100,6 +101,7 @@ public class LabController {
   @FXML private Button btnCloseDropdownMenu;
   @FXML private Button btnOpenDropdownMenu;
   @FXML private Text txtTaskList;
+  @FXML private TextArea txtRecipe;
 
   private ArrayList<ImageView> arrowCollection = new ArrayList<ImageView>();
   private MenuController menuController;
@@ -234,8 +236,7 @@ public class LabController {
     btnSwitchToTimeMachine.setDisable(true);
 
     // Create task to run GPT model for riddle message
-    labRiddleTask =
-        ChatTaskGenerator.createTask(GptPromptEngineering.getRiddleLab(solutionColours));
+    labRiddleTask = ChatTaskGenerator.createTask(GptPromptEngineering.getRiddleLab());
     Thread labRiddleThread = new Thread(labRiddleTask);
     labRiddleThread.setDaemon(true);
     labRiddleThread.start();
@@ -392,6 +393,10 @@ public class LabController {
     AnimationManager.rectLabLeftDoor = rectLeftDoor;
     AnimationManager.rectLabRightDoor = rectRightDoor;
     rectRightDoor.visibleProperty().bind(rectLeftDoor.visibleProperty());
+
+    // Add printing animation
+    AnimationManager.imgLabPaper = imgPaper;
+    AnimationManager.txtLabRecipe = txtRecipe;
   }
 
   /**
@@ -423,6 +428,7 @@ public class LabController {
             enableChemicals(true);
             blurredImage.setVisible(true);
             fadeTransition();
+            AnimationManager.printRecipe();
 
             createAnimateTask();
             // End the task
@@ -512,6 +518,9 @@ public class LabController {
     Thread initLabThread = new Thread(initLabTask);
     initLabThread.setDaemon(true);
     initLabThread.start();
+
+    // Initialise recipe text
+    txtRecipe.setText("Recipe:\n" + convertRecipe());
   }
 
   /** Increment number of solutions added and check if puzzle is complete. */
@@ -519,6 +528,7 @@ public class LabController {
     numChemicalsAdded++;
     if (numChemicalsAdded == 3) {
       puzzleComplete();
+      AnimationManager.removeRecipe();
       return true;
     } else {
       return false;
@@ -770,5 +780,39 @@ public class LabController {
     chemicalGreen.setVisible(visibility);
     chemicalOrange.setVisible(visibility);
     chemicalGeneral.setVisible(false);
+  }
+
+  /** TODO JAVADOCS */
+  public String convertRecipe() {
+    String[] colorStr = new String[3];
+
+    // Convert the solution colours to strings to append to the riddle
+    for (int i = 0; i < 3; i++) {
+      switch (solutionColours.get(i)) {
+        case 0:
+          colorStr[i] = "Blue";
+          break;
+        case 1:
+          colorStr[i] = "Purple";
+          break;
+        case 2:
+          colorStr[i] = "Cyan";
+          break;
+        case 3:
+          colorStr[i] = "Green";
+          break;
+        case 4:
+          colorStr[i] = "Yellow";
+          break;
+        case 5:
+          colorStr[i] = "Orange";
+          break;
+        default:
+          colorStr[i] = "Red";
+          break;
+      }
+    }
+
+    return "1. " + colorStr[0] + "\n2. " + colorStr[1] + "\n3. " + colorStr[2];
   }
 }
