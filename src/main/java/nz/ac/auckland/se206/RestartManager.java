@@ -95,6 +95,8 @@ public class RestartManager {
 
   /** TODO JAVADOCS */
   private static void restartTimemachineScene() {
+    GameState.isHackOpened = false;
+
     // Initialise timer and bind the lblTimer to the timerController properties.
     TimemachineController.timer = new TimerController();
     timemachineLabel.textProperty().bind(TimemachineController.timer.messageProperty());

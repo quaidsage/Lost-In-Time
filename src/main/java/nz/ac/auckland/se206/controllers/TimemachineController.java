@@ -321,6 +321,19 @@ public class TimemachineController {
     // Check if other two tasks are complete
     if (GameState.isLabResolved && GameState.isStorageResolved) {
       App.audio.playClick();
+      if (!GameState.isHackOpened) {
+        // Get AI response for completing task
+        Task<ChatMessage> hackTaskStart =
+            ChatTaskGenerator.createTask(GptPromptEngineering.getStartHack());
+        hackTaskStart.setOnSucceeded(
+            e -> {
+              ChatTaskGenerator.updateChat("\n\n-> ", hackTaskStart.getValue());
+            });
+        Thread hackTaskStartThread = new Thread(hackTaskStart);
+        hackTaskStartThread.setDaemon(true);
+        hackTaskStartThread.start();
+        GameState.isHackOpened = true;
+      }
       desktopView.setVisible(true);
     }
   }
@@ -437,6 +450,9 @@ public class TimemachineController {
         e -> {
           ChatTaskGenerator.updateChat("\n\n-> ", hackTaskComplete.getValue());
         });
+    Thread hackTaskStartThread = new Thread(hackTaskComplete);
+    hackTaskStartThread.setDaemon(true);
+    hackTaskStartThread.start();
   }
 
   /**

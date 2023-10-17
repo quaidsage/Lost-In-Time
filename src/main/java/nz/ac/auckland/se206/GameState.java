@@ -30,6 +30,9 @@ public class GameState {
   /** Indicates whether the user has visited the storage room. */
   public static boolean isStorageVisited = false;
 
+  /** TODO Comment */
+  public static boolean isHackOpened = false;
+
   /** Current text to speech for game. */
   public static TextToSpeech txtToSpeech;
 

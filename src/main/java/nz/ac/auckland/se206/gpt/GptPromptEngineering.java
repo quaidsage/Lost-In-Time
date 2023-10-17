@@ -93,6 +93,13 @@ public class GptPromptEngineering {
   }
 
   /** TODO JAVADOCS */
+  public static String getStartHack() {
+    return "You are the digital conciousness of a mad scientist helping the user. You have already"
+        + " introduced yourself. In one or two short sentences, Tell the user to hack into the time"
+        + " machine by solving the encryption in the 'hack.exe' file. ";
+  }
+
+  /** TODO JAVADOCS */
   public static String getHackComplete() {
     return "You are the digital conciousness of a mad scientist helping the user. You have already"
         + " introduced yourself. Tell the user to interact with the time machine to return"
