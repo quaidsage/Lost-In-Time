@@ -57,8 +57,8 @@ public class LabController {
    * @param minutes the number of minutes to set the timer to.
    */
   public static void labStartTimer(int minutes) {
-    timer.setMinutes(minutes);
-    timer.start();
+    // timer.setMinutes(minutes);
+    // timer.start();
   }
 
   /**
@@ -160,6 +160,10 @@ public class LabController {
           App.setUi(AppUi.TIMEOUT);
           timer.reset();
         });
+    timer.setOnCancelled(
+        e -> {
+        timer.reset();
+        });
 
     // Create task to run GPT model for intro message
     labIntroTask = ChatTaskGenerator.createTask(GptPromptEngineering.getLabIntro());
@@ -203,6 +207,7 @@ public class LabController {
    */
   @FXML
   private void onClickReturn(ActionEvent event) throws IOException {
+    timer.cancel();
     App.setUi(AppUi.MAINMENU);
   }
 

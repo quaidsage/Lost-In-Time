@@ -74,8 +74,6 @@ public class TimemachineController {
     // Start timer. Change 'minutes' variable to change the length of the game
     lblTimer.setVisible(true);
     timemachineStartTimer(IntroController.minutes);
-    LabController.labStartTimer(IntroController.minutes);
-    StorageController.storageStartTimer(IntroController.minutes);
   }
 
   /** Function to create an animation of the lights turning on. */
@@ -199,6 +197,10 @@ public class TimemachineController {
         e -> {
           lblTimer.setText("0:00");
         });
+    timer.setOnCancelled(
+        e -> {
+        timer.reset();
+        });
 
     // Initialise relevant tasks
     initialiseTasks();
@@ -271,6 +273,7 @@ public class TimemachineController {
   private void onClickTimeMachine(ActionEvent event) {
     // Check if game is complete
     if (GameState.isLabResolved && GameState.isStorageResolved && GameState.isControlBoxResolved) {
+      timer.cancel();
       App.setUi(AppUi.ENDSCENE);
     }
   }
@@ -322,6 +325,7 @@ public class TimemachineController {
    */
   @FXML
   private void onClickReturn(ActionEvent event) throws IOException {
+    timer.cancel();
     App.setUi(AppUi.MAINMENU);
   }
 
