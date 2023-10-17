@@ -37,7 +37,7 @@ public class AnimationManager {
     imgStorageDoor.setLayoutX(11);
     final Timeline timeline = new Timeline();
     final KeyValue kv = new KeyValue(imgStorageDoor.layoutXProperty(), -1200);
-    final KeyFrame kf = new KeyFrame(Duration.millis(400), kv);
+    final KeyFrame kf = new KeyFrame(Duration.millis(500), kv);
     timeline.getKeyFrames().add(kf);
     delay(
         300,
