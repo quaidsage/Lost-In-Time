@@ -22,6 +22,7 @@ import nz.ac.auckland.se206.gpt.ChatTaskGenerator;
 import nz.ac.auckland.se206.gpt.GptPromptEngineering;
 import nz.ac.auckland.se206.gpt.openai.ChatCompletionRequest;
 
+/** Class to restart components in every scene in the game. */
 public class RestartManager {
 
   public static CheckBox[] difficultyCheckBoxes;
@@ -35,7 +36,7 @@ public class RestartManager {
   public static Label storageLabel;
   public static Object[] storageElements;
 
-  /** TODO JAVADOCS */
+  /** Function to restart certain parts of the game by calling restart methods. */
   public static void restartGame() {
     // Reset various game states and settings when the game starts.
     ChatTaskGenerator.numHints = 5;
@@ -53,7 +54,7 @@ public class RestartManager {
     restartStorageScene();
   }
 
-  /** TODO JAVADOCS */
+  /** Function to restart the difficulty menu scene upon playing the game again. */
   private static void restartDifficultyScene() {
     GameState.isDifficultyEasy = false;
     GameState.isDifficultyMedium = false;
@@ -69,7 +70,7 @@ public class RestartManager {
     }
   }
 
-  /** TODO JAVADOCS */
+  /** Function to restart the introduction scene upon playing the game again. */
   private static void restartIntroScene() {
     IntroController.interaction = 0;
     IntroController.isContextLoaded = false;
@@ -93,7 +94,7 @@ public class RestartManager {
     ((TextArea) introElements[5]).setText("");
   }
 
-  /** TODO JAVADOCS */
+  /** Function to restart the time machine scene upon playing the game again. */
   private static void restartTimemachineScene() {
     // Initialise timer and bind the lblTimer to the timerController properties.
     TimemachineController.timer = new TimerController();
@@ -107,7 +108,7 @@ public class RestartManager {
     TimemachineController.createStartTask(timemachineRect, timemachineLabel);
   }
 
-  /** TODO JAVADOCS */
+  /** Function to restart the lav scene upon playing the game again. */
   private static void restartLabScene() {
     GameState.isLabResolved = false;
     GameState.isLabVisited = false;
@@ -159,7 +160,7 @@ public class RestartManager {
     labTxtRecipe.setText("Recipe:\n" + LabController.convertRecipe(solutionColours));
   }
 
-  /** TODO JAVADOCS */
+  /** Function to restart the storage scene upon playing the game again. */
   private static void restartStorageScene() {
     // Reset game states
     GameState.isStorageResolved = false;
@@ -206,7 +207,7 @@ public class RestartManager {
     ((Text) storageElements[7]).setText("Current Streak: ");
   }
 
-  /** TODO JAVADOCS */
+  /** Function to clear chat areas for all scenes in the game. */
   private static void clearGameChatAreas() {
     for (int i = 0; i < ChatTaskGenerator.chatAreas.size(); i++) {
       ChatTaskGenerator.chatAreas.get(i).setText("");

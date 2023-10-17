@@ -115,6 +115,12 @@ public class TimemachineController {
         });
   }
 
+  /**
+   * Creates the task for animations of starting the round.
+   *
+   * @param rectLight rectangle to flash on and off.
+   * @param lblTimer timer to be set and started.
+   */
   public static void createStartTask(Rectangle rectLight, Label lblTimer) {
     // Create task to start round
     startTask =
