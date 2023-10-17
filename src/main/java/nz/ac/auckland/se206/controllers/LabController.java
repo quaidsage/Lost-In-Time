@@ -433,7 +433,7 @@ public class LabController {
               // Set properties of arrow
               int posx = 180 + (110 * i);
               if (i > 6) { // >6 are arrows along bottom row
-                posx = posx + (105 * (i - 6));
+                posx = 180 + (110 * (i - 7));
                 posy = 555;
                 arrow.rotateProperty().setValue(180.0);
               }
