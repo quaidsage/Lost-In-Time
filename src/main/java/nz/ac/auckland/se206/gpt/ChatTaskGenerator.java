@@ -87,6 +87,12 @@ public class ChatTaskGenerator {
     // Append to main game chat completion request
     GameState.chatCompletionRequest.addMessage(msg);
 
+    if (msg.getContent().equals(GptPromptEngineering.getRiddleLab())) {
+      // Append instructions to GPT request
+      GameState.chatCompletionRequest.addMessage(
+          "assistant", GptPromptEngineering.getRiddleInstructions());
+    }
+
     // Enable thinking animation
     setThinkingAnimation(true);
 
