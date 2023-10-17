@@ -29,13 +29,14 @@ public class RestartManager {
   public static Label labLabel;
   public static Polyline labChemicals;
   public static ArrayList<ImageView> labArrowCollection;
+  public static TextArea labTxtRecipe;
   public static Label storageLabel;
   public static Object[] storageElements;
 
   /** TODO JAVADOCS */
   public static void restartGame() {
     // Reset various game states and settings when the game starts.
-    LabController.numHints = 5;
+    ChatTaskGenerator.numHints = 5;
 
     // Initialise AI chat parameters
     GameState.chatCompletionRequest =
@@ -150,6 +151,10 @@ public class RestartManager {
     }
     LabController.isChemicalSolution = isChemicalSolution;
     LabController.solutionColours = solutionColours;
+
+    // Set new recipe
+    AnimationManager.removeRecipe();
+    labTxtRecipe.setText("Recipe:\n" + LabController.convertRecipe(solutionColours));
   }
 
   /** TODO JAVADOCS */

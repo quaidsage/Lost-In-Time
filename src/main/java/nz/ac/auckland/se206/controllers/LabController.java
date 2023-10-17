@@ -22,6 +22,7 @@ import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import nz.ac.auckland.se206.AnimationManager;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.Delay;
 import nz.ac.auckland.se206.GameState;
@@ -34,7 +35,6 @@ import nz.ac.auckland.se206.gpt.openai.ApiProxyException;
 
 /** A controller class for the lab scene. */
 public class LabController {
-  public static int numHints = 5;
   public static ArrayList<Integer> solutionColours;
   public static int numChemicalsAdded = 0;
 
@@ -42,7 +42,6 @@ public class LabController {
   public static Task<ChatMessage> labIntroTask;
   public static Task<ChatMessage> labRiddleTask;
   public static Task<Void> animateTask;
-  public static Task<Void> updateHintTask;
 
   // Fields related to chemical solutions
   public static Boolean[] isChemicalSolution = {false, false, false, false, false, false, false};
@@ -85,6 +84,7 @@ public class LabController {
   @FXML private TextArea chatArea;
   @FXML private TextArea chatField;
   @FXML private ImageView imgScientistThinking;
+  @FXML private ImageView imgPaper;
   @FXML private Button btnMenu;
   @FXML private Polyline chemicalGeneral;
   @FXML private Rectangle chemicalCyan;
@@ -95,9 +95,10 @@ public class LabController {
   @FXML private Rectangle chemicalGreen;
   @FXML private Rectangle chemicalRed;
   @FXML private Rectangle transitionScene;
+  @FXML private Rectangle rectLeftDoor;
+  @FXML private Rectangle rectRightDoor;
   @FXML private ImageView baseImage;
   @FXML private ImageView blurredImage;
-  @FXML private ImageView typingBubble;
   @FXML private Pane dropdownMenu;
   @FXML private Pane menuOverlay;
   @FXML private Button btnCloseDropdownMenu;
@@ -109,8 +110,7 @@ public class LabController {
   @FXML private Text txtTask1;
   @FXML private Text txtTask2;
   @FXML private Text txtTask3;
-
-
+  @FXML private TextArea txtRecipe;
 
   private ArrayList<ImageView> arrowCollection = new ArrayList<ImageView>();
   private MenuController menuController;
@@ -205,41 +205,42 @@ public class LabController {
   private void onClickReturn(ActionEvent event) throws IOException {
     App.setUi(AppUi.MAINMENU);
   }
-/**
-     * Opens the dropdown menu in response to an action event.
-     *
-     * @param event The action event that triggered this method.
-     */
-    @FXML
-    private void openDropdownMenu(ActionEvent event) {
-        // Call the openMenu method in the MenuController to open the dropdown menu.
-        menuOverlay.setVisible(true);
-        menuController.openMenu();
-    }
 
-    /**
-     * Closes the dropdown menu in response to an action event.
-     *
-     * @param event The action event that triggered this method.
-     */
-    @FXML
-    private void closeDropdownMenu(ActionEvent event) {
-        // Call the closeMenu method in the MenuController to close the dropdown menu.
-        menuOverlay.setVisible(false);
-        menuController.closeMenu();
-    }
+  /**
+   * Opens the dropdown menu in response to an action event.
+   *
+   * @param event The action event that triggered this method.
+   */
+  @FXML
+  private void openDropdownMenu(ActionEvent event) {
+    // Call the openMenu method in the MenuController to open the dropdown menu.
+    menuOverlay.setVisible(true);
+    menuController.openMenu();
+  }
 
-      /**
-     * Closes the dropdown menu in response to an action event.
-     *
-     * @param event The action event that triggered this method.
-     */
-    @FXML
-    private void closeDropdownMenuOverlay(MouseEvent event) {
-        // Call the closeMenu method in the MenuController to close the dropdown menu.
-        menuOverlay.setVisible(false);
-        menuController.closeMenu();
-    }
+  /**
+   * Closes the dropdown menu in response to an action event.
+   *
+   * @param event The action event that triggered this method.
+   */
+  @FXML
+  private void closeDropdownMenu(ActionEvent event) {
+    // Call the closeMenu method in the MenuController to close the dropdown menu.
+    menuOverlay.setVisible(false);
+    menuController.closeMenu();
+  }
+
+  /**
+   * Closes the dropdown menu in response to an action event.
+   *
+   * @param event The action event that triggered this method.
+   */
+  @FXML
+  private void closeDropdownMenuOverlay(MouseEvent event) {
+    // Call the closeMenu method in the MenuController to close the dropdown menu.
+    menuOverlay.setVisible(false);
+    menuController.closeMenu();
+  }
 
   /**
    * Function to begin lab riddle.
@@ -249,8 +250,7 @@ public class LabController {
   @FXML
   private void onClickChemicals(MouseEvent event) {
     if (GameState.isDifficultyMedium == true) {
-      numHints = 5;
-      hintsRemaining.setText("Hints Remaining: " + String.valueOf(numHints));
+      hintsRemaining.setText("Hints Remaining: " + String.valueOf(ChatTaskGenerator.numHints));
     } else if (GameState.isDifficultyEasy == true) {
       hintsRemaining.setText("Unlimited hints available");
     } else {
@@ -266,8 +266,7 @@ public class LabController {
     btnSwitchToTimeMachine.setDisable(true);
 
     // Create task to run GPT model for riddle message
-    labRiddleTask =
-        ChatTaskGenerator.createTask(GptPromptEngineering.getRiddleLab(solutionColours));
+    labRiddleTask = ChatTaskGenerator.createTask(GptPromptEngineering.getRiddleLab());
     Thread labRiddleThread = new Thread(labRiddleTask);
     labRiddleThread.setDaemon(true);
     labRiddleThread.start();
@@ -402,40 +401,35 @@ public class LabController {
     // Set chat area
     ChatTaskGenerator.chatAreas.add(chatArea);
 
+    // Set text field
+    ChatTaskGenerator.chatFields.add(chatField);
+
     // Set send button
     ChatTaskGenerator.sendButtons.add(btnSend);
 
     // Set thinking animation
     ChatTaskGenerator.thinkingAnimationImages.add(imgScientistThinking);
-    ChatTaskGenerator.thinkingAnimationImages.add(typingBubble);
 
-    // Add timer label, arrows, and general chemicals to restart manager
+    // Add hint text
+    ChatTaskGenerator.hintsRemaining = hintsRemaining;
+
+    // Add timer label, arrows, recipe txt, and general chemicals to restart manager
     RestartManager.labLabel = lblTimer;
     RestartManager.labArrowCollection = arrowCollection;
     RestartManager.labChemicals = chemicalGeneral;
+    RestartManager.labTxtRecipe = txtRecipe;
 
     // Create tasks for animation and updating hint label
     createAnimateTask();
-    updateHintTask(numHints);
-  }
 
-  /**
-   * Function to update the label showing the user their remaining hints.
-   *
-   * @param numHints the number of hints remaining.
-   */
-  public void updateHintTask(int numHints) {
-    updateHintTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            if (numHints >= 0) {
-              // Update number of hints to relevant number of hints
-              hintsRemaining.setText("Hints Remaining: " + String.valueOf(numHints));
-            }
-            return null;
-          }
-        };
+    // Add door animation to animation manager and bind their properties
+    AnimationManager.rectLabLeftDoor = rectLeftDoor;
+    AnimationManager.rectLabRightDoor = rectRightDoor;
+    rectRightDoor.visibleProperty().bind(rectLeftDoor.visibleProperty());
+
+    // Add printing animation
+    AnimationManager.imgLabPaper = imgPaper;
+    AnimationManager.txtLabRecipe = txtRecipe;
   }
 
   /** Function to create a task for animation. */
@@ -448,6 +442,7 @@ public class LabController {
             enableChemicals(true);
             blurredImage.setVisible(true);
             fadeTransition();
+            AnimationManager.printRecipe();
 
             createAnimateTask();
             // End the task
@@ -464,15 +459,15 @@ public class LabController {
           @Override
           protected Void call() throws Exception {
             // Initialise white arrows
-            int posy = 170;
+            int posy = 150;
             for (int i = 0; i < 14; i++) { // 0-6 are up arrows, 8-13 are down arrows
               ImageView arrow = new ImageView("file:src/main/resources/images/arrow_white.png");
 
               // Set properties of arrow
-              int posx = 180 + (110 * i);
+              int posx = 193 + (98 * i);
               if (i > 6) { // >6 are arrows along bottom row
-                posx = posx + (105 * (i - 6));
-                posy = 555;
+                posx = 193 + (98 * (i - 7));
+                posy = 530;
                 arrow.rotateProperty().setValue(180.0);
               }
               arrow.setOpacity(0);
@@ -491,15 +486,15 @@ public class LabController {
             }
 
             // Initialise Green arrows
-            posy = 195;
+            posy = 175;
             for (int i = 0; i < 14; i++) { // 0-6 are up arrows, 7-13 are down arrows
               ImageView arrow = new ImageView("file:src/main/resources/images/arrow_green.png");
 
               // Set properties
-              int posx = 180 + (110 * i);
+              int posx = 193 + (98 * i);
               if (i > 6) {
-                posx = 100 + (105 * (i - 6));
-                posy = 530;
+                posx = 193 + (98 * (i - 7));
+                posy = 515;
                 arrow.rotateProperty().setValue(180.0);
               }
               arrow.setOpacity(0);
@@ -537,6 +532,9 @@ public class LabController {
     Thread initLabThread = new Thread(initLabTask);
     initLabThread.setDaemon(true);
     initLabThread.start();
+
+    // Initialise recipe text
+    txtRecipe.setText("Recipe:\n" + convertRecipe(solutionColours));
   }
 
   /** Increment number of solutions added and check if puzzle is complete. */
@@ -544,6 +542,7 @@ public class LabController {
     numChemicalsAdded++;
     if (numChemicalsAdded == 3) {
       puzzleComplete();
+      AnimationManager.removeRecipe();
       return true;
     } else {
       return false;
@@ -795,5 +794,39 @@ public class LabController {
     chemicalGreen.setVisible(visibility);
     chemicalOrange.setVisible(visibility);
     chemicalGeneral.setVisible(false);
+  }
+
+  /** TODO JAVADOCS */
+  public static String convertRecipe(ArrayList<Integer> solutionColours) {
+    String[] colorStr = new String[3];
+
+    // Convert the solution colours to strings to append to the riddle
+    for (int i = 0; i < 3; i++) {
+      switch (solutionColours.get(i)) {
+        case 0:
+          colorStr[i] = "Blue";
+          break;
+        case 1:
+          colorStr[i] = "Purple";
+          break;
+        case 2:
+          colorStr[i] = "Cyan";
+          break;
+        case 3:
+          colorStr[i] = "Green";
+          break;
+        case 4:
+          colorStr[i] = "Yellow";
+          break;
+        case 5:
+          colorStr[i] = "Orange";
+          break;
+        default:
+          colorStr[i] = "Red";
+          break;
+      }
+    }
+
+    return "1. " + colorStr[0] + "\n2. " + colorStr[1] + "\n3. " + colorStr[2];
   }
 }

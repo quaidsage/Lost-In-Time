@@ -19,7 +19,7 @@
    <children>
       <ImageView fitHeight="739.0" fitWidth="1349.0" layoutX="-13.0" layoutY="-12.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/BaseUI.jpg" />
+            <Image url="@../images/BaseUI.png" />
          </image>
          <effect>
             <DropShadow height="96.72" radius="42.8525" spread="0.79" width="76.69">
@@ -66,11 +66,6 @@
       </Button>
       <Label id="lblTimer" fx:id="lblTimer" layoutX="1153.0" layoutY="276.0" prefHeight="41.0" prefWidth="118.0" style="-fx-font-size: 32.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="XX:XX" textFill="#6bf9b1">
     </Label>
-      <ImageView fx:id="typingBubble" fitHeight="70.0" fitWidth="107.0" layoutX="1212.0" layoutY="160.0" pickOnBounds="true" preserveRatio="true" visible="false">
-         <image>
-            <Image url="@../images/typing_bubble1.gif" />
-         </image>
-      </ImageView>
 <Button id="timeMachine" fx:id="btnTimeMachine" layoutX="339.0" layoutY="129.0" mnemonicParsing="false" onAction="#onClickTimeMachine" opacity="0.0" prefHeight="471.0" prefWidth="349.0" text="Time Machine" textFill="WHITE" />
       <Button id="timeMachine" fx:id="btnControlBox" layoutX="25.0" layoutY="325.0" mnemonicParsing="false" onAction="#onClickControlBox" opacity="0.0" prefHeight="305.0" prefWidth="150.0" text="Control Box" textFill="WHITE" />
       <Rectangle fx:id="rectLight" arcHeight="5.0" arcWidth="5.0" height="596.0" layoutX="25.0" layoutY="60.0" stroke="BLACK" strokeType="INSIDE" width="960.0" />
