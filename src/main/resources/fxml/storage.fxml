@@ -135,6 +135,7 @@
       </Text>
          <Pane fx:id="dropdownMenu" opacity="0.9" prefHeight="750.0" prefWidth="266.0" style="-fx-background-color: rgb(28,28,28);" translateX="-266" translateY="0" visible="true">
          <children>
+                   <Text layoutX="90.0" layoutY="94" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20.0;" text="TASKS" fill="#6bf9b1" />
             <Button id="btnSkip" fx:id="btnCloseDropdownMenu" layoutX="226" layoutY="40" mnemonicParsing="false" onAction="#closeDropdownMenu" text="X">
                <font>
                   <Font name="PT Mono Bold" size="13.0" />
@@ -155,6 +156,9 @@
                <font>
                   <Font name="PT Mono Bold" size="13.0" />
                </font></Text>
+                   <Circle fx:id="task1CircleStorage" layoutX="30.0" layoutY="150.0" radius="8" stroke="#ff9999" fill="transparent" strokeWidth="2" />
+                   <Circle fx:id="task2CircleStorage" layoutX="30.0" layoutY="256.0" radius="8" stroke="#ff9999" fill="transparent" strokeWidth="2" />
+                   <Circle fx:id="task3CircleStorage" layoutX="30.0" layoutY="362.0" radius="8" stroke="#ff9999" fill="transparent" strokeWidth="2" />
          </children>
       </Pane>
       <Pane fx:id="menuOverlay" onMouseClicked="#closeDropdownMenuOverlay" opacity="0" prefHeight="750" prefWidth="1174" style="-fx-background-color: rgb(28,28,28);" translateX="266" translateY="0" visible="false">

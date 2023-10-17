@@ -8,6 +8,7 @@ import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,6 +20,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -44,6 +46,8 @@ public class StorageController {
 
   // Initialise Timer
   public static TimerController timer = new TimerController();
+
+  public static TaskController taskController;
 
   /**
    * Function to start timer when the game is started.
@@ -103,6 +107,13 @@ public class StorageController {
   @FXML private Button btnCloseDropdownMenu;
   @FXML private Button btnOpenDropdownMenu;
   @FXML private Text txtTaskList;
+  @FXML private Circle task1CircleStorage;
+  @FXML private Circle task2CircleStorage;
+  @FXML private Circle task3CircleStorage; 
+  @FXML private Text txtTask1;
+  @FXML private Text txtTask2;
+  @FXML private Text txtTask3;
+
 
   // Initialise Variables
   private ArrayList<Button> buttons = new ArrayList<>();
@@ -124,9 +135,30 @@ public class StorageController {
    * @throws ApiProxyException when there is a problem with the ApiProxy.
    */
   public void initialize() throws ApiProxyException {
+    taskController = new TaskController();
     // Initialise drop down menu
     menuController = new MenuController(dropdownMenu);
 
+    task1CircleStorage.fillProperty().bind(Bindings.when(taskController.labTaskCompletedProperty())
+            .then(Color.GREEN)
+            .otherwise(Color.TRANSPARENT));
+    task2CircleStorage.fillProperty().bind(Bindings.when(taskController.storageTaskCompletedProperty())
+            .then(Color.GREEN)
+            .otherwise(Color.TRANSPARENT));
+    task3CircleStorage.fillProperty().bind(Bindings.when(taskController.controlBoxTaskCompletedProperty())
+            .then(Color.GREEN)
+            .otherwise(Color.TRANSPARENT));
+    
+    txtTask1.styleProperty().bind(Bindings.when(taskController.labTaskCompletedProperty())
+            .then("-fx-strikethrough: true; -fx-font-size: 16px;")
+            .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
+    txtTask2.styleProperty().bind(Bindings.when(taskController.storageTaskCompletedProperty())
+            .then("-fx-strikethrough: true; -fx-font-size: 16px;")
+            .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
+    txtTask3.styleProperty().bind(Bindings.when(taskController.controlBoxTaskCompletedProperty())
+            .then("-fx-strikethrough: true; -fx-font-size: 16px;")
+            .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
+    
     // Initialise timer
     timer = new TimerController();
     lblTimer.textProperty().bind(timer.messageProperty());
@@ -314,6 +346,7 @@ public class StorageController {
 
     // Update game state
     GameState.isStorageResolved = true;
+    TaskController.completeTask2();
 
     // Get AI response for completing task
     Task<ChatMessage> storageTaskComplete =
