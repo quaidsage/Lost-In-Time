@@ -457,7 +457,9 @@ public class TimemachineController {
     // Handle events within the towers of Hanoi hacking game.
     if (row.equals("row1")) {
       // If there is no currently held circle, return
-      if (currentCircle == null) return;
+      if (currentCircle == null) {
+        return;
+      }
       // If the row is empty, add the current circle and reset it
       else if (row1.getChildren().size() == 0) {
         row1.getChildren().add(currentCircle);
@@ -478,7 +480,9 @@ public class TimemachineController {
       }
     } else if (row.equals("row2")) {
       // Handle events for "row2" - similar logic as for "row1"
-      if (currentCircle == null) return;
+      if (currentCircle == null) {
+        return;
+      }
       if (row2.getChildren().size() == 0) {
         row2.getChildren().add(currentCircle);
         currentCircle.setEffect(null);
@@ -496,7 +500,9 @@ public class TimemachineController {
       }
     } else if (row.equals("row3")) {
       // Handle events for "row3" - similar logic as for "row1"
-      if (currentCircle == null) return;
+      if (currentCircle == null) {
+        return;
+      }
       if (row3.getChildren().size() == 0) {
         row3.getChildren().add(currentCircle);
         currentCircle.setEffect(null);
@@ -528,8 +534,9 @@ public class TimemachineController {
     StackPane row = (StackPane) circle.getParent();
     // Get the smallest circle
     for (int i = 0; i < row.getChildren().size(); i++) {
-      if (row.getChildren().get(i).getId().compareTo(toChoseCircle.getId()) > 0)
+      if (row.getChildren().get(i).getId().compareTo(toChoseCircle.getId()) > 0) {
         toChoseCircle = (Circle) row.getChildren().get(i);
+      }
     }
     return toChoseCircle;
   }
