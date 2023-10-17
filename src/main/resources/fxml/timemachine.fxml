@@ -50,7 +50,7 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#303030" height="64.0" layoutX="1030.0" layoutY="276.0" stroke="TRANSPARENT" strokeType="INSIDE" width="342.0" />
       <TextArea id="chatField" fx:id="chatField" layoutX="1027.0" layoutY="571.0" prefHeight="106.0" prefWidth="208.0" promptText="Enter message..." style="-fx-font-size: 18.0; -fx-font-family: 'PT Mono'; -fx-font-weight: bold;" stylesheets="@../css/style.css" wrapText="true">
       </TextArea>
-      <TextArea id="chatArea" fx:id="chatArea" editable="false" layoutX="1030.0" layoutY="336.0" prefHeight="194.0" prefWidth="342.0" style="-fx-font-size: 16.0; -fx-font-family: PT Mono'; -fx-font-weight: bold;" stylesheets="@../css/style.css" wrapText="true">
+      <TextArea id="chatArea" fx:id="chatArea" editable="false" layoutX="1030.0" layoutY="336.0" prefHeight="194.0" prefWidth="342.0" style="-fx-font-size: 16.0; -fx-font-family: 'PT Mono'; -fx-font-weight: bold;" stylesheets="@../css/style.css" wrapText="true">
       </TextArea>
       <ImageView fitHeight="150.0" fitWidth="277.0" layoutX="1032.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -158,12 +158,12 @@
       </Pane>
       <Pane fx:id="dropdownMenu" opacity="0.9" prefHeight="750.0" prefWidth="266.0" style="-fx-background-color: rgb(28,28,28);" translateX="-266" translateY="0" visible="true">
          <children>
-            <Text layoutX="90.0" layoutY="94" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20.0;" text="TASKS" fill="#6bf9b1" />
+            <Text fill="#6bf9b1" layoutX="90.0" layoutY="94" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20.0;" text="TASKS" />
             <Button id="btnSkip" fx:id="btnCloseDropdownMenu" layoutX="226" layoutY="40" mnemonicParsing="false" onAction="#closeDropdownMenu" text="X">
                <font>
                   <Font name="PT Mono Bold" size="13.0" />
                </font></Button>
-            <Button id="btnSkip" fx:id="btnMenu" layoutX="150.0" layoutY="702.0" mnemonicParsing="false" onAction="#onClickReturn" text="Return to menu">
+            <Button id="btnSkip" fx:id="btnMenu" layoutX="110.0" layoutY="701.0" mnemonicParsing="false" onAction="#onClickReturn" text="Return to menu">
                <font>
                   <Font name="PT Mono Bold" size="13.0" />
                </font></Button>
@@ -179,9 +179,9 @@
                <font>
                   <Font name="PT Mono Bold" size="13.0" />
                </font></Text>
-            <Circle fx:id="task1Circle" layoutX="30.0" layoutY="150.0" radius="8" stroke="#ff9999" fill="transparent" strokeWidth="2" />
-            <Circle fx:id="task2Circle" layoutX="30.0" layoutY="256.0" radius="8" stroke="#ff9999" fill="transparent" strokeWidth="2" />
-            <Circle fx:id="task3Circle" layoutX="30.0" layoutY="362.0" radius="8" stroke="#ff9999" fill="transparent" strokeWidth="2" />
+            <Circle fx:id="task1Circle" fill="transparent" layoutX="30.0" layoutY="150.0" radius="8" stroke="#ff9999" strokeWidth="2" />
+            <Circle fx:id="task2Circle" fill="transparent" layoutX="30.0" layoutY="256.0" radius="8" stroke="#ff9999" strokeWidth="2" />
+            <Circle fx:id="task3Circle" fill="transparent" layoutX="30.0" layoutY="362.0" radius="8" stroke="#ff9999" strokeWidth="2" />
          </children>
       </Pane>
       <Pane fx:id="menuOverlay" onMouseClicked="#closeDropdownMenuOverlay" opacity="0" prefHeight="750" prefWidth="1174" style="-fx-background-color: rgb(28,28,28);" translateX="266" translateY="0" visible="false">
