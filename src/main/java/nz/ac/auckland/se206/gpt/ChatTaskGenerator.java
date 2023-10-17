@@ -89,12 +89,6 @@ public class ChatTaskGenerator {
     // Append to main game chat completion request
     GameState.chatCompletionRequest.addMessage(msg);
 
-    if (msg.getContent().equals(GptPromptEngineering.getRiddleLab())) {
-      // Append instructions to GPT request
-      GameState.chatCompletionRequest.addMessage(
-          "assistant", GptPromptEngineering.getRiddleInstructions());
-    }
-
     // Enable thinking animation
     setThinkingAnimation(true);
 
@@ -105,6 +99,8 @@ public class ChatTaskGenerator {
 
       // Create chat message from response
       GameState.chatCompletionRequest.addMessage(result.getChatMessage());
+
+      System.out.println(result.getChatMessage().getContent());
 
       // Check if users answer was correct
       if (result.getChatMessage().getContent().startsWith("Correct")) {
