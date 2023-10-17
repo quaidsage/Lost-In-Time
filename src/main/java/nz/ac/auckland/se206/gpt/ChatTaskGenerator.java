@@ -45,7 +45,7 @@ public class ChatTaskGenerator {
     if (userMessage == null) {
       return;
     }
-    updateChat("\n\n<- ", new ChatMessage("user", userMessage));
+    updateChat("\n<- ", new ChatMessage("user", userMessage));
 
     // Create task to run GPT model for AI response
     Task<ChatMessage> aiResponseTask = createTask(userMessage);
@@ -128,6 +128,7 @@ public class ChatTaskGenerator {
 
       // Generate TTS
       if (!msg.getContent().equals(GptPromptEngineering.getContext())) {
+        textToSpeech.clear();
         TextToSpeech.runTextToSpeech(result.getChatMessage().getContent());
       }
 

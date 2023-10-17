@@ -42,7 +42,8 @@ public class GptPromptEngineering {
     return "You are the digital conciousness of a mad scientist helping the user. You have already"
         + " introduced yourself. Now explain to the user that they need to interact with the"
         + " wall circuit to restore the power. Warn the user their memory will be put to the"
-        + " test to unlock the switch to return the power. Do not refer to the user.";
+        + " test to unlock the switch to return the power. Do this in two short sentences."
+        + " Do not refer to the user.";
   }
 
   /**
@@ -53,15 +54,15 @@ public class GptPromptEngineering {
    */
   public static String getRiddleLab() {
     // Generate riddle prompt.
-    return " Tell the user they must earn the time fluid recipe. Then give just a riddle with an"
-        + " easy science answer. You must follow these instructions: ";
+    return "You must only do one response with the format of saying the user must earn the recipe"
+        + " and on a new line an easy science riddle.\n You must follow these instructions: ";
   }
 
   /** TODO JAVADOCS */
   public static String getRiddleInstructions() {
-    return "When the user answers, Accept answers that are correct or very close and 'Correct' MUST"
-               + " be the first word of your response.\n"
-               + "Hints limited to "
+    return "When the user answers, Accept answers that are exact or extremely close and 'Correct'"
+        + " MUST be the first word of your response.\n"
+        + "Hints limited to "
         + numHints
         + " The only way you can give hint, user must ask for hint and 'Hint:' MUST be the first"
         + " word of response.\n"
@@ -81,7 +82,7 @@ public class GptPromptEngineering {
         + " introduced yourself. The user has just completed making the time fluid. Now they"
         + " must "
         + GameState.getNextStep()
-        + ". Do not refer to the user.";
+        + ". Do this in one short sentence. Do not refer to the user.";
   }
 
   /**
@@ -94,7 +95,7 @@ public class GptPromptEngineering {
         + " introduced yourself. The user has just restored power to the time machine. Now"
         + " they must "
         + GameState.getNextStep()
-        + ". Do not refer to the user.";
+        + ". Do this in one short sentence. Do not refer to the user.";
   }
 
   /** TODO JAVADOCS */
