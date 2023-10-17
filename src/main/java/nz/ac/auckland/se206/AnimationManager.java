@@ -32,17 +32,25 @@ public class AnimationManager {
 
   /** TODO JAVADOCS */
   public static void openStorageDoor() {
+    App.audio.playScan();
     imgStorageDoor.setVisible(true);
     imgStorageDoor.setLayoutX(11);
     final Timeline timeline = new Timeline();
     final KeyValue kv = new KeyValue(imgStorageDoor.layoutXProperty(), -1200);
     final KeyFrame kf = new KeyFrame(Duration.millis(400), kv);
     timeline.getKeyFrames().add(kf);
-    delay(300, () -> timeline.play());
+    delay(
+        300,
+        () -> {
+          App.audio.playStorageDoor();
+          timeline.play();
+        });
     timeline.setOnFinished(event -> imgStorageDoor.setVisible(false));
   }
 
+  /** TODO JAVADOCS */
   public static void openLabDoor() {
+    App.audio.playScan();
     rectLabLeftDoor.setVisible(true);
     rectLabLeftDoor.setLayoutX(25);
     rectLabRightDoor.setLayoutX(505);
@@ -53,14 +61,21 @@ public class AnimationManager {
     final KeyValue kvRight = new KeyValue(rectLabRightDoor.layoutXProperty(), 1500);
     final KeyFrame kfRight = new KeyFrame(Duration.millis(400), kvRight);
     timeline.getKeyFrames().add(kfRight);
-    delay(300, () -> timeline.play());
+    delay(
+        300,
+        () -> {
+          App.audio.playLabDoor();
+          timeline.play();
+        });
     timeline.setOnFinished(
         event -> {
           rectLabLeftDoor.setVisible(false);
         });
   }
 
+  /** TODO JAVADOCS */
   public static void printRecipe() {
+    App.audio.playPrint();
     imgLabPaper.setVisible(true);
     imgLabPaper.setLayoutY(-20);
     final Timeline timeline = new Timeline();
@@ -73,7 +88,9 @@ public class AnimationManager {
     timeline.play();
   }
 
+  /** TODO JAVADOCS */
   public static void removeRecipe() {
+    App.audio.playPrint();
     imgLabPaper.setLayoutY(130);
     txtLabRecipe.setLayoutY(140);
     final Timeline timeline = new Timeline();

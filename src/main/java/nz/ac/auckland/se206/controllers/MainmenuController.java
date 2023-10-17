@@ -5,6 +5,7 @@ import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.media.MediaView;
 import javax.speech.AudioException;
 import javax.speech.EngineStateError;
 import nz.ac.auckland.se206.App;
@@ -27,11 +28,15 @@ public class MainmenuController {
 
   @FXML private Button btnBeginGame;
   @FXML private Button btnMute;
+  @FXML private MediaView mediaView;
 
   /** Initialises the main menu scene with the required settings. */
   public void initialize() {
-    // Initialise text to speech
+    // Initialise all fxml files
     loadFxmlFiles();
+
+    // Initialise audio
+    App.audio = new AudioController(mediaView);
 
     // Initialise AI chat parameters
     GameState.chatCompletionRequest =
@@ -49,6 +54,7 @@ public class MainmenuController {
   @FXML
   private void onClickBeginGame(ActionEvent event)
       throws IOException, AudioException, EngineStateError {
+    App.audio.playClick();
     App.setUi(AppUi.DIFFICULTY);
     TextToSpeech.runTextToSpeech("Select difficulty level and time limit.");
   }

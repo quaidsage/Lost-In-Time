@@ -89,6 +89,7 @@ public class DifficultyController {
       appendThread.setDaemon(true);
       appendThread.start();
 
+      App.audio.playClick();
       App.setUi(AppUi.INTRO);
 
       MainmenuController.disableSkipButton();
@@ -102,6 +103,8 @@ public class DifficultyController {
    */
   @FXML
   private void onClickEasy(ActionEvent event) {
+    App.audio.playClick();
+
     // Change game state
     currentDifficulty = Difficulty.EASY;
     isDifficultyChecked = true;
@@ -123,6 +126,8 @@ public class DifficultyController {
    */
   @FXML
   private void onClickMedium(ActionEvent event) {
+    App.audio.playClick();
+
     // Change game state
     currentDifficulty = Difficulty.MEDIUM;
     isDifficultyChecked = true;
@@ -144,6 +149,8 @@ public class DifficultyController {
    */
   @FXML
   private void onClickHard(ActionEvent event) {
+    App.audio.playClick();
+
     // Change game state
     currentDifficulty = Difficulty.HARD;
     isDifficultyChecked = true;
@@ -161,6 +168,8 @@ public class DifficultyController {
   /** Handles the 2 Minutes checkbox. */
   @FXML
   private void onClickTwoMins() {
+    App.audio.playClick();
+
     // Change game state
     currentTimeSetting = TimeSetting.TWO;
     isTimeChecked = true;
@@ -179,6 +188,8 @@ public class DifficultyController {
   /** Handles the 4 Minutes checkbox. */
   @FXML
   private void onClickFourMins() {
+    App.audio.playClick();
+
     // Change game state
     currentTimeSetting = TimeSetting.FOUR;
     isTimeChecked = true;
@@ -197,6 +208,8 @@ public class DifficultyController {
   /** Handles the 6 Minutes checkbox. */
   @FXML
   private void onClickSixMins() {
+    App.audio.playClick();
+
     // Change game state
     currentTimeSetting = TimeSetting.SIX;
     isTimeChecked = true;

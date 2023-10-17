@@ -13,6 +13,8 @@ public class EndsceneController {
   /** Handle the "Play Again" button click event. */
   @FXML
   private void onClickBackToMenu() throws IOException {
+    App.audio.playClick();
+
     // Set the root scene to the main menu when the "Play Again" button is clicked
     App.setUi(AppUi.MAINMENU);
   }

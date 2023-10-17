@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.SceneManager.AppUi;
+import nz.ac.auckland.se206.controllers.AudioController;
 import nz.ac.auckland.se206.controllers.MainmenuController;
 import nz.ac.auckland.se206.gpt.ChatTaskGenerator;
 
@@ -20,6 +21,8 @@ public class App extends Application {
   public static AppUi currentUi = AppUi.MAINMENU;
 
   private static Scene scene;
+
+  public static AudioController audio;
 
   public static void main(final String[] args) {
     launch();
@@ -59,13 +62,18 @@ public class App extends Application {
     stage.setScene(scene);
     stage.setResizable(false);
     stage.getIcons().add(new Image("file:src/main/resources/images/scientist-process.png"));
+    stage.setOnCloseRequest(
+        e -> {
+          ChatTaskGenerator.textToSpeech.clear();
+          ChatTaskGenerator.textToSpeech.terminate();
+          audio.stop();
+        });
     stage.show();
   }
 
   // Sets the Ui without resetting the state
   public static void setUi(AppUi newUi) {
     if (newUi == AppUi.MAINMENU) {
-      System.out.println("RESTARTING");
       MainmenuController.hasRestarted = true;
       ChatTaskGenerator.textToSpeech.clear();
       RestartManager.restartGame();
