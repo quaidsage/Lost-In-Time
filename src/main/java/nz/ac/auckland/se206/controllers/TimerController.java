@@ -6,7 +6,7 @@ import javafx.concurrent.Task;
 /** A class to create a timer to be used within the game. */
 public class TimerController extends Service<Void> {
   private int minutes = 2; // Initial minutes for the timer
-  private int seconds = 0; // Initial seconds for the timer
+  private int seconds = 10; // Initial seconds for the timer
 
   /**
    * Sets the number of minutes for the timer.
@@ -44,6 +44,15 @@ public class TimerController extends Service<Void> {
         }
         return null;
       }
-    };
+    };  
+  }
+
+  public void cancelAndReset() {
+    if (isRunning()) {
+        cancel(); // Cancel the timer task
+    }
+    reset(); // Reset the service to its initial state
+    minutes = 2; // Reset minutes to the initial value
+    seconds = 10; // Reset seconds to the initial value
   }
 }

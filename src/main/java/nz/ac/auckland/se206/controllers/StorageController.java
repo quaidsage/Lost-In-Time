@@ -50,16 +50,6 @@ public class StorageController {
   public static TaskController taskController;
 
   /**
-   * Function to start timer when the game is started.
-   *
-   * @param minutes the number of minutes to set the timer to
-   */
-  public static void storageStartTimer(int minutes) {
-    timer.setMinutes(minutes);
-    timer.start();
-  }
-
-  /**
    * Delays given code by a given number of milliseconds.
    *
    * @param ms milliseconds of delay
@@ -165,6 +155,10 @@ public class StorageController {
     timer.setOnSucceeded(
         e -> {
           lblTimer.setText("0:00");
+        });
+    timer.setOnCancelled(
+        e -> {
+        timer.reset();
         });
 
     initialiseTasks();
@@ -303,6 +297,7 @@ public class StorageController {
    */
   @FXML
   private void onClickReturn(ActionEvent event) throws IOException {
+    timer.cancel();
     App.setUi(AppUi.MAINMENU);
   }
 
