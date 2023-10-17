@@ -129,14 +129,14 @@
       </Text>
       <Text fx:id="info" fill="#6bf9b1" layoutX="33.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20.0; -fx-font-family: 'PT Mono'; -fx-font-weight: bold;" text="Time to test your memory!" textAlignment="CENTER" visible="false" wrappingWidth="302.0">
       </Text>
-       <Button id="btnSkip" fx:id="btnOpenDropdownMenu" layoutX="25.0" layoutY="9.0" mnemonicParsing="false" onAction="#openDropdownMenu" style="-fx-font-size: 17.0; -fx-font-family: 'PT Mono'; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="≡">
+       <Button id="btnSkip" fx:id="btnOpenDropdownMenu" layoutX="25.0" layoutY="9.0" mnemonicParsing="false" onAction="#openDropDownMenu" style="-fx-font-size: 17.0; -fx-font-family: 'PT Mono'; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="≡">
 </Button>
       <Text fill="#6bf9b1" layoutX="463.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20.0; -fx-font-family: 'PT Mono'; -fx-font-weight: bold;" text="Currently in: Storage Room" textAlignment="RIGHT" wrappingWidth="522.0">
       </Text>
          <Pane fx:id="dropdownMenu" opacity="0.9" prefHeight="750.0" prefWidth="266.0" style="-fx-background-color: rgb(28,28,28);" translateX="-266" translateY="0" visible="true">
          <children>
             <Text fill="#6bf9b1" layoutX="90.0" layoutY="94" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20.0; -fx-font-family: 'PT Mono';" text="TASKS" />
-            <Button id="btnSkip" fx:id="btnCloseDropdownMenu" layoutX="226" layoutY="40" mnemonicParsing="false" onAction="#closeDropdownMenu" text="X">
+            <Button id="btnSkip" fx:id="btnCloseDropdownMenu" layoutX="226" layoutY="40" mnemonicParsing="false" onAction="#closeDropDownMenu" text="X">
                <font>
                   <Font name="PT Mono Bold" size="13.0" />
                </font></Button>
