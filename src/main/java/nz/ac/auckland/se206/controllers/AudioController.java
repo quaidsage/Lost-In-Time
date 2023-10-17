@@ -6,6 +6,10 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import nz.ac.auckland.se206.Delay;
 
+/**
+ * This class represents an audio controller for managing audio playback in a game.
+ * It provides methods for playing various sound effects and controlling audio settings.
+ */
 public class AudioController {
 
   /**
@@ -27,6 +31,11 @@ public class AudioController {
   private Media media;
   private double volume = 0.5;
 
+  /**
+   * Constructs an AudioController with a given MediaView for audio playback.
+   *
+   * @param mediaView The MediaView for audio playback.
+   */
   public AudioController(MediaView mediaView) {
     this.mediaView = mediaView;
   }
@@ -40,42 +49,74 @@ public class AudioController {
     mediaView.getMediaPlayer().play();
   }
 
+  /**
+   * Set the volume for audio playback.
+   *
+   * @param volume The volume level to set (0.0 to 1.0).
+   */
   public void setVolume(double volume) {
     this.volume = volume;
   }
 
+  /**
+   * Play the lights sound effect.
+   */
   public void playLights() {
     playMedia("/sounds/lights.wav");
   }
 
+  /**
+   * Play the click sound effect.
+   */
   public void playClick() {
     playMedia("/sounds/click.wav");
   }
 
+  /**
+   * Play the success sound effect.
+   */
   public void playSuccess() {
     playMedia("/sounds/success.wav");
   }
 
+  /**
+   * Play the print sound effect.
+   */
   public void playPrint() {
     playMedia("/sounds/print.wav");
   }
 
+  /**
+   * Play the fail sound effect.
+   */
   public void playFail() {
     playMedia("/sounds/fail.mp3");
   }
 
+  /**
+   * Play the keypad sound effect.
+   */
   public void playKeypad() {
     playMedia("/sounds/keypad.wav");
   }
 
+  /**
+   * Play the pattern sound effect.
+   */
   public void playPattern() {
     playMedia("/sounds/pattern.wav");
   }
 
+  /**
+   * Play the scan sound effect.
+   */
   public void playScan() {
     playMedia("/sounds/scan.wav");
   }
 
+  /**
+   * Play the lab door sound effect.
+   */
   public void playLabDoor() {
     playMedia("/sounds/labdoor.mp3");
   }
@@ -102,6 +143,9 @@ public class AudioController {
         });
   }
 
+  /**
+   * Stop the currently playing audio.
+   */
   public void stop() {
     mediaView.getMediaPlayer().stop();
   }

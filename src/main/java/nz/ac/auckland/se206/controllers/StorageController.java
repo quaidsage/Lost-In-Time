@@ -126,9 +126,9 @@ public class StorageController {
    */
   public void initialize() throws ApiProxyException {
     taskController = new TaskController();
-    // Initialise drop down menu
     menuController = new MenuController(dropdownMenu);
 
+    // Bind the properties of the task list circles to gamestate variables.
     task1CircleStorage.fillProperty().bind(Bindings.when(taskController.labTaskCompletedProperty())
             .then(Color.GREEN)
             .otherwise(Color.TRANSPARENT));
@@ -138,7 +138,8 @@ public class StorageController {
     task3CircleStorage.fillProperty().bind(Bindings.when(taskController.controlBoxTaskCompletedProperty())
             .then(Color.GREEN)
             .otherwise(Color.TRANSPARENT));
-    
+
+    // Bind the properties of the task list text to gamestate variables.
     txtTask1.styleProperty().bind(Bindings.when(taskController.labTaskCompletedProperty())
             .then("-fx-strikethrough: true; -fx-font-size: 16px;")
             .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
@@ -322,6 +323,7 @@ public class StorageController {
     ChatTaskGenerator.onSendMessage(chatField);
   }
 
+  /** Function to handle the flashing animation. */
   private void startFlashing() {
     FadeTransition fadeTransition = new FadeTransition(Duration.seconds(0.5), circuitLed);
     fadeTransition.setFromValue(1.0);
@@ -472,6 +474,7 @@ public class StorageController {
     pause.play();
   }
 
+  /** Function to initialise the tasks for the storage scene. */
   private void initialiseTasks() {
     // Set chat area
     ChatTaskGenerator.chatAreas.add(chatArea);

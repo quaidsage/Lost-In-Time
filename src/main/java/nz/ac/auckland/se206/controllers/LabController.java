@@ -49,17 +49,8 @@ public class LabController {
   // Initialise Timer
   public static TimerController timer = new TimerController();
   
+  // Initialsie Timer
   public static TaskController taskController;
-
-  /**
-   * Function to start the scenes timer when the game is started.
-   *
-   * @param minutes the number of minutes to set the timer to.
-   */
-  public static void labStartTimer(int minutes) {
-    // timer.setMinutes(minutes);
-    // timer.start();
-  }
 
   /**
    * Delays given code by a given number of milliseconds.
@@ -131,6 +122,7 @@ public class LabController {
     menuController = new MenuController(dropdownMenu);
     taskController = new TaskController();
 
+    // Bind the circles for the task list to the gamestate variables.
     task1Circle.fillProperty().bind(Bindings.when(taskController.labTaskCompletedProperty())
             .then(Color.GREEN)
             .otherwise(Color.TRANSPARENT));    
@@ -141,6 +133,7 @@ public class LabController {
             .then(Color.GREEN)
             .otherwise(Color.TRANSPARENT));
 
+    // Bind the text for the task list to the gamestate variables.
     txtTask1.styleProperty().bind(Bindings.when(taskController.labTaskCompletedProperty())
             .then("-fx-strikethrough: true; -fx-font-size: 16px;")
             .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
@@ -811,7 +804,7 @@ public class LabController {
     chemicalGeneral.setVisible(false);
   }
 
-  /** TODO JAVADOCS */
+  /** Converts the randomised solution colours to strings for use in the recipe. */
   public static String convertRecipe(ArrayList<Integer> solutionColours) {
     String[] colorStr = new String[3];
 
