@@ -15,6 +15,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1400.0" style="-fx-background-color: rgb(28,28,28);" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.StorageController">
@@ -69,13 +70,13 @@
                </stops>
             </RadialGradient>
          </fill></Rectangle>
-      <Label id="lblTimer" fx:id="lblTimer" layoutX="1153.0" layoutY="276.0" prefHeight="41.0" prefWidth="118.0" style="-fx-font-size: 32.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="XX:XX" textFill="#6bf9b1">
+      <Label id="lblTimer" fx:id="lblTimer" layoutX="1153.0" layoutY="276.0" prefHeight="41.0" prefWidth="118.0" style="-fx-font-size: 32.0; -fx-font-family: 'PT Mono'; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="XX:XX" textFill="#6bf9b1">
       </Label>
-      <Button id="btnSkip" fx:id="btnSwitchToTimeMachine" layoutX="639.0" layoutY="676.0" mnemonicParsing="false" onAction="#onClickTimeMachineRoom" prefHeight="41.0" prefWidth="350.0" style="-fx-font-size: 27.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" text="Time Machine Room">
+      <Button id="btnSkip" fx:id="btnSwitchToTimeMachine" layoutX="639.0" layoutY="676.0" mnemonicParsing="false" onAction="#onClickTimeMachineRoom" prefHeight="41.0" prefWidth="350.0" style="-fx-font-size: 27.0; -fx-font-family: 'PT Mono'; -fx-font-weight: bold;" text="Time Machine Room">
       </Button>
-      <TextArea id="chatField" fx:id="chatField" layoutX="1027.0" layoutY="571.0" prefHeight="106.0" prefWidth="208.0" promptText="Enter message..." style="-fx-font-size: 18.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" stylesheets="@../css/style.css" wrapText="true">
+      <TextArea id="chatField" fx:id="chatField" layoutX="1027.0" layoutY="571.0" prefHeight="106.0" prefWidth="208.0" promptText="Enter message..." style="-fx-font-size: 18.0; -fx-font-family: 'PT Mono'; -fx-font-weight: bold;" stylesheets="@../css/style.css" wrapText="true">
       </TextArea>
-      <TextArea id="chatArea" fx:id="chatArea" editable="false" layoutX="1030.0" layoutY="336.0" prefHeight="194.0" prefWidth="342.0" style="-fx-font-size: 16.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" stylesheets="@../css/style.css" wrapText="true">
+      <TextArea id="chatArea" fx:id="chatArea" editable="false" layoutX="1030.0" layoutY="336.0" prefHeight="194.0" prefWidth="342.0" style="-fx-font-size: 16.0; -fx-font-family: 'PT Mono'; -fx-font-weight: bold;" stylesheets="@../css/style.css" wrapText="true">
       </TextArea>
       <ImageView fitHeight="150.0" fitWidth="277.0" layoutX="1032.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -87,7 +88,7 @@
             <Image url="@../images/scientist-processing.gif" />
          </image>
       </ImageView>
-      <Button id="btnSend" fx:id="btnSend" layoutX="1265.0" layoutY="600.0" mnemonicParsing="false" onAction="#onSendMessage" style="-fx-font-size: 24.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="Send" textFill="#6bf9b1">
+      <Button id="btnSend" fx:id="btnSend" layoutX="1265.0" layoutY="600.0" mnemonicParsing="false" onAction="#onSendMessage" style="-fx-font-size: 24.0; -fx-font-family: 'PT Mono'; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="Send" textFill="#6bf9b1">
 </Button>
       <Rectangle fx:id="circuitGameBg" arcHeight="5.0" arcWidth="5.0" fill="#141414" height="585.0" layoutX="25.0" layoutY="66.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="960.0" />
       <ImageView fx:id="circuitGameImg" fitHeight="571.0" fitWidth="622.0" layoutX="230.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true" visible="false">
@@ -120,25 +121,40 @@
             </HBox>
          </children>
       </VBox>
-      <Text fx:id="info2" fill="#6bf9b1" layoutX="25.0" layoutY="347.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" text="Observe the pattern in which the squares are highlighted carefully, and repeat it. Get 4 in a row in order to fix the power." textAlignment="CENTER" visible="false" wrappingWidth="317.0">
+      <Text fx:id="info2" fill="#6bf9b1" layoutX="25.0" layoutY="347.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20.0; -fx-font-family: 'PT Mono'; -fx-font-weight: bold;" text="Observe the pattern in which the squares are highlighted carefully, and repeat it. Get 4 in a row in order to fix the power." textAlignment="CENTER" visible="false" wrappingWidth="317.0">
       </Text>
-      <Button id="btnSkip" fx:id="btnStartCircuitGame" layoutX="753.0" layoutY="338.0" mnemonicParsing="false" onAction="#onClickStartMemoryGame" style="-fx-font-size: 24.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" text="Start" visible="false">
+      <Button id="btnSkip" fx:id="btnStartCircuitGame" layoutX="753.0" layoutY="338.0" mnemonicParsing="false" onAction="#onClickStartMemoryGame" style="-fx-font-size: 24.0; -fx-font-family: 'PT Mono'; -fx-font-weight: bold;" text="Start" visible="false">
       </Button>
-      <Text fx:id="text" fill="#6bf9b1" layoutX="354.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 24.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" text="Current Streak:" visible="false" wrappingWidth="336.0">
+      <Text fx:id="text" fill="#6bf9b1" layoutX="354.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 24.0; -fx-font-family: 'PT Mono'; -fx-font-weight: bold;" text="Current Streak:" visible="false" wrappingWidth="336.0">
       </Text>
-      <Text fx:id="info" fill="#6bf9b1" layoutX="33.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" text="Time to test your memory!" textAlignment="CENTER" visible="false" wrappingWidth="302.0">
+      <Text fx:id="info" fill="#6bf9b1" layoutX="33.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20.0; -fx-font-family: 'PT Mono'; -fx-font-weight: bold;" text="Time to test your memory!" textAlignment="CENTER" visible="false" wrappingWidth="302.0">
       </Text>
-       <Button id="btnSkip" fx:id="btnOpenDropdownMenu" layoutX="25.0" layoutY="9.0" mnemonicParsing="false" onAction="#openDropdownMenu" style="-fx-font-size: 17.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="≡">
+       <Button id="btnSkip" fx:id="btnOpenDropdownMenu" layoutX="25.0" layoutY="9.0" mnemonicParsing="false" onAction="#openDropdownMenu" style="-fx-font-size: 17.0; -fx-font-family: 'PT Mono'; -fx-font-weight: bold;" stylesheets="@../css/style.css" text="≡">
 </Button>
-      <Text fill="#6bf9b1" layoutX="463.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20.0; -fx-font-family: 'Monospace 821 Bold BT'; -fx-font-weight: bold;" text="Currently in: Storage Room" textAlignment="RIGHT" wrappingWidth="522.0">
+      <Text fill="#6bf9b1" layoutX="463.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20.0; -fx-font-family: 'PT Mono'; -fx-font-weight: bold;" text="Currently in: Storage Room" textAlignment="RIGHT" wrappingWidth="522.0">
       </Text>
          <Pane fx:id="dropdownMenu" opacity="0.9" prefHeight="750.0" prefWidth="266.0" style="-fx-background-color: rgb(28,28,28);" translateX="-266" translateY="0" visible="true">
          <children>
-            <Button id="btnSkip" fx:id="btnCloseDropdownMenu" layoutX="226" layoutY="40" mnemonicParsing="false" onAction="#closeDropdownMenu" text="X" />
-            <Button id="btnSkip" fx:id="btnMenu" layoutX="150.0" layoutY="702.0" mnemonicParsing="false" onAction="#onClickReturn" text="return to menu" />
-            <Text fx:id="txtTask1" fill="#6bf9b1" layoutX="60.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Make the time fluid using the chemicals in the lab" wrappingWidth="160" />
-            <Text fx:id="txtTask2" fill="#6bf9b1" layoutX="60.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Turn the time machine on using the circuit box in the storage." wrappingWidth="160" />
-            <Text fx:id="txtTask3" fill="#6bf9b1" layoutX="60.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Use the time machine to escape." wrappingWidth="160" />
+            <Button id="btnSkip" fx:id="btnCloseDropdownMenu" layoutX="226" layoutY="40" mnemonicParsing="false" onAction="#closeDropdownMenu" text="X">
+               <font>
+                  <Font name="PT Mono Bold" size="13.0" />
+               </font></Button>
+            <Button id="btnSkip" fx:id="btnMenu" layoutX="124.0" layoutY="701.0" mnemonicParsing="false" onAction="#onClickReturn" text="Return to menu">
+               <font>
+                  <Font name="PT Mono Bold" size="13.0" />
+               </font></Button>
+            <Text fx:id="txtTask1" fill="#6bf9b1" layoutX="60.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Make the time fluid using the chemicals in the lab" wrappingWidth="160">
+               <font>
+                  <Font name="PT Mono Bold" size="13.0" />
+               </font></Text>
+            <Text fx:id="txtTask2" fill="#6bf9b1" layoutX="60.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Turn the time machine on using the circuit box in the storage." wrappingWidth="160">
+               <font>
+                  <Font name="PT Mono Bold" size="13.0" />
+               </font></Text>
+            <Text fx:id="txtTask3" fill="#6bf9b1" layoutX="60.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Use the time machine to escape." wrappingWidth="160">
+               <font>
+                  <Font name="PT Mono Bold" size="13.0" />
+               </font></Text>
          </children>
       </Pane>
       <Pane fx:id="menuOverlay" onMouseClicked="#closeDropdownMenuOverlay" opacity="0" prefHeight="750" prefWidth="1174" style="-fx-background-color: rgb(28,28,28);" translateX="266" translateY="0" visible="false">
