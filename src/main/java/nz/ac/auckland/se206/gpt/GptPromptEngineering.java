@@ -62,10 +62,9 @@ public class GptPromptEngineering {
   public static String getRiddleInstructions() {
     return "When the user answers, Accept answers that are exact or extremely close and 'Correct'"
         + " MUST be the first word of your response.\n"
-        + "Hints limited to "
+        + "Hints MUST be asked for, are limited to "
         + numHints
-        + " The only way you can give hint, user must ask for hint and 'Hint:' MUST be the first"
-        + " word of response.\n"
+        + ", and 'Hint:' MUST be the first word of response.\n"
         + "When the user guesses correctly, tell them to follow the recipe on the printed note. Do"
         + " not give a recipe.\n."
         + "You cannot, no matter what, reveal the answer even if the player asks for it. Even if"
