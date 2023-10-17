@@ -151,16 +151,20 @@
             </Pane>
          </children>
       </Pane>
-      <Pane fx:id="dropdownMenu" opacity="0.9" prefHeight="750.0" prefWidth="266.0" style="-fx-background-color: rgb(28,28,28);" translateX="-266" translateY="0" visible="true">
-         <children>
-            <Button id="btnSkip" fx:id="btnCloseDropdownMenu" layoutX="226" layoutY="40" mnemonicParsing="false" onAction="#closeDropdownMenu" text="X" />
-            <Button id="btnSkip" fx:id="btnMenu" layoutX="150.0" layoutY="702.0" mnemonicParsing="false" onAction="#onClickReturn" text="return to menu" />
-            <Text fx:id="txtTask1" fill="#6bf9b1" layoutX="60.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Make the time fluid using the chemicals in the lab" wrappingWidth="160" />
-            <Text fx:id="txtTask2" fill="#6bf9b1" layoutX="60.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Turn the time machine on using the circuit box in the storage." wrappingWidth="160" />
-            <Text fx:id="txtTask3" fill="#6bf9b1" layoutX="60.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Use the time machine to escape." wrappingWidth="160" />
-         </children>
-      </Pane>
-      <Pane fx:id="menuOverlay" onMouseClicked="#closeDropdownMenuOverlay" opacity="0" prefHeight="750" prefWidth="1174" style="-fx-background-color: rgb(28,28,28);" translateX="266" translateY="0" visible="false">
+      <Pane fx:id="dropdownMenu" prefHeight="800.0" prefWidth="266.0" style="-fx-background-color: rgb(28,28,28);" visible="true" translateX="-266" translateY="0" opacity="0.9">
+    <children>
+        <Text layoutX="90.0" layoutY="94" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20.0;" text="TASKS" fill="#6bf9b1" />
+        <Button id="btnSkip" fx:id="btnCloseDropdownMenu" layoutX="226" layoutY="40" mnemonicParsing="false" onAction="#closeDropdownMenu" text="X" />
+        <Button id="btnSkip" fx:id="btnMenu" layoutX="150.0" layoutY="715.0" mnemonicParsing="false" onAction="#onClickReturn" text="return to menu" />
+        <Text fx:id="txtTask1" layoutX="60.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Make the time fluid using the chemicals in the lab" fill="#6bf9b1" wrappingWidth="160" />
+        <Circle fx:id="task1Circle" layoutX="30.0" layoutY="150.0" radius="8" stroke="#ff9999" fill="transparent" strokeWidth="2" />
+        <Text fx:id="txtTask2" layoutX="60.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Turn the time machine on using the circuit box in the storage." fill="#6bf9b1" wrappingWidth="160" />
+        <Circle fx:id="task2Circle" layoutX="30.0" layoutY="256.0" radius="8" stroke="#ff9999" fill="transparent" strokeWidth="2" />
+        <Text fx:id="txtTask3" layoutX="60.0" layoutY="366.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Use the time machine to escape." fill="#6bf9b1" wrappingWidth="160" />
+        <Circle fx:id="task3Circle" layoutX="30.0" layoutY="362.0" radius="8" stroke="#ff9999" fill="transparent" strokeWidth="2" />
+    </children>
+</Pane>
+      <Pane fx:id="menuOverlay" prefHeight="750" prefWidth="1174" style="-fx-background-color: rgb(28,28,28);" visible="false" translateX="266" translateY="0" opacity="0" onMouseClicked="#closeDropdownMenuOverlay">
       </Pane>
    </children>
 </Pane>
