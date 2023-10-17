@@ -125,7 +125,7 @@
       </Text>
       <Button id="btnSkip" fx:id="btnStartCircuitGame" layoutX="753.0" layoutY="338.0" mnemonicParsing="false" onAction="#onClickStartMemoryGame" style="-fx-font-size: 24.0; -fx-font-family: 'PT Mono'; -fx-font-weight: bold;" text="Start" visible="false">
       </Button>
-      <Text fx:id="text" fill="#6bf9b1" layoutX="354.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 24.0; -fx-font-family: 'PT Mono'; -fx-font-weight: bold;" text="Current Streak:" visible="false" wrappingWidth="336.0">
+      <Text fx:id="text" fill="#6bf9b1" layoutX="42.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 24.0; -fx-font-family: 'PT Mono'; -fx-font-weight: bold;" text="Current Streak:" textAlignment="CENTER" visible="false" wrappingWidth="912.0">
       </Text>
       <Text fx:id="info" fill="#6bf9b1" layoutX="33.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20.0; -fx-font-family: 'PT Mono'; -fx-font-weight: bold;" text="Time to test your memory!" textAlignment="CENTER" visible="false" wrappingWidth="302.0">
       </Text>
@@ -135,12 +135,12 @@
       </Text>
          <Pane fx:id="dropdownMenu" opacity="0.9" prefHeight="750.0" prefWidth="266.0" style="-fx-background-color: rgb(28,28,28);" translateX="-266" translateY="0" visible="true">
          <children>
-            <Text layoutX="90.0" layoutY="94" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20.0;" text="TASKS" fill="#6bf9b1" />
+            <Text fill="#6bf9b1" layoutX="90.0" layoutY="94" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 20.0; -fx-font-family: 'PT Mono';" text="TASKS" />
             <Button id="btnSkip" fx:id="btnCloseDropdownMenu" layoutX="226" layoutY="40" mnemonicParsing="false" onAction="#closeDropdownMenu" text="X">
                <font>
                   <Font name="PT Mono Bold" size="13.0" />
                </font></Button>
-            <Button id="btnSkip" fx:id="btnMenu" layoutX="150.0" layoutY="702.0" mnemonicParsing="false" onAction="#onClickReturn" text="Return to menu">
+            <Button id="btnSkip" fx:id="btnMenu" layoutX="124.0" layoutY="702.0" mnemonicParsing="false" onAction="#onClickReturn" text="Return to menu">
                <font>
                   <Font name="PT Mono Bold" size="13.0" />
                </font></Button>
@@ -156,9 +156,9 @@
                <font>
                   <Font name="PT Mono Bold" size="13.0" />
                </font></Text>
-            <Circle fx:id="task1CircleStorage" layoutX="30.0" layoutY="150.0" radius="8" stroke="#ff9999" fill="transparent" strokeWidth="2" />
-            <Circle fx:id="task2CircleStorage" layoutX="30.0" layoutY="256.0" radius="8" stroke="#ff9999" fill="transparent" strokeWidth="2" />
-            <Circle fx:id="task3CircleStorage" layoutX="30.0" layoutY="362.0" radius="8" stroke="#ff9999" fill="transparent" strokeWidth="2" />
+            <Circle fx:id="task1CircleStorage" fill="transparent" layoutX="30.0" layoutY="150.0" radius="8" stroke="#ff9999" strokeWidth="2" />
+            <Circle fx:id="task2CircleStorage" fill="transparent" layoutX="30.0" layoutY="256.0" radius="8" stroke="#ff9999" strokeWidth="2" />
+            <Circle fx:id="task3CircleStorage" fill="transparent" layoutX="30.0" layoutY="362.0" radius="8" stroke="#ff9999" strokeWidth="2" />
          </children>
       </Pane>
       <Pane fx:id="menuOverlay" onMouseClicked="#closeDropdownMenuOverlay" opacity="0" prefHeight="750" prefWidth="1174" style="-fx-background-color: rgb(28,28,28);" translateX="266" translateY="0" visible="false">
