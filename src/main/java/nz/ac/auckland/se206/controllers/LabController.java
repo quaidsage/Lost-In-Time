@@ -278,7 +278,7 @@ public class LabController {
    * @param event The action event that triggered this method.
    */
   @FXML
-  private void openDropDownMenu(ActionEvent event) {
+  private void onClickOpenDropMenu(ActionEvent event) {
     App.audio.playClick();
     // Call the openMenu method in the MenuController to open the dropdown menu.
     menuOverlay.setVisible(true);
@@ -291,7 +291,7 @@ public class LabController {
    * @param event The action event that triggered this method.
    */
   @FXML
-  private void closeDropDownMenu(ActionEvent event) {
+  private void onClickCloseDropMenu(ActionEvent event) {
     App.audio.playClick();
     // Call the closeMenu method in the MenuController to close the dropdown menu.
     menuOverlay.setVisible(false);
@@ -615,14 +615,14 @@ public class LabController {
    * @return true if the puzzle is complete, false otherwise.
    */
   private Boolean isPuzzleComplete() {
-    numChemicalsAdded++; // Increment the count of added solutions
+    numChemicalsAdded++;
 
     if (numChemicalsAdded == 3) { // Check if the required number of solutions (3) have been added
       puzzleComplete(); // Call a method to handle puzzle completion
-      AnimationManager.removeRecipe(); // Remove the recipe animation
+      AnimationManager.removeRecipe();
       return true; // Return true to indicate the puzzle is complete
     } else {
-      return false; // Return false if the puzzle is not yet complete
+      return false;
     }
   }
 
