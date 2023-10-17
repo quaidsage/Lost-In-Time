@@ -169,9 +169,11 @@ public class TimemachineController {
   /** Carries out specific tasks required when opening the scene. */
   public void initialize() {
 
+    // Initialise controller instances
     menuController = new MenuController(dropdownMenu);
     taskController = new TaskController();
 
+    // Bind the circle properties to the task list.
     task1Circle
         .fillProperty()
         .bind(
@@ -191,6 +193,7 @@ public class TimemachineController {
                 .then(Color.GREEN)
                 .otherwise(Color.TRANSPARENT));
 
+    // Bind the task list text to the gamestate variables.
     txtTask1
         .styleProperty()
         .bind(
@@ -225,8 +228,10 @@ public class TimemachineController {
     // Initialise relevant tasks
     initialiseTasks();
 
+    // Init gamestate variable.
     GameState.isControlBoxResolved = false;
 
+    // Set the circle radii, and currentCircle to null.
     circle1.setRadius(110);
     circle2.setRadius(95);
     circle3.setRadius(80);
@@ -243,6 +248,7 @@ public class TimemachineController {
             // Append context to chat and if unmuted, use TTS
             ChatTaskGenerator.updateChat("-> ", ChatTaskGenerator.contextResponse);
             if (!MainmenuController.isTTSMuted) {
+              // Run the text to speech
               TextToSpeech.runTextToSpeech(ChatTaskGenerator.contextResponse.getContent());
             }
           }
@@ -257,9 +263,12 @@ public class TimemachineController {
    */
   @FXML
   private void onClickLab(ActionEvent event) {
+    // Play audio
     App.audio.playClick();
+    // Change UI and run animation
     App.setUi(AppUi.LAB);
     AnimationManager.openLabDoor();
+    // Handle the gamestate variables
     if (!GameState.isLabVisited) {
       GameState.isLabVisited = true;
       Thread labIntroThread = new Thread(LabController.labIntroTask);
@@ -353,7 +362,9 @@ public class TimemachineController {
    */
   @FXML
   private void onClickReturn(ActionEvent event) throws IOException {
+    // Play audio.
     App.audio.playClick();
+    // Cancel timer and reset UI to the mainmenu.
     timer.cancel();
     App.setUi(AppUi.MAINMENU);
   }
@@ -404,9 +415,12 @@ public class TimemachineController {
     }
   }
 
+  /** Function to handle the completion of the game. */
   private void winGame() {
+    // Play audio
     App.audio.playSuccess();
 
+    // Set components visibility
     hackGame.setVisible(false);
     desktopView.setVisible(false);
     btnControlBox.setVisible(false);
@@ -422,32 +436,45 @@ public class TimemachineController {
         });
   }
 
-  // drops circle on both blank as well as a non blank row appropriately
+  /**
+   * Drops circle on both blank as well as a non blank row appropriately.
+   *
+   * @param event event handler for when mouse event occurs.
+   */
   @FXML
   private void dropCircle(MouseEvent event) {
+    // Play a click sound
     App.audio.playClick();
+
+    // Get the ID of the row where the circle is being dropped
     String row = event.getPickResult().getIntersectedNode().getId();
 
+    // Handle events within the towers of Hanoi hacking game.
     if (row.equals("row1")) {
+      // If there is no currently held circle, return
       if (currentCircle == null) return;
+      // If the row is empty, add the current circle and reset it
       else if (row1.getChildren().size() == 0) {
         row1.getChildren().add(currentCircle);
         currentCircle.setEffect(null);
         currentCircle = null;
       } else {
+        // If the current circle's ID is greater than the top circle's ID, add it and reset
         if (currentCircle.getId().compareTo(getCircle((Circle) row1.getChildren().get(0)).getId())
             > 0) {
           row1.getChildren().add(currentCircle);
           currentCircle.setEffect(null);
           currentCircle = null;
         } else {
+          // If the current circle can't be added, just reset it
           currentCircle.setEffect(null);
           currentCircle = null;
         }
       }
     } else if (row.equals("row2")) {
+      // Handle events for "row2" - similar logic as for "row1"
       if (currentCircle == null) return;
-      else if (row2.getChildren().size() == 0) {
+      if (row2.getChildren().size() == 0) {
         row2.getChildren().add(currentCircle);
         currentCircle.setEffect(null);
         currentCircle = null;
@@ -463,8 +490,9 @@ public class TimemachineController {
         }
       }
     } else if (row.equals("row3")) {
+      // Handle events for "row3" - similar logic as for "row1"
       if (currentCircle == null) return;
-      else if (row3.getChildren().size() == 0) {
+      if (row3.getChildren().size() == 0) {
         row3.getChildren().add(currentCircle);
         currentCircle.setEffect(null);
         currentCircle = null;
@@ -482,12 +510,18 @@ public class TimemachineController {
     }
   }
 
-  // gets the smallest circle of the row of whichever circle you press
-  // that is you don't want to select a bigger circle when a smaller circle is already present
+  /**
+   * Gets the smallest circle of the row of whichever circle you press.
+   *
+   * @param circle takes a javafx Circle as input.
+   * @return returns updated Circle element.
+   */
   @FXML
   private Circle getCircle(Circle circle) {
+    // Initialise values
     Circle toChoseCircle = circle;
     StackPane row = (StackPane) circle.getParent();
+    // Get the smallest circle
     for (int i = 0; i < row.getChildren().size(); i++) {
       if (row.getChildren().get(i).getId().compareTo(toChoseCircle.getId()) > 0)
         toChoseCircle = (Circle) row.getChildren().get(i);

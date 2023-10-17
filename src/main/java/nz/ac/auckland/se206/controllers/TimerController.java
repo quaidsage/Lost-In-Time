@@ -44,13 +44,15 @@ public class TimerController extends Service<Void> {
         }
         return null;
       }
-    };  
+    };
   }
 
+  /** Function to handle cancelling and resetting the timer. */
   public void cancelAndReset() {
     if (isRunning()) {
-        cancel(); // Cancel the timer task
+      cancel(); // Cancel the timer task
     }
+
     reset(); // Reset the service to its initial state
     minutes = 2; // Reset minutes to the initial value
     seconds = 0; // Reset seconds to the initial value
