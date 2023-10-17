@@ -167,15 +167,15 @@
                <font>
                   <Font name="PT Mono Bold" size="13.0" />
                </font></Button>
-            <Text fx:id="txtTask1" fill="#6bf9b1" layoutX="60.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Make the time fluid using the chemicals in the lab" wrappingWidth="160">
+            <Text fx:id="txtTask1" fill="#6bf9b1" layoutX="60.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Make the time fluid using the chemicals in the lab." wrappingWidth="160">
                <font>
                   <Font name="PT Mono Bold" size="13.0" />
                </font></Text>
-            <Text fx:id="txtTask2" fill="#6bf9b1" layoutX="60.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Turn the time machine on using the circuit box in the storage." wrappingWidth="160">
+            <Text fx:id="txtTask2" fill="#6bf9b1" layoutX="60.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Turn the time machine on using the circuit box in the storage." wrappingWidth="160">
                <font>
                   <Font name="PT Mono Bold" size="13.0" />
                </font></Text>
-            <Text fx:id="txtTask3" fill="#6bf9b1" layoutX="60.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Use the time machine to escape." wrappingWidth="160">
+            <Text fx:id="txtTask3" fill="#6bf9b1" layoutX="60.0" layoutY="366.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-font-size: 16.0;" text="Hack the control panel to grant access to the time machine." wrappingWidth="160">
                <font>
                   <Font name="PT Mono Bold" size="13.0" />
                </font></Text>
