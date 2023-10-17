@@ -92,6 +92,13 @@ public class GptPromptEngineering {
         + ". Do this in one short sentence. Do not refer to the user.";
   }
 
+  /** TODO JAVADOCS */
+  public static String getStartHack() {
+    return "You are the digital conciousness of a mad scientist helping the user. You have already"
+        + " introduced yourself. In one or two short sentences, Tell the user to hack into the time"
+        + " machine by solving the encryption in the 'hack.exe' file. ";
+  }
+
   /**
    * Method to get hte message to run chatGPT when the hack task is complete.
    *

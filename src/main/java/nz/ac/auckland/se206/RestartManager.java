@@ -96,6 +96,8 @@ public class RestartManager {
 
   /** Function to restart the time machine scene upon playing the game again. */
   private static void restartTimemachineScene() {
+    GameState.isHackOpened = false;
+
     // Initialise timer and bind the lblTimer to the timerController properties.
     TimemachineController.timer = new TimerController();
     timemachineLabel.textProperty().bind(TimemachineController.timer.messageProperty());
