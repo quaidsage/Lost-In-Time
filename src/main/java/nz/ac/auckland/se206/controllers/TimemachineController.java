@@ -40,7 +40,6 @@ public class TimemachineController {
   public static TimerController timer = new TimerController();
   public static TaskController taskController;
 
-
   /**
    * Function to start the time in the timemachinescene.
    *
@@ -174,27 +173,45 @@ public class TimemachineController {
     taskController = new TaskController();
 
     // Bind the circle properties to the task list.
-    task1Circle.fillProperty().bind(Bindings.when(taskController.labTaskCompletedProperty())
-            .then(Color.GREEN)
-            .otherwise(Color.TRANSPARENT));
-    task2Circle.fillProperty().bind(Bindings.when(taskController.storageTaskCompletedProperty())
-            .then(Color.GREEN)
-            .otherwise(Color.TRANSPARENT));
-    task3Circle.fillProperty().bind(Bindings.when(taskController.controlBoxTaskCompletedProperty())
-            .then(Color.GREEN)
-            .otherwise(Color.TRANSPARENT));
-    
+    task1Circle
+        .fillProperty()
+        .bind(
+            Bindings.when(taskController.labTaskCompletedProperty())
+                .then(Color.GREEN)
+                .otherwise(Color.TRANSPARENT));
+    task2Circle
+        .fillProperty()
+        .bind(
+            Bindings.when(taskController.storageTaskCompletedProperty())
+                .then(Color.GREEN)
+                .otherwise(Color.TRANSPARENT));
+    task3Circle
+        .fillProperty()
+        .bind(
+            Bindings.when(taskController.controlBoxTaskCompletedProperty())
+                .then(Color.GREEN)
+                .otherwise(Color.TRANSPARENT));
+
     // Bind the task list text to the gamestate variables.
-    txtTask1.styleProperty().bind(Bindings.when(taskController.labTaskCompletedProperty())
-            .then("-fx-strikethrough: true; -fx-font-size: 16px;")
-            .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
-    txtTask2.styleProperty().bind(Bindings.when(taskController.storageTaskCompletedProperty())
-            .then("-fx-strikethrough: true; -fx-font-size: 16px;")
-            .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
-    txtTask3.styleProperty().bind(Bindings.when(taskController.controlBoxTaskCompletedProperty())
-            .then("-fx-strikethrough: true; -fx-font-size: 16px;")
-            .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
-    
+    txtTask1
+        .styleProperty()
+        .bind(
+            Bindings.when(taskController.labTaskCompletedProperty())
+                .then("-fx-strikethrough: true; -fx-font-size: 16px;")
+                .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
+    txtTask2
+        .styleProperty()
+        .bind(
+            Bindings.when(taskController.storageTaskCompletedProperty())
+                .then("-fx-strikethrough: true; -fx-font-size: 16px;")
+                .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
+    txtTask3
+        .styleProperty()
+        .bind(
+            Bindings.when(taskController.controlBoxTaskCompletedProperty())
+                .then("-fx-strikethrough: true; -fx-font-size: 16px;")
+                .otherwise("-fx-strikethrough: false; -fx-font-size: 16px;"));
+
     // Initialise timer and bind the lblTimer to the timerController properties.
     timer = new TimerController();
     lblTimer.textProperty().bind(timer.messageProperty());
@@ -204,14 +221,16 @@ public class TimemachineController {
         });
     timer.setOnCancelled(
         e -> {
-        timer.reset();
+          timer.reset();
         });
 
     // Initialise relevant tasks
     initialiseTasks();
 
+    // Init gamestate variable.
     GameState.isControlBoxResolved = false;
 
+    // Set the circle radii, and currentCircle to null.
     circle1.setRadius(110);
     circle2.setRadius(95);
     circle3.setRadius(80);
@@ -228,6 +247,7 @@ public class TimemachineController {
             // Append context to chat and if unmuted, use TTS
             ChatTaskGenerator.updateChat("-> ", ChatTaskGenerator.contextResponse);
             if (!MainmenuController.isTTSMuted) {
+              // Run the text to speech
               TextToSpeech.runTextToSpeech(ChatTaskGenerator.contextResponse.getContent());
             }
           }
@@ -242,9 +262,12 @@ public class TimemachineController {
    */
   @FXML
   private void onClickLab(ActionEvent event) {
+    // Play audio
     App.audio.playClick();
+    // Change UI and run animation
     App.setUi(AppUi.LAB);
     AnimationManager.openLabDoor();
+    // Handle the gamestate variables
     if (!GameState.isLabVisited) {
       GameState.isLabVisited = true;
       Thread labIntroThread = new Thread(LabController.labIntroTask);
@@ -338,7 +361,9 @@ public class TimemachineController {
    */
   @FXML
   private void onClickReturn(ActionEvent event) throws IOException {
+    // Play audio.
     App.audio.playClick();
+    // Cancel timer and reset UI to the mainmenu.
     timer.cancel();
     App.setUi(AppUi.MAINMENU);
   }
@@ -404,7 +429,7 @@ public class TimemachineController {
 
   /**
    * Drops circle on both blank as well as a non blank row appropriately.
-   * 
+   *
    * @param event event handler for when mouse event occurs.
    */
   @FXML
@@ -426,7 +451,8 @@ public class TimemachineController {
         currentCircle = null;
       } else {
         // If the current circle's ID is greater than the top circle's ID, add it and reset
-        if (currentCircle.getId().compareTo(getCircle((Circle) row1.getChildren().get(0)).getId()) > 0) {
+        if (currentCircle.getId().compareTo(getCircle((Circle) row1.getChildren().get(0)).getId())
+            > 0) {
           row1.getChildren().add(currentCircle);
           currentCircle.setEffect(null);
           currentCircle = null;
@@ -434,7 +460,7 @@ public class TimemachineController {
           // If the current circle can't be added, just reset it
           currentCircle.setEffect(null);
           currentCircle = null;
-          }
+        }
       }
     } else if (row.equals("row2")) {
       // Handle events for "row2" - similar logic as for "row1"
@@ -444,7 +470,8 @@ public class TimemachineController {
         currentCircle.setEffect(null);
         currentCircle = null;
       } else {
-        if (currentCircle.getId().compareTo(getCircle((Circle) row2.getChildren().get(0)).getId()) > 0) {
+        if (currentCircle.getId().compareTo(getCircle((Circle) row2.getChildren().get(0)).getId())
+            > 0) {
           row2.getChildren().add(currentCircle);
           currentCircle.setEffect(null);
           currentCircle = null;
@@ -461,7 +488,8 @@ public class TimemachineController {
         currentCircle.setEffect(null);
         currentCircle = null;
       } else {
-        if (currentCircle.getId().compareTo(getCircle((Circle) row3.getChildren().get(0)).getId()) > 0) {
+        if (currentCircle.getId().compareTo(getCircle((Circle) row3.getChildren().get(0)).getId())
+            > 0) {
           row3.getChildren().add(currentCircle);
           currentCircle.setEffect(null);
           currentCircle = null;
@@ -475,7 +503,7 @@ public class TimemachineController {
 
   /**
    * Gets the smallest circle of the row of whichever circle you press.
-   * 
+   *
    * @param circle takes a javafx Circle as input.
    * @return returns updated Circle element.
    */

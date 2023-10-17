@@ -77,7 +77,7 @@ public class App extends Application {
       MainmenuController.hasRestarted = true;
       ChatTaskGenerator.textToSpeech.clear();
       RestartManager.restartGame();
-      MainmenuController.newContextResponse();
+      MainmenuController.createNewContextResponse();
     }
 
     scene.setRoot(SceneManager.getUiRoot(newUi));

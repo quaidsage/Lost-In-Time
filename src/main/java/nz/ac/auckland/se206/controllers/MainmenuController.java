@@ -22,9 +22,53 @@ import nz.ac.auckland.se206.speech.TextToSpeech;
 public class MainmenuController {
 
   public static Button btnSkip;
-
   public static boolean hasRestarted = false;
   public static boolean isTTSMuted = true;
+
+  /** Function to disable the skip button until all fxml files are loaded. */
+  public static void disableSkipButton() {
+    // Create a task to disable skip button.
+    Task<Void> disableSkipButtonTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            // While the current UI is the intro UI
+            while (App.currentUi == AppUi.INTRO) {
+              if (IntroController.isFilesLoaded) {
+                btnSkip.setDisable(false);
+              } else {
+                btnSkip.setDisable(true);
+              }
+            }
+            return null;
+          }
+        };
+    // Create a thread for the task
+    Thread disableSkipButtonThread = new Thread(disableSkipButtonTask);
+    disableSkipButtonThread.setDaemon(true);
+    // Start the task
+    disableSkipButtonThread.start();
+  }
+
+  /** Function to create new first AI response on loading time machine. */
+  public static void createNewContextResponse() {
+    // Generate context for start of the game
+    ChatTaskGenerator.contextResponse = null;
+    Task<ChatMessage> contextTask = ChatTaskGenerator.createTask(GptPromptEngineering.getContext());
+    contextTask.setOnSucceeded(
+        event -> {
+          ChatTaskGenerator.contextResponse = contextTask.getValue();
+          if (App.currentUi == AppUi.TIMEMACHINE) {
+            TimemachineController.appendContextProperty.set(
+                !TimemachineController.appendContextProperty.get());
+          } else {
+            IntroController.isContextLoaded = true;
+          }
+        });
+    Thread contextThread = new Thread(contextTask);
+    contextThread.setDaemon(true);
+    contextThread.start();
+  }
 
   @FXML private Button btnBeginGame;
   @FXML private Button btnMute;
@@ -54,6 +98,7 @@ public class MainmenuController {
   @FXML
   private void onClickBeginGame(ActionEvent event)
       throws IOException, AudioException, EngineStateError {
+    // Play audio and set the UI.
     App.audio.playClick();
     App.setUi(AppUi.DIFFICULTY);
     TextToSpeech.runTextToSpeech("Select difficulty level and time limit.");
@@ -66,37 +111,18 @@ public class MainmenuController {
    * @throws AudioException If there is an error with the audio
    */
   @FXML
-  private void muteTTS(ActionEvent event) throws AudioException, EngineStateError {
+  private void muteTextToSpeech(ActionEvent event) throws AudioException, EngineStateError {
+    // Check if text to speech is muted, and if it isnt, mute it.
     if (isTTSMuted) {
       isTTSMuted = false;
       ChatTaskGenerator.textToSpeech.pause(false);
       btnMute.setText("Mute TTS (TEMP BUTTON)");
     } else {
+      // If it is muted, do the opposite.
       isTTSMuted = true;
       ChatTaskGenerator.textToSpeech.pause(true);
       btnMute.setText("Unmute TTS (TEMP BUTTON)");
     }
-  }
-
-  /** Function to disable the skip button until all fxml files are loaded. */
-  public static void disableSkipButton() {
-    Task<Void> disableSkipButtonTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            while (App.currentUi == AppUi.INTRO) {
-              if (IntroController.isFilesLoaded) {
-                btnSkip.setDisable(false);
-              } else {
-                btnSkip.setDisable(true);
-              }
-            }
-            return null;
-          }
-        };
-    Thread disableSkipButtonThread = new Thread(disableSkipButtonTask);
-    disableSkipButtonThread.setDaemon(true);
-    disableSkipButtonThread.start();
   }
 
   /**
@@ -127,31 +153,11 @@ public class MainmenuController {
     loadTask.setOnSucceeded(
         e -> {
           IntroController.isFilesLoaded = true;
-          newContextResponse();
+          createNewContextResponse();
           ChatTaskGenerator.enableEnterHandler();
         });
     Thread loadThread = new Thread(loadTask);
     loadThread.setDaemon(true);
     loadThread.start();
-  }
-
-  /** Function to create new first AI response on loading time machine. */
-  public static void newContextResponse() {
-    // Generate context for start of the game
-    ChatTaskGenerator.contextResponse = null;
-    Task<ChatMessage> contextTask = ChatTaskGenerator.createTask(GptPromptEngineering.getContext());
-    contextTask.setOnSucceeded(
-        event -> {
-          ChatTaskGenerator.contextResponse = contextTask.getValue();
-          if (App.currentUi == AppUi.TIMEMACHINE) {
-            TimemachineController.appendContextProperty.set(
-                !TimemachineController.appendContextProperty.get());
-          } else {
-            IntroController.isContextLoaded = true;
-          }
-        });
-    Thread contextThread = new Thread(contextTask);
-    contextThread.setDaemon(true);
-    contextThread.start();
   }
 }
