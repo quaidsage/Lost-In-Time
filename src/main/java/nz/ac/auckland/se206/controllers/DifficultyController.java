@@ -173,7 +173,7 @@ public class DifficultyController {
     }
 
     booleanProperty.set(!isDifficultyChecked || !isTimeChecked);
-    minutes = 0;
+    minutes = 2;
   }
 
   /** Handles the 4 Minutes checkbox. */
