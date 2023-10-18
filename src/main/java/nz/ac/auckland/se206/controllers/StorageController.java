@@ -180,10 +180,6 @@ public class StorageController {
     // Initialise timer
     timer = new TimerController();
     lblTimer.textProperty().bind(timer.messageProperty());
-    timer.setOnSucceeded(
-        e -> {
-          lblTimer.setText("0:00");
-        });
     timer.setOnCancelled(
         e -> {
           timer.reset();

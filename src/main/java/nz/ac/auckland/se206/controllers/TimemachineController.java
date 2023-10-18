@@ -226,7 +226,7 @@ public class TimemachineController {
     lblTimer.textProperty().bind(timer.messageProperty());
     timer.setOnSucceeded(
         e -> {
-          lblTimer.setText("0:00");
+          // Do changes on timeout
         });
     timer.setOnCancelled(
         e -> {
