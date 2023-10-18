@@ -218,7 +218,6 @@ public class LabController {
     timer.setOnSucceeded(
         e -> {
           App.setUi(AppUi.TIMEOUT);
-          timer.reset();
         });
 
     // Create task to run GPT model for intro message

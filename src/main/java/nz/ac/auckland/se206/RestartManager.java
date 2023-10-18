@@ -101,10 +101,6 @@ public class RestartManager {
     // Initialise timer and bind the lblTimer to the timerController properties.
     TimemachineController.timer = new TimerController();
     timemachineLabel.textProperty().bind(TimemachineController.timer.messageProperty());
-    TimemachineController.timer.setOnSucceeded(
-        e -> {
-          timemachineLabel.setText("0:00");
-        });
 
     // Initialise start task
     TimemachineController.createStartTask(timemachineRect, timemachineLabel);
@@ -119,12 +115,12 @@ public class RestartManager {
     Boolean[] isChemicalSolution = new Boolean[] {false, false, false, false, false, false, false};
 
     // Initialise timer and bind the lblTimer to the timerController properties.
+    LabController.timer.cancel();
     LabController.timer = new TimerController();
     labLabel.textProperty().bind(LabController.timer.messageProperty());
     LabController.timer.setOnSucceeded(
         e -> {
           App.setUi(AppUi.TIMEOUT);
-          LabController.timer.reset();
         });
 
     // Create task to run GPT model for intro message
@@ -175,10 +171,6 @@ public class RestartManager {
     // Initialise timer
     StorageController.timer = new TimerController();
     storageLabel.textProperty().bind(StorageController.timer.messageProperty());
-    StorageController.timer.setOnSucceeded(
-        e -> {
-          storageLabel.setText("0:00");
-        });
 
     // Get introduction message on first visit of storage room
     StorageController.storageIntroTask =

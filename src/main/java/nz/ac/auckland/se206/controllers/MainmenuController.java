@@ -23,7 +23,7 @@ public class MainmenuController {
 
   public static Button btnSkip;
   public static boolean hasRestarted = false;
-  public static boolean isTTSMuted = true;
+  public static boolean isTTSMuted = false;
 
   /** Function to disable the skip button until all fxml files are loaded. */
   public static void disableSkipButton() {
